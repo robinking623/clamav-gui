@@ -4,8 +4,9 @@
 #
 #-------------------------------------------------
 
-QT       += core gui network widgets
-#greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QT       += core gui network
+
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = clamav-gui
 TEMPLATE = app
@@ -38,7 +39,6 @@ SOURCES += src/main.cpp\
     src/profilewizarddialog.cpp \
     src/profilemanager.cpp \
     src/translator.cpp
-    src/translator.cpp
 
 HEADERS  += src/clamav_gui.h \
     src/scanoption.h \
@@ -65,7 +65,6 @@ HEADERS  += src/clamav_gui.h \
     src/progressdialog.h \
     src/profilewizarddialog.h \
     src/profilemanager.h \
-    src/translator.h
     src/translator.h
 
 FORMS    += ui/clamav_gui.ui \
@@ -150,7 +149,7 @@ icon256.files = extra/icon256/clamav-gui.png
 desktopfile.path = /$(DESTDIR)/usr/share/applications
 desktopfile.files = extra/ClamAV-GUI.desktop
 
-servicemenufile.path = /$(DESTDIR)/usr/share/kio/servicemenus
+servicemenufile.path = /$(DESTDIR)/usr/share/kservices5/ServiceMenus
 servicemenufile.files = extra/ClamAV-GUI-ServiceMenu.desktop
 
 translation.path = /$(DESTDIR)/usr/share/clamav-gui

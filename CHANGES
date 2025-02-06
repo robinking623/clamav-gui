@@ -1,3 +1,11 @@
+* Wed Feb 5 2025 - Version 1.0.4
+- Made a full code review and optimized several codeblocks (Some of the code originates back to 2015).
+- During the optimization process fixed several bugs and flaws.
+- Now the code should be more readable and maintaining it will be much easier.
+
+* Sun Feb 2 2025 - Version 1.0.3
+- Scanlimit Tab code optimization and elimination of minor flaws.
+
 * Sat Feb 1 2025 - Version 1.0.2
 - Fixed an error in the new translation module.
 
