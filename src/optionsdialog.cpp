@@ -271,54 +271,116 @@ QString rc;
 void optionsDialog::updateDirectories(){
 QString value;
 QString checked;
+QStringList keywords;
 
-    value=setupFile->getSectionValue("Directories","LoadSupportedDBFiles");
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    checked=="checked"?ui->loadVirusDatabaseCheckBox->setChecked(true):ui->loadVirusDatabaseCheckBox->setChecked(false);
-    ui->loadVirusDatabaseLineEdit->setText(value);
+    keywords << "LoadSupportedDBFiles" << "ScanReportToFile" << "ScanFilesFromFile" << "TmpFile" << "MoveInfectedFiles";
+    keywords << "CopyInfectedFiles" << "FollowDirectorySymLinks" << "FollowFileSymLinks";
 
-    value=setupFile->getSectionValue("Directories","ScanReportToFile");
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    checked=="checked"?ui->scanReportToFileCheckBox->setChecked(true):ui->scanReportToFileCheckBox->setChecked(false);
-    ui->scanReportToFileLineEdit->setText(value);
+    for (int i = 0; i < keywords.length(); i++){
+        value=setupFile->getSectionValue("Directories",keywords.at(i));
+        checked = value.left(value.indexOf("|"));
+        value = value.mid(value.indexOf("|") + 1);
 
-    value=setupFile->getSectionValue("Directories","ScanFilesFromFile");
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    checked=="checked"?ui->scanFilesFromFileCheckBox->setChecked(true):ui->scanFilesFromFileCheckBox->setChecked(false);
-    ui->scanFilesFromFileLineEdit->setText(value);
-
-    value=setupFile->getSectionValue("Directories","TmpFile");
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    checked=="checked"?ui->tempFileCheckBox->setChecked(true):ui->tempFileCheckBox->setChecked(false);
-    ui->tempFilesLineEdit->setText(value);
-
-    value=setupFile->getSectionValue("Directories","MoveInfectedFiles");
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    checked=="checked"?ui->moveDirectoryCheckBox->setChecked(true):ui->moveDirectoryCheckBox->setChecked(false);
-    ui->moveDirectoryLineEdit->setText(value);
-
-    value=setupFile->getSectionValue("Directories","CopyInfectedFiles");
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    checked=="checked"?ui->copyDirectoryCheckBox->setChecked(true):ui->copyDirectoryCheckBox->setChecked(false);
-    ui->copyDirectoryLineEdit->setText(value);
-
-    value=setupFile->getSectionValue("Directories","FollowDirectorySymLinks");
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    checked=="checked"?ui->followDirectorySymlinksCheckBox->setChecked(true):ui->followDirectorySymlinksCheckBox->setChecked(false);
-    ui->followDirectorySymlinksComboBox->setCurrentIndex(value.toInt());
-
-    value=setupFile->getSectionValue("Directories","FollowFileSymLinks");
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    checked=="checked"?ui->followFileSymlinksCheckBox->setChecked(true):ui->followFileSymlinksCheckBox->setChecked(false);
-    ui->followFileSymlinksComboBox->setCurrentIndex(value.toInt());
+        if (checked == "checked"){
+            switch (i) {
+                case 0 : ui->loadVirusDatabaseCheckBox->setChecked(true);
+                         ui->databaseFrame->setStyleSheet("background-color:lightgreen");
+                         ui->loadVirusDatabaseLineEdit->setEnabled(true);
+                         ui->selectLVDButton->setEnabled(true);
+                         ui->loadVirusDatabaseLineEdit->setText(value);
+                            break;
+                case 1 : ui->scanReportToFileCheckBox->setChecked(true);
+                         ui->scanReportFrame->setStyleSheet("background-color:lightgreen");
+                         ui->scanReportToFileLineEdit->setEnabled(true);
+                         ui->selectSCRFButton->setEnabled(true);
+                         ui->scanReportToFileLineEdit->setText(value);
+                            break;
+                case 2 : ui->scanFilesFromFileCheckBox->setChecked(true);
+                         ui->scanFileFrame->setStyleSheet("background-color:lightgreen");
+                         ui->scanFilesFromFileLineEdit->setEnabled(true);
+                         ui->selectSFFButton->setEnabled(true);
+                         ui->scanFilesFromFileLineEdit->setText(value);
+                            break;
+                case 3 : ui->tempFileCheckBox->setChecked(true);
+                         ui->tempFileFrame->setStyleSheet("background-color:lightgreen");
+                         ui->tempFilesLineEdit->setEnabled(true);
+                         ui->selectTFButton->setEnabled(true);
+                         ui->tempFilesLineEdit->setText(value);
+                            break;
+                case 4 : ui->moveDirectoryCheckBox->setChecked(true);
+                         ui->moveFrame->setStyleSheet("background-color:lightgreen");
+                         ui->moveDirectoryLineEdit->setEnabled(true);
+                         ui->selectMDButton->setEnabled(true);
+                         ui->moveDirectoryLineEdit->setText(value);
+                            break;
+                case 5 : ui->copyDirectoryCheckBox->setChecked(true);
+                         ui->copyFrame->setStyleSheet("background-color:lightgreen");
+                         ui->copyDirectoryLineEdit->setEnabled(true);
+                         ui->selectCFButton->setEnabled(true);
+                         ui->copyDirectoryLineEdit->setText(value);
+                            break;
+                case 6 : ui->followDirectorySymlinksCheckBox->setChecked(true);
+                         ui->followDirLinksFrame->setStyleSheet("background-color:lightgreen");
+                         ui->followDirectorySymlinksComboBox->setEnabled(true);
+                         ui->followDirectorySymlinksComboBox->setCurrentIndex(value.toInt());
+                            break;
+                case 7 : ui->followFileSymlinksCheckBox->setChecked(true);
+                         ui->followFileLinksFrame->setStyleSheet("background-color:lightgreen");
+                         ui->followFileSymlinksComboBox->setEnabled(true);
+                         ui->followFileSymlinksComboBox->setCurrentIndex(value.toInt());
+                            break;
+            }
+        } else {
+            switch (i) {
+                case 0 : ui->loadVirusDatabaseCheckBox->setChecked(false);
+                         ui->databaseFrame->setStyleSheet("");
+                         ui->loadVirusDatabaseLineEdit->setEnabled(false);
+                         ui->selectLVDButton->setEnabled(false);
+                         ui->loadVirusDatabaseLineEdit->setText(value);
+                            break;
+                case 1 : ui->scanReportToFileCheckBox->setChecked(false);
+                         ui->scanReportFrame->setStyleSheet("");
+                         ui->scanReportToFileLineEdit->setEnabled(false);
+                         ui->selectSCRFButton->setEnabled(false);
+                         ui->scanReportToFileLineEdit->setText(value);
+                            break;
+                case 2 : ui->scanFilesFromFileCheckBox->setChecked(false);
+                         ui->scanFileFrame->setStyleSheet("");
+                         ui->scanFilesFromFileLineEdit->setEnabled(false);
+                         ui->selectSFFButton->setEnabled(false);
+                         ui->scanFilesFromFileLineEdit->setText(value);
+                            break;
+                case 3 : ui->tempFileCheckBox->setChecked(false);
+                         ui->tempFileFrame->setStyleSheet("");
+                         ui->tempFilesLineEdit->setEnabled(false);
+                         ui->selectTFButton->setEnabled(false);
+                         ui->tempFilesLineEdit->setText(value);
+                            break;
+                case 4 : ui->moveDirectoryCheckBox->setChecked(false);
+                         ui->moveFrame->setStyleSheet("");
+                         ui->moveDirectoryLineEdit->setEnabled(false);
+                         ui->selectMDButton->setEnabled(false);
+                         ui->moveDirectoryLineEdit->setText(value);
+                            break;
+                case 5 : ui->copyDirectoryCheckBox->setChecked(false);
+                         ui->copyFrame->setStyleSheet("");
+                         ui->copyDirectoryLineEdit->setEnabled(false);
+                         ui->selectCFButton->setEnabled(false);
+                         ui->copyDirectoryLineEdit->setText(value);
+                            break;
+                case 6 : ui->followDirectorySymlinksCheckBox->setChecked(false);
+                         ui->followDirLinksFrame->setStyleSheet("");
+                         ui->followDirectorySymlinksComboBox->setEnabled(false);
+                         ui->followDirectorySymlinksComboBox->setCurrentIndex(value.toInt());
+                            break;
+                case 7 : ui->followFileSymlinksCheckBox->setChecked(false);
+                         ui->followFileLinksFrame->setStyleSheet("");
+                         ui->followFileSymlinksComboBox->setEnabled(false);
+                         ui->followFileSymlinksComboBox->setCurrentIndex(value.toInt());
+                            break;
+            }
+        }
+    }
 }
 
 void optionsDialog::writeDirectories(){
@@ -379,6 +441,7 @@ QString checked;
     } else {
         emit databasePathChanged("/var/lib/clamav");
     }
+    updateDirectories();
 }
 
 void optionsDialog::slot_updateDirectories(){
