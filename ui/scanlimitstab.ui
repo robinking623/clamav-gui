@@ -38,7 +38,7 @@
           <number>1</number>
          </property>
          <property name="maximum">
-          <number>999</number>
+          <number>100</number>
          </property>
         </widget>
        </item>
@@ -94,30 +94,6 @@
          </item>
         </widget>
        </item>
-       <item row="11" column="2">
-        <widget class="QComboBox" name="maxNumberOfIconsInPEFileComboBox">
-         <item>
-          <property name="text">
-           <string/>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>K</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>M</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>G</string>
-          </property>
-         </item>
-        </widget>
-       </item>
        <item row="2" column="0">
         <widget class="QCheckBox" name="maxNumberForContainerCheckBox">
          <property name="text">
@@ -133,7 +109,14 @@
         </widget>
        </item>
        <item row="23" column="1">
-        <widget class="QSpinBox" name="maxPCREFileSizeSpinBox"/>
+        <widget class="QSpinBox" name="maxPCREFileSizeSpinBox">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>2048</number>
+         </property>
+        </widget>
        </item>
        <item row="16" column="0">
         <widget class="QCheckBox" name="structuredSSNCountCheckBox">
@@ -151,12 +134,15 @@
           <number>1</number>
          </property>
          <property name="maximum">
-          <number>999</number>
+          <number>100000</number>
          </property>
         </widget>
        </item>
        <item row="22" column="1">
         <widget class="QSpinBox" name="maxRecursionPCREMatchSpinBox">
+         <property name="minimum">
+          <number>1</number>
+         </property>
          <property name="maximum">
           <number>999</number>
          </property>
@@ -198,7 +184,7 @@
           <number>1</number>
          </property>
          <property name="maximum">
-          <number>999</number>
+          <number>2048</number>
          </property>
         </widget>
        </item>
@@ -207,25 +193,6 @@
          <property name="text">
           <string>Maximum size of script file to normalize</string>
          </property>
-        </widget>
-       </item>
-       <item row="2" column="2">
-        <widget class="QComboBox" name="maxNumberForContainerComboBox">
-         <item>
-          <property name="text">
-           <string/>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>K</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>M</string>
-          </property>
-         </item>
         </widget>
        </item>
        <item row="6" column="2">
@@ -275,7 +242,7 @@
           <number>1</number>
          </property>
          <property name="maximum">
-          <number>999</number>
+          <number>2048</number>
          </property>
         </widget>
        </item>
@@ -291,7 +258,7 @@
           <number>1</number>
          </property>
          <property name="maximum">
-          <number>999</number>
+          <number>30</number>
          </property>
         </widget>
        </item>
@@ -305,7 +272,7 @@
        <item row="0" column="1">
         <widget class="QSpinBox" name="filesLargerThanThisSpinBox">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -329,7 +296,7 @@
           <number>1</number>
          </property>
          <property name="maximum">
-          <number>999</number>
+          <number>2048</number>
          </property>
         </widget>
        </item>
@@ -353,25 +320,6 @@
          </property>
         </widget>
        </item>
-       <item row="10" column="2">
-        <widget class="QComboBox" name="maxNumberOfPartitionsInDiskImageComboBox">
-         <item>
-          <property name="text">
-           <string/>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>K</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>M</string>
-          </property>
-         </item>
-        </widget>
-       </item>
        <item row="3" column="1">
         <widget class="QSpinBox" name="maxArchiveRecursionForContainerSpinBox">
          <property name="buttonSymbols">
@@ -381,12 +329,15 @@
           <number>1</number>
          </property>
          <property name="maximum">
-          <number>999</number>
+          <number>100</number>
          </property>
         </widget>
        </item>
        <item row="21" column="1">
         <widget class="QSpinBox" name="maxPCREMatchSpinBox">
+         <property name="minimum">
+          <number>1</number>
+         </property>
          <property name="maximum">
           <number>999</number>
          </property>
@@ -399,25 +350,6 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="2">
-        <widget class="QComboBox" name="maxArchiveRecursionForContainerComboBox">
-         <item>
-          <property name="text">
-           <string/>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>K</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>M</string>
-          </property>
-         </item>
-        </widget>
-       </item>
        <item row="7" column="1">
         <widget class="QSpinBox" name="maxSizeOfNormalizedHTMLFileSpinBox">
          <property name="buttonSymbols">
@@ -427,7 +359,7 @@
           <number>1</number>
          </property>
          <property name="maximum">
-          <number>999</number>
+          <number>2048</number>
          </property>
         </widget>
        </item>
@@ -466,8 +398,11 @@
        </item>
        <item row="19" column="1">
         <widget class="QSpinBox" name="maxScanTimeSpinBox">
+         <property name="minimum">
+          <number>1</number>
+         </property>
          <property name="maximum">
-          <number>999</number>
+          <number>30000</number>
          </property>
         </widget>
        </item>
@@ -476,25 +411,6 @@
          <property name="text">
           <string>Bytecode timeout in milliseconds</string>
          </property>
-        </widget>
-       </item>
-       <item row="4" column="2">
-        <widget class="QComboBox" name="maxDirRecursionLevelComboBox">
-         <item>
-          <property name="text">
-           <string/>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>K</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>M</string>
-          </property>
-         </item>
         </widget>
        </item>
        <item row="1" column="2">
@@ -544,7 +460,7 @@
           <number>1</number>
          </property>
          <property name="maximum">
-          <number>999</number>
+          <number>2048</number>
          </property>
         </widget>
        </item>
@@ -568,10 +484,18 @@
         </widget>
        </item>
        <item row="16" column="1">
-        <widget class="QSpinBox" name="structuredSSNCountSpinBox"/>
+        <widget class="QSpinBox" name="structuredSSNCountSpinBox">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+        </widget>
        </item>
        <item row="17" column="1">
-        <widget class="QSpinBox" name="structuredCCCountSpinBox"/>
+        <widget class="QSpinBox" name="structuredCCCountSpinBox">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+        </widget>
        </item>
        <item row="17" column="0">
         <widget class="QCheckBox" name="structuredCCCountCheckBox">
@@ -639,7 +563,7 @@
           <number>1</number>
          </property>
          <property name="maximum">
-          <number>999</number>
+          <number>100</number>
          </property>
         </widget>
        </item>
@@ -682,6 +606,9 @@
        </item>
        <item row="20" column="1">
         <widget class="QSpinBox" name="maxRecursionHWP3SpinBox">
+         <property name="minimum">
+          <number>1</number>
+         </property>
          <property name="maximum">
           <number>999</number>
          </property>
@@ -715,7 +642,7 @@
           <number>1</number>
          </property>
          <property name="maximum">
-          <number>9999</number>
+          <number>30000</number>
          </property>
         </widget>
        </item>
@@ -742,7 +669,7 @@
           <number>1</number>
          </property>
          <property name="maximum">
-          <number>999</number>
+          <number>2048</number>
          </property>
         </widget>
        </item>
@@ -769,7 +696,7 @@
           <number>1</number>
          </property>
          <property name="maximum">
-          <number>999</number>
+          <number>2048</number>
          </property>
         </widget>
        </item>
@@ -1274,22 +1201,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>maxNumberForContainerComboBox</sender>
-   <signal>activated(int)</signal>
-   <receiver>scanLimitsTab</receiver>
-   <slot>writeLimits()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>725</x>
-     <y>67</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>921</x>
-     <y>145</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>maxArchiveRecursionForContainerSpinBox</sender>
    <signal>valueChanged(int)</signal>
    <receiver>scanLimitsTab</receiver>
@@ -1306,22 +1217,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>maxArchiveRecursionForContainerComboBox</sender>
-   <signal>activated(int)</signal>
-   <receiver>scanLimitsTab</receiver>
-   <slot>writeLimits()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>725</x>
-     <y>100</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>922</x>
-     <y>200</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>maxDirRecursionLevelSpinBox</sender>
    <signal>valueChanged(int)</signal>
    <receiver>scanLimitsTab</receiver>
@@ -1334,22 +1229,6 @@
     <hint type="destinationlabel">
      <x>922</x>
      <y>232</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>maxDirRecursionLevelComboBox</sender>
-   <signal>activated(int)</signal>
-   <receiver>scanLimitsTab</receiver>
-   <slot>writeLimits()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>725</x>
-     <y>133</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>923</x>
-     <y>263</y>
     </hint>
    </hints>
   </connection>
@@ -1530,22 +1409,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>maxNumberOfPartitionsInDiskImageComboBox</sender>
-   <signal>activated(int)</signal>
-   <receiver>scanLimitsTab</receiver>
-   <slot>writeLimits()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>725</x>
-     <y>331</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>920</x>
-     <y>527</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>maxNumberOfIconsInPEFileSpinBox</sender>
    <signal>valueChanged(int)</signal>
    <receiver>scanLimitsTab</receiver>
@@ -1557,22 +1420,6 @@
     </hint>
     <hint type="destinationlabel">
      <x>677</x>
-     <y>6</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>maxNumberOfIconsInPEFileComboBox</sender>
-   <signal>activated(int)</signal>
-   <receiver>scanLimitsTab</receiver>
-   <slot>writeLimits()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>725</x>
-     <y>364</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>589</x>
      <y>6</y>
     </hint>
    </hints>

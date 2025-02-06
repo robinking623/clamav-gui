@@ -97,50 +97,10 @@
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QGridLayout" name="gridLayout">
-             <item row="2" column="0">
-              <widget class="QRadioButton" name="loadPUAPWToolRadioButton">
+             <item row="5" column="1">
+              <widget class="QRadioButton" name="loadPUAToolRadioButton">
                <property name="text">
-                <string>Load PUA sigs of category PWTool</string>
-               </property>
-               <property name="autoExclusive">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="1">
-              <widget class="QRadioButton" name="loadPUAJavaRadioButton">
-               <property name="text">
-                <string>Load PUA sigs of category Java</string>
-               </property>
-               <property name="autoExclusive">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1">
-              <widget class="QRadioButton" name="loadPUAScriptRadioButton">
-               <property name="text">
-                <string>Load PUA sigs of category Script</string>
-               </property>
-               <property name="autoExclusive">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="8" column="0">
-              <widget class="QRadioButton" name="loadPUAServerRadioButton">
-               <property name="text">
-                <string>Load PUA sigs of category Server</string>
-               </property>
-               <property name="autoExclusive">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="7" column="0">
-              <widget class="QRadioButton" name="loadPUANetToolSpyRadioButton">
-               <property name="text">
-                <string>Load PUA sigs of category NetToolSpy</string>
+                <string>Load PUA sigs of category Tool</string>
                </property>
                <property name="autoExclusive">
                 <bool>false</bool>
@@ -151,46 +111,6 @@
               <widget class="QRadioButton" name="loadPUAAndrRadioButton">
                <property name="text">
                 <string>Load PUA sigs of category Andr</string>
-               </property>
-               <property name="autoExclusive">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="0">
-              <widget class="QRadioButton" name="loadPUAP2PRadioButton">
-               <property name="text">
-                <string>Load PUA sigs of category P2P</string>
-               </property>
-               <property name="autoExclusive">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="1">
-              <widget class="QRadioButton" name="loadPUAOsxRadioButton">
-               <property name="text">
-                <string>Load PUA sigs of category Osx</string>
-               </property>
-               <property name="autoExclusive">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0">
-              <widget class="QRadioButton" name="loadPUAPackedRadioButon">
-               <property name="text">
-                <string>Load PUA sigs of category Packed</string>
-               </property>
-               <property name="autoExclusive">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="0">
-              <widget class="QRadioButton" name="loadPUAIRCRadioButton">
-               <property name="text">
-                <string>Load PUA sigs of category IRC</string>
                </property>
                <property name="autoExclusive">
                 <bool>false</bool>
@@ -210,10 +130,30 @@
                </property>
               </widget>
              </item>
-             <item row="6" column="1">
-              <widget class="QRadioButton" name="loadPUAUnixRadioButton">
+             <item row="5" column="0">
+              <widget class="QRadioButton" name="loadPUAIRCRadioButton">
                <property name="text">
-                <string>Load PUA sigs of category Unix</string>
+                <string>Load PUA sigs of category IRC</string>
+               </property>
+               <property name="autoExclusive">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QRadioButton" name="loadPUAPWToolRadioButton">
+               <property name="text">
+                <string>Load PUA sigs of category PWTool</string>
+               </property>
+               <property name="autoExclusive">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QRadioButton" name="loadPUAScriptRadioButton">
+               <property name="text">
+                <string>Load PUA sigs of category Script</string>
                </property>
                <property name="autoExclusive">
                 <bool>false</bool>
@@ -230,6 +170,66 @@
                </property>
               </widget>
              </item>
+             <item row="4" column="0">
+              <widget class="QRadioButton" name="loadPUAP2PRadioButton">
+               <property name="text">
+                <string>Load PUA sigs of category P2P</string>
+               </property>
+               <property name="autoExclusive">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="1">
+              <widget class="QRadioButton" name="loadPUAUnixRadioButton">
+               <property name="text">
+                <string>Load PUA sigs of category Unix</string>
+               </property>
+               <property name="autoExclusive">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="0">
+              <widget class="QRadioButton" name="loadPUANetToolSpyRadioButton">
+               <property name="text">
+                <string>Load PUA sigs of category NetToolSpy</string>
+               </property>
+               <property name="autoExclusive">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QRadioButton" name="loadPUAPackedRadioButon">
+               <property name="text">
+                <string>Load PUA sigs of category Packed</string>
+               </property>
+               <property name="autoExclusive">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QRadioButton" name="loadPUAJavaRadioButton">
+               <property name="text">
+                <string>Load PUA sigs of category Java</string>
+               </property>
+               <property name="autoExclusive">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1">
+              <widget class="QRadioButton" name="loadPUAOsxRadioButton">
+               <property name="text">
+                <string>Load PUA sigs of category Osx</string>
+               </property>
+               <property name="autoExclusive">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
              <item row="7" column="1">
               <widget class="QRadioButton" name="loadPUAWinRadioButton">
                <property name="text">
@@ -240,10 +240,10 @@
                </property>
               </widget>
              </item>
-             <item row="5" column="1">
-              <widget class="QRadioButton" name="loadPUAToolRadioButton">
+             <item row="8" column="0">
+              <widget class="QRadioButton" name="loadPUAServerRadioButton">
                <property name="text">
-                <string>Load PUA sigs of category Tool</string>
+                <string>Load PUA sigs of category Server</string>
                </property>
                <property name="autoExclusive">
                 <bool>false</bool>

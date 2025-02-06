@@ -1338,6 +1338,15 @@
                       <normaloff>:/icons/icons/timorleste.png</normaloff>:/icons/icons/timorleste.png</iconset>
                     </property>
                    </item>
+                   <item>
+                    <property name="text">
+                     <string>[uk_UA] Ukraine</string>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="../resources.qrc">
+                      <normaloff>:/icons/icons/ukraine.png</normaloff>:/icons/icons/ukraine.png</iconset>
+                    </property>
+                   </item>
                   </widget>
                  </item>
                 </layout>

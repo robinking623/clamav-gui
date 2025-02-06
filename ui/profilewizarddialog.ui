@@ -424,8 +424,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>784</width>
-            <height>469</height>
+            <width>98</width>
+            <height>28</height>
            </rect>
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout_6">
@@ -1870,8 +1870,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
    <slot>slot_cancleButtonClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>598</x>
-     <y>606</y>
+     <x>701</x>
+     <y>696</y>
     </hint>
     <hint type="destinationlabel">
      <x>632</x>
@@ -1886,8 +1886,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
    <slot>slot_previousButtonClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>94</x>
-     <y>609</y>
+     <x>103</x>
+     <y>696</y>
     </hint>
     <hint type="destinationlabel">
      <x>369</x>
@@ -1902,8 +1902,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
    <slot>slot_nextButtonClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>186</x>
-     <y>609</y>
+     <x>235</x>
+     <y>696</y>
     </hint>
     <hint type="destinationlabel">
      <x>542</x>
@@ -1918,8 +1918,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
    <slot>slot_checkNavigationButtons()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>99</x>
-     <y>129</y>
+     <x>214</x>
+     <y>168</y>
     </hint>
     <hint type="destinationlabel">
      <x>631</x>
@@ -1934,8 +1934,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
    <slot>slot_enablePUACheckBoxActivated()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>70</x>
-     <y>149</y>
+     <x>79</x>
+     <y>144</y>
     </hint>
     <hint type="destinationlabel">
      <x>6</x>
@@ -1950,8 +1950,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
    <slot>slot_rootButtonClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>132</x>
-     <y>150</y>
+     <x>152</x>
+     <y>244</y>
     </hint>
     <hint type="destinationlabel">
      <x>7</x>
@@ -1966,8 +1966,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
    <slot>slot_homeButtonClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>124</x>
-     <y>148</y>
+     <x>152</x>
+     <y>284</y>
     </hint>
     <hint type="destinationlabel">
      <x>5</x>
@@ -1982,8 +1982,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
    <slot>slot_listChanged()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>89</x>
-     <y>132</y>
+     <x>270</x>
+     <y>185</y>
     </hint>
     <hint type="destinationlabel">
      <x>695</x>
@@ -1998,8 +1998,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
    <slot>slot_loadAllSupportedDBButtonClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>660</x>
-     <y>163</y>
+     <x>108</x>
+     <y>144</y>
     </hint>
     <hint type="destinationlabel">
      <x>696</x>
@@ -2014,8 +2014,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
    <slot>slot_saveScanReportToFileButtonClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>661</x>
-     <y>199</y>
+     <x>108</x>
+     <y>144</y>
     </hint>
     <hint type="destinationlabel">
      <x>693</x>
@@ -2030,8 +2030,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
    <slot>slot_scanFromFileButtonClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>650</x>
-     <y>230</y>
+     <x>108</x>
+     <y>144</y>
     </hint>
     <hint type="destinationlabel">
      <x>696</x>
@@ -2046,8 +2046,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
    <slot>slot_createTempFilesButtonClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>639</x>
-     <y>259</y>
+     <x>108</x>
+     <y>144</y>
     </hint>
     <hint type="destinationlabel">
      <x>694</x>
@@ -2062,8 +2062,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
    <slot>slot_moveInfectedFilesButtonClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>626</x>
-     <y>293</y>
+     <x>108</x>
+     <y>144</y>
     </hint>
     <hint type="destinationlabel">
      <x>697</x>
@@ -2078,8 +2078,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
    <slot>slot_copyInfectedFilesButtonClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>656</x>
-     <y>318</y>
+     <x>108</x>
+     <y>144</y>
     </hint>
     <hint type="destinationlabel">
      <x>697</x>
@@ -2094,8 +2094,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
    <slot>slot_createButtonClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>637</x>
-     <y>591</y>
+     <x>818</x>
+     <y>696</y>
     </hint>
     <hint type="destinationlabel">
      <x>692</x>
@@ -2126,9 +2126,9 @@ li.checked::marker { content: &quot;\2612&quot;; }
   <buttongroup name="buttonGroup_6"/>
   <buttongroup name="buttonGroup_5"/>
   <buttongroup name="buttonGroup_3"/>
-  <buttongroup name="buttonGroup_7"/>
   <buttongroup name="buttonGroup_8"/>
   <buttongroup name="buttonGroup_4"/>
+  <buttongroup name="buttonGroup_7"/>
   <buttongroup name="buttonGroup_9"/>
   <buttongroup name="buttonGroup_2"/>
  </buttongroups>

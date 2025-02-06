@@ -104,22 +104,8 @@
            </rect>
           </property>
           <layout class="QGridLayout" name="gridLayout_7">
-           <item row="4" column="0">
-            <widget class="QCheckBox" name="moveDirectoryCheckBox">
-             <property name="text">
-              <string>Move infected files into DIRECTORY</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QCheckBox" name="scanReportToFileCheckBox">
-             <property name="text">
-              <string>Save scan report to FILE</string>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="1" colspan="2">
-            <widget class="QLineEdit" name="moveDirectoryLineEdit">
+           <item row="1" column="1">
+            <widget class="QLineEdit" name="scanReportToFileLineEdit">
              <property name="styleSheet">
               <string notr="true"/>
              </property>
@@ -128,41 +114,11 @@
              </property>
             </widget>
            </item>
-           <item row="0" column="3">
-            <widget class="QPushButton" name="selectLVDButton">
-             <property name="autoFillBackground">
-              <bool>false</bool>
-             </property>
+           <item row="3" column="3">
+            <widget class="QPushButton" name="selectTFButton">
              <property name="styleSheet">
               <string notr="true"/>
              </property>
-             <property name="text">
-              <string>...</string>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="1" colspan="2">
-            <widget class="QLineEdit" name="copyDirectoryLineEdit">
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="3">
-            <widget class="QPushButton" name="selectCFButton">
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-             <property name="text">
-              <string>...</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="3">
-            <widget class="QPushButton" name="selectSFFButton">
              <property name="text">
               <string>...</string>
              </property>
@@ -172,30 +128,6 @@
             <widget class="QCheckBox" name="scanFilesFromFileCheckBox">
              <property name="text">
               <string>Scan files from file</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1" colspan="2">
-            <widget class="QLineEdit" name="scanFilesFromFileLineEdit"/>
-           </item>
-           <item row="5" column="0">
-            <widget class="QCheckBox" name="copyDirectoryCheckBox">
-             <property name="text">
-              <string>Copy infected files into DIRECTORY</string>
-             </property>
-            </widget>
-           </item>
-           <item row="7" column="0">
-            <widget class="QCheckBox" name="followFileSymlinksCheckBox">
-             <property name="text">
-              <string>Follow file symlinks</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="0">
-            <widget class="QCheckBox" name="loadVirusDatabaseCheckBox">
-             <property name="text">
-              <string>Use the antivirus database from DIR</string>
              </property>
             </widget>
            </item>
@@ -209,23 +141,10 @@
              </property>
             </widget>
            </item>
-           <item row="1" column="1">
-            <widget class="QLineEdit" name="scanReportToFileLineEdit">
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="1" colspan="2">
-            <widget class="QLineEdit" name="tempFilesLineEdit">
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-             <property name="readOnly">
-              <bool>true</bool>
+           <item row="6" column="0">
+            <widget class="QCheckBox" name="followDirectorySymlinksCheckBox">
+             <property name="text">
+              <string>Follow directory symlinks</string>
              </property>
             </widget>
            </item>
@@ -248,18 +167,8 @@
              </item>
             </widget>
            </item>
-           <item row="3" column="3">
-            <widget class="QPushButton" name="selectTFButton">
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-             <property name="text">
-              <string>...</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1" colspan="2">
-            <widget class="QLineEdit" name="loadVirusDatabaseLineEdit">
+           <item row="3" column="1" colspan="2">
+            <widget class="QLineEdit" name="tempFilesLineEdit">
              <property name="styleSheet">
               <string notr="true"/>
              </property>
@@ -268,32 +177,28 @@
              </property>
             </widget>
            </item>
-           <item row="1" column="2">
-            <widget class="QPushButton" name="viewButton">
-             <property name="text">
-              <string/>
-             </property>
-             <property name="icon">
-              <iconset resource="../resources.qrc">
-               <normaloff>:/icons/icons/magnifierglass.png</normaloff>:/icons/icons/magnifierglass.png</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>22</width>
-               <height>22</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-           <item row="6" column="0">
-            <widget class="QCheckBox" name="followDirectorySymlinksCheckBox">
-             <property name="text">
-              <string>Follow directory symlinks</string>
-             </property>
-            </widget>
-           </item>
            <item row="4" column="3">
             <widget class="QPushButton" name="selectMDButton">
+             <property name="styleSheet">
+              <string notr="true"/>
+             </property>
+             <property name="text">
+              <string>...</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="1" colspan="2">
+            <widget class="QLineEdit" name="moveDirectoryLineEdit">
+             <property name="styleSheet">
+              <string notr="true"/>
+             </property>
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="3">
+            <widget class="QPushButton" name="selectCFButton">
              <property name="styleSheet">
               <string notr="true"/>
              </property>
@@ -321,10 +226,105 @@
              </item>
             </widget>
            </item>
+           <item row="0" column="3">
+            <widget class="QPushButton" name="selectLVDButton">
+             <property name="autoFillBackground">
+              <bool>false</bool>
+             </property>
+             <property name="styleSheet">
+              <string notr="true"/>
+             </property>
+             <property name="text">
+              <string>...</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QCheckBox" name="loadVirusDatabaseCheckBox">
+             <property name="text">
+              <string>Use the antivirus database from DIR</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="2">
+            <widget class="QPushButton" name="viewButton">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="../resources.qrc">
+               <normaloff>:/icons/icons/magnifierglass.png</normaloff>:/icons/icons/magnifierglass.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>22</width>
+               <height>22</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QCheckBox" name="scanReportToFileCheckBox">
+             <property name="text">
+              <string>Save scan report to FILE</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0">
+            <widget class="QCheckBox" name="moveDirectoryCheckBox">
+             <property name="text">
+              <string>Move infected files into DIRECTORY</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="3">
+            <widget class="QPushButton" name="selectSFFButton">
+             <property name="text">
+              <string>...</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="0">
+            <widget class="QCheckBox" name="copyDirectoryCheckBox">
+             <property name="text">
+              <string>Copy infected files into DIRECTORY</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1" colspan="2">
+            <widget class="QLineEdit" name="scanFilesFromFileLineEdit"/>
+           </item>
+           <item row="5" column="1" colspan="2">
+            <widget class="QLineEdit" name="copyDirectoryLineEdit">
+             <property name="styleSheet">
+              <string notr="true"/>
+             </property>
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1" colspan="2">
+            <widget class="QLineEdit" name="loadVirusDatabaseLineEdit">
+             <property name="styleSheet">
+              <string notr="true"/>
+             </property>
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
            <item row="3" column="0">
             <widget class="QCheckBox" name="tempFileCheckBox">
              <property name="text">
               <string>Create temporary files in DIRECTORY</string>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="0">
+            <widget class="QCheckBox" name="followFileSymlinksCheckBox">
+             <property name="text">
+              <string>Follow file symlinks</string>
              </property>
             </widget>
            </item>
