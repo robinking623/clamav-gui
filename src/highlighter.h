@@ -22,7 +22,6 @@
 #define HIGHLIGHTER_H
 //
 #include <QSyntaxHighlighter>
-#include <QRegularExpression>
 //
 class highlighter : public QSyntaxHighlighter
 {
@@ -35,13 +34,14 @@ public:
 private:
      struct HighlightingRule
      {
-         QRegularExpression pattern;
+         QRegExp pattern;
          QTextCharFormat format;
      };
+
      QVector<HighlightingRule> highlightingRules;
 
-     QRegularExpression commentStartExpression;
-     QRegularExpression commentEndExpression;
+     QRegExp commentStartExpression;
+     QRegExp commentEndExpression;
 
      QTextCharFormat keywordFormat;
      QTextCharFormat classFormat;

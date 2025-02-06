@@ -1,8 +1,7 @@
 #include "optionsdialog.h"
 #include "ui_optionsdialog.h"
 
-optionsDialog::optionsDialog(QWidget *parent) : QWidget(parent), ui(new Ui::optionsDialog)
-{
+optionsDialog::optionsDialog(QWidget *parent) : QWidget(parent), ui(new Ui::optionsDialog){
     ui->setupUi(this);
     setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini");
     updateDirectories();
@@ -29,27 +28,24 @@ optionsDialog::optionsDialog(QWidget *parent) : QWidget(parent), ui(new Ui::opti
     getClamscanParametersProcess->start("clamscan",parameters);
 }
 
-optionsDialog::~optionsDialog()
-{
+optionsDialog::~optionsDialog(){
     delete ui;
 }
 
-void optionsDialog::slot_updateClamdConf() {
+void optionsDialog::slot_updateClamdConf(){
     emit updateClamdConf();
 }
 
-void optionsDialog::slot_getClamscanProcessHasOutput()
-{
+void optionsDialog::slot_getClamscanProcessHasOutput(){
     getClamscanProcessOutput = getClamscanProcessOutput + getClamscanParametersProcess->readAll();
 }
 
-void optionsDialog::slot_getClamscanProcessFinished()
-{
+void optionsDialog::slot_getClamscanProcessFinished(){
     QString excludeList =  "--help|--version|--database|--log|--file-list|--move|--copy|--exclude|--exclude-dir|--include|--include-dir|";
     excludeList += "--bytecode-timeout|--statistics|--exclude-pua|--include-pua|--structured-ssn-format|--structured-ssn-count|--structured-cc-count|--tempdir|--follow-dir-symlinks|";
     excludeList += "--structured-cc-mode|--max-scantime|--max-filesize|--max-scansize|--max-files|--max-recursion|--max-dir-recursion|--max-embeddedpe|--max-htmlnormalize|--follow-file-symlinks|";
-    excludeList += "--max-htmlnotags|--max-scriptnormalize|--max-ziptypercg|--max-partitions|--max-iconspe|--max-rechwp3|--pcre-match-limit|--pcre-recmatch-limit=#n|--pcre-max-filesize=#n";
-    excludeList += "";
+    excludeList += "--max-htmlnotags|--max-scriptnormalize|--max-ziptypercg|--max-partitions|--max-iconspe|--max-rechwp3|--pcre-match-limit|--pcre-recmatch-limit=#n|--pcre-max-filesize=#n|";
+    excludeList += "--fail-if-cvd-older-than=days";
     getClamscanProcessOutput = getClamscanProcessOutput + getClamscanParametersProcess->readAll();
 
     QString value;
@@ -63,6 +59,7 @@ void optionsDialog::slot_getClamscanProcessFinished()
 
     setupFile->removeSection("AvailableOptions");
 
+    QString commentSum = "";
     for (int x = 0; x < lines.size(); x++) {
         line = lines[x];
         line = line.trimmed();
@@ -78,6 +75,7 @@ void optionsDialog::slot_getClamscanProcessFinished()
               if (ca_certFile.exists() == false) QMessageBox::warning(this,"WARNING",message);
             }
             ui->versionLabel->setText("ClamAV Version:" + version);
+            setupFile->setSectionValue("Updater","Version",version);
         }
 
         if (line.indexOf("--") == 0) {
@@ -96,9 +94,6 @@ void optionsDialog::slot_getClamscanProcessFinished()
                 if (value == "") value = keyword; else value = value + "\n" + keyword;
                 if (parameter != "") {
                     value = value + "=" + parameter;
-                    //if ((parameter == "yes/no(*)") ||(parameter == "yes(*)/no")) {
-                    //    value = value + "=yes/no";
-                    //}
                 }
                 comment = line.mid(commentStart);
                 comment = comment.trimmed();
@@ -108,6 +103,7 @@ void optionsDialog::slot_getClamscanProcessFinished()
                 }
                 comment = tr(comment.toLocal8Bit());
                 comments.append(comment);
+                commentSum == ""? commentSum = comment:commentSum = commentSum + "|" + comment;
                 if ((parameter == "yes/no(*)") ||(parameter == "yes(*)/no")) {
                     if (parameter == "yes/no(*)") {
                         setupFile->setSectionValue("AvailableOptions",keyword + "<equal>no",comment);
@@ -122,6 +118,17 @@ void optionsDialog::slot_getClamscanProcessFinished()
             }
         }
     }
+
+    /*For Debuggin-Reasons only*/
+    /*QFile tempfile("/home/wusel/parameters.txt");
+    QStringList commentList = commentSum.split("|");
+    if (tempfile.open(QIODevice::WriteOnly|QIODevice::Text)){
+        QTextStream stream(&tempfile);
+        for (int i = 0; i < commentList.length(); i++) {
+            stream << "base = base + \"" << commentList.at(i) << "|\";" << "\n";
+        }
+    }
+    tempfile.close();*/
 
     QStringList parameters = value.split("\n");
     scanoption * option;
@@ -149,9 +156,11 @@ void optionsDialog::slot_getClamscanProcessFinished()
                 }
             }
         }
+
         if (setupFile->keywordExists("SelectedOptions",label.replace("=","<equal>")) == true) {
             if (label.indexOf("<equal>") == -1) {
                 option = new scanoption(nullptr, QDir::homePath() + "/.clamav-gui/settings.ini","SelectedOptions",true,label,comments[x]);
+                connect(option,SIGNAL(valuechanged()),this,SLOT(slot_updateClamdConf()));
                 if (flipflop == false) {
                     ui->optionLayout->addWidget(option);
                     flipflop = true;
@@ -161,6 +170,7 @@ void optionsDialog::slot_getClamscanProcessFinished()
                 }
             } else {
                 optionyn = new scanoptionyn(nullptr, QDir::homePath() + "/.clamav-gui/settings.ini","SelectedOptions",true,label,comments[x]);
+                connect(optionyn,SIGNAL(valuechanged()),this,SLOT(slot_updateClamdConf()));
                 if (flipflop == false) {
                     ui->optionLayout->addWidget(optionyn);
                     flipflop = true;
@@ -172,6 +182,7 @@ void optionsDialog::slot_getClamscanProcessFinished()
         } else {
             if (label.indexOf("<equal>") == -1) {
                 option = new scanoption(nullptr, QDir::homePath() + "/.clamav-gui/settings.ini","SelectedOptions",false,label,comments[x]);
+                connect(option,SIGNAL(valuechanged()),this,SLOT(slot_updateClamdConf()));
                 if (flipflop == false) {
                     ui->optionLayout->addWidget(option);
                     flipflop = true;
@@ -181,6 +192,7 @@ void optionsDialog::slot_getClamscanProcessFinished()
                 }
             } else {
                 optionyn = new scanoptionyn(nullptr, QDir::homePath() + "/.clamav-gui/settings.ini","SelectedOptions",false,label,comments[x]);
+                connect(optionyn,SIGNAL(valuechanged()),this,SLOT(slot_updateClamdConf()));
                 if (flipflop == false) {
                     ui->optionLayout->addWidget(optionyn);
                     flipflop = true;
@@ -191,16 +203,13 @@ void optionsDialog::slot_getClamscanProcessFinished()
             }
         }
     }
-
 }
 
-QString optionsDialog::getCopyDirectory()
-{
+QString optionsDialog::getCopyDirectory(){
     return ui->copyDirectoryLineEdit->text();
 }
 
-QString optionsDialog::getMoveDirectory()
-{
+QString optionsDialog::getMoveDirectory(){
     return ui->moveDirectoryLineEdit->text();
 }
 

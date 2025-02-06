@@ -16,21 +16,22 @@ scanoptionyn::scanoptionyn(QWidget *parent, QString setupFileName, QString secti
     com = trans->translateit(comment);
     ui->checkBox->setChecked(checked);
     ui->comboBox->setEnabled(checked);
+
     if (checked == true) {
         this->setStyleSheet("background-color:lightgreen");
     }
+
     ui->checkBox->setText(com);
     ui->checkBox->setToolTip(option);
+
     if (label.indexOf("<equal>yes") != -1) ui->comboBox->setCurrentText("yes");else ui->comboBox->setCurrentText("no");
 }
 
-scanoptionyn::~scanoptionyn()
-{
+scanoptionyn::~scanoptionyn(){
     delete ui;
 }
 
-void scanoptionyn::slot_checkboxClicked()
-{
+void scanoptionyn::slot_checkboxClicked(){
     if (ui->checkBox->isChecked() == false) {
         setupFile->removeKeyword(setupFileSection,option + "<equal>" + ui->comboBox->currentText());
         ui->comboBox->setEnabled(false);
@@ -40,13 +41,16 @@ void scanoptionyn::slot_checkboxClicked()
         ui->comboBox->setEnabled(true);
         this->setStyleSheet("background-color:lightgreen");
     }
+
+    emit valuechanged();
 }
 
-void scanoptionyn::slot_comboboxChanged(QString value)
-{
+void scanoptionyn::slot_comboboxChanged(QString value){
     if (ui->checkBox->isChecked() == true) {
         setupFile->removeKeyword(setupFileSection,option + "<equal>yes");
         setupFile->removeKeyword(setupFileSection,option + "<equal>no");
         setupFile->setSectionValue(setupFileSection,option + "<equal>" + value ,com);
     }
+
+    emit valuechanged();
 }

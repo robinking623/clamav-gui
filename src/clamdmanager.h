@@ -44,6 +44,7 @@ public:
     QString               trimLocationOutput(QString);
     bool                  startup;
     bool                  waitForFreshclam;
+    bool                  initprocessrunning;
     int                   clamdStartupCounter;
     void initClamdSettings(); // clamd
     void restartClamonacc(); // clamd

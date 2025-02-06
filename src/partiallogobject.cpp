@@ -1,8 +1,7 @@
 #include "partiallogobject.h"
 #include "ui_partiallogobject.h"
 
-partialLogObject::partialLogObject(QWidget *parent, QString logText) : QWidget(parent), ui(new Ui::partialLogObject)
-{
+partialLogObject::partialLogObject(QWidget *parent, QString logText) : QWidget(parent), ui(new Ui::partialLogObject){
     ui->setupUi(this);
     logHighlighter = new highlighter(ui->logPlainText->document());
     setLogText(logText);
@@ -11,8 +10,7 @@ partialLogObject::partialLogObject(QWidget *parent, QString logText) : QWidget(p
     infectedStart = 0;
 }
 
-partialLogObject::~partialLogObject()
-{
+partialLogObject::~partialLogObject(){
     delete ui;
 }
 
@@ -25,30 +23,35 @@ QString infectedFiles;
 int pos;
 
     ui->logPlainText->setPlainText(logText);
+
     pos = logText.indexOf("Engine version:");
     if (pos > -1){
         engine = logText.mid(pos + 15,logText.indexOf("\n",pos + 15) - (pos + 15));
     } else {
         engine = "n/a";
     }
+
     pos = logText.indexOf("Scanned directories:");
     if (pos > -1){
         scannedDirs = logText.mid(pos + 20,logText.indexOf("\n",pos + 20) - (pos + 20));
     } else {
         scannedDirs = "n/a";
     }
+
     pos = logText.indexOf("Scanned files:");
     if (pos > -1){
         scannedFiles = logText.mid(pos + 14,logText.indexOf("\n",pos + 14) - (pos + 14));
     } else {
         scannedFiles = "n/a";
     }
+
     pos = logText.indexOf("Total errors:");
     if (pos > -1){
         errors = logText.mid(pos + 13,logText.indexOf("\n",pos + 13) - (pos + 13));
     } else {
         errors = "n/a";
     }
+
     pos = logText.indexOf("Infected files:");
     if (pos > -1){
         infectedFiles = logText.mid(pos + 15,logText.indexOf("\n",pos + 15) - (pos + 15));
@@ -97,7 +100,6 @@ int pos = ui->logPlainText->toPlainText().toUpper().indexOf(searchString.toUpper
             }
         }
     }
-
 }
 
 void partialLogObject::slot_searchLineEditChanged(){

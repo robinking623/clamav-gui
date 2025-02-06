@@ -29,6 +29,9 @@ private:
 private slots:
     void slot_checkboxClicked();
     void slot_comboboxChanged(QString value);
+
+signals:
+    void valuechanged();
 };
 
 #endif // SCANOPTIONYN_H

@@ -14,11 +14,6 @@ QRect  screenGeometry = screen->geometry();
     int height = screenGeometry.height();
     int width = screenGeometry.width();
 
-
-//QRect   rec = QApplication::desktop()->screenGeometry();
-//int     height = rec.height();
-//int     width = rec.width();
-
     this->setStyleSheet("background:transparent;");
     this->setAttribute(Qt::WA_TranslucentBackground);
     this->setWindowFlags(Qt::FramelessWindowHint|Qt::Tool|Qt::WindowStaysOnTopHint);
@@ -55,4 +50,3 @@ QString tempString;
         }
     }
 }
-

@@ -28,6 +28,9 @@ private:
 
 private slots:
     void slot_checkboxClicked();
+
+signals:
+    void valuechanged();
 };
 
 #endif // SCANOPTION_H

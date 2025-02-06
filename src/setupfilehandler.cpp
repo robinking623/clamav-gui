@@ -635,6 +635,7 @@ void setupFileHandler::setSingleLineValue(QString keyword, QString value){
 
     start = setupFileContent.indexOf(keyword + " ");
 
+
     if (start > -1) {
         stop = setupFileContent.indexOf("\n",start);
         prev = setupFileContent.mid(0,start);
@@ -655,8 +656,7 @@ void setupFileHandler::setSingleLineValue(QString keyword, QString value){
 void setupFileHandler::addSingleLineValue(QString keyword, QString value)
 {
     readSetupFile();
-    setupFileContent = setupFileContent + keyword + " " + value;
-
+    if (setupFileContent.indexOf(keyword + " " + value) == -1) setupFileContent = setupFileContent + keyword + " " + value;
     writeSetupFile();
 }
 

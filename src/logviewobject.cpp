@@ -1,8 +1,7 @@
 #include "logviewobject.h"
 #include "ui_logviewobject.h"
 
-logViewObject::logViewObject(QWidget *parent, QString fileName) : QDialog(parent), ui(new Ui::logViewObject)
-{
+logViewObject::logViewObject(QWidget *parent, QString fileName) : QDialog(parent), ui(new Ui::logViewObject){
     setWindowFlags(((this->windowFlags() | Qt::CustomizeWindowHint) & ~Qt::WindowCloseButtonHint & ~Qt::WindowContextHelpButtonHint) );
     ui->setupUi(this);
     logFileName = fileName;
@@ -11,8 +10,7 @@ logViewObject::logViewObject(QWidget *parent, QString fileName) : QDialog(parent
     contentChanged = false;
 }
 
-logViewObject::~logViewObject()
-{
+logViewObject::~logViewObject(){
     delete ui;
 }
 
@@ -34,15 +32,18 @@ QString tabHeader;
     while(ui->logTab->count() > 0){
         ui->logTab->removeTab(0);
     }
+
     if (file.open(QIODevice::ReadOnly)){
         QTextStream stream(&file);
         buffer = stream.readAll();
         logs = buffer.split("<Scanning startet>");
+
         for (int i = 1; i < logs.count(); i++){
             partialLogObject * log = new partialLogObject(this,logs[i]);
             tabHeader = logs[i].mid(1,logs[i].indexOf("\n") - 1);
             ui->logTab->addTab(log,QIcon(":/icons/icons/information.png"),tabHeader);
         }
+
         file.close();
     }
 }

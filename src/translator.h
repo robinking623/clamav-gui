@@ -1,6 +1,7 @@
 #ifndef TRANSLATOR_H
 #define TRANSLATOR_H
 
+#include <QMessageBox>
 #include <QStringList>
 #include <QString>
 

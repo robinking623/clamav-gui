@@ -15,22 +15,22 @@ scanoption::scanoption(QWidget *parent, QString setupFileName, QString section, 
     option = label;
     com = trans->translateit(comment);
     ui->checkBox->setChecked(checked);
+
     if (checked == true) {
         this->setStyleSheet("background-color:lightgreen");
         setupFile->setSectionValue(setupFileSection,option,com);
     }
+
     ui->checkBox->setText(com);
     ui->checkBox->setToolTip(option);
 }
 
-scanoption::~scanoption()
-{
+scanoption::~scanoption(){
     delete ui;
 }
 
 
-void scanoption::slot_checkboxClicked()
-{
+void scanoption::slot_checkboxClicked(){
     if (ui->checkBox->isChecked() == false) {
         setupFile->removeKeyword(setupFileSection,option);
         this->setStyleSheet("");
@@ -38,4 +38,6 @@ void scanoption::slot_checkboxClicked()
         setupFile->setSectionValue(setupFileSection,option,com);
         this->setStyleSheet("background-color:lightgreen");
     }
+
+    emit valuechanged();
 }

@@ -41,14 +41,11 @@ private:
     Ui::scanLimitsTab   *ui;
     setupFileHandler    *setupFile;
     setupFileHandler    *profiles;
-    QProcess            *getClamscanParametersProcess;
-    QString              getClamscanProcessOutput;
     void updateLimits();
+    bool update;
 
 private slots:
     void writeLimits();
-    void slot_getClamscanProcessHasOutput();
-    void slot_getClamscanProcessFinished();
 
 signals:
     void updateClamdConf();

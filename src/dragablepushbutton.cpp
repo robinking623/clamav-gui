@@ -1,19 +1,14 @@
 #include "dragablepushbutton.h"
 #include "ui_dragablepushbutton.h"
 
-dragablePushButton::dragablePushButton(QWidget *parent) : QPushButton(parent), ui(new Ui::dragablePushButton)
-{
-    //ui->setupUi(this);
+dragablePushButton::dragablePushButton(QWidget *parent) : QPushButton(parent), ui(new Ui::dragablePushButton){
 }
 
-dragablePushButton::dragablePushButton(QIcon icon, QString text, QWidget *parent, QString dragText) : QPushButton(icon, text, parent)
-{
+dragablePushButton::dragablePushButton(QIcon icon, QString text, QWidget *parent, QString dragText) : QPushButton(icon, text, parent){
     dragDropText = dragText;
 }
 
-dragablePushButton::~dragablePushButton()
-{
-    //delete ui;
+dragablePushButton::~dragablePushButton(){
 }
 
 void dragablePushButton::mouseMoveEvent(QMouseEvent *event) {
@@ -27,8 +22,11 @@ QList <QUrl> urls;
 
     mimeData->setText("file://" + dragDropText);
     mimeData->setUrls(urls);
+
     drag->setMimeData(mimeData);
     drag->setPixmap(QPixmap(":/icons/icons/media.png"));
+
     emit dragStarted();
+
     drag->exec();
 }

@@ -29,7 +29,7 @@ highlighter::highlighter(QTextDocument * parent) : QSyntaxHighlighter(parent)
 
      singleLineCommentFormat.setForeground(Qt::blue);
      singleLineCommentFormat.setBackground(Qt::white);
-     rule.pattern = QRegularExpression("^Downloading.*|^ClamInotif:|.-> .*|^/.*|^Database updated.*|^ClamAV update process started.*|^---.*|.Testing database:*|.Database Test passed.");
+     rule.pattern = QRegExp("^Downloading.*|^ClamInotif:|.-> .*|^/.*|^Database updated.*|^ClamAV update process started.*|^---.*|.Testing database:*|.Database Test passed.");
      singleLineCommentFormat.setFontWeight(QFont::Normal);
      rule.format = singleLineCommentFormat;
      highlightingRules.append(rule);
@@ -37,55 +37,52 @@ highlighter::highlighter(QTextDocument * parent) : QSyntaxHighlighter(parent)
      singleLineCommentFormat.setForeground(QColor(0x4f,0x7e,0x8a,0xff));
      singleLineCommentFormat.setBackground(Qt::white);
      singleLineCommentFormat.setFontWeight(QFont::Bold);
-     rule.pattern = QRegularExpression("^Known viruses:.|^Engine version:.|^Data scanned:.|^Data read:.|^Time:.|^Start Date:.|^End Date:.");
+     rule.pattern = QRegExp("^Known viruses:.|^Engine version:.|^Data scanned:.|^Data read:.|^Time:.|^Start Date:.|^End Date:.");
      rule.format = singleLineCommentFormat;
      highlightingRules.append(rule);
 
      singleLineCommentFormat.setForeground(Qt::darkGreen);
      singleLineCommentFormat.setBackground(Qt::white);
      singleLineCommentFormat.setFontWeight(QFont::Normal);
-     rule.pattern = QRegularExpression("LOCAL:|OLE2:|Phishing:|Heuristic:|Structured:|Local:|Limits:|.enabled|.disabled|.watching .*|^daily.cvd.*|^daily.cld.*|^bytecode.cvd.*|^main.cvd.*|^freshclam deamon.*|. OK|^Scanned directories:.|^Scanned files:.|^Infected files: 0");
+     rule.pattern = QRegExp("LOCAL:|OLE2:|Phishing:|Heuristic:|Structured:|Local:|Limits:|.enabled|.disabled|.watching .*|^daily.cvd.*|^daily.cld.*|^bytecode.cvd.*|^main.cvd.*|^freshclam deamon.*|. OK|^Scanned directories:.|^Scanned files:.|^Infected files: 0");
      rule.format = singleLineCommentFormat;
      highlightingRules.append(rule);
 
      singleLineCommentFormat.setForeground(Qt::darkYellow);
      singleLineCommentFormat.setBackground(Qt::white);
      singleLineCommentFormat.setFontWeight(QFont::Normal);
-     rule.pattern = QRegularExpression(".Pid file removed.|. Started at.*|. Stopped at.*|.Socket file removed.");
+     rule.pattern = QRegExp(".Pid file removed.|. Started at.*|. Stopped at.*|.Socket file removed.");
      rule.format = singleLineCommentFormat;
      highlightingRules.append(rule);
 
      singleLineCommentFormat.setForeground(Qt::red);
      singleLineCommentFormat.setBackground(Qt::white);
      singleLineCommentFormat.setFontWeight(QFont::Normal);
-     rule.pattern = QRegularExpression("^ERROR: ClamCom:|.Empty file|^WARN.*|.FOUND *|.ERROR:.*|.WARNING:.*|^Can't connect to port.*|.Access denied|^Infected files:.|^Total errors:.*");
+     rule.pattern = QRegExp("^ERROR: ClamCom:|.Empty file|^WARN.*|.FOUND *|.ERROR:.*|.WARNING:.*|^Can't connect to port.*|.Access denied|^Infected files:.|^Total errors:.*");
      rule.format = singleLineCommentFormat;
      highlightingRules.append(rule);
 
      multiLineCommentFormat.setForeground(Qt::red);
      singleLineCommentFormat.setBackground(Qt::white);
      singleLineCommentFormat.setFontWeight(QFont::Normal);
-     commentStartExpression = QRegularExpression("START");
-     commentEndExpression = QRegularExpression("ENDE");
+     commentStartExpression = QRegExp("START");
+     commentEndExpression = QRegExp("ENDE");
 
 }
 
 void highlighter::highlightBlock(const QString &text)
  {
      foreach (const HighlightingRule &rule, highlightingRules) {
-         QRegularExpression expression(rule.pattern);
-         QRegularExpressionMatchIterator iterator = expression.globalMatch(text);
-
-         while (iterator.hasNext()) {
-             QRegularExpressionMatch match = iterator.next();
-             int length = match.capturedLength();
-             int index = match.capturedStart();
+         QRegExp expression(rule.pattern);
+         int index = expression.indexIn(text);
+         while (index >= 0) {
+             int length = expression.matchedLength();
              setFormat(index, length, rule.format);
+             index = expression.indexIn(text, index + length);
          }
      }
-
-// Es scheint, als wäre der restliche Block obsolet ....
-/*     setCurrentBlockState(0);
+     
+     setCurrentBlockState(0);
 
      int startIndex = 0;
      if (previousBlockState() != 1) startIndex = commentStartExpression.indexIn(text);
@@ -97,9 +94,10 @@ void highlighter::highlightBlock(const QString &text)
              setCurrentBlockState(1);
              commentLength = text.length() - startIndex;
          } else {
-             commentLength = endIndex - startIndex + commentEndExpression.matchedLength();
+             commentLength = endIndex - startIndex
+                             + commentEndExpression.matchedLength();
          }
          startIndex = commentStartExpression.indexIn(text, startIndex + commentLength);
-    }*/
+    }
 }
 //

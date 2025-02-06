@@ -1,8 +1,7 @@
 #include "scantab.h"
 #include "ui_scantab.h"
 
-scanTab::scanTab(QWidget *parent) : QWidget(parent),ui(new Ui::scanTab)
-{
+scanTab::scanTab(QWidget *parent) : QWidget(parent),ui(new Ui::scanTab){
     ui->setupUi(this);
     logHighLighter = new highlighter(ui->logPlainTextEdit->document());
     setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini");
@@ -48,6 +47,7 @@ QStringList scanObjects;
     for (int i = 0; i < list.count(); i++){
         if (list[i].data(QFileSystemModel::FilePathRole).toString() != "") scanObjects << list[i].data(QFileSystemModel::FilePathRole).toString();
     }
+
     if (scanObjects.count() > 0) emit triggerScanRequest(scanObjects);
 }
 
@@ -78,6 +78,7 @@ QStringList dirs = dir.entryList(filters,QDir::AllDirs|QDir::NoDotAndDotDot);
 QStringList dirsUbuntu = dirUbuntu.entryList(filters,QDir::AllDirs|QDir::NoDotAndDotDot);
 QLabel * deviceLabel = new QLabel(tr("Devices"));
 QLayoutItem *item = NULL;
+
     while ((item = ui->devicesFrame->layout()->takeAt(0)) != 0) {
         delete item->widget();
     }
@@ -139,8 +140,6 @@ QLayoutItem *item = NULL;
             buttonID++;
         }
     }
-
-    //model->refresh();
 }
 
 void scanTab::slot_deviceButtonClicked(int buttonIndex){
@@ -226,8 +225,7 @@ void scanTab::setStatusBarMessage(QString message, QString bgColor){
     ui->currentFileLabel->setStyleSheet("background:"+bgColor);
 }
 
-int scanTab::getVirusFoundComboBoxValue()
-{
+int scanTab::getVirusFoundComboBoxValue(){
     return ui->virusFoundComboBox->currentIndex();
 }
 
@@ -250,8 +248,7 @@ QString directories;
     setupFile->setSectionValue("Settings","Directories",directories);
 }
 
-void scanTab::slot_updateDBPath(QString path)
-{
+void scanTab::slot_updateDBPath(QString path){
     setupFile->setSectionValue("Directories", "LoadSupportedDBFiles", "checked|" + path);
 }
 

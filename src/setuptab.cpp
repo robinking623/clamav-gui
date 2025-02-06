@@ -8,8 +8,11 @@ setupTab::setupTab(QWidget *parent) :
     ui->setupUi(this);
 
     int index = -1;
+
     QString langhelper;
+
     supressMessage = true; // verhindert, dass bei der Initialisierung der Sprachauswahl die Warnmeldung kommt.
+
     setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini");
     if (setupFile->keywordExists("Setup","language") == true) {
         langhelper = setupFile->getSectionValue("Setup","language");
@@ -28,20 +31,20 @@ setupTab::setupTab(QWidget *parent) :
     }
 
     slot_updateSystemInfo();
+
     supressMessage = false;
 }
 
-setupTab::~setupTab()
-{
+setupTab::~setupTab(){
     delete ui;
 }
 
-void setupTab::slot_updateSystemInfo()
-{
+void setupTab::slot_updateSystemInfo(){
     QString systemInfo;
     if (setupFile->keywordExists("Clamd","ClamdLocation") == true) ui->clamdPath->setText(setupFile->getSectionValue("Clamd","ClamdLocation").replace("\n",""));
     if (setupFile->keywordExists("Clamd","ClamonaccLocation") == true) ui->clamonaccPath->setText(setupFile->getSectionValue("Clamd","ClamonaccLocation").replace("\n",""));
     if (setupFile->keywordExists("FreshclamSettings","FreshclamLocation") == true) ui->freshclamPath->setText(setupFile->getSectionValue("FreshclamSettings","FreshclamLocation").replace("\n",""));
+
     if (setupFile->sectionExists("Updater") == true) {
         ui->databasePath->setText(setupFile->getSectionValue("Directories","LoadSupportedDBFiles").mid(setupFile->getSectionValue("Directories","LoadSupportedDBFiles").indexOf("|")+1));
         ui->databaseLastUpdate->setText(setupFile->getSectionValue("Updater","LastUpdate"));
@@ -49,13 +52,14 @@ void setupTab::slot_updateSystemInfo()
         ui->databaseDailyFile->setText(setupFile->getSectionValue("Updater","DailyVersion"));
         ui->databaseBytecodeFile->setText(setupFile->getSectionValue("Updater","BytecodeVersion"));
 
-
-        systemInfo = "<b>Last Update:</b><br>" + setupFile->getSectionValue("Updater","LastUpdate");
+        systemInfo = "<b>Version:</b><br>" + setupFile->getSectionValue("Updater","Version");
+        systemInfo += "<br><br><b>Last Update:</b><br>" + setupFile->getSectionValue("Updater","LastUpdate");
         systemInfo += "<br><br><b>Main Version:</b><br>" + setupFile->getSectionValue("Updater","MainVersion");
         systemInfo += "<br><br><b>Daily Version:</b><br> " + setupFile->getSectionValue("Updater","DailyVersion");
         systemInfo += "<br><br><b>Bytecode Version:</b><br>" + setupFile->getSectionValue("Updater","BytecodeVersion");
         emit sendSystemInfo(systemInfo);
     }
+
     if (setupFile->keywordExists("Clamd","ClamonaccPid") == true) {
         ui->clamonaccPID->setText(setupFile->getSectionValue("Clamd","ClamonaccPid"));
         if (setupFile->getSectionValue("Clamd","ClamonaccPid") == "n/a") {
@@ -69,6 +73,7 @@ void setupTab::slot_updateSystemInfo()
             ui->clamonaccStatus->setStyleSheet("background-color:green;color:yellow");
         }
     }
+
     if (setupFile->keywordExists("Clamd","ClamdPid") == true) {
         ui->clamdPID->setText(setupFile->getSectionValue("Clamd","ClamdPid"));
         if (setupFile->getSectionValue("Clamd","ClamdPid") == "n/a") {
@@ -92,7 +97,6 @@ void setupTab::slot_updateSystemInfo()
                 ui->clamonaccStatus->setStyleSheet("background-color:red;color:yellow");
                 ui->clamonaccStatus->setText("is down");
             }
-//            ui->clamdStatus->setStyleSheet("background-color:red;color:yellow");
         } else {
             ui->clamdActivityLabel->setMovie(new QMovie(":/icons/icons/gifs/activity.gif"));
             ui->clamdActivityLabel->movie()->start();
@@ -100,6 +104,7 @@ void setupTab::slot_updateSystemInfo()
             ui->clamdStatus->setStyleSheet("background-color:green;color:yellow");
         }
     }
+
     if (setupFile->keywordExists("Freshclam","Pid") == true) {
         ui->freshclamPID->setText(setupFile->getSectionValue("Freshclam","Pid"));
         if (setupFile->getSectionValue("Freshclam","Pid") == "n/a") {
@@ -115,8 +120,7 @@ void setupTab::slot_updateSystemInfo()
     }
 }
 
-void setupTab::slot_clamdButtonClicked()
-{
+void setupTab::slot_clamdButtonClicked(){
     emit switchActiveTab(6);
 }
 
@@ -128,14 +132,12 @@ void setupTab::slot_clamonaccButtonClicked() {
     emit switchActiveTab(6);
 }
 
-void setupTab::slot_selectedLanguageChanged()
-{
+void setupTab::slot_selectedLanguageChanged(){
     setupFile->setSectionValue("Setup","language",ui->languageSelectComboBox->currentText().mid(0,7));
     if (supressMessage == false) QMessageBox::information(this,tr("Warning"),tr("You have to restart the application for changes to take effect!"));
 }
 
-void setupTab::slot_basicSettingsChanged()
-{
+void setupTab::slot_basicSettingsChanged(){
     if (ui->windowStateComboBox->currentIndex() == 0) setupFile->setSectionValue("Setup","WindowState","maximized");
     if (ui->windowStateComboBox->currentIndex() == 1) setupFile->setSectionValue("Setup","WindowState","minimized");
 }

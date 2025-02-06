@@ -88,37 +88,34 @@ bool translatorLoaded = false;
             }
 
             // Scan Limitations
+            QStringList SLKeywords;
+            QStringList SLSwitches;
+            SLKeywords << "Files larger than this will be skipped and assumed clean" << "The maximum amount of data to scan for each container file";
+            SLKeywords << "The maximum number of files to scan for each container file" << "Maximum archive recursion level for container file";
+            SLKeywords << "Maximum directory recursion level" << "Maximum size file to check for embedded PE" << "Maximum size of HTML file to normalize";
+            SLKeywords << "Maximum size of normalized HTML file to scan" << "Maximum size of script file to normalize" << "Maximum size zip to type reanalyze";
+            SLKeywords << "Maximum number of partitions in disk image to be scanned" << "Maximum number of icons in PE file to be scanned";
+            SLKeywords << "Number of seconds to wait for waiting a response back from the stats server" << "Bytecode timeout in milliseconds";
+            SLKeywords << "Collect and print execution statistics" << "Structured SSN Format" << "Structured SSN Count" << "Structured CC Count" << "Structured CC Mode";
+            SLKeywords << "Max Scan-Time" << "Max recursion to HWP3 parsing function" << "Max calls to PCRE match function" << "Max recursion calls to the PCRE match function";
+            SLKeywords << "Max PCRE file size" << "Database outdated if older than x days";
+            SLSwitches << "--max-filesize=" << "--max-scansize=" << "--max-files=" << "--max-recursion=" << "--max-dir-recursion=";
+            SLSwitches << "--max-embeddedpe=" << "--max-htmlnormalize=" << "--max-htmlnotags=" << "--max-scriptnormalize=" << "--max-ziptypercg=";
+            SLSwitches << "--max-partitions=" << "--max-iconspe=" << "--stats-timeout=" << "--bytecode-timeout=" << "--statistics=";
+            SLSwitches << "--structured-ssn-format=" << "--structured-ssn-count=" << "--structured-cc-count=" << "--structured-cc-mode=" << "--max-scantime=";
+            SLSwitches << "--max-rechwp3=" << "--pcre-match-limit=" << "--pcre-recmatch-limit=" << "--pcre-max-filesize=" << "--fail-if-cvd-older-than=";
+
             for (int i = 0; i < scanLimitations.count(); i++){
                 option = scanLimitations.at(i);
                 value = setupFile->getSectionValue("ScanLimitations",option);
                 checked = value.left(value.indexOf("|"));
                 value = value.mid(value.indexOf("|") + 1);
                 if (checked == "checked"){
-                    if (option == "Files larger than this will be skipped and assumed clean") parameters << "--max-filesize=" + value;
-                    if (option == "The maximum amount of data to scan for each container file") parameters << "--max-scansize=" + value;
-                    if (option == "The maximum number of files to scan for each container file") parameters << "--max-files=" + value;
-                    if (option == "Maximum archive recursion level for container file") parameters << "--max-recursion=" + value;
-                    if (option == "Maximum directory recursion level") parameters << "--max-dir-recursion=" + value;
-                    if (option == "Maximum size file to check for embedded PE") parameters << "--max-embeddedpe=" + value;
-                    if (option == "Maximum size of HTML file to normalize") parameters << "--max-htmlnormalize=" + value;
-                    if (option == "Maximum size of normalized HTML file to scan") parameters << "--max-htmlnotags=" + value;
-                    if (option == "Maximum size of script file to normalize") parameters << "--max-scriptnormalize=" + value;
-                    if (option == "Maximum size zip to type reanalyze") parameters << "--max-ziptypercg=" + value;
-                    if (option == "Maximum number of partitions in disk image to be scanned") parameters << "--max-partitions=" + value;
-                    if (option == "Maximum number of icons in PE file to be scanned") parameters << "--max-iconspe=" + value;
-                    if (option == "Number of seconds to wait for waiting a response back from the stats server") parameters << "--stats-timeout=" + value;
-                    if (option == "Bytecode timeout in milliseconds") parameters << "--bytecode-timeout=" + value;
-                    if (option == "Collect and print execution statistics") parameters << "--statistics=" + value;
-                    if (option == "Structured SSN Format") parameters << "--structured-ssn-format=" + value;
-                    if (option == "Structured SSN Count") parameters << "--structured-ssn-count=" + value;
-                    if (option == "Structured CC Count") parameters << "--structured-cc-count=" + value;
-                    if (option == "Structured CC Mode") parameters << "--structured-cc-mode=" + value;
-                    if (option == "Max Scan-Time") parameters << "--max-scantime=" + value;
-                    if (option == "Max recursion to HWP3 parsing function") parameters << "--max-rechwp3=" + value;
-                    if (option == "Max calls to PCRE match function") parameters << "--pcre-match-limit=" + value;
-                    if (option == "Max recursion calls to the PCRE match function") parameters << "--pcre-recmatch-limit=" + value;
-                    if (option == "Max PCRE file size") parameters << "--pcre-max-filesize=" + value;
-                    if (option == "Database outdated if older than x days") parameters << "--fail-if-cvd-older-than=" + value;
+                    for (int i = 0; i < SLKeywords.length(); i++) {
+                        if (option == SLKeywords.at(i)){
+                            parameters << SLSwitches.at(i) + value;
+                        }
+                    }
                 }
             }
 
@@ -144,21 +141,16 @@ bool translatorLoaded = false;
             if (checked == "checked") parameters << "--include-dir=" + value;
 
             if (setupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","EnablePUAOptions") == true){
-                if (setupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","LoadPUAPacked") == true) parameters << "--include-pua=Packed";
-                if (setupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","LoadPUAPWTool") == true) parameters << "--include-pua=PWTool";
-                if (setupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","LoadPUANetTool") == true) parameters << "--include-pua=NetTool";
-                if (setupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","LoadPUAP2P") == true) parameters << "--include-pua=P2P";
-                if (setupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","LoadPUAIRC") == true) parameters << "--include-pua=IRC";
-                if (setupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","LoadPUARAT") == true) parameters << "--include-pua=RAT";
-                if (setupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","LoadPUANetToolSpy") == true) parameters << "--include-pua=NetToolSpy";
-                if (setupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","LoadPUAServer") == true) parameters << "--include-pua=Server";
-                if (setupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","LoadPUAScript") == true) parameters << "--include-pua=Script";
-                if (setupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","LoadPUAAndr") == true) parameters << "--include-pua=Andr";
-                if (setupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","LoadPUAJava") == true) parameters << "--include-pua=Java";
-                if (setupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","LoadPUAOsx") == true) parameters << "--include-pua=Osx";
-                if (setupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","LoadPUATool") == true) parameters << "--include-pua=Tool";
-                if (setupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","LoadPUAUnix") == true) parameters << "--include-pua=Unix";
-                if (setupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","LoadPUAWin") == true) parameters << "--include-pua=Win";
+                QStringList keywords;
+                QStringList switches;
+                keywords << "LoadPUAPacked" << "LoadPUAPWTool" << "LoadPUANetTool" << "LoadPUAP2P" << "LoadPUAIRC" << "LoadPUARAT" << "LoadPUANetToolSpy";
+                keywords << "LoadPUAServer" << "LoadPUAScript" << "LoadPUAAndr" << "LoadPUAJava" << "LoadPUAOsx" << "LoadPUATool" << "LoadPUAUnix" << "LoadPUAWin";
+                switches << "--include-pua=Packed" << "--include-pua=PWTool" << "--include-pua=NetTool" << "--include-pua=P2P" << "--include-pua=IRC" << "--include-pua=RAT";
+                switches << "--include-pua=NetToolSpy" << "--include-pua=Server" << "--include-pua=Script" << "--include-pua=Andr" << "--include-pua=Java";
+                switches << "--include-pua=Osx" << "--include-pua=Tool" << "--include-pua=Unix" << "--include-pua=Win";
+                for (int i = 0; i < keywords.length(); i++) {
+                    if (setupFile->getSectionBoolValue("REGEXP_and_IncludeExclude",keywords.at(i)) == true) parameters << switches.at(i);
+                }
             }
         }
 

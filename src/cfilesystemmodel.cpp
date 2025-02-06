@@ -1,17 +1,14 @@
 #include "cfilesystemmodel.h"
 #include <QDebug>
 
-CFileSystemModel::CFileSystemModel()
-{
+CFileSystemModel::CFileSystemModel(){
 }
 
-Qt::ItemFlags CFileSystemModel::flags(const QModelIndex &index) const
-{
+Qt::ItemFlags CFileSystemModel::flags(const QModelIndex &index) const{
     return QFileSystemModel::flags(index) | Qt::ItemIsUserCheckable;
 }
 
-QVariant CFileSystemModel::data(const QModelIndex &index, int role) const
-{
+QVariant CFileSystemModel::data(const QModelIndex &index, int role) const{
     if(role == Qt::CheckStateRole)
     {
 
@@ -23,8 +20,7 @@ QVariant CFileSystemModel::data(const QModelIndex &index, int role) const
     }
 }
 
-bool CFileSystemModel::setData(const QModelIndex &index, const QVariant &value, int role)
-{
+bool CFileSystemModel::setData(const QModelIndex &index, const QVariant &value, int role){
     if(role == Qt::CheckStateRole)
     {
         if(value == Qt::Checked)

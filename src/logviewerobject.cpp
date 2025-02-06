@@ -1,15 +1,13 @@
 #include "logviewerobject.h"
 #include "ui_logviewerobject.h"
 
-logViewerObject::logViewerObject(QWidget *parent) : QWidget(parent), ui(new Ui::logViewerObject)
-{
+logViewerObject::logViewerObject(QWidget *parent) : QWidget(parent), ui(new Ui::logViewerObject){
     setupfile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini");
     ui->setupUi(this);
     slot_profilesChanged();
 }
 
-logViewerObject::~logViewerObject()
-{
+logViewerObject::~logViewerObject(){
     delete ui;
 }
 
@@ -48,6 +46,7 @@ QStringList values;
     while(ui->logTab->count() > 0){
         ui->logTab->removeTab(0);
     }
+
     values = sf->getSectionValue("Directories","ScanReportToFile").split("|");
     if (values.count() == 2){
         QFile file(values[1]);

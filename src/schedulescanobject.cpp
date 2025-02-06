@@ -5,21 +5,27 @@ scheduleScanObject::scheduleScanObject(QWidget *parent, QString name, QStringLis
 {
     setWindowFlags(((this->windowFlags() | Qt::CustomizeWindowHint) & ~Qt::WindowCloseButtonHint & ~Qt::WindowContextHelpButtonHint) );
     ui->setupUi(this);
+
     if (name=="Direct Scan") {
         directScan = true;
         ui->headerLabel->setText("Direct Scan");
     } else {
         directScan = false;
     }
+
     logHighLighter = new highlighter(ui->logMessagePlainTextEdit->document());
-    scanProcess = new QProcess(this);
+
     QString message = "clamscan ";
     for (int i = 0;i < parameters.count();i++){
         message = message + " " + parameters.at(i);
     }
+
     if (directScan == true) ui->logMessagePlainTextEdit->appendPlainText(message);
+
     ui->scanJobHeader->setText(tr("Scan-Job: ") + name);
     this->setWindowTitle(tr("Scheduled Scan-Job: ") + name);
+
+    scanProcess = new QProcess(this);
     connect(scanProcess,SIGNAL(readyReadStandardError()),this,SLOT(slot_scanProcessHasErrOutput()));
     connect(scanProcess,SIGNAL(readyReadStandardOutput()),this,SLOT(slot_scanProcessHasStdOutput()));
     connect(scanProcess,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(slot_scanProcessFinished(int,QProcess::ExitStatus)));
@@ -37,6 +43,7 @@ scheduleScanObject::scheduleScanObject(QWidget *parent, QString name, QStringLis
     closeWindowTimer = new QTimer(this);
     closeWindowTimer->setSingleShot(true);
     connect(closeWindowTimer,SIGNAL(timeout()),this,SLOT(slot_closeWindowTimerTimeout()));
+
     closeWindowCounter = 100;
     errorStart = 0;
     infectedStart = 0;
@@ -84,26 +91,28 @@ int start,end;
         currentFile.replace("\n","");
         ui->currentFileLabel->setText(tr("Scanning : ") + currentFile);
     }
+
     ui->logMessagePlainTextEdit->insertPlainText(message);
     ui->logMessagePlainTextEdit->ensureCursorVisible();
 }
 
 void scheduleScanObject::slot_scanProcessHasErrOutput(){
-    QString message = scanProcess->readAllStandardOutput();
-    QString currentFile;
-    int start,end;
+QString message = scanProcess->readAllStandardOutput();
+QString currentFile;
+int start,end;
 
-        while(message.indexOf("Scanning") != -1){
-            start = message.indexOf("Scanning");
-            end = message.indexOf("\n",start);
-            currentFile = message.mid(start,end - start + 1);
-            message.replace(currentFile,"");
-            currentFile = currentFile.mid(currentFile.lastIndexOf("/") + 1);
-            currentFile.replace("\n","");
-            ui->currentFileLabel->setText(tr("Scanning : ") + currentFile);
-        }
-        ui->logMessagePlainTextEdit->insertPlainText(message);
-        ui->logMessagePlainTextEdit->ensureCursorVisible();
+    while(message.indexOf("Scanning") != -1){
+        start = message.indexOf("Scanning");
+        end = message.indexOf("\n",start);
+        currentFile = message.mid(start,end - start + 1);
+        message.replace(currentFile,"");
+        currentFile = currentFile.mid(currentFile.lastIndexOf("/") + 1);
+        currentFile.replace("\n","");
+        ui->currentFileLabel->setText(tr("Scanning : ") + currentFile);
+    }
+
+    ui->logMessagePlainTextEdit->insertPlainText(message);
+    ui->logMessagePlainTextEdit->ensureCursorVisible();
 }
 
 void scheduleScanObject::slot_scanProcessFinished(int exitCode,QProcess::ExitStatus status){
@@ -117,6 +126,7 @@ int pos,end;
         delete movie;
         delete busyLabel;
     }
+
     if (status == QProcess::CrashExit) {
         ui->currentFileLabel->setText(tr("Scan Process aborted ....."));
         ui->currentFileLabel->setStyleSheet("background:red");
@@ -146,10 +156,13 @@ int pos,end;
                 emit sendStatusReport(1,"Scan-Job: " + scanJob,tr("Scan Process finished ..... an Error occurred!"));
             }
     }
+
     ui->closeButton->setEnabled(true);
     ui->stopButton->setEnabled(false);
+
     if (status != QProcess::CrashExit){
         temp = ui->logMessagePlainTextEdit->toPlainText();
+
         pos = temp.indexOf("Engine version:");
         if (pos != -1){
             end = temp.indexOf("\n",pos);
@@ -157,6 +170,7 @@ int pos,end;
         } else {
             ui->engineVersionLabel->setText(tr("Engine Version: n/a"));
         }
+
         pos = temp.indexOf("Infected files:");
         if (pos != -1){
             end = temp.indexOf("\n",pos);
@@ -164,6 +178,7 @@ int pos,end;
         } else {
             ui->infectedFilesLabel->setText(tr("Infected files: n/a"));
         }
+
         pos = temp.indexOf("Scanned directories:");
         if (pos != -1){
             end = temp.indexOf("\n",pos);
@@ -171,6 +186,7 @@ int pos,end;
         } else {
             ui->scannedDirectoriesLabel->setText(tr("Scanned Directories: n/a"));
         }
+
         pos = temp.indexOf("Scanned files:");
         if (pos != -1){
             end = temp.indexOf("\n",pos);
@@ -178,6 +194,7 @@ int pos,end;
         } else {
             ui->scannedFilesLabel->setText(tr("Scanned Files: n/a"));
         }
+
         pos = temp.indexOf("Total errors::");
         if (pos != -1){
             end = temp.indexOf("\n",pos);
@@ -186,11 +203,13 @@ int pos,end;
             ui->errorsLabel->setText(tr("Total Errors: 0"));
         }
     }
+
     emit scanProcessFinished();
 }
 
 void scheduleScanObject::slot_closeWindowTimerTimeout(){
     closeWindowCounter--;
+
     if (closeWindowCounter == 0){
         this->accept();
     } else {

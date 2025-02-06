@@ -1,8 +1,7 @@
 #include "profilemanager.h"
 #include "ui_profilemanager.h"
 
-ProfileManager::ProfileManager(QWidget *parent) : QWidget(parent), ui(new Ui::ProfileManager)
-{
+ProfileManager::ProfileManager(QWidget *parent) : QWidget(parent), ui(new Ui::ProfileManager){
     setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini");
     ui->setupUi(this);
     getProfileList();
@@ -10,8 +9,7 @@ ProfileManager::ProfileManager(QWidget *parent) : QWidget(parent), ui(new Ui::Pr
 
 }
 
-ProfileManager::~ProfileManager()
-{
+ProfileManager::~ProfileManager(){
     delete ui;
 }
 
@@ -65,23 +63,18 @@ QString logFile = tempSetupFile->getSectionValue("Directories","ScanReportToFile
     if (tempSetupFile->getSectionValue("REGEXP_and_IncludeExclude","OnlyScanDiretoriesMatchingRegExp").indexOf("not checked") == -1) optionLabel = optionLabel + "\n" + "--include-dir=" + tempSetupFile->getSectionValue("REGEXP_and_IncludeExclude","OnlyScanDiretoriesMatchingRegExp").mid(tempSetupFile->getSectionValue("REGEXP_and_IncludeExclude","OnlyScanDiretoriesMatchingRegExp").indexOf("|") + 1);
 
     if (tempSetupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","EnablePUAOptions") == true) {
-        if (tempSetupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","LoadPUAPacked") == true) optionLabel = optionLabel + "\n" + "--include-pua=Packed";
-        if (tempSetupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","LoadPUAPWTool") == true) optionLabel = optionLabel + "\n" + "--include-pua=PWTool";
-        if (tempSetupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","LoadPUANetTool") == true) optionLabel = optionLabel + "\n" + "--include-pua=NetTool";
-        if (tempSetupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","LoadPUAP2P") == true) optionLabel = optionLabel + "\n" + "--include-pua=P2P";
-        if (tempSetupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","LoadPUAIRC") == true) optionLabel = optionLabel + "\n" + "--include-pua=IRC";
-        if (tempSetupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","LoadPUARAT") == true) optionLabel = optionLabel + "\n" + "--include-pua=RAT";
-        if (tempSetupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","LoadPUANetToolSpy") == true) optionLabel = optionLabel + "\n" + "--include-pua=NetToolSpy";
-        if (tempSetupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","LoadPUAServer") == true) optionLabel = optionLabel + "\n" + "--include-pua=Server";
-        if (tempSetupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","LoadPUAScript") == true) optionLabel = optionLabel + "\n" + "--include-pua=Script";
-        if (tempSetupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","LoadPUAAndr") == true) optionLabel = optionLabel + "\n" + "--include-pua=Andr";
-        if (tempSetupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","LoadPUAJava") == true) optionLabel = optionLabel + "\n" + "--include-pua=Java";
-        if (tempSetupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","LoadPUAOsx") == true) optionLabel = optionLabel + "\n" + "--include-pua=Osx";
-        if (tempSetupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","LoadPUATool") == true) optionLabel = optionLabel + "\n" + "--include-pua=Tool";
-        if (tempSetupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","LoadPUAUnix") == true) optionLabel = optionLabel + "\n" + "--include-pua=Unix";
-        if (tempSetupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","LoadPUAWin") == true) optionLabel = optionLabel + "\n" + "--include-pua=Win";
+        QStringList keywords;
+        QStringList switches;
+        keywords << "LoadPUAPacked" << "LoadPUAPWTool" << "LoadPUANetTool" << "LoadPUAP2P" << "LoadPUAIRC" << "LoadPUARAT" << "LoadPUANetToolSpy";
+        keywords << "LoadPUAServer" << "LoadPUAScript" << "LoadPUAAndr" << "LoadPUAJava" << "LoadPUAOsx" << "LoadPUATool" << "LoadPUAUnix" << "LoadPUAWin";
+        switches << "--include-pua=Packed" << "--include-pua=PWTool" << "--include-pua=NetTool" << "--include-pua=P2P" << "--include-pua=IRC" << "--include-pua=RAT";
+        switches << "--include-pua=NetToolSpy" << "--include-pua=Server" << "--include-pua=Script" << "--include-pua=Andr" << "--include-pua=Java";
+        switches << "--include-pua=Osx" << "--include-pua=Tool" << "--include-pua=Unix" << "--include-pua=Win";
+        for (int i = 0; i < keywords.length(); i++) {
+            if (tempSetupFile->getSectionBoolValue("REGEXP_and_IncludeExclude",keywords.at(i)) == true) optionLabel = optionLabel + "\n" + switches.at(i);
+        }
     }
-
+    // Scan Limitations
     QString value = "";
     value = tempSetupFile->getSectionValue("ScanLimitations","Files larger than this will be skipped and assumed clean");
     if ((value != "") && (value.indexOf("not checked") == -1)) optionLabel = optionLabel + "\n" + "--max-filesize=" + value.mid(value.indexOf("|") + 1);

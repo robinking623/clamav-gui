@@ -488,6 +488,7 @@ QString translator::translateit(QString original) {
         helper = translations.at(pos);
     }
 
+    // Word-Wrap of lines that are longer than 60 characters ...
     for (int i = 0; i < helper.length(); i++) {
         if ((counter > 60) && (helper.mid(i,1) == ' ')) {
             rc = rc + "\n";
