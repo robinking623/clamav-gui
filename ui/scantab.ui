@@ -24,15 +24,8 @@
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="1" column="1">
-       <layout class="QHBoxLayout" name="horizontalLayout">
-        <item>
-         <widget class="QLabel" name="virusFoundLabel">
-          <property name="text">
-           <string>When a virus is found</string>
-          </property>
-         </widget>
-        </item>
-        <item>
+       <layout class="QGridLayout" name="gridLayout_4">
+        <item row="0" column="1">
          <widget class="QComboBox" name="virusFoundComboBox">
           <item>
            <property name="text">
@@ -72,14 +65,31 @@
           </item>
          </widget>
         </item>
-        <item>
-         <widget class="QCheckBox" name="recursivCheckBox">
+        <item row="0" column="0">
+         <widget class="QLabel" name="virusFoundLabel">
           <property name="text">
-           <string>scan recursive</string>
+           <string>When a virus is found</string>
           </property>
          </widget>
         </item>
-        <item>
+        <item row="1" column="5">
+         <widget class="QPushButton" name="startScanButton">
+          <property name="text">
+           <string>start</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../resources.qrc">
+            <normaloff>:/icons/icons/start.png</normaloff>:/icons/icons/start.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="3">
          <spacer name="horizontalSpacer_2">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -91,6 +101,40 @@
            </size>
           </property>
          </spacer>
+        </item>
+        <item row="1" column="1">
+         <widget class="QCheckBox" name="recursivCheckBox">
+          <property name="text">
+           <string>scan recursive</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QCheckBox" name="showHiddenDirsCheckBox">
+          <property name="text">
+           <string>show hidden folders</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="6">
+         <widget class="QPushButton" name="stopScanButton">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>stop</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../resources.qrc">
+            <normaloff>:/icons/icons/stop.png</normaloff>:/icons/icons/stop.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>
@@ -105,43 +149,6 @@
         <attribute name="headerVisible">
          <bool>false</bool>
         </attribute>
-       </widget>
-      </item>
-      <item row="1" column="2">
-       <widget class="QPushButton" name="startScanButton">
-        <property name="text">
-         <string>start</string>
-        </property>
-        <property name="icon">
-         <iconset resource="../resources.qrc">
-          <normaloff>:/icons/icons/start.png</normaloff>:/icons/icons/start.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>24</width>
-          <height>24</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="3">
-       <widget class="QPushButton" name="stopScanButton">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="text">
-         <string>stop</string>
-        </property>
-        <property name="icon">
-         <iconset resource="../resources.qrc">
-          <normaloff>:/icons/icons/stop.png</normaloff>:/icons/icons/stop.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>24</width>
-          <height>24</height>
-         </size>
-        </property>
        </widget>
       </item>
       <item row="1" column="0" rowspan="2">
@@ -400,8 +407,8 @@
    <slot>slot_scanButtonClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>834</x>
-     <y>49</y>
+     <x>821</x>
+     <y>82</y>
     </hint>
     <hint type="destinationlabel">
      <x>468</x>
@@ -416,8 +423,8 @@
    <slot>slot_abortScan()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>920</x>
-     <y>49</y>
+     <x>907</x>
+     <y>82</y>
     </hint>
     <hint type="destinationlabel">
      <x>707</x>
@@ -432,8 +439,8 @@
    <slot>slot_recursivScanCheckBoxClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>660</x>
-     <y>46</y>
+     <x>580</x>
+     <y>79</y>
     </hint>
     <hint type="destinationlabel">
      <x>757</x>
@@ -448,8 +455,8 @@
    <slot>slot_virusFoundComboBoxChanged()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>542</x>
-     <y>47</y>
+     <x>580</x>
+     <y>46</y>
     </hint>
     <hint type="destinationlabel">
      <x>757</x>
@@ -505,6 +512,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>showHiddenDirsCheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>scanTab</receiver>
+   <slot>slot_hiddenFoldersCheckBoxClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>200</x>
+     <y>70</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>5</x>
+     <y>176</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>slot_scanButtonClicked()</slot>
@@ -514,5 +537,6 @@
   <slot>slot_recursivScanCheckBoxClicked()</slot>
   <slot>slot_abortScan()</slot>
   <slot>slot_dirtreeSelectionChanged()</slot>
+  <slot>slot_hiddenFoldersCheckBoxClicked()</slot>
  </slots>
 </ui>

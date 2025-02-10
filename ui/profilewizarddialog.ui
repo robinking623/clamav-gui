@@ -10,6 +10,18 @@
     <height>706</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>0</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
@@ -74,10 +86,84 @@
      </layout>
     </widget>
    </item>
+   <item row="2" column="0">
+    <widget class="QPushButton" name="previousButton">
+     <property name="text">
+      <string>Back</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../resources.qrc">
+       <normaloff>:/icons/icons/back.png</normaloff>:/icons/icons/back.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>22</width>
+       <height>22</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QPushButton" name="nextButton">
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="text">
+      <string>Next</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../resources.qrc">
+       <normaloff>:/icons/icons/next.png</normaloff>:/icons/icons/next.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>22</width>
+       <height>22</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="6">
+    <widget class="QPushButton" name="createButton">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="text">
+      <string>Create</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../resources.qrc">
+       <normaloff>:/icons/icons/create.png</normaloff>:/icons/icons/create.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>22</width>
+       <height>22</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="5">
+    <widget class="QPushButton" name="cancelButton">
+     <property name="text">
+      <string>Cancel</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../resources.qrc">
+       <normaloff>:/icons/icons/cancel.png</normaloff>:/icons/icons/cancel.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>22</width>
+       <height>22</height>
+      </size>
+     </property>
+    </widget>
+   </item>
    <item row="1" column="0" colspan="7">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>6</number>
      </property>
      <widget class="QWidget" name="wizardPage_1">
       <layout class="QGridLayout" name="gridLayout_2">
@@ -174,15 +260,15 @@ li.checked::marker { content: &quot;\2612&quot;; }
          </property>
          <layout class="QGridLayout" name="gridLayout_13">
           <item row="0" column="0" rowspan="2" colspan="3">
-           <layout class="QHBoxLayout" name="horizontalLayout_5">
-            <item>
+           <layout class="QGridLayout" name="gridLayout_15">
+            <item row="0" column="0">
              <widget class="QLabel" name="virusFoundLabel">
               <property name="text">
                <string>When a virus is found</string>
               </property>
              </widget>
             </item>
-            <item>
+            <item row="0" column="1">
              <widget class="QComboBox" name="virusFoundComboBox">
               <item>
                <property name="text">
@@ -206,14 +292,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
               </item>
              </widget>
             </item>
-            <item>
-             <widget class="QCheckBox" name="recursivCheckBox">
-              <property name="text">
-               <string>scan recursive</string>
-              </property>
-             </widget>
-            </item>
-            <item>
+            <item row="0" column="3">
              <spacer name="horizontalSpacer_6">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
@@ -225,6 +304,20 @@ li.checked::marker { content: &quot;\2612&quot;; }
                </size>
               </property>
              </spacer>
+            </item>
+            <item row="1" column="0">
+             <widget class="QCheckBox" name="recursivCheckBox">
+              <property name="text">
+               <string>scan recursive</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QCheckBox" name="showHiddenDirsCheckBox">
+              <property name="text">
+               <string>show hidden folders</string>
+              </property>
+             </widget>
             </item>
            </layout>
           </item>
@@ -440,177 +533,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
      </widget>
      <widget class="QWidget" name="wizardPage_5">
       <layout class="QGridLayout" name="gridLayout_5">
-       <item row="8" column="0">
-        <widget class="QCheckBox" name="followDirectorySymlinksCheckBox">
-         <property name="text">
-          <string>Follow directory symlinks</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="1">
-        <widget class="QLineEdit" name="moveDirectoryLineEdit">
-         <property name="styleSheet">
-          <string notr="true">background:white;</string>
-         </property>
-         <property name="readOnly">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QLineEdit" name="scanReportToFileLineEdit">
-         <property name="styleSheet">
-          <string notr="true">background:white;</string>
-         </property>
-         <property name="readOnly">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="1">
-        <widget class="QComboBox" name="followFileSymlinksComboBox">
-         <item>
-          <property name="text">
-           <string>never</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>direct</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>always</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QCheckBox" name="scanReportToFileCheckBox">
-         <property name="text">
-          <string>Save scan report to FILE</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="0">
-        <widget class="QCheckBox" name="copyDirectoryCheckBox">
-         <property name="text">
-          <string>Copy infected files into DIRECTORY</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="2">
-        <widget class="QPushButton" name="pwselectLVDButton">
-         <property name="autoFillBackground">
-          <bool>false</bool>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background:lightgrey;</string>
-         </property>
-         <property name="text">
-          <string>...</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="2">
-        <widget class="QPushButton" name="pwselectSCRFButton">
-         <property name="styleSheet">
-          <string notr="true">background:lightgrey;</string>
-         </property>
-         <property name="text">
-          <string>...</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1">
-        <widget class="QLineEdit" name="scanFilesFromFileLineEdit"/>
-       </item>
-       <item row="2" column="1">
-        <widget class="QLineEdit" name="loadVirusDatabaseLineEdit">
-         <property name="styleSheet">
-          <string notr="true">background:white;</string>
-         </property>
-         <property name="readOnly">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="2">
-        <widget class="QPushButton" name="pwselectCFButton">
-         <property name="styleSheet">
-          <string notr="true">background:lightgrey;</string>
-         </property>
-         <property name="text">
-          <string>...</string>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="1">
-        <widget class="QComboBox" name="followDirectorySymlinksComboBox">
-         <item>
-          <property name="text">
-           <string>never</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>direct</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>always</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="6" column="2">
-        <widget class="QPushButton" name="pwselectMDButton">
-         <property name="styleSheet">
-          <string notr="true">background:lightgrey;</string>
-         </property>
-         <property name="text">
-          <string>...</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QCheckBox" name="loadVirusDatabaseCheckBox">
-         <property name="text">
-          <string>Load all supported db files from DIR</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="2">
-        <widget class="QPushButton" name="pwselectTFButton">
-         <property name="styleSheet">
-          <string notr="true">background:lightgrey;</string>
-         </property>
-         <property name="text">
-          <string>...</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0">
-        <widget class="QCheckBox" name="tempFileCheckBox">
-         <property name="text">
-          <string>Create temporary files in DIRECTORY</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="1">
-        <widget class="QLineEdit" name="tempFilesLineEdit">
-         <property name="styleSheet">
-          <string notr="true">background:white;</string>
-         </property>
-         <property name="readOnly">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="10" column="0" colspan="3">
-        <spacer name="verticalSpacer_4">
+       <item row="11" column="0" colspan="2">
+        <spacer name="verticalSpacer_2">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
@@ -622,45 +546,239 @@ li.checked::marker { content: &quot;\2612&quot;; }
          </property>
         </spacer>
        </item>
-       <item row="9" column="0">
-        <widget class="QCheckBox" name="followFileSymlinksCheckBox">
-         <property name="text">
-          <string>Follow file symlinks</string>
+       <item row="10" column="0" colspan="2">
+        <widget class="QFrame" name="ffsFrame">
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
          </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_12">
+          <property name="topMargin">
+           <number>2</number>
+          </property>
+          <property name="bottomMargin">
+           <number>2</number>
+          </property>
+          <item>
+           <widget class="QCheckBox" name="followFileSymlinksCheckBox">
+            <property name="text">
+             <string>Follow file symlinks</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="followFileSymlinksComboBox">
+            <property name="autoFillBackground">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string>never</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>direct</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>always</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
-       <item row="6" column="0">
-        <widget class="QCheckBox" name="moveDirectoryCheckBox">
-         <property name="text">
-          <string>Move infected files into DIRECTORY</string>
+       <item row="2" column="0" colspan="2">
+        <widget class="QFrame" name="ssrtfFrame">
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
          </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_7">
+          <property name="topMargin">
+           <number>2</number>
+          </property>
+          <property name="bottomMargin">
+           <number>2</number>
+          </property>
+          <item>
+           <widget class="QCheckBox" name="scanReportToFileCheckBox">
+            <property name="text">
+             <string>Save scan report to FILE</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="scanReportToFileLineEdit">
+            <property name="autoFillBackground">
+             <bool>true</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pwselectSCRFButton">
+            <property name="styleSheet">
+             <string notr="true">background:lightgrey;</string>
+            </property>
+            <property name="text">
+             <string>...</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
-       <item row="4" column="2">
-        <widget class="QPushButton" name="pwselectSFFButton">
-         <property name="text">
-          <string>...</string>
+       <item row="9" column="0" colspan="2">
+        <widget class="QFrame" name="fdsFrame">
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
          </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_11">
+          <property name="topMargin">
+           <number>2</number>
+          </property>
+          <property name="bottomMargin">
+           <number>2</number>
+          </property>
+          <item>
+           <widget class="QCheckBox" name="followDirectorySymlinksCheckBox">
+            <property name="text">
+             <string>Follow directory symlinks</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="followDirectorySymlinksComboBox">
+            <property name="autoFillBackground">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string>never</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>direct</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>always</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
-       <item row="4" column="0">
-        <widget class="QCheckBox" name="scanFilesFromFileCheckBox">
-         <property name="text">
-          <string>Scan files from file</string>
+       <item row="1" column="0" colspan="2">
+        <widget class="QFrame" name="lvdFrame">
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
          </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <property name="topMargin">
+           <number>2</number>
+          </property>
+          <property name="bottomMargin">
+           <number>2</number>
+          </property>
+          <item>
+           <widget class="QCheckBox" name="loadVirusDatabaseCheckBox">
+            <property name="text">
+             <string>Load all supported db files from DIR</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="loadVirusDatabaseLineEdit">
+            <property name="autoFillBackground">
+             <bool>true</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pwselectLVDButton">
+            <property name="autoFillBackground">
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background:lightgrey;</string>
+            </property>
+            <property name="text">
+             <string>...</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
-       <item row="7" column="1">
-        <widget class="QLineEdit" name="copyDirectoryLineEdit">
-         <property name="styleSheet">
-          <string notr="true">background:white;</string>
+       <item row="3" column="0" colspan="2">
+        <widget class="QFrame" name="sfffFrame">
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
          </property>
-         <property name="readOnly">
-          <bool>true</bool>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
          </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_8">
+          <property name="topMargin">
+           <number>2</number>
+          </property>
+          <property name="bottomMargin">
+           <number>2</number>
+          </property>
+          <item>
+           <widget class="QCheckBox" name="scanFilesFromFileCheckBox">
+            <property name="text">
+             <string>Scan files from file</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="scanFilesFromFileLineEdit">
+            <property name="autoFillBackground">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pwselectSFFButton">
+            <property name="text">
+             <string>...</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
-       <item row="0" column="0" colspan="3">
+       <item row="0" column="0" colspan="2">
         <widget class="QFrame" name="frame_x">
          <layout class="QHBoxLayout" name="horizontalLayout_3">
           <item alignment="Qt::AlignLeft">
@@ -694,776 +812,151 @@ li.checked::marker { content: &quot;\2612&quot;; }
          </layout>
         </widget>
        </item>
+       <item row="4" column="0" colspan="2">
+        <widget class="QFrame" name="ctfidFrame">
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_9">
+          <property name="topMargin">
+           <number>2</number>
+          </property>
+          <property name="bottomMargin">
+           <number>2</number>
+          </property>
+          <item>
+           <widget class="QCheckBox" name="tempFileCheckBox">
+            <property name="text">
+             <string>Create temporary files in DIRECTORY</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="tempFilesLineEdit">
+            <property name="autoFillBackground">
+             <bool>true</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pwselectTFButton">
+            <property name="styleSheet">
+             <string notr="true">background:lightgrey;</string>
+            </property>
+            <property name="text">
+             <string>...</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QFrame" name="cifidFrame">
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_13">
+          <property name="topMargin">
+           <number>2</number>
+          </property>
+          <property name="bottomMargin">
+           <number>2</number>
+          </property>
+          <item>
+           <widget class="QCheckBox" name="copyDirectoryCheckBox">
+            <property name="text">
+             <string>Copy infected files into DIRECTORY</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="copyDirectoryLineEdit">
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pwselectCFButton">
+            <property name="styleSheet">
+             <string notr="true">background:lightgrey;</string>
+            </property>
+            <property name="text">
+             <string>...</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QFrame" name="mifidFrame">
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_10">
+          <property name="topMargin">
+           <number>2</number>
+          </property>
+          <property name="bottomMargin">
+           <number>2</number>
+          </property>
+          <item>
+           <widget class="QCheckBox" name="moveDirectoryCheckBox">
+            <property name="text">
+             <string>Move infected files into DIRECTORY</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="moveDirectoryLineEdit">
+            <property name="autoFillBackground">
+             <bool>true</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pwselectMDButton">
+            <property name="styleSheet">
+             <string notr="true">background:lightgrey;</string>
+            </property>
+            <property name="text">
+             <string>...</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="wizardPage_6">
       <layout class="QGridLayout" name="gridLayout_6">
-       <item row="1" column="0">
-        <widget class="QScrollArea" name="scrollArea">
-         <property name="widgetResizable">
-          <bool>true</bool>
-         </property>
-         <widget class="QWidget" name="scrollAreaWidgetContents">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>722</width>
-            <height>834</height>
-           </rect>
-          </property>
-          <layout class="QGridLayout" name="gridLayout_8">
-           <item row="22" column="0">
-            <widget class="QCheckBox" name="pwMaxRecursionCallsPCREMatchFunctionCheckBox">
-             <property name="text">
-              <string>Maximum recursion calls to PCRE match function</string>
-             </property>
-            </widget>
-           </item>
-           <item row="19" column="0">
-            <widget class="QCheckBox" name="pwMaxScanTimeCheckBox">
-             <property name="text">
-              <string>Maximum Scan Time in ms</string>
-             </property>
-            </widget>
-           </item>
-           <item row="16" column="0">
-            <widget class="QCheckBox" name="pwStructuredSSNCountCheckBox">
-             <property name="text">
-              <string>Structured SSN Count</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QSpinBox" name="pwmaxAmountForContainerSpinBox">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="buttonSymbols">
-              <enum>QAbstractSpinBox::PlusMinus</enum>
-             </property>
-             <property name="minimum">
-              <number>1</number>
-             </property>
-             <property name="maximum">
-              <number>999</number>
-             </property>
-            </widget>
-           </item>
-           <item row="22" column="1">
-            <widget class="QSpinBox" name="pwMaxRecursionCallsPCREMatchFunctionCpinBox"/>
-           </item>
-           <item row="1" column="0">
-            <widget class="QCheckBox" name="pwmaxAmountForContainerCheckBox">
-             <property name="text">
-              <string>The maximum amount of data to scan for each container file</string>
-             </property>
-            </widget>
-           </item>
-           <item row="9" column="1">
-            <widget class="QSpinBox" name="pwmaxSizeZipToTypeReanalzeSpinBox">
-             <property name="buttonSymbols">
-              <enum>QAbstractSpinBox::PlusMinus</enum>
-             </property>
-             <property name="minimum">
-              <number>1</number>
-             </property>
-             <property name="maximum">
-              <number>999</number>
-             </property>
-            </widget>
-           </item>
-           <item row="20" column="1">
-            <widget class="QSpinBox" name="pwMaxRecursionHWP3SpinBox">
-             <property name="maximum">
-              <number>999</number>
-             </property>
-            </widget>
-           </item>
-           <item row="18" column="1" colspan="2">
-            <widget class="QComboBox" name="pwStructuredCCModeComboBox">
-             <item>
-              <property name="text">
-               <string>credit debit and private label</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>credit cards only</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-           <item row="14" column="1" colspan="2">
-            <widget class="QComboBox" name="pwExecutionStatisticsComboBox">
-             <item>
-              <property name="text">
-               <string>none</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>bytecode</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>pcre</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-           <item row="17" column="1">
-            <widget class="QSpinBox" name="pwStructuredCCCountSpinBox">
-             <property name="maximum">
-              <number>999</number>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="2">
-            <widget class="QComboBox" name="pwmaxSizeFileForPEComboBox">
-             <item>
-              <property name="text">
-               <string/>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>K</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>M</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-           <item row="2" column="2">
-            <widget class="QComboBox" name="pwmaxNumberForContainerComboBox">
-             <item>
-              <property name="text">
-               <string/>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>K</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>M</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-           <item row="19" column="1">
-            <widget class="QSpinBox" name="pwMaxScanTimeSpinBox">
-             <property name="maximum">
-              <number>999</number>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="2">
-            <widget class="QComboBox" name="pwmaxDirRecursionLevelComboBox">
-             <item>
-              <property name="text">
-               <string/>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>K</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>M</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-           <item row="23" column="0">
-            <widget class="QCheckBox" name="pwMaxPCREFileSizeCheckBox">
-             <property name="text">
-              <string>Maximum PCRE file size</string>
-             </property>
-            </widget>
-           </item>
-           <item row="9" column="0">
-            <widget class="QCheckBox" name="pwmaxSizeZipToTypeReanalzeCheckBox">
-             <property name="text">
-              <string>Maximum size zip to type reanalyze</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QCheckBox" name="pwmaxNumberForContainerCheckBox">
-             <property name="text">
-              <string>The maximum number of files to scan for each container file</string>
-             </property>
-            </widget>
-           </item>
-           <item row="23" column="2">
-            <widget class="QComboBox" name="pwMaxPCREFileSizeComboBox">
-             <item>
-              <property name="text">
-               <string/>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>K</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>M</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-           <item row="10" column="0">
-            <widget class="QCheckBox" name="pwmaxNumberOfPartitionsInDiskImageCheckBox">
-             <property name="text">
-              <string>Maximum number of partitions in disk image to be scanned</string>
-             </property>
-            </widget>
-           </item>
-           <item row="11" column="0">
-            <widget class="QCheckBox" name="pwmaxNumberOfIconsInPEFileCheckBox">
-             <property name="text">
-              <string>Maximum number of icons in PE file to be scanned</string>
-             </property>
-            </widget>
-           </item>
-           <item row="11" column="2">
-            <widget class="QComboBox" name="pwmaxNumberOfIconsInPEFileComboBox">
-             <item>
-              <property name="text">
-               <string/>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>K</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>M</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-           <item row="3" column="2">
-            <widget class="QComboBox" name="pwmaxArchiveRecursionForContainerComboBox">
-             <item>
-              <property name="text">
-               <string/>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>K</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>M</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-           <item row="7" column="1">
-            <widget class="QSpinBox" name="pwmaxSizeOfNormalizedHTMLFileSpinBox">
-             <property name="buttonSymbols">
-              <enum>QAbstractSpinBox::PlusMinus</enum>
-             </property>
-             <property name="minimum">
-              <number>1</number>
-             </property>
-             <property name="maximum">
-              <number>999</number>
-             </property>
-            </widget>
-           </item>
-           <item row="15" column="1" colspan="2">
-            <widget class="QComboBox" name="pwStructuredSSNFormatComboBox">
-             <item>
-              <property name="text">
-               <string>normal</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>stripped</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>both</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-           <item row="18" column="0">
-            <widget class="QCheckBox" name="pwStructuredCCModeCheckBox">
-             <property name="text">
-              <string>Structured CC Mode</string>
-             </property>
-            </widget>
-           </item>
-           <item row="8" column="2">
-            <widget class="QComboBox" name="pwmaxSizeOfScriptFileToNormalizeComboBox">
-             <item>
-              <property name="text">
-               <string/>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>K</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>M</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-           <item row="14" column="0">
-            <widget class="QCheckBox" name="pwExecutionStatisticsCheckBox">
-             <property name="text">
-              <string>Collect and print execution statistics</string>
-             </property>
-            </widget>
-           </item>
-           <item row="10" column="2">
-            <widget class="QComboBox" name="pwmaxNumberOfPartitionsInDiskImageComboBox">
-             <item>
-              <property name="text">
-               <string/>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>K</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>M</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-           <item row="7" column="0">
-            <widget class="QCheckBox" name="pwmaxSizeOfNormalizedHTMLFileCheckBox">
-             <property name="text">
-              <string>Maximum size of normalized HTML file to scan</string>
-             </property>
-            </widget>
-           </item>
-           <item row="6" column="2">
-            <widget class="QComboBox" name="pwmaxSizeHTMLFileToNormalizeComboBox">
-             <item>
-              <property name="text">
-               <string/>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>K</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>M</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-           <item row="6" column="0">
-            <widget class="QCheckBox" name="pwmaxSizeHTMLFileToNormalizeCheckBox">
-             <property name="text">
-              <string>Maximum size of HTML file to normalize</string>
-             </property>
-            </widget>
-           </item>
-           <item row="23" column="1">
-            <widget class="QSpinBox" name="pwMaxPCREFileSizeSpinBox"/>
-           </item>
-           <item row="21" column="1">
-            <widget class="QSpinBox" name="pwMaxCallsPCREMatchFunctionSpinBox"/>
-           </item>
-           <item row="9" column="2">
-            <widget class="QComboBox" name="pwmaxSizeZipToTypeReanalzeComboBox">
-             <item>
-              <property name="text">
-               <string/>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>K</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>M</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-           <item row="0" column="2">
-            <widget class="QComboBox" name="pwfilesLargerThanThisComboBox">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>70</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>70</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <item>
-              <property name="text">
-               <string/>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>K</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>M</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>G</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-           <item row="16" column="1">
-            <widget class="QSpinBox" name="pwStructuredSSNCountSpinBox">
-             <property name="maximum">
-              <number>999</number>
-             </property>
-            </widget>
-           </item>
-           <item row="12" column="0">
-            <widget class="QCheckBox" name="pwnumberOfSecondsToWaitForResponseCheckBox">
-             <property name="text">
-              <string>Number of seconds to wait for waiting a response back from the stats server</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="2">
-            <widget class="QComboBox" name="pwmaxAmountForContainerComboBox">
-             <item>
-              <property name="text">
-               <string/>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>K</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>M</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-           <item row="4" column="1">
-            <widget class="QSpinBox" name="pwmaxDirRecursionLevelSpinBox">
-             <property name="buttonSymbols">
-              <enum>QAbstractSpinBox::PlusMinus</enum>
-             </property>
-             <property name="minimum">
-              <number>1</number>
-             </property>
-             <property name="maximum">
-              <number>999</number>
-             </property>
-            </widget>
-           </item>
-           <item row="10" column="1">
-            <widget class="QSpinBox" name="pwmaxNumberOfPartitionsInDiskImageSpinBox">
-             <property name="buttonSymbols">
-              <enum>QAbstractSpinBox::PlusMinus</enum>
-             </property>
-             <property name="minimum">
-              <number>1</number>
-             </property>
-             <property name="maximum">
-              <number>999</number>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="0">
-            <widget class="QCheckBox" name="pwmaxArchiveRecursionForContainerCheckBox">
-             <property name="text">
-              <string>Maximum archive recursion level for container file</string>
-             </property>
-            </widget>
-           </item>
-           <item row="12" column="1">
-            <widget class="QSpinBox" name="pwnumberOfSecondsToWaitForResponseSpinBox">
-             <property name="buttonSymbols">
-              <enum>QAbstractSpinBox::PlusMinus</enum>
-             </property>
-             <property name="minimum">
-              <number>1</number>
-             </property>
-             <property name="maximum">
-              <number>999</number>
-             </property>
-            </widget>
-           </item>
-           <item row="20" column="0">
-            <widget class="QCheckBox" name="pwMaxRecursionHWP3CheckBox">
-             <property name="text">
-              <string>Maximum recursion HWP3 parsing function</string>
-             </property>
-            </widget>
-           </item>
-           <item row="21" column="0">
-            <widget class="QCheckBox" name="pwMaxCallsPCREMatchFunctionCheckBox">
-             <property name="text">
-              <string>Maximum calls to PCRE match function</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="0">
-            <widget class="QCheckBox" name="pwfilesLargerThanThisCheckBox">
-             <property name="text">
-              <string>Files larger than this will be skipped and assumed clean</string>
-             </property>
-            </widget>
-           </item>
-           <item row="8" column="0">
-            <widget class="QCheckBox" name="pwmaxSizeOfScriptFileToNormalizeCheckBox">
-             <property name="text">
-              <string>Maximum size of script file to normalize</string>
-             </property>
-            </widget>
-           </item>
-           <item row="6" column="1">
-            <widget class="QSpinBox" name="pwmaxSizeHTMLFileToNormalizeSpinBox">
-             <property name="buttonSymbols">
-              <enum>QAbstractSpinBox::PlusMinus</enum>
-             </property>
-             <property name="minimum">
-              <number>1</number>
-             </property>
-             <property name="maximum">
-              <number>999</number>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="1">
-            <widget class="QSpinBox" name="pwmaxSizeFileForPESpinBox">
-             <property name="buttonSymbols">
-              <enum>QAbstractSpinBox::PlusMinus</enum>
-             </property>
-             <property name="minimum">
-              <number>1</number>
-             </property>
-             <property name="maximum">
-              <number>999</number>
-             </property>
-            </widget>
-           </item>
-           <item row="8" column="1">
-            <widget class="QSpinBox" name="pwmaxSizeOfScriptFileToNormalizeSpinBox">
-             <property name="buttonSymbols">
-              <enum>QAbstractSpinBox::PlusMinus</enum>
-             </property>
-             <property name="minimum">
-              <number>1</number>
-             </property>
-             <property name="maximum">
-              <number>999</number>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="0">
-            <widget class="QCheckBox" name="pwmaxDirRecursionLevelCheckBox">
-             <property name="text">
-              <string>Maximum directory recursion level</string>
-             </property>
-            </widget>
-           </item>
-           <item row="15" column="0">
-            <widget class="QCheckBox" name="pwstructuredSSNFormatCheckBox">
-             <property name="text">
-              <string>Structured SSN Format</string>
-             </property>
-            </widget>
-           </item>
-           <item row="13" column="1">
-            <widget class="QSpinBox" name="pwBytecodeTimeoutSpinBox">
-             <property name="maximum">
-              <number>999</number>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="QSpinBox" name="pwmaxNumberForContainerSpinBox">
-             <property name="buttonSymbols">
-              <enum>QAbstractSpinBox::PlusMinus</enum>
-             </property>
-             <property name="minimum">
-              <number>1</number>
-             </property>
-             <property name="maximum">
-              <number>999</number>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="1">
-            <widget class="QSpinBox" name="pwmaxArchiveRecursionForContainerSpinBox">
-             <property name="buttonSymbols">
-              <enum>QAbstractSpinBox::PlusMinus</enum>
-             </property>
-             <property name="minimum">
-              <number>1</number>
-             </property>
-             <property name="maximum">
-              <number>999</number>
-             </property>
-            </widget>
-           </item>
-           <item row="7" column="2">
-            <widget class="QComboBox" name="pwmaxSizeOfNormalizedHTMLFileComboBox">
-             <item>
-              <property name="text">
-               <string/>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>K</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>M</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-           <item row="13" column="0">
-            <widget class="QCheckBox" name="pwBytecodeTimeoutCheckBox">
-             <property name="text">
-              <string>Bytecode timeout in milliseconds</string>
-             </property>
-            </widget>
-           </item>
-           <item row="17" column="0">
-            <widget class="QCheckBox" name="pwStructuredCCCountCheckBox">
-             <property name="text">
-              <string>Structured CC Count</string>
-             </property>
-            </widget>
-           </item>
-           <item row="11" column="1">
-            <widget class="QSpinBox" name="pwmaxNumberOfIconsInPEFileSpinBox">
-             <property name="buttonSymbols">
-              <enum>QAbstractSpinBox::PlusMinus</enum>
-             </property>
-             <property name="minimum">
-              <number>1</number>
-             </property>
-             <property name="maximum">
-              <number>999</number>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="0">
-            <widget class="QCheckBox" name="pwmaxSizeFileForPECheckBox">
-             <property name="text">
-              <string>Maximum size file to check for embedded PE</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QSpinBox" name="pwfilesLargerThanThisSpinBox">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>70</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>70</height>
-              </size>
-             </property>
-             <property name="buttonSymbols">
-              <enum>QAbstractSpinBox::PlusMinus</enum>
-             </property>
-             <property name="minimum">
-              <number>1</number>
-             </property>
-             <property name="maximum">
-              <number>999</number>
-             </property>
-            </widget>
-           </item>
-           <item row="24" column="0">
-            <widget class="QCheckBox" name="pwdatabaseOutdatedCheckbox">
-             <property name="text">
-              <string>Fail if virus database is older than days</string>
-             </property>
-            </widget>
-           </item>
-           <item row="24" column="1">
-            <widget class="QSpinBox" name="pwdatabaseOutdatedSpinBox">
-             <property name="minimum">
-              <number>1</number>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </widget>
-       </item>
        <item row="0" column="0" colspan="2">
         <layout class="QHBoxLayout" name="horizontalLayout_4">
          <item>
@@ -1509,29 +1002,2015 @@ li.checked::marker { content: &quot;\2612&quot;; }
          </item>
         </layout>
        </item>
+       <item row="1" column="0">
+        <widget class="QScrollArea" name="scrollArea">
+         <property name="widgetResizable">
+          <bool>true</bool>
+         </property>
+         <widget class="QWidget" name="scrollAreaWidgetContents">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>589</width>
+            <height>953</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout">
+           <item>
+            <widget class="QFrame" name="limitFrame_1">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_16">
+              <property name="topMargin">
+               <number>2</number>
+              </property>
+              <property name="bottomMargin">
+               <number>2</number>
+              </property>
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="pwfilesLargerThanThisCheckBox">
+                <property name="text">
+                 <string>Files larger than this will be skipped and assumed clean</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <spacer name="horizontalSpacer_4">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item row="0" column="2">
+               <widget class="QSpinBox" name="pwfilesLargerThanThisSpinBox">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>70</height>
+                 </size>
+                </property>
+                <property name="buttonSymbols">
+                 <enum>QAbstractSpinBox::PlusMinus</enum>
+                </property>
+                <property name="minimum">
+                 <number>1</number>
+                </property>
+                <property name="maximum">
+                 <number>999</number>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="3">
+               <widget class="QComboBox" name="pwfilesLargerThanThisComboBox">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>70</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <item>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>K</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>M</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QFrame" name="limitFrame_2">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_17">
+              <property name="topMargin">
+               <number>2</number>
+              </property>
+              <property name="bottomMargin">
+               <number>2</number>
+              </property>
+              <item row="0" column="3">
+               <widget class="QComboBox" name="pwmaxAmountForContainerComboBox">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>70</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <item>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>K</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>M</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="0" column="2">
+               <widget class="QSpinBox" name="pwmaxAmountForContainerSpinBox">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>70</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="buttonSymbols">
+                 <enum>QAbstractSpinBox::PlusMinus</enum>
+                </property>
+                <property name="minimum">
+                 <number>1</number>
+                </property>
+                <property name="maximum">
+                 <number>999</number>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="pwmaxAmountForContainerCheckBox">
+                <property name="text">
+                 <string>The maximum amount of data to scan for each container file</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <spacer name="horizontalSpacer_7">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QFrame" name="limitFrame_3">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_14">
+              <property name="topMargin">
+               <number>2</number>
+              </property>
+              <property name="bottomMargin">
+               <number>2</number>
+              </property>
+              <item>
+               <widget class="QCheckBox" name="pwmaxNumberForContainerCheckBox">
+                <property name="text">
+                 <string>The maximum number of files to scan for each container file</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="pwmaxNumberForContainerSpinBox">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>70</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="buttonSymbols">
+                 <enum>QAbstractSpinBox::PlusMinus</enum>
+                </property>
+                <property name="minimum">
+                 <number>1</number>
+                </property>
+                <property name="maximum">
+                 <number>999</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="pwmaxNumberForContainerComboBox">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>70</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <item>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>K</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>M</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QFrame" name="limitFrame_4">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_15">
+              <property name="topMargin">
+               <number>2</number>
+              </property>
+              <property name="bottomMargin">
+               <number>2</number>
+              </property>
+              <item>
+               <widget class="QCheckBox" name="pwmaxArchiveRecursionForContainerCheckBox">
+                <property name="text">
+                 <string>Maximum archive recursion level for container file</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_8">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>242</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="pwmaxArchiveRecursionForContainerSpinBox">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>70</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="buttonSymbols">
+                 <enum>QAbstractSpinBox::PlusMinus</enum>
+                </property>
+                <property name="minimum">
+                 <number>1</number>
+                </property>
+                <property name="maximum">
+                 <number>999</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="pwmaxArchiveRecursionForContainerComboBox">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>70</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <item>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>K</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>M</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QFrame" name="limitFrame_5">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_16">
+              <property name="topMargin">
+               <number>2</number>
+              </property>
+              <property name="bottomMargin">
+               <number>2</number>
+              </property>
+              <item>
+               <widget class="QCheckBox" name="pwmaxDirRecursionLevelCheckBox">
+                <property name="text">
+                 <string>Maximum directory recursion level</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_9">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>336</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="pwmaxDirRecursionLevelSpinBox">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="buttonSymbols">
+                 <enum>QAbstractSpinBox::PlusMinus</enum>
+                </property>
+                <property name="minimum">
+                 <number>1</number>
+                </property>
+                <property name="maximum">
+                 <number>999</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="pwmaxDirRecursionLevelComboBox">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <item>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>K</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>M</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QFrame" name="limitFrame_6">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_17">
+              <property name="topMargin">
+               <number>2</number>
+              </property>
+              <property name="bottomMargin">
+               <number>2</number>
+              </property>
+              <item>
+               <widget class="QCheckBox" name="pwmaxSizeFileForPECheckBox">
+                <property name="text">
+                 <string>Maximum size file to check for embedded PE</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_10">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>275</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="pwmaxSizeFileForPESpinBox">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="buttonSymbols">
+                 <enum>QAbstractSpinBox::PlusMinus</enum>
+                </property>
+                <property name="minimum">
+                 <number>1</number>
+                </property>
+                <property name="maximum">
+                 <number>999</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="pwmaxSizeFileForPEComboBox">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <item>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>K</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>M</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QFrame" name="limitFrame_7">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_18">
+              <property name="topMargin">
+               <number>2</number>
+              </property>
+              <property name="rightMargin">
+               <number>9</number>
+              </property>
+              <property name="bottomMargin">
+               <number>2</number>
+              </property>
+              <item>
+               <widget class="QCheckBox" name="pwmaxSizeHTMLFileToNormalizeCheckBox">
+                <property name="text">
+                 <string>Maximum size of HTML file to normalize</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_11">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>303</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="pwmaxSizeHTMLFileToNormalizeSpinBox">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="buttonSymbols">
+                 <enum>QAbstractSpinBox::PlusMinus</enum>
+                </property>
+                <property name="minimum">
+                 <number>1</number>
+                </property>
+                <property name="maximum">
+                 <number>999</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="pwmaxSizeHTMLFileToNormalizeComboBox">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <item>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>K</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>M</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QFrame" name="limitFrame_8">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_19">
+              <property name="topMargin">
+               <number>2</number>
+              </property>
+              <property name="bottomMargin">
+               <number>2</number>
+              </property>
+              <item>
+               <widget class="QCheckBox" name="pwmaxSizeOfNormalizedHTMLFileCheckBox">
+                <property name="text">
+                 <string>Maximum size of normalized HTML file to scan</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_12">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>264</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="pwmaxSizeOfNormalizedHTMLFileSpinBox">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="buttonSymbols">
+                 <enum>QAbstractSpinBox::PlusMinus</enum>
+                </property>
+                <property name="minimum">
+                 <number>1</number>
+                </property>
+                <property name="maximum">
+                 <number>999</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="pwmaxSizeOfNormalizedHTMLFileComboBox">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <item>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>K</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>M</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QFrame" name="limitFrame_9">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_20">
+              <property name="topMargin">
+               <number>2</number>
+              </property>
+              <property name="bottomMargin">
+               <number>2</number>
+              </property>
+              <item>
+               <widget class="QCheckBox" name="pwmaxSizeOfScriptFileToNormalizeCheckBox">
+                <property name="text">
+                 <string>Maximum size of script file to normalize</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_13">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>305</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="pwmaxSizeOfScriptFileToNormalizeSpinBox">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="buttonSymbols">
+                 <enum>QAbstractSpinBox::PlusMinus</enum>
+                </property>
+                <property name="minimum">
+                 <number>1</number>
+                </property>
+                <property name="maximum">
+                 <number>999</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="pwmaxSizeOfScriptFileToNormalizeComboBox">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <item>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>K</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>M</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QFrame" name="limitFrame_10">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_21">
+              <property name="topMargin">
+               <number>2</number>
+              </property>
+              <property name="bottomMargin">
+               <number>2</number>
+              </property>
+              <item>
+               <widget class="QCheckBox" name="pwmaxSizeZipToTypeReanalzeCheckBox">
+                <property name="text">
+                 <string>Maximum size zip to type reanalyze</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_14">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>331</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="pwmaxSizeZipToTypeReanalzeSpinBox">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="buttonSymbols">
+                 <enum>QAbstractSpinBox::PlusMinus</enum>
+                </property>
+                <property name="minimum">
+                 <number>1</number>
+                </property>
+                <property name="maximum">
+                 <number>999</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="pwmaxSizeZipToTypeReanalzeComboBox">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <item>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>K</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>M</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QFrame" name="limitFrame_11">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_22">
+              <property name="topMargin">
+               <number>2</number>
+              </property>
+              <property name="bottomMargin">
+               <number>2</number>
+              </property>
+              <item>
+               <widget class="QCheckBox" name="pwmaxNumberOfPartitionsInDiskImageCheckBox">
+                <property name="text">
+                 <string>Maximum number of partitions in disk image to be scanned</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_15">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>183</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="pwmaxNumberOfPartitionsInDiskImageSpinBox">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="buttonSymbols">
+                 <enum>QAbstractSpinBox::PlusMinus</enum>
+                </property>
+                <property name="minimum">
+                 <number>1</number>
+                </property>
+                <property name="maximum">
+                 <number>999</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="pwmaxNumberOfPartitionsInDiskImageComboBox">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <item>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>K</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>M</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QFrame" name="limitFrame_12">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_23">
+              <property name="topMargin">
+               <number>2</number>
+              </property>
+              <property name="bottomMargin">
+               <number>2</number>
+              </property>
+              <item>
+               <widget class="QCheckBox" name="pwmaxNumberOfIconsInPEFileCheckBox">
+                <property name="text">
+                 <string>Maximum number of icons in PE file to be scanned</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_16">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>239</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="pwmaxNumberOfIconsInPEFileSpinBox">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="buttonSymbols">
+                 <enum>QAbstractSpinBox::PlusMinus</enum>
+                </property>
+                <property name="minimum">
+                 <number>1</number>
+                </property>
+                <property name="maximum">
+                 <number>999</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="pwmaxNumberOfIconsInPEFileComboBox">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <item>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>K</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>M</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QFrame" name="limitFrame_13">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>50</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_24">
+              <property name="topMargin">
+               <number>2</number>
+              </property>
+              <property name="bottomMargin">
+               <number>2</number>
+              </property>
+              <item>
+               <widget class="QCheckBox" name="pwnumberOfSecondsForResponseCheckBox">
+                <property name="text">
+                 <string>Minimum number of seconds to Wait for Response</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_17">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="pwnumberOfSecondsForResponseSpinBox">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="autoFillBackground">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QFrame" name="limitFrame_14">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_25">
+              <property name="topMargin">
+               <number>2</number>
+              </property>
+              <property name="bottomMargin">
+               <number>2</number>
+              </property>
+              <item>
+               <widget class="QCheckBox" name="pwBytecodeTimeoutCheckBox">
+                <property name="text">
+                 <string>Bytecode timeout in milliseconds</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_18">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>422</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="pwBytecodeTimeoutSpinBox">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximum">
+                 <number>999</number>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QFrame" name="limitFrame_15">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_26">
+              <property name="topMargin">
+               <number>2</number>
+              </property>
+              <property name="bottomMargin">
+               <number>2</number>
+              </property>
+              <item>
+               <widget class="QCheckBox" name="pwExecutionStatisticsCheckBox">
+                <property name="text">
+                 <string>Collect and print execution statistics</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_19">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>389</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QComboBox" name="pwExecutionStatisticsComboBox">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>none</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>bytecode</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>pcre</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QFrame" name="limitFrame_16">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_27">
+              <property name="topMargin">
+               <number>2</number>
+              </property>
+              <property name="bottomMargin">
+               <number>2</number>
+              </property>
+              <item>
+               <widget class="QCheckBox" name="pwstructuredSSNFormatCheckBox">
+                <property name="text">
+                 <string>Structured SSN Format</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_20">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>474</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QComboBox" name="pwStructuredSSNFormatComboBox">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>normal</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>stripped</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>both</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QFrame" name="limitFrame_17">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_28">
+              <property name="topMargin">
+               <number>2</number>
+              </property>
+              <property name="bottomMargin">
+               <number>2</number>
+              </property>
+              <item>
+               <widget class="QCheckBox" name="pwStructuredSSNCountCheckBox">
+                <property name="text">
+                 <string>Structured SSN Count</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_21">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>491</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="pwStructuredSSNCountSpinBox">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximum">
+                 <number>999</number>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QFrame" name="limitFrame_18">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_29">
+              <property name="topMargin">
+               <number>2</number>
+              </property>
+              <property name="bottomMargin">
+               <number>2</number>
+              </property>
+              <item>
+               <widget class="QCheckBox" name="pwStructuredCCCountCheckBox">
+                <property name="text">
+                 <string>Structured CC Count</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_22">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>499</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="pwStructuredCCCountSpinBox">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximum">
+                 <number>999</number>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QFrame" name="limitFrame_19">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_30">
+              <property name="topMargin">
+               <number>2</number>
+              </property>
+              <property name="bottomMargin">
+               <number>2</number>
+              </property>
+              <item>
+               <widget class="QCheckBox" name="pwStructuredCCModeCheckBox">
+                <property name="text">
+                 <string>Structured CC Mode</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_23">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>366</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QComboBox" name="pwStructuredCCModeComboBox">
+                <item>
+                 <property name="text">
+                  <string>credit debit and private label</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>credit cards only</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QFrame" name="limitFrame_20">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_31">
+              <property name="topMargin">
+               <number>2</number>
+              </property>
+              <property name="bottomMargin">
+               <number>2</number>
+              </property>
+              <item>
+               <widget class="QCheckBox" name="pwMaxScanTimeCheckBox">
+                <property name="text">
+                 <string>Maximum Scan Time in ms</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_24">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>460</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="pwMaxScanTimeSpinBox">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximum">
+                 <number>999</number>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QFrame" name="limitFrame_21">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_32">
+              <property name="topMargin">
+               <number>2</number>
+              </property>
+              <property name="bottomMargin">
+               <number>2</number>
+              </property>
+              <item>
+               <widget class="QCheckBox" name="pwMaxRecursionHWP3CheckBox">
+                <property name="text">
+                 <string>Maximum recursion HWP3 parsing function</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_25">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="pwMaxRecursionHWP3SpinBox">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximum">
+                 <number>999</number>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QFrame" name="limitFrame_22">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_33">
+              <property name="topMargin">
+               <number>2</number>
+              </property>
+              <property name="bottomMargin">
+               <number>2</number>
+              </property>
+              <item>
+               <widget class="QCheckBox" name="pwMaxCallsPCREMatchFunctionCheckBox">
+                <property name="text">
+                 <string>Maximum calls to PCRE match function</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_26">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>386</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="pwMaxCallsPCREMatchFunctionSpinBox">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QFrame" name="limitFrame_23">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_34">
+              <property name="topMargin">
+               <number>2</number>
+              </property>
+              <property name="bottomMargin">
+               <number>2</number>
+              </property>
+              <item>
+               <widget class="QCheckBox" name="pwMaxRecursionCallsPCREMatchFunctionCheckBox">
+                <property name="text">
+                 <string>Maximum recursion calls to PCRE match function</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_27">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>325</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="pwMaxRecursionCallsPCREMatchFunctionCpinBox">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QFrame" name="limitFrame_24">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_35">
+              <property name="topMargin">
+               <number>2</number>
+              </property>
+              <property name="bottomMargin">
+               <number>2</number>
+              </property>
+              <item>
+               <widget class="QCheckBox" name="pwMaxPCREFileSizeCheckBox">
+                <property name="text">
+                 <string>Maximum PCRE file size</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_28">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>403</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="pwMaxPCREFileSizeSpinBox">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="pwMaxPCREFileSizeComboBox">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <item>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>K</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>M</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QFrame" name="limitFrame_25">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_36">
+              <property name="topMargin">
+               <number>2</number>
+              </property>
+              <property name="bottomMargin">
+               <number>2</number>
+              </property>
+              <item>
+               <widget class="QCheckBox" name="pwdatabaseOutdatedCheckbox">
+                <property name="text">
+                 <string>Fail if virus database is older than days</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_29">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>388</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="pwdatabaseOutdatedSpinBox">
+                <property name="minimumSize">
+                 <size>
+                  <width>70</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="minimum">
+                 <number>1</number>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="wizardPage_7">
       <layout class="QGridLayout" name="gridLayout_12">
-       <item row="0" column="1">
-        <widget class="QLineEdit" name="pwdontScanFileNameLineEdit"/>
-       </item>
-       <item row="1" column="0">
-        <widget class="QCheckBox" name="pwdontScanDirCheckBox">
-         <property name="text">
-          <string>Don't scan directories matching REGEX</string>
+       <item row="3" column="0" colspan="2">
+        <widget class="QFrame" name="frame04">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
          </property>
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_40">
+          <property name="topMargin">
+           <number>2</number>
+          </property>
+          <property name="bottomMargin">
+           <number>2</number>
+          </property>
+          <item>
+           <widget class="QCheckBox" name="pwonlyScanDirCheckBox">
+            <property name="text">
+             <string>Only scan directories matching REGEX</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="pwonlyScanDirLineEdit"/>
+          </item>
+         </layout>
         </widget>
        </item>
-       <item row="0" column="0">
-        <widget class="QCheckBox" name="pwdontScanFileNameCheckBox">
-         <property name="text">
-          <string>Don't scan file names matching REGEX</string>
+       <item row="2" column="0" colspan="2">
+        <widget class="QFrame" name="frame03">
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
          </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_39">
+          <property name="topMargin">
+           <number>2</number>
+          </property>
+          <property name="bottomMargin">
+           <number>2</number>
+          </property>
+          <item>
+           <widget class="QCheckBox" name="pwonlyScanFileNameCheckBox">
+            <property name="text">
+             <string>Only scan file names matching REGEX</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="pwonlyScanFileNameLineEdit"/>
+          </item>
+         </layout>
         </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QLineEdit" name="pwonlyScanFileNameLineEdit"/>
        </item>
        <item row="4" column="0" colspan="2">
         <widget class="QFrame" name="frame_3">
@@ -1562,9 +3041,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
                <property name="autoExclusive">
                 <bool>false</bool>
                </property>
-               <attribute name="buttonGroup">
-                <string notr="true">buttonGroup_2</string>
-               </attribute>
               </widget>
              </item>
              <item row="6" column="0">
@@ -1575,9 +3051,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
                <property name="autoExclusive">
                 <bool>false</bool>
                </property>
-               <attribute name="buttonGroup">
-                <string notr="true">buttonGroup_7</string>
-               </attribute>
               </widget>
              </item>
              <item row="2" column="0">
@@ -1591,9 +3064,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
                <property name="autoExclusive">
                 <bool>false</bool>
                </property>
-               <attribute name="buttonGroup">
-                <string notr="true">buttonGroup_3</string>
-               </attribute>
               </widget>
              </item>
              <item row="4" column="0">
@@ -1604,9 +3074,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
                <property name="autoExclusive">
                 <bool>false</bool>
                </property>
-               <attribute name="buttonGroup">
-                <string notr="true">buttonGroup_5</string>
-               </attribute>
               </widget>
              </item>
              <item row="5" column="0">
@@ -1617,9 +3084,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
                <property name="autoExclusive">
                 <bool>false</bool>
                </property>
-               <attribute name="buttonGroup">
-                <string notr="true">buttonGroup_6</string>
-               </attribute>
               </widget>
              </item>
              <item row="3" column="0">
@@ -1630,9 +3094,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
                <property name="autoExclusive">
                 <bool>false</bool>
                </property>
-               <attribute name="buttonGroup">
-                <string notr="true">buttonGroup_4</string>
-               </attribute>
               </widget>
              </item>
              <item row="7" column="0">
@@ -1643,9 +3104,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
                <property name="autoExclusive">
                 <bool>false</bool>
                </property>
-               <attribute name="buttonGroup">
-                <string notr="true">buttonGroup_8</string>
-               </attribute>
               </widget>
              </item>
              <item row="8" column="0">
@@ -1659,9 +3117,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
                <property name="autoExclusive">
                 <bool>false</bool>
                </property>
-               <attribute name="buttonGroup">
-                <string notr="true">buttonGroup_9</string>
-               </attribute>
               </widget>
              </item>
              <item row="0" column="0">
@@ -1675,9 +3130,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
                <property name="autoExclusive">
                 <bool>false</bool>
                </property>
-               <attribute name="buttonGroup">
-                <string notr="true">buttonGroup</string>
-               </attribute>
               </widget>
              </item>
              <item row="0" column="1">
@@ -1753,102 +3205,64 @@ li.checked::marker { content: &quot;\2612&quot;; }
          </layout>
         </widget>
        </item>
-       <item row="3" column="1">
-        <widget class="QLineEdit" name="pwonlyScanDirLineEdit"/>
-       </item>
-       <item row="1" column="1">
-        <widget class="QLineEdit" name="pwdontScanDirLineEdit"/>
-       </item>
-       <item row="2" column="0">
-        <widget class="QCheckBox" name="pwonlyScanFileNameCheckBox">
-         <property name="text">
-          <string>Only scan file names matching REGEX</string>
+       <item row="0" column="0" colspan="2">
+        <widget class="QFrame" name="frame01">
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
          </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_37">
+          <property name="topMargin">
+           <number>2</number>
+          </property>
+          <property name="bottomMargin">
+           <number>2</number>
+          </property>
+          <item>
+           <widget class="QCheckBox" name="pwdontScanFileNameCheckBox">
+            <property name="text">
+             <string>Don't scan file names matching REGEX</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="pwdontScanFileNameLineEdit"/>
+          </item>
+         </layout>
         </widget>
        </item>
-       <item row="3" column="0">
-        <widget class="QCheckBox" name="pwonlyScanDirCheckBox">
-         <property name="text">
-          <string>Only scan directories matching REGEX</string>
+       <item row="1" column="0" colspan="2">
+        <widget class="QFrame" name="frame02">
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
          </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_38">
+          <property name="topMargin">
+           <number>2</number>
+          </property>
+          <property name="bottomMargin">
+           <number>2</number>
+          </property>
+          <item>
+           <widget class="QCheckBox" name="pwdontScanDirCheckBox">
+            <property name="text">
+             <string>Don't scan directories matching REGEX</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="pwdontScanDirLineEdit"/>
+          </item>
+         </layout>
         </widget>
        </item>
       </layout>
      </widget>
-    </widget>
-   </item>
-   <item row="2" column="0">
-    <widget class="QPushButton" name="previousButton">
-     <property name="text">
-      <string>Back</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../resources.qrc">
-       <normaloff>:/icons/icons/back.png</normaloff>:/icons/icons/back.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>22</width>
-       <height>22</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1">
-    <widget class="QPushButton" name="nextButton">
-     <property name="layoutDirection">
-      <enum>Qt::LeftToRight</enum>
-     </property>
-     <property name="text">
-      <string>Next</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../resources.qrc">
-       <normaloff>:/icons/icons/next.png</normaloff>:/icons/icons/next.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>22</width>
-       <height>22</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="6">
-    <widget class="QPushButton" name="createButton">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="text">
-      <string>Create</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../resources.qrc">
-       <normaloff>:/icons/icons/create.png</normaloff>:/icons/icons/create.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>22</width>
-       <height>22</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="5">
-    <widget class="QPushButton" name="cancelButton">
-     <property name="text">
-      <string>Cancel</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../resources.qrc">
-       <normaloff>:/icons/icons/cancel.png</normaloff>:/icons/icons/cancel.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>22</width>
-       <height>22</height>
-      </size>
-     </property>
     </widget>
    </item>
   </layout>
@@ -1918,8 +3332,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
    <slot>slot_checkNavigationButtons()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>214</x>
-     <y>168</y>
+     <x>99</x>
+     <y>129</y>
     </hint>
     <hint type="destinationlabel">
      <x>631</x>
@@ -1934,8 +3348,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
    <slot>slot_enablePUACheckBoxActivated()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>79</x>
-     <y>144</y>
+     <x>117</x>
+     <y>353</y>
     </hint>
     <hint type="destinationlabel">
      <x>6</x>
@@ -1950,8 +3364,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
    <slot>slot_rootButtonClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>152</x>
-     <y>244</y>
+     <x>108</x>
+     <y>144</y>
     </hint>
     <hint type="destinationlabel">
      <x>7</x>
@@ -1966,8 +3380,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
    <slot>slot_homeButtonClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>152</x>
-     <y>284</y>
+     <x>108</x>
+     <y>144</y>
     </hint>
     <hint type="destinationlabel">
      <x>5</x>
@@ -1982,8 +3396,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
    <slot>slot_listChanged()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>270</x>
-     <y>185</y>
+     <x>108</x>
+     <y>144</y>
     </hint>
     <hint type="destinationlabel">
      <x>695</x>
@@ -2103,6 +3517,854 @@ li.checked::marker { content: &quot;\2612&quot;; }
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>showHiddenDirsCheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_hiddenDirsCheckBoxClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>108</x>
+     <y>144</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>822</x>
+     <y>184</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>loadVirusDatabaseCheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_directoryCheckBoxesClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>42</x>
+     <y>144</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>5</x>
+     <y>195</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>scanReportToFileCheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_directoryCheckBoxesClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>56</x>
+     <y>144</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-6</x>
+     <y>238</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>scanFilesFromFileCheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_directoryCheckBoxesClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>70</x>
+     <y>144</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>6</x>
+     <y>260</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tempFileCheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_directoryCheckBoxesClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>63</x>
+     <y>144</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>7</x>
+     <y>298</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>moveDirectoryCheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_directoryCheckBoxesClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>59</x>
+     <y>144</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>6</x>
+     <y>339</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>followDirectorySymlinksCheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_directoryCheckBoxesClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>95</x>
+     <y>144</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>5</x>
+     <y>377</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>followFileSymlinksCheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_directoryCheckBoxesClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>78</x>
+     <y>144</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>5</x>
+     <y>419</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>copyDirectoryCheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_directoryCheckBoxesClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>46</x>
+     <y>144</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>3</x>
+     <y>458</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pwfilesLargerThanThisCheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_scanLimitsCheckBoxClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>51</x>
+     <y>125</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>6</x>
+     <y>181</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pwmaxAmountForContainerCheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_scanLimitsCheckBoxClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>74</x>
+     <y>162</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>3</x>
+     <y>150</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pwmaxNumberForContainerCheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_scanLimitsCheckBoxClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>110</x>
+     <y>199</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>4</x>
+     <y>127</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pwmaxArchiveRecursionForContainerCheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_scanLimitsCheckBoxClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>64</x>
+     <y>236</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>13</x>
+     <y>663</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pwmaxDirRecursionLevelCheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_scanLimitsCheckBoxClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>77</x>
+     <y>273</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>33</x>
+     <y>667</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pwmaxSizeFileForPECheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_scanLimitsCheckBoxClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>95</x>
+     <y>310</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>75</x>
+     <y>666</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pwmaxSizeHTMLFileToNormalizeCheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_scanLimitsCheckBoxClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>118</x>
+     <y>347</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>94</x>
+     <y>663</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pwmaxSizeOfNormalizedHTMLFileCheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_scanLimitsCheckBoxClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>118</x>
+     <y>384</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>114</x>
+     <y>667</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pwmaxSizeOfScriptFileToNormalizeCheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_scanLimitsCheckBoxClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>118</x>
+     <y>421</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>133</x>
+     <y>667</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pwmaxSizeZipToTypeReanalzeCheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_scanLimitsCheckBoxClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>118</x>
+     <y>458</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>254</x>
+     <y>681</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pwmaxNumberOfPartitionsInDiskImageCheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_scanLimitsCheckBoxClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>118</x>
+     <y>495</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>276</x>
+     <y>692</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pwmaxNumberOfIconsInPEFileCheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_scanLimitsCheckBoxClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>118</x>
+     <y>532</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>388</x>
+     <y>663</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pwnumberOfSecondsForResponseCheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_scanLimitsCheckBoxClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>118</x>
+     <y>569</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>475</x>
+     <y>678</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pwBytecodeTimeoutCheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_scanLimitsCheckBoxClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>106</x>
+     <y>625</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>191</x>
+     <y>109</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pwExecutionStatisticsCheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_scanLimitsCheckBoxClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>80</x>
+     <y>662</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>384</x>
+     <y>5</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pwstructuredSSNFormatCheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_scanLimitsCheckBoxClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>99</x>
+     <y>698</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>361</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pwStructuredSSNCountCheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_scanLimitsCheckBoxClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>72</x>
+     <y>734</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>346</x>
+     <y>-5</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pwStructuredCCCountCheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_scanLimitsCheckBoxClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>96</x>
+     <y>771</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>331</x>
+     <y>-11</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pwStructuredCCModeCheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_scanLimitsCheckBoxClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>70</x>
+     <y>808</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>308</x>
+     <y>-18</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pwMaxScanTimeCheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_scanLimitsCheckBoxClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>87</x>
+     <y>844</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>292</x>
+     <y>-24</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pwMaxRecursionHWP3CheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_scanLimitsCheckBoxClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>118</x>
+     <y>881</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>811</x>
+     <y>-4</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pwMaxCallsPCREMatchFunctionCheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_scanLimitsCheckBoxClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>72</x>
+     <y>918</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>799</x>
+     <y>1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pwMaxRecursionCallsPCREMatchFunctionCheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_scanLimitsCheckBoxClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>100</x>
+     <y>955</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>788</x>
+     <y>5</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pwMaxPCREFileSizeCheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_scanLimitsCheckBoxClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>74</x>
+     <y>992</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>822</x>
+     <y>24</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pwdatabaseOutdatedCheckbox</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_scanLimitsCheckBoxClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>101</x>
+     <y>1029</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>824</x>
+     <y>59</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pwdontScanFileNameCheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_highlightSettings()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>82</x>
+     <y>142</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>4</x>
+     <y>11</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pwdontScanDirCheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_highlightSettings()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>50</x>
+     <y>193</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>3</x>
+     <y>42</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pwonlyScanFileNameCheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_highlightSettings()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>99</x>
+     <y>242</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>2</x>
+     <y>70</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pwonlyScanDirCheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_highlightSettings()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>83</x>
+     <y>291</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>2</x>
+     <y>105</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pwloadPUAPackedRadioButon</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_highlightSettings()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>58</x>
+     <y>380</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>27</x>
+     <y>111</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pwloadPUAPWToolRadioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_highlightSettings()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>80</x>
+     <y>410</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>822</x>
+     <y>15</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pwloadPUANetToolRadioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_highlightSettings()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>161</x>
+     <y>441</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>823</x>
+     <y>46</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pwloadPUAP2PRadioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_highlightSettings()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>67</x>
+     <y>474</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>822</x>
+     <y>77</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pwloadPUAIRCRadioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_highlightSettings()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>131</x>
+     <y>503</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>824</x>
+     <y>113</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pwloadPUARATRadioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_highlightSettings()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>73</x>
+     <y>531</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>821</x>
+     <y>144</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pwloadPUANetToolSpyRadioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_highlightSettings()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>124</x>
+     <y>564</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>819</x>
+     <y>179</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pwloadPUAServerRadioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_highlightSettings()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>172</x>
+     <y>593</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>821</x>
+     <y>527</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pwloadPUAScriptRadioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_highlightSettings()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>253</x>
+     <y>622</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>821</x>
+     <y>485</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pwloadPUAAndrRadioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_highlightSettings()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>511</x>
+     <y>383</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>823</x>
+     <y>563</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pwloadPUAJavaRadioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_highlightSettings()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>602</x>
+     <y>411</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>821</x>
+     <y>592</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pwloadPUAOsxRadioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_highlightSettings()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>476</x>
+     <y>443</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>822</x>
+     <y>620</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pwloadPUAToolRadioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_highlightSettings()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>529</x>
+     <y>469</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>822</x>
+     <y>648</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pwloadPUAUnixRadioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_highlightSettings()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>570</x>
+     <y>504</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>821</x>
+     <y>455</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pwloadPUAWinRadioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ProfileWizardDialog</receiver>
+   <slot>slot_highlightSettings()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>458</x>
+     <y>534</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>821</x>
+     <y>424</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>slot_nextButtonClicked()</slot>
@@ -2120,16 +4382,9 @@ li.checked::marker { content: &quot;\2612&quot;; }
   <slot>slot_copyInfectedFilesButtonClicked()</slot>
   <slot>slot_createButtonClicked()</slot>
   <slot>slot_cancleButtonClicked()</slot>
+  <slot>slot_hiddenDirsCheckBoxClicked()</slot>
+  <slot>slot_directoryCheckBoxesClicked()</slot>
+  <slot>slot_scanLimitsCheckBoxClicked()</slot>
+  <slot>slot_highlightSettings()</slot>
  </slots>
- <buttongroups>
-  <buttongroup name="buttonGroup"/>
-  <buttongroup name="buttonGroup_6"/>
-  <buttongroup name="buttonGroup_5"/>
-  <buttongroup name="buttonGroup_3"/>
-  <buttongroup name="buttonGroup_8"/>
-  <buttongroup name="buttonGroup_4"/>
-  <buttongroup name="buttonGroup_7"/>
-  <buttongroup name="buttonGroup_9"/>
-  <buttongroup name="buttonGroup_2"/>
- </buttongroups>
 </ui>
