@@ -66,6 +66,10 @@ private slots:
     void slot_getClamscanProcessHasOutput();
     void slot_getClamscanProcessFinished();
     void slot_cancleButtonClicked();
+    void slot_hiddenDirsCheckBoxClicked();
+    void slot_directoryCheckBoxesClicked();
+    void slot_scanLimitsCheckBoxClicked();
+    void slot_highlightSettings();
 
 signals:
     void signal_profileSaved();

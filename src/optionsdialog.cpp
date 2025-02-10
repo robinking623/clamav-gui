@@ -44,7 +44,7 @@ void optionsDialog::slot_getClamscanProcessFinished(){
     QString excludeList =  "--help|--version|--database|--log|--file-list|--move|--copy|--exclude|--exclude-dir|--include|--include-dir|";
     excludeList += "--bytecode-timeout|--statistics|--exclude-pua|--include-pua|--structured-ssn-format|--structured-ssn-count|--structured-cc-count|--tempdir|--follow-dir-symlinks|";
     excludeList += "--structured-cc-mode|--max-scantime|--max-filesize|--max-scansize|--max-files|--max-recursion|--max-dir-recursion|--max-embeddedpe|--max-htmlnormalize|--follow-file-symlinks|";
-    excludeList += "--max-htmlnotags|--max-scriptnormalize|--max-ziptypercg|--max-partitions|--max-iconspe|--max-rechwp3|--pcre-match-limit|--pcre-recmatch-limit=#n|--pcre-max-filesize=#n|";
+    excludeList += "--max-htmlnotags|--max-scriptnormalize|--max-ziptypercg|--max-partitions|--max-iconspe|--max-rechwp3|--pcre-match-limit|--pcre-recmatch-limit|--pcre-max-filesize|";
     excludeList += "--fail-if-cvd-older-than=days";
     getClamscanProcessOutput = getClamscanProcessOutput + getClamscanParametersProcess->readAll();
 
@@ -58,6 +58,7 @@ void optionsDialog::slot_getClamscanProcessFinished(){
     QString comment;
 
     setupFile->removeSection("AvailableOptions");
+    setupFile->removeSection("OtherKeywords");
 
     QString commentSum = "";
     for (int x = 0; x < lines.size(); x++) {
@@ -115,6 +116,8 @@ void optionsDialog::slot_getClamscanProcessFinished(){
                 } else {
                     setupFile->setSectionValue("AvailableOptions",keyword,comment);
                 }
+            } else {
+                setupFile->setSectionValue("OtherKeywords",keyword,"exists");
             }
         }
     }

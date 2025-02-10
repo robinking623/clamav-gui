@@ -46,6 +46,7 @@ private:
 private slots:
     void slot_writeSettings();
     void slot_enablePUACheckBoxClicked();
+    void slot_highlightSettings();
 
 signals:
     void updateClamdConf();

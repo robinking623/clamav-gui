@@ -27,7 +27,9 @@ scanTab::scanTab(QWidget *parent) : QWidget(parent),ui(new Ui::scanTab){
         }
     }
 
-    setupFile->getSectionBoolValue("Settings","RecursivScan") == true?ui->recursivCheckBox->setChecked(true):ui->recursivCheckBox->setChecked(false);
+    ui->recursivCheckBox->setChecked(setupFile->getSectionBoolValue("Settings","RecursivScan"));
+    ui->showHiddenDirsCheckBox->setChecked(setupFile->getSectionBoolValue("Settings","ShowHiddenDirs"));
+    slot_hiddenFoldersCheckBoxClicked();
     ui->virusFoundComboBox->setCurrentIndex(setupFile->getSectionIntValue("Settings","VirusFoundComboBox"));
 
     whoamiProcess = new QProcess(this);
@@ -216,6 +218,7 @@ void scanTab::slot_enableForm(bool mode){
     ui->startScanButton->setEnabled(mode);
     ui->stopScanButton->setEnabled(!mode);
     ui->recursivCheckBox->setEnabled(mode);
+    ui->showHiddenDirsCheckBox->setEnabled(mode);
     ui->virusFoundComboBox->setEnabled(mode);
     ui->treeView->setEnabled(mode);
 }
@@ -259,5 +262,15 @@ void scanTab::slot_disableScanButton()
 
 void scanTab::slot_receiveVersionInformation(QString info)
 {
-   ui->versionTextBrowser->setHtml(info);
+    ui->versionTextBrowser->setHtml(info);
+}
+
+void scanTab::slot_hiddenFoldersCheckBoxClicked()
+{
+    if (ui->showHiddenDirsCheckBox->isChecked() == true) {
+        model->setFilter(QDir::AllDirs|QDir::NoDotAndDotDot|QDir::Hidden);
+    } else {
+        model->setFilter(QDir::AllDirs|QDir::NoDotAndDotDot);
+    }
+    setupFile->setSectionValue("Settings","ShowHiddenDirs",ui->showHiddenDirsCheckBox->isChecked());
 }

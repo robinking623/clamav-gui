@@ -46,7 +46,6 @@ QString checked;
 /*23*/        keywords << "Max PCRE file size";
 /*24*/        keywords << "Database outdated if older than x days";
 
-
         for (int i = 0; i < keywords.length(); i++) {
             keyword = keywords.at(i);
 
@@ -131,6 +130,8 @@ QString checked;
         }
 
         emit updateClamdConf();
+
+        updateLimits();
     }
 }
 
@@ -170,6 +171,13 @@ bool flag;
 /*23*/    keywords << "Max PCRE file size";
 /*24*/    keywords << "Database outdated if older than x days";
 
+    QStringList switches;
+    switches << "--max-filesize" << "--max-scansize" << "--max-files" << "--max-recursion" << "--max-dir-recursion" << "--max-embeddedpe";
+    switches << "--max-htmlnormalize" << "--max-htmlnotags" << "--max-scriptnormalize" << "--max-ziptypercg" << "--max-partitions" << "--max-iconspe";
+    switches << "--stats-timeout" << "--bytecode-timeout" << "--statistics" << "--structured-ssn-format" << "--structured-ssn-count" << "--structured-cc-count";
+    switches << "--structured-cc-count" << "--structured-cc-mode" << "--max-rechwp3" << "--pcre-match-limit" << "--pcre-recmatch-limit" << "--pcre-max-filesize";
+    switches << "--fail-if-cvd-older-than";
+
     for (int i = 0; i < keywords.length(); i++) {
         keyword = keywords.at(i);
 
@@ -179,114 +187,214 @@ bool flag;
         checked=="checked"?flag=true:flag=false;
 
         switch (i) {
-        case 0 : if (value.right(1) != ""){
-                     ui->filesLargerThanThisComboBox->setCurrentIndex(ui->filesLargerThanThisComboBox->findText(value.right(1)));
-                     value = value.left(value.length() - 1);
-                 }
-                 ui->filesLargerThanThisCheckBox->setChecked(flag);
-                 ui->filesLargerThanThisSpinBox->setValue(value.toInt());
-                    break;
-        case 1 : if (value.right(1) != ""){
-                     ui->maxAmountForContainerComboBox->setCurrentIndex(ui->maxAmountForContainerComboBox->findText(value.right(1)));
-                     value = value.left(value.length() - 1);
-                 }
-                 ui->maxAmountForContainerCheckBox->setChecked(flag);
-                 ui->maxAmountForContainerSpinBox->setValue(value.toInt());
-                    break;
-        case 2 : ui->maxNumberForContainerCheckBox->setChecked(flag);
-                 ui->maxNumberForContainerSpinBox->setValue(value.toInt());
-                    break;
-        case 3 : ui->maxArchiveRecursionForContainerCheckBox->setChecked(flag);
-                 ui->maxArchiveRecursionForContainerSpinBox->setValue(value.toInt());
-                    break;
-        case 4 : ui->maxDirRecursionLevelCheckBox->setChecked(flag);
-                 ui->maxDirRecursionLevelSpinBox->setValue(value.toInt());
-                    break;
-        case 5 : if (value.right(1) != ""){
-                     ui->maxSizeFileForPEComboBox->setCurrentIndex(ui->maxSizeFileForPEComboBox->findText(value.right(1)));
-                     value = value.left(value.length() - 1);
-                 }
-                 ui->maxSizeFileForPECheckBox->setChecked(flag);
-                 ui->maxSizeFileForPESpinBox->setValue(value.toInt());
-                    break;
-        case 6 : if (value.right(1) != ""){
-                     ui->maxSizeHTMLFileToNormalizeComboBox->setCurrentIndex(ui->maxSizeHTMLFileToNormalizeComboBox->findText(value.right(1)));
-                     value = value.left(value.length() - 1);
-                 }
-                 ui->maxSizeHTMLFileToNormalizeCheckBox->setChecked(flag);
-                 ui->maxSizeHTMLFileToNormalizeSpinBox->setValue(value.toInt());
-                    break;
-        case 7 : if (value.right(1) != ""){
-                     ui->maxSizeOfNormalizedHTMLFileComboBox->setCurrentIndex(ui->maxSizeOfNormalizedHTMLFileComboBox->findText(value.right(1)));
-                     value = value.left(value.length() - 1);
-                 }
-                 ui->maxSizeOfNormalizedHTMLFileCheckBox->setChecked(flag);
-                 ui->maxSizeOfNormalizedHTMLFileSpinBox->setValue(value.toInt());
-                    break;
-        case 8 : if (value.right(1) != ""){
-                     ui->maxSizeOfScriptFileToNormalizeComboBox->setCurrentIndex(ui->maxSizeOfScriptFileToNormalizeComboBox->findText(value.right(1)));
-                     value = value.left(value.length() - 1);
-                 }
-                 ui->maxSizeOfScriptFileToNormalizeCheckBox->setChecked(flag);
-                 ui->maxSizeOfScriptFileToNormalizeSpinBox->setValue(value.toInt());
-                    break;
-        case 9 : if (value.right(1) != ""){
-                     ui->maxSizeZipToTypeReanalzeComboBox->setCurrentIndex(ui->maxSizeZipToTypeReanalzeComboBox->findText(value.right(1)));
-                     value = value.left(value.length() - 1);
-                 }
-                 ui->maxSizeZipToTypeReanalzeCheckBox->setChecked(flag);
-                 ui->maxSizeZipToTypeReanalzeSpinBox->setValue(value.toInt());
-                    break;
-        case 10: ui->maxNumberOfPartitionsInDiskImageCheckBox->setChecked(flag);
-                 ui->maxNumberOfPartitionsInDiskImageSpinBox->setValue(value.toInt());
-                    break;
-        case 11: ui->maxNumberOfIconsInPEFileCheckBox->setChecked(flag);
-                 ui->maxNumberOfIconsInPEFileSpinBox->setValue(value.toInt());
-                    break;
-        case 12: ui->numberOfSecondsToWaitForResponseCheckBox->setChecked(flag);
-                 ui->numberOfSecondsToWaitForResponseSpinBox->setValue(value.toInt());
-                    break;
-        case 13: ui->numberOfSecondsToWaitForByteCodeCheckBox->setChecked(flag);
-                 ui->numberOfSecondsToWaitForByteCodeSpinBox->setValue(value.toInt());
-                    break;
-        case 14: ui->collectAndPrintExecutionStatisticsCheckBox->setChecked(flag);
-                 ui->collectAndPrintExecutionStatisticsComboBox->setCurrentIndex(value.toInt());
-                    break;
-        case 15: ui->structuredSSNFormatCheckBox->setChecked(flag);
-                 ui->structuredSSNFormatComboBox->setCurrentIndex(value.toInt());
-                    break;
-        case 16: ui->structuredSSNCountCheckBox->setChecked(flag);
-                 ui->structuredSSNCountSpinBox->setValue(value.toInt());
-                    break;
-        case 17: ui->structuredCCCountCheckBox->setChecked(flag);
-                 ui->structuredCCCountSpinBox->setValue(value.toInt());
-                    break;
-        case 18: ui->structuredCCModeCheckBox->setChecked(flag);
-                 ui->structuredCCModeComboBox->setCurrentIndex(value.toInt());
-                    break;
-        case 19: ui->maxScanTimeCheckBox->setChecked(flag);
-                 ui->maxScanTimeSpinBox->setValue(value.toInt());
-                    break;
-        case 20: ui->maxRecursionHWP3CheckBox->setChecked(flag);
-                 ui->maxRecursionHWP3SpinBox->setValue(value.toInt());
-                    break;
-        case 21: ui->maxPCREMatchCheckBox->setChecked(flag);
-                 ui->maxPCREMatchSpinBox->setValue(value.toInt());
-                    break;
-        case 22: ui->maxRecursionPCREMatchCheckBox->setChecked(flag);
-                 ui->maxRecursionPCREMatchSpinBox->setValue(value.toInt());
-                    break;
-        case 23: if (value.right(1) != ""){
-                     ui->maxPCREFileSizeComboBox->setCurrentIndex(ui->maxPCREFileSizeComboBox->findText(value.right(1)));
-                     value = value.left(value.length() - 1);
-                 }
-                 ui->maxPCREFileSizeCheckBox->setChecked(flag);
-                 ui->maxPCREFileSizeSpinBox->setValue(value.toInt());
-                    break;
-        case 24: ui->databaseOutdatedCheckBox->setChecked(flag);
-                 ui->databaseOutdatedSpinBox->setValue(value.toInt());
-                    break;
-        }
+            case 0 : if (value.right(1) != ""){
+                         if ((value.indexOf("K") != -1) || (value.indexOf("M") != -1)) {
+                             ui->filesLargerThanThisComboBox->setCurrentIndex(ui->filesLargerThanThisComboBox->findText(value.right(1)));
+                            value = value.left(value.length() - 1);
+                         }
+                     }
+                     ui->filesLargerThanThisComboBox->setEnabled(flag);
+                     ui->filesLargerThanThisCheckBox->setChecked(flag);
+                     if (value != "") ui->filesLargerThanThisSpinBox->setValue(value.toInt());
+                     ui->filesLargerThanThisSpinBox->setEnabled(flag);
+                     flag == true?ui->frame01->setStyleSheet("background-color:lightgreen"):ui->frame01->setStyleSheet("");
+                     setupFile->keywordExists("OtherKeywords",switches.at(i)) == true?ui->frame01->setVisible(true):ui->frame01->setVisible(false);
+
+                        break;
+            case 1 : if (value.right(1) != ""){
+                         if ((value.indexOf("K") != -1) || (value.indexOf("M") != -1)) {
+                             ui->maxAmountForContainerComboBox->setCurrentIndex(ui->maxAmountForContainerComboBox->findText(value.right(1)));
+                             value = value.left(value.length() - 1);
+                         }
+                     }
+                     ui->maxAmountForContainerComboBox->setEnabled(flag);
+                     ui->maxAmountForContainerCheckBox->setChecked(flag);
+                     if (value != "") ui->maxAmountForContainerSpinBox->setValue(value.toInt());
+                     ui->maxAmountForContainerSpinBox->setEnabled(flag);
+                     flag == true?ui->frame02->setStyleSheet("background-color:lightgreen"):ui->frame02->setStyleSheet("");
+                     setupFile->keywordExists("OtherKeywords",switches.at(i)) == true?ui->frame02->setVisible(true):ui->frame02->setVisible(false);
+                        break;
+            case 2 : ui->maxNumberForContainerCheckBox->setChecked(flag);
+                     ui->maxNumberForContainerSpinBox->setValue(value.toInt());
+                     ui->maxNumberForContainerSpinBox->setEnabled(flag);
+                     flag == true?ui->frame03->setStyleSheet("background-color:lightgreen"):ui->frame03->setStyleSheet("");
+                     setupFile->keywordExists("OtherKeywords",switches.at(i)) == true?ui->frame03->setVisible(true):ui->frame03->setVisible(false);
+                        break;
+            case 3 : ui->maxArchiveRecursionForContainerCheckBox->setChecked(flag);
+                     ui->maxArchiveRecursionForContainerSpinBox->setValue(value.toInt());
+                     ui->maxArchiveRecursionForContainerSpinBox->setEnabled(flag);
+                     flag == true?ui->frame04->setStyleSheet("background-color:lightgreen"):ui->frame04->setStyleSheet("");
+                     setupFile->keywordExists("OtherKeywords",switches.at(i)) == true?ui->frame04->setVisible(true):ui->frame04->setVisible(false);
+                        break;
+            case 4 : ui->maxDirRecursionLevelCheckBox->setChecked(flag);
+                     ui->maxDirRecursionLevelSpinBox->setValue(value.toInt());
+                     ui->maxDirRecursionLevelSpinBox->setEnabled(flag);
+                     flag == true?ui->frame05->setStyleSheet("background-color:lightgreen"):ui->frame05->setStyleSheet("");
+                     setupFile->keywordExists("OtherKeywords",switches.at(i)) == true?ui->frame05->setVisible(true):ui->frame05->setVisible(false);
+                        break;
+            case 5 : if (value.right(1) != ""){
+                         if ((value.indexOf("K") != -1) || (value.indexOf("M") != -1)) {
+                             ui->maxSizeFileForPEComboBox->setCurrentIndex(ui->maxSizeFileForPEComboBox->findText(value.right(1)));
+                             value = value.left(value.length() - 1);
+                         }
+                     }
+                     ui->maxSizeFileForPEComboBox->setEnabled(flag);
+                     ui->maxSizeFileForPECheckBox->setChecked(flag);
+                     if (value != "") ui->maxSizeFileForPESpinBox->setValue(value.toInt());
+                     ui->maxSizeFileForPESpinBox->setEnabled(flag);
+                     flag == true?ui->frame06->setStyleSheet("background-color:lightgreen"):ui->frame06->setStyleSheet("");
+                     setupFile->keywordExists("OtherKeywords",switches.at(i)) == true?ui->frame06->setVisible(true):ui->frame06->setVisible(false);
+                        break;
+            case 6 : if (value.right(1) != ""){
+                         if ((value.indexOf("K") != -1) || (value.indexOf("M") != -1)) {
+                             ui->maxSizeHTMLFileToNormalizeComboBox->setCurrentIndex(ui->maxSizeHTMLFileToNormalizeComboBox->findText(value.right(1)));
+                             value = value.left(value.length() - 1);
+                         }
+                     }
+                     ui->maxSizeHTMLFileToNormalizeComboBox->setEnabled(flag);
+                     ui->maxSizeHTMLFileToNormalizeCheckBox->setChecked(flag);
+                     if (value != "") ui->maxSizeHTMLFileToNormalizeSpinBox->setValue(value.toInt());
+                     ui->maxSizeHTMLFileToNormalizeSpinBox->setEnabled(flag);
+                     flag == true?ui->frame07->setStyleSheet("background-color:lightgreen"):ui->frame07->setStyleSheet("");
+                     setupFile->keywordExists("OtherKeywords",switches.at(i)) == true?ui->frame07->setVisible(true):ui->frame07->setVisible(false);
+                        break;
+            case 7 : if (value.right(1) != ""){
+                         if ((value.indexOf("K") != -1) || (value.indexOf("M") != -1)) {
+                             ui->maxSizeOfNormalizedHTMLFileComboBox->setCurrentIndex(ui->maxSizeOfNormalizedHTMLFileComboBox->findText(value.right(1)));
+                             value = value.left(value.length() - 1);
+                         }
+                     }
+                     ui->maxSizeOfNormalizedHTMLFileComboBox->setEnabled(flag);
+                     ui->maxSizeOfNormalizedHTMLFileCheckBox->setChecked(flag);
+                     if (value != "") ui->maxSizeOfNormalizedHTMLFileSpinBox->setValue(value.toInt());
+                     ui->maxSizeOfNormalizedHTMLFileSpinBox->setEnabled(flag);
+                     flag == true?ui->frame08->setStyleSheet("background-color:lightgreen"):ui->frame08->setStyleSheet("");
+                     setupFile->keywordExists("OtherKeywords",switches.at(i)) == true?ui->frame08->setVisible(true):ui->frame08->setVisible(false);
+                        break;
+            case 8 : if (value.right(1) != ""){
+                         if ((value.indexOf("K") != -1) || (value.indexOf("M") != -1)) {
+                             ui->maxSizeOfScriptFileToNormalizeComboBox->setCurrentIndex(ui->maxSizeOfScriptFileToNormalizeComboBox->findText(value.right(1)));
+                             value = value.left(value.length() - 1);
+                         }
+                     }
+                     ui->maxSizeOfScriptFileToNormalizeComboBox->setEnabled(flag);
+                     ui->maxSizeOfScriptFileToNormalizeCheckBox->setChecked(flag);
+                     if (value != "") ui->maxSizeOfScriptFileToNormalizeSpinBox->setValue(value.toInt());
+                     ui->maxSizeOfScriptFileToNormalizeSpinBox->setEnabled(flag);
+                     flag == true?ui->frame09->setStyleSheet("background-color:lightgreen"):ui->frame09->setStyleSheet("");
+                     setupFile->keywordExists("OtherKeywords",switches.at(i)) == true?ui->frame09->setVisible(true):ui->frame09->setVisible(false);
+                        break;
+            case 9 : if (value.right(1) != ""){
+                         if ((value.indexOf("K") != -1) || (value.indexOf("M") != -1)) {
+                             ui->maxSizeZipToTypeReanalzeComboBox->setCurrentIndex(ui->maxSizeZipToTypeReanalzeComboBox->findText(value.right(1)));
+                             value = value.left(value.length() - 1);
+                         }
+                     }
+                     ui->maxSizeZipToTypeReanalzeComboBox->setEnabled(flag);
+                     ui->maxSizeZipToTypeReanalzeCheckBox->setChecked(flag);
+                     if (value != "") ui->maxSizeZipToTypeReanalzeSpinBox->setValue(value.toInt());
+                     ui->maxSizeZipToTypeReanalzeSpinBox->setEnabled(flag);
+                     flag == true?ui->frame10->setStyleSheet("background-color:lightgreen"):ui->frame10->setStyleSheet("");
+                     setupFile->keywordExists("OtherKeywords",switches.at(i)) == true?ui->frame10->setVisible(true):ui->frame10->setVisible(false);
+                        break;
+            case 10: ui->maxNumberOfPartitionsInDiskImageCheckBox->setChecked(flag);
+                     ui->maxNumberOfPartitionsInDiskImageSpinBox->setValue(value.toInt());
+                     ui->maxNumberOfPartitionsInDiskImageSpinBox->setEnabled(flag);
+                     flag == true?ui->frame11->setStyleSheet("background-color:lightgreen"):ui->frame11->setStyleSheet("");
+                     setupFile->keywordExists("OtherKeywords",switches.at(i)) == true?ui->frame11->setVisible(true):ui->frame11->setVisible(false);
+                        break;
+            case 11: ui->maxNumberOfIconsInPEFileCheckBox->setChecked(flag);
+                     ui->maxNumberOfIconsInPEFileSpinBox->setValue(value.toInt());
+                     ui->maxNumberOfIconsInPEFileSpinBox->setEnabled(flag);
+                     flag == true?ui->frame12->setStyleSheet("background-color:lightgreen"):ui->frame12->setStyleSheet("");
+                     setupFile->keywordExists("OtherKeywords",switches.at(i)) == true?ui->frame12->setVisible(true):ui->frame12->setVisible(false);
+                        break;
+            case 12: ui->numberOfSecondsToWaitForResponseCheckBox->setChecked(flag);
+                     ui->numberOfSecondsToWaitForResponseSpinBox->setValue(value.toInt());
+                     ui->numberOfSecondsToWaitForResponseSpinBox->setEnabled(flag);
+                     flag == true?ui->frame13->setStyleSheet("background-color:lightgreen"):ui->frame13->setStyleSheet("");
+                     setupFile->keywordExists("OtherKeywords",switches.at(i)) == true?ui->frame13->setVisible(true):ui->frame13->setVisible(false);
+                        break;
+            case 13: ui->numberOfSecondsToWaitForByteCodeCheckBox->setChecked(flag);
+                     ui->numberOfSecondsToWaitForByteCodeSpinBox->setValue(value.toInt());
+                     ui->numberOfSecondsToWaitForByteCodeSpinBox->setEnabled(flag);
+                     flag == true?ui->frame14->setStyleSheet("background-color:lightgreen"):ui->frame14->setStyleSheet("");
+                     setupFile->keywordExists("OtherKeywords",switches.at(i)) == true?ui->frame14->setVisible(true):ui->frame14->setVisible(false);
+                        break;
+            case 14: ui->collectAndPrintExecutionStatisticsCheckBox->setChecked(flag);
+                     ui->collectAndPrintExecutionStatisticsComboBox->setCurrentIndex(value.toInt());
+                     ui->collectAndPrintExecutionStatisticsComboBox->setEnabled(flag);
+                     flag == true?ui->frame15->setStyleSheet("background-color:lightgreen"):ui->frame15->setStyleSheet("");
+                     setupFile->keywordExists("OtherKeywords",switches.at(i)) == true?ui->frame15->setVisible(true):ui->frame15->setVisible(false);
+                        break;
+            case 15: ui->structuredSSNFormatCheckBox->setChecked(flag);
+                     ui->structuredSSNFormatComboBox->setCurrentIndex(value.toInt());
+                     ui->structuredSSNFormatComboBox->setEnabled(flag);
+                     flag == true?ui->frame16->setStyleSheet("background-color:lightgreen"):ui->frame16->setStyleSheet("");
+                     setupFile->keywordExists("OtherKeywords",switches.at(i)) == true?ui->frame16->setVisible(true):ui->frame16->setVisible(false);
+                        break;
+            case 16: ui->structuredSSNCountCheckBox->setChecked(flag);
+                     ui->structuredSSNCountSpinBox->setValue(value.toInt());
+                     ui->structuredSSNCountSpinBox->setEnabled(flag);
+                     flag == true?ui->frame17->setStyleSheet("background-color:lightgreen"):ui->frame17->setStyleSheet("");
+                     setupFile->keywordExists("OtherKeywords",switches.at(i)) == true?ui->frame17->setVisible(true):ui->frame17->setVisible(false);
+                        break;
+            case 17: ui->structuredCCCountCheckBox->setChecked(flag);
+                     ui->structuredCCCountSpinBox->setValue(value.toInt());
+                     ui->structuredCCCountSpinBox->setEnabled(flag);
+                     flag == true?ui->frame18->setStyleSheet("background-color:lightgreen"):ui->frame18->setStyleSheet("");
+                     setupFile->keywordExists("OtherKeywords",switches.at(i)) == true?ui->frame18->setVisible(true):ui->frame18->setVisible(false);
+                        break;
+            case 18: ui->structuredCCModeCheckBox->setChecked(flag);
+                     ui->structuredCCModeComboBox->setCurrentIndex(value.toInt());
+                     ui->structuredCCModeComboBox->setEnabled(flag);
+                     flag == true?ui->frame19->setStyleSheet("background-color:lightgreen"):ui->frame19->setStyleSheet("");
+                     setupFile->keywordExists("OtherKeywords",switches.at(i)) == true?ui->frame19->setVisible(true):ui->frame19->setVisible(false);
+                        break;
+            case 19: ui->maxScanTimeCheckBox->setChecked(flag);
+                     ui->maxScanTimeSpinBox->setValue(value.toInt());
+                     ui->maxScanTimeSpinBox->setEnabled(flag);
+                     flag == true?ui->frame20->setStyleSheet("background-color:lightgreen"):ui->frame20->setStyleSheet("");
+                     setupFile->keywordExists("OtherKeywords",switches.at(i)) == true?ui->frame20->setVisible(true):ui->frame20->setVisible(false);
+                        break;
+            case 20: ui->maxRecursionHWP3CheckBox->setChecked(flag);
+                     ui->maxRecursionHWP3SpinBox->setValue(value.toInt());
+                     ui->maxRecursionHWP3SpinBox->setEnabled(flag);
+                     flag == true?ui->frame21->setStyleSheet("background-color:lightgreen"):ui->frame21->setStyleSheet("");
+                     setupFile->keywordExists("OtherKeywords",switches.at(i)) == true?ui->frame21->setVisible(true):ui->frame21->setVisible(false);
+                        break;
+            case 21: ui->maxPCREMatchCheckBox->setChecked(flag);
+                     ui->maxPCREMatchSpinBox->setValue(value.toInt());
+                     ui->maxPCREMatchSpinBox->setEnabled(flag);
+                     flag == true?ui->frame22->setStyleSheet("background-color:lightgreen"):ui->frame22->setStyleSheet("");
+                     setupFile->keywordExists("OtherKeywords",switches.at(i)) == true?ui->frame22->setVisible(true):ui->frame22->setVisible(false);
+                        break;
+            case 22: ui->maxRecursionPCREMatchCheckBox->setChecked(flag);
+                     ui->maxRecursionPCREMatchSpinBox->setValue(value.toInt());
+                     ui->maxRecursionPCREMatchSpinBox->setEnabled(flag);
+                     flag == true?ui->frame23->setStyleSheet("background-color:lightgreen"):ui->frame23->setStyleSheet("");
+                     setupFile->keywordExists("OtherKeywords",switches.at(i)) == true?ui->frame23->setVisible(true):ui->frame23->setVisible(false);
+                        break;
+            case 23: if (value.right(1) != ""){
+                         if ((value.indexOf("K") != -1) || (value.indexOf("M") != -1)) {
+                             ui->maxPCREFileSizeComboBox->setCurrentIndex(ui->maxPCREFileSizeComboBox->findText(value.right(1)));
+                             value = value.left(value.length() - 1);
+                         }
+                     }
+                     ui->maxPCREFileSizeComboBox->setEnabled(flag);
+                     ui->maxPCREFileSizeCheckBox->setChecked(flag);
+                     if (value != "") ui->maxPCREFileSizeSpinBox->setValue(value.toInt());
+                     ui->maxPCREFileSizeSpinBox->setEnabled(flag);
+                     flag == true?ui->frame24->setStyleSheet("background-color:lightgreen"):ui->frame24->setStyleSheet("");
+                     setupFile->keywordExists("OtherKeywords",switches.at(i)) == true?ui->frame24->setVisible(true):ui->frame24->setVisible(false);
+                        break;
+            case 24: ui->databaseOutdatedCheckBox->setChecked(flag);
+                     ui->databaseOutdatedSpinBox->setValue(value.toInt());
+                     ui->databaseOutdatedSpinBox->setEnabled(flag);
+                     flag == true?ui->frame25->setStyleSheet("background-color:lightgreen"):ui->frame25->setStyleSheet("");
+                     setupFile->keywordExists("OtherKeywords",switches.at(i)) == true?ui->frame25->setVisible(true):ui->frame25->setVisible(false);
+                        break;
+            }
     }
     update = false;
 }

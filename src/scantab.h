@@ -85,6 +85,7 @@ private slots:
     void slot_updateDBPath(QString path);
     void slot_disableScanButton();
     void slot_receiveVersionInformation(QString info);
+    void slot_hiddenFoldersCheckBoxClicked();
 
 signals:
     void triggerScanRequest(QStringList);

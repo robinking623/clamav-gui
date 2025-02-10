@@ -12,15 +12,14 @@ ProfileWizardDialog::ProfileWizardDialog(QWidget *parent, QString name) : QDialo
     } else {
         setupFileFilename = QDir::homePath() + "/.clamav-gui/profiles/" + profileName + ".ini";
         setupFile = new setupFileHandler(setupFileFilename);
-        ui->profileNameLineEdit->setText(profileName);
         ui->profileNameLineEdit->setReadOnly(true);
         ui->createButton->setText(tr("Save"));
         newProfile = false;
     }
 
-
     model = new CFileSystemModel;
-    model->setFilter(QDir::Dirs|QDir::NoDotAndDotDot );
+    setupFile->getSectionBoolValue("Settings","ShowHiddenDirs") == true?model->setFilter(QDir::Dirs|QDir::NoDotAndDotDot|QDir::Hidden):model->setFilter(QDir::Dirs|QDir::NoDotAndDotDot);
+    ui->showHiddenDirsCheckBox->setChecked(setupFile->getSectionBoolValue("Settings","ShowHiddenDirs"));
     model->setRootPath("/");
     model->unCheckAll();
 
@@ -31,7 +30,10 @@ ProfileWizardDialog::ProfileWizardDialog(QWidget *parent, QString name) : QDialo
     ui->treeView->collapseAll();
 
     profileName==""?ui->stackedWidget->setCurrentIndex(0):ui->stackedWidget->setCurrentIndex(3);
-    if (profileName != "") readSettings();
+    if (profileName != ""){
+        ui->profileNameLineEdit->setText(profileName);
+        readSettings();
+    }
 
     slot_previousButtonClicked();
 
@@ -45,6 +47,8 @@ ProfileWizardDialog::ProfileWizardDialog(QWidget *parent, QString name) : QDialo
     parameters << "--help";
 
     getClamscanParametersProcess->start("clamscan",parameters);
+
+
 }
 
 ProfileWizardDialog::~ProfileWizardDialog()
@@ -72,7 +76,11 @@ QStringList availableOptions = setupFile->getKeywords("AvailableOptions");
 
 // DIRTREE
     ui->treeView->collapseAll();
-    ui->recursivCheckBox->setChecked(setupFile->getSectionBoolValue(ui->profileNameLineEdit->text(),"Recursion"));
+    if (newProfile == true) {
+        ui->recursivCheckBox->setChecked(setupFile->getSectionBoolValue("Settings","RecursivScan"));
+    } else {
+        ui->recursivCheckBox->setChecked(setupFile->getSectionBoolValue(profileName,"Recursion"));
+    }
     model->unCheckAll();
     foreach(QString dir,directories){
         if (dir != ""){
@@ -131,6 +139,8 @@ QStringList availableOptions = setupFile->getKeywords("AvailableOptions");
     value = value.mid(value.indexOf("|") + 1);
     checked=="checked"?ui->followFileSymlinksCheckBox->setChecked(true):ui->followFileSymlinksCheckBox->setChecked(false);
     ui->followFileSymlinksComboBox->setCurrentIndex(value.toInt());
+
+    slot_directoryCheckBoxesClicked();
 
 // INCLUDE / EXCLUDE
     keyword = "DontScanFileNamesMatchingRegExp";
@@ -364,8 +374,8 @@ QStringList availableOptions = setupFile->getKeywords("AvailableOptions");
     value = setupFile->getSectionValue("ScanLimitations","Number of seconds to wait for waiting a response back from the stats server");
     checked = value.left(value.indexOf("|"));
     value = value.mid(value.indexOf("|") + 1);
-    checked=="checked"?ui->pwnumberOfSecondsToWaitForResponseCheckBox->setChecked(true):ui->pwnumberOfSecondsToWaitForResponseCheckBox->setChecked(false);
-    ui->pwnumberOfSecondsToWaitForResponseSpinBox->setValue(value.toInt());
+    checked=="checked"?ui->pwnumberOfSecondsForResponseCheckBox->setChecked(true):ui->pwnumberOfSecondsForResponseCheckBox->setChecked(false);
+    ui->pwnumberOfSecondsForResponseSpinBox->setValue(value.toInt());
 
     value = setupFile->getSectionValue("ScanLimitations","Bytecode timeout in milliseconds");
     checked = value.left(value.indexOf("|"));
@@ -487,6 +497,8 @@ QStringList availableOptions = setupFile->getKeywords("AvailableOptions");
             }
         }
     }
+    slot_scanLimitsCheckBoxClicked();
+    slot_highlightSettings();
 }
 
 void ProfileWizardDialog::slot_nextButtonClicked(){
@@ -790,8 +802,8 @@ QString tooltipString;
     profiles->setSectionValue("ScanLimitations",keyword,checked + "|" + value);
 
     keyword = "Number of seconds to wait for waiting a response back from the stats server";
-    value = QString::number(ui->pwnumberOfSecondsToWaitForResponseSpinBox->value());
-    ui->pwnumberOfSecondsToWaitForResponseCheckBox->isChecked() == true?checked="checked":checked="not checked";
+    value = QString::number(ui->pwnumberOfSecondsForResponseSpinBox->value());
+    ui->pwnumberOfSecondsForResponseCheckBox->isChecked() == true?checked="checked":checked="not checked";
     profiles->setSectionValue("ScanLimitations",keyword,checked + "|" + value);
 
     keyword = "Bytecode timeout in milliseconds";
@@ -952,8 +964,9 @@ void ProfileWizardDialog::slot_getClamscanProcessFinished()
     ui->pwmaxSizeZipToTypeReanalzeComboBox->setVisible(false);
     ui->pwmaxSizeZipToTypeReanalzeSpinBox->setVisible(false);
 
-    ui->pwnumberOfSecondsToWaitForResponseCheckBox->setVisible(false);
-    ui->pwnumberOfSecondsToWaitForResponseSpinBox->setVisible(false);
+    ui->pwnumberOfSecondsForResponseCheckBox->setVisible(false);
+    ui->pwnumberOfSecondsForResponseSpinBox->setVisible(false);
+    ui->limitFrame_13->setVisible(false);
 
     QStringList lines = getClamscanProcessOutput.split("\n");
     QString line;
@@ -1094,8 +1107,9 @@ void ProfileWizardDialog::slot_getClamscanProcessFinished()
         }
 
         if (line.indexOf("--stats-timeout") != -1) {
-            ui->pwnumberOfSecondsToWaitForResponseCheckBox->setVisible(true);
-            ui->pwnumberOfSecondsToWaitForResponseSpinBox->setVisible(true);
+            ui->pwnumberOfSecondsForResponseCheckBox->setVisible(true);
+            ui->pwnumberOfSecondsForResponseSpinBox->setVisible(true);
+            ui->limitFrame_13->setVisible(true);
         }
     }
 }
@@ -1108,4 +1122,343 @@ void ProfileWizardDialog::slot_cancleButtonClicked()
         if (killfile.exists() == true) killfile.remove();
     }
     this->close();
+}
+
+void ProfileWizardDialog::slot_hiddenDirsCheckBoxClicked()
+{
+    ui->showHiddenDirsCheckBox->isChecked() == true?model->setFilter(QDir::Dirs|QDir::NoDotAndDotDot|QDir::Hidden):model->setFilter(QDir::Dirs|QDir::NoDotAndDotDot);
+}
+
+void ProfileWizardDialog::slot_directoryCheckBoxesClicked()
+{
+    if (ui->loadVirusDatabaseCheckBox->isChecked() == true) {
+        ui->lvdFrame->setStyleSheet("background-color:lightgreen");
+        ui->loadVirusDatabaseLineEdit->setEnabled(true);
+        ui->pwselectLVDButton->setEnabled(true);
+    } else {
+        ui->lvdFrame->setStyleSheet("");
+        ui->loadVirusDatabaseLineEdit->setEnabled(false);
+        ui->pwselectLVDButton->setEnabled(false);
+    }
+
+    if (ui->scanReportToFileCheckBox->isChecked() == true) {
+        ui->ssrtfFrame->setStyleSheet("background-color:lightgreen");
+        ui->scanReportToFileLineEdit->setEnabled(true);
+        ui->pwselectSCRFButton->setEnabled(true);
+    } else {
+        ui->ssrtfFrame->setStyleSheet("");
+        ui->scanReportToFileLineEdit->setEnabled(false);
+        ui->pwselectSCRFButton->setEnabled(false);
+    }
+
+    if (ui->scanFilesFromFileCheckBox->isChecked() == true) {
+        ui->sfffFrame->setStyleSheet("background-color:lightgreen");
+        ui->scanFilesFromFileLineEdit->setEnabled(true);
+        ui->pwselectSFFButton->setEnabled(true);
+    } else {
+        ui->sfffFrame->setStyleSheet("");
+        ui->scanFilesFromFileLineEdit->setEnabled(false);
+        ui->pwselectSFFButton->setEnabled(false);
+    }
+
+    if (ui->tempFileCheckBox->isEnabled() == true){
+        ui->ctfidFrame->setStyleSheet("background-color:lightgreen");
+        ui->tempFilesLineEdit->setEnabled(true);
+        ui->pwselectTFButton->setEnabled(true);
+    } else {
+        ui->ctfidFrame->setStyleSheet("");
+        ui->tempFilesLineEdit->setEnabled(false);
+        ui->pwselectTFButton->setEnabled(false);
+    }
+
+    if (ui->moveDirectoryCheckBox->isChecked() == true) {
+        ui->mifidFrame->setStyleSheet("background-color:lightgreen");
+        ui->moveDirectoryLineEdit->setEnabled(true);
+        ui->pwselectMDButton->setEnabled(true);
+    } else {
+        ui->mifidFrame->setStyleSheet("");
+        ui->moveDirectoryLineEdit->setEnabled(false);
+        ui->pwselectMDButton->setEnabled(false);
+    }
+
+    if (ui->copyDirectoryCheckBox->isChecked() == true) {
+        ui->cifidFrame->setStyleSheet("background-color:lightgreen");
+        ui->copyDirectoryLineEdit->setEnabled(true);
+        ui->pwselectCFButton->setEnabled(true);
+    } else {
+        ui->cifidFrame->setStyleSheet("");
+        ui->copyDirectoryLineEdit->setEnabled(false);
+        ui->pwselectCFButton->setEnabled(false);
+    }
+
+    if (ui->followDirectorySymlinksCheckBox->isChecked() == true){
+        ui->fdsFrame->setStyleSheet("background-color:lightgreen");
+        ui->followDirectorySymlinksComboBox->setEnabled(true);
+    } else {
+        ui->fdsFrame->setStyleSheet("");
+        ui->followDirectorySymlinksComboBox->setEnabled(false);
+    }
+
+    if (ui->followFileSymlinksCheckBox->isChecked() == true) {
+        ui->ffsFrame->setStyleSheet("background-color:lightgreen");
+        ui->followFileSymlinksComboBox->setEnabled(true);
+    } else {
+        ui->ffsFrame->setStyleSheet("");
+        ui->followFileSymlinksComboBox->setEnabled(false);
+    }
+}
+
+void ProfileWizardDialog::slot_scanLimitsCheckBoxClicked()
+{
+    if (ui->pwfilesLargerThanThisCheckBox->isChecked()) {
+        ui->limitFrame_1->setStyleSheet("background-color:lightgreen");
+        ui->pwfilesLargerThanThisComboBox->setEnabled(true);
+        ui->pwfilesLargerThanThisSpinBox->setEnabled(true);
+    } else {
+        ui->limitFrame_1->setStyleSheet("");
+        ui->pwfilesLargerThanThisComboBox->setEnabled(false);
+        ui->pwfilesLargerThanThisSpinBox->setEnabled(false);
+    }
+
+    if (ui->pwmaxAmountForContainerCheckBox->isChecked()) {
+            ui->limitFrame_2->setStyleSheet("background-color:lightgreen");
+            ui->pwmaxAmountForContainerComboBox->setEnabled(true);
+            ui->pwmaxAmountForContainerSpinBox->setEnabled(true);
+    } else {
+        ui->limitFrame_2->setStyleSheet("");
+        ui->pwmaxAmountForContainerComboBox->setEnabled(false);
+        ui->pwmaxAmountForContainerSpinBox->setEnabled(false);
+    }
+
+    if (ui->pwmaxNumberForContainerCheckBox->isChecked()) {
+        ui->limitFrame_3->setStyleSheet("background-color:lightgreen");
+        ui->pwmaxNumberForContainerComboBox->setEnabled(true);
+        ui->pwmaxNumberForContainerSpinBox->setEnabled(true);
+    } else {
+        ui->limitFrame_3->setStyleSheet("");
+        ui->pwmaxNumberForContainerComboBox->setEnabled(false);
+        ui->pwmaxNumberForContainerSpinBox->setEnabled(false);
+    }
+
+    if (ui->pwmaxArchiveRecursionForContainerCheckBox->isChecked()) {
+        ui->limitFrame_4->setStyleSheet("background-color:lightgreen");
+        ui->pwmaxArchiveRecursionForContainerComboBox->setEnabled(true);
+        ui->pwmaxArchiveRecursionForContainerSpinBox->setEnabled(true);
+    } else {
+        ui->limitFrame_4->setStyleSheet("");
+        ui->pwmaxArchiveRecursionForContainerComboBox->setEnabled(false);
+        ui->pwmaxArchiveRecursionForContainerSpinBox->setEnabled(false);
+    }
+
+    if (ui->pwmaxDirRecursionLevelCheckBox->isChecked()) {
+        ui->limitFrame_5->setStyleSheet("background-color:lightgreen");
+        ui->pwmaxDirRecursionLevelComboBox->setEnabled(true);
+        ui->pwmaxDirRecursionLevelSpinBox->setEnabled(true);
+    } else {
+        ui->limitFrame_5->setStyleSheet("");
+        ui->pwmaxDirRecursionLevelComboBox->setEnabled(false);
+        ui->pwmaxDirRecursionLevelSpinBox->setEnabled(false);
+    }
+
+    if (ui->pwmaxSizeFileForPECheckBox->isChecked()) {
+        ui->limitFrame_6->setStyleSheet("background-color:lightgreen");
+        ui->pwmaxSizeFileForPEComboBox->setEnabled(true);
+        ui->pwmaxSizeFileForPESpinBox->setEnabled(true);
+    } else {
+        ui->limitFrame_6->setStyleSheet("");
+        ui->pwmaxSizeFileForPEComboBox->setEnabled(false);
+        ui->pwmaxSizeFileForPESpinBox->setEnabled(false);
+    }
+
+    if (ui->pwmaxSizeHTMLFileToNormalizeCheckBox->isChecked()) {
+        ui->limitFrame_7->setStyleSheet("background-color:lightgreen");
+        ui->pwmaxSizeHTMLFileToNormalizeComboBox->setEnabled(true);
+        ui->pwmaxSizeHTMLFileToNormalizeSpinBox->setEnabled(true);
+    } else {
+        ui->limitFrame_7->setStyleSheet("");
+        ui->pwmaxSizeHTMLFileToNormalizeComboBox->setEnabled(false);
+        ui->pwmaxSizeHTMLFileToNormalizeSpinBox->setEnabled(false);
+    }
+
+    if (ui->pwmaxSizeOfNormalizedHTMLFileCheckBox->isChecked()) {
+        ui->limitFrame_8->setStyleSheet("background-color:lightgreen");
+        ui->pwmaxSizeOfNormalizedHTMLFileComboBox->setEnabled(true);
+        ui->pwmaxSizeOfNormalizedHTMLFileSpinBox->setEnabled(true);
+    } else {
+        ui->limitFrame_8->setStyleSheet("");
+        ui->pwmaxSizeOfNormalizedHTMLFileComboBox->setEnabled(false);
+        ui->pwmaxSizeOfNormalizedHTMLFileSpinBox->setEnabled(false);
+    }
+
+    if (ui->pwmaxSizeOfScriptFileToNormalizeCheckBox->isChecked()) {
+        ui->limitFrame_9->setStyleSheet("background-color:lightgreen");
+        ui->pwmaxSizeOfScriptFileToNormalizeComboBox->setEnabled(true);
+        ui->pwmaxSizeOfScriptFileToNormalizeSpinBox->setEnabled(true);
+    } else {
+        ui->limitFrame_9->setStyleSheet("");
+        ui->pwmaxSizeOfScriptFileToNormalizeComboBox->setEnabled(false);
+        ui->pwmaxSizeOfScriptFileToNormalizeSpinBox->setEnabled(false);
+    }
+
+    if (ui->pwmaxSizeZipToTypeReanalzeCheckBox->isChecked()) {
+        ui->limitFrame_10->setStyleSheet("background-color:lightgreen");
+        ui->pwmaxSizeZipToTypeReanalzeComboBox->setEnabled(true);
+        ui->pwmaxSizeZipToTypeReanalzeSpinBox->setEnabled(true);
+    } else {
+        ui->limitFrame_10->setStyleSheet("");
+        ui->pwmaxSizeZipToTypeReanalzeComboBox->setEnabled(false);
+        ui->pwmaxSizeZipToTypeReanalzeSpinBox->setEnabled(false);
+    }
+
+    if (ui->pwmaxNumberOfPartitionsInDiskImageCheckBox->isChecked()) {
+        ui->limitFrame_11->setStyleSheet("background-color:lightgreen");
+        ui->pwmaxNumberOfPartitionsInDiskImageComboBox->setEnabled(true);
+        ui->pwmaxNumberOfPartitionsInDiskImageSpinBox->setEnabled(true);
+    } else {
+        ui->limitFrame_11->setStyleSheet("");
+        ui->pwmaxNumberOfPartitionsInDiskImageComboBox->setEnabled(false);
+        ui->pwmaxNumberOfPartitionsInDiskImageSpinBox->setEnabled(false);
+    }
+
+    if (ui->pwmaxNumberOfIconsInPEFileCheckBox->isChecked()) {
+        ui->limitFrame_12->setStyleSheet("background-color:lightgreen");
+        ui->pwmaxNumberOfIconsInPEFileComboBox->setEnabled(true);
+        ui->pwmaxNumberOfIconsInPEFileSpinBox->setEnabled(true);
+    } else {
+        ui->limitFrame_12->setStyleSheet("");
+        ui->pwmaxNumberOfIconsInPEFileComboBox->setEnabled(false);
+        ui->pwmaxNumberOfIconsInPEFileSpinBox->setEnabled(false);
+    }
+
+    if (ui->pwnumberOfSecondsForResponseCheckBox->isChecked()) {
+        ui->limitFrame_13->setStyleSheet("background-color:lightgreen");
+        ui->pwnumberOfSecondsForResponseSpinBox->setEnabled(true);
+    } else {
+        ui->limitFrame_13->setStyleSheet("");
+        ui->pwnumberOfSecondsForResponseSpinBox->setEnabled(false);
+    }
+
+    if (ui->pwBytecodeTimeoutCheckBox->isChecked()) {
+        ui->limitFrame_14->setStyleSheet("background-color:lightgreen");
+        ui->pwBytecodeTimeoutSpinBox->setEnabled(true);
+    } else {
+        ui->limitFrame_14->setStyleSheet("");
+        ui->pwBytecodeTimeoutSpinBox->setEnabled(false);
+    }
+
+    if (ui->pwExecutionStatisticsCheckBox->isChecked()) {
+        ui->limitFrame_15->setStyleSheet("background-color:lightgreen");
+        ui->pwExecutionStatisticsComboBox->setEnabled(true);
+    } else {
+        ui->limitFrame_15->setStyleSheet("");
+        ui->pwExecutionStatisticsComboBox->setEnabled(false);
+    }
+
+    if (ui->pwstructuredSSNFormatCheckBox->isChecked()) {
+        ui->limitFrame_16->setStyleSheet("background-color:lightgreen");
+        ui->pwStructuredSSNFormatComboBox->setEnabled(true);
+    } else {
+        ui->limitFrame_16->setStyleSheet("");
+        ui->pwStructuredSSNFormatComboBox->setEnabled(false);
+    }
+
+    if (ui->pwStructuredSSNCountCheckBox->isChecked()) {
+        ui->limitFrame_17->setStyleSheet("background-color:lightgreen");
+        ui->pwStructuredSSNCountSpinBox->setEnabled(true);
+    } else {
+        ui->limitFrame_17->setStyleSheet("");
+        ui->pwStructuredSSNCountSpinBox->setEnabled(false);
+    }
+
+    if (ui->pwStructuredCCCountCheckBox->isChecked()) {
+        ui->limitFrame_18->setStyleSheet("background-color:lightgreen");
+        ui->pwStructuredCCCountSpinBox->setEnabled(true);
+    } else {
+        ui->limitFrame_18->setStyleSheet("");
+        ui->pwStructuredCCCountSpinBox->setEnabled(false);
+    }
+
+    if (ui->pwStructuredCCModeCheckBox->isChecked()) {
+        ui->limitFrame_19->setStyleSheet("background-color:lightgreen");
+        ui->pwStructuredCCModeComboBox->setEnabled(true);
+    } else {
+        ui->limitFrame_19->setStyleSheet("");
+        ui->pwStructuredCCModeComboBox->setEnabled(false);
+    }
+
+    if (ui->pwMaxScanTimeCheckBox->isChecked()) {
+        ui->limitFrame_20->setStyleSheet("background-color:lightgreen");
+        ui->pwMaxScanTimeSpinBox->setEnabled(true);
+    } else {
+        ui->limitFrame_20->setStyleSheet("");
+        ui->pwMaxScanTimeSpinBox->setEnabled(false);
+    }
+
+    if (ui->pwMaxRecursionHWP3CheckBox->isChecked()) {
+        ui->limitFrame_21->setStyleSheet("background-color:lightgreen");
+        ui->pwMaxRecursionHWP3SpinBox->setEnabled(true);
+    } else {
+        ui->limitFrame_21->setStyleSheet("");
+        ui->pwMaxRecursionHWP3SpinBox->setEnabled(false);
+    }
+
+    if (ui->pwMaxCallsPCREMatchFunctionCheckBox->isChecked()) {
+        ui->limitFrame_22->setStyleSheet("background-color:lightgreen");
+        ui->pwMaxCallsPCREMatchFunctionSpinBox->setEnabled(true);
+    } else {
+        ui->limitFrame_22->setStyleSheet("");
+        ui->pwMaxCallsPCREMatchFunctionSpinBox->setEnabled(false);
+    }
+
+    if (ui->pwMaxRecursionCallsPCREMatchFunctionCheckBox->isChecked()) {
+        ui->limitFrame_23->setStyleSheet("background-color:lightgreen");
+        ui->pwMaxRecursionCallsPCREMatchFunctionCpinBox->setEnabled(true);
+    } else {
+        ui->limitFrame_23->setStyleSheet("");
+        ui->pwMaxRecursionCallsPCREMatchFunctionCpinBox->setEnabled(false);
+    }
+
+    if (ui->pwMaxPCREFileSizeCheckBox->isChecked()) {
+        ui->limitFrame_24->setStyleSheet("background-color:lightgreen");
+        ui->pwMaxPCREFileSizeComboBox->setEnabled(true);
+        ui->pwMaxPCREFileSizeSpinBox->setEnabled(true);
+    } else {
+        ui->limitFrame_24->setStyleSheet("");
+        ui->pwMaxPCREFileSizeComboBox->setEnabled(false);
+        ui->pwMaxPCREFileSizeSpinBox->setEnabled(false);
+    }
+
+    if (ui->pwdatabaseOutdatedCheckbox->isChecked()) {
+        ui->limitFrame_25->setStyleSheet("background-color:lightgreen");
+        ui->pwdatabaseOutdatedSpinBox->setEnabled(true);
+    } else {
+        ui->limitFrame_25->setStyleSheet("");
+        ui->pwdatabaseOutdatedSpinBox->setEnabled(false);
+    }
+}
+
+void ProfileWizardDialog::slot_highlightSettings()
+{
+
+    ui->pwdontScanFileNameCheckBox->isChecked()?ui->frame01->setStyleSheet("background-color:lightgreen"):ui->frame01->setStyleSheet("");
+    ui->pwdontScanDirCheckBox->isChecked()?ui->frame02->setStyleSheet("background-color:lightgreen"):ui->frame02->setStyleSheet("");
+    ui->pwonlyScanFileNameCheckBox->isChecked()?ui->frame03->setStyleSheet("background-color:lightgreen"):ui->frame03->setStyleSheet("");
+    ui->pwonlyScanDirCheckBox->isChecked()?ui->frame04->setStyleSheet("background-color:lightgreen"):ui->frame04->setStyleSheet("");
+
+    ui->pwloadPUAPackedRadioButon->isChecked()?ui->pwloadPUAPackedRadioButon->setStyleSheet("background-color:lightgreen"):ui->pwloadPUAPackedRadioButon->setStyleSheet("");
+    ui->pwloadPUAPWToolRadioButton->isChecked()?ui->pwloadPUAPWToolRadioButton->setStyleSheet("background-color:lightgreen"):ui->pwloadPUAPWToolRadioButton->setStyleSheet("");
+    ui->pwloadPUANetToolRadioButton->isChecked()?ui->pwloadPUANetToolRadioButton->setStyleSheet("background-color:lightgreen"):ui->pwloadPUANetToolRadioButton->setStyleSheet("");
+    ui->pwloadPUAP2PRadioButton->isChecked()?ui->pwloadPUAP2PRadioButton->setStyleSheet("background-color:lightgreen"):ui->pwloadPUAP2PRadioButton->setStyleSheet("");
+    ui->pwloadPUAIRCRadioButton->isChecked()?ui->pwloadPUAIRCRadioButton->setStyleSheet("background-color:lightgreen"):ui->pwloadPUAIRCRadioButton->setStyleSheet("");
+    ui->pwloadPUARATRadioButton->isChecked()?ui->pwloadPUARATRadioButton->setStyleSheet("background-color:lightgreen"):ui->pwloadPUARATRadioButton->setStyleSheet("");
+    ui->pwloadPUANetToolSpyRadioButton->isChecked()?ui->pwloadPUANetToolSpyRadioButton->setStyleSheet("background-color:lightgreen"):ui->pwloadPUANetToolSpyRadioButton->setStyleSheet("");
+    ui->pwloadPUAServerRadioButton->isChecked()?ui->pwloadPUAServerRadioButton->setStyleSheet("background-color:lightgreen"):ui->pwloadPUAServerRadioButton->setStyleSheet("");
+    ui->pwloadPUAScriptRadioButton->isChecked()?ui->pwloadPUAScriptRadioButton->setStyleSheet("background-color:lightgreen"):ui->pwloadPUAScriptRadioButton->setStyleSheet("");
+    ui->pwloadPUAAndrRadioButton->isChecked()?ui->pwloadPUAAndrRadioButton->setStyleSheet("background-color:lightgreen"):ui->pwloadPUAAndrRadioButton->setStyleSheet("");
+    ui->pwloadPUAJavaRadioButton->isChecked()?ui->pwloadPUAJavaRadioButton->setStyleSheet("background-color:lightgreen"):ui->pwloadPUAJavaRadioButton->setStyleSheet("");
+    ui->pwloadPUAOsxRadioButton->isChecked()?ui->pwloadPUAOsxRadioButton->setStyleSheet("background-color:lightgreen"):ui->pwloadPUAOsxRadioButton->setStyleSheet("");
+    ui->pwloadPUAToolRadioButton->isChecked()?ui->pwloadPUAToolRadioButton->setStyleSheet("background-color:lightgreen"):ui->pwloadPUAToolRadioButton->setStyleSheet("");
+    ui->pwloadPUAUnixRadioButton->isChecked()?ui->pwloadPUAUnixRadioButton->setStyleSheet("background-color:lightgreen"):ui->pwloadPUAUnixRadioButton->setStyleSheet("");
+    ui->pwloadPUAWinRadioButton->isChecked()?ui->pwloadPUAWinRadioButton->setStyleSheet("background-color:lightgreen"):ui->pwloadPUAWinRadioButton->setStyleSheet("");
+
 }
