@@ -1,3 +1,10 @@
+* Sun Feb 9 2025 - Version 1.0.6
+- Several changes made to the Profile Wizard, the Options Tab and the Scan Limits Tab.
+- Changed the Directory View. In the Scan Tab and the Profile Wizard now hidden folders can be displayes.
+
+* Thu Feb 6 2025 - Version 1.0.5
+- Made several changes to the option tab.
+
 * Wed Feb 5 2025 - Version 1.0.4
 - Made a full code review and optimized several codeblocks (Some of the code originates back to 2015).
 - During the optimization process fixed several bugs and flaws.
