@@ -52,11 +52,10 @@ void setupTab::slot_updateSystemInfo(){
         ui->databaseDailyFile->setText(setupFile->getSectionValue("Updater","DailyVersion"));
         ui->databaseBytecodeFile->setText(setupFile->getSectionValue("Updater","BytecodeVersion"));
 
-        systemInfo = "<b>Version:</b><br>" + setupFile->getSectionValue("Updater","Version");
-        systemInfo += "<br><br><b>Last Update:</b><br>" + setupFile->getSectionValue("Updater","LastUpdate");
-        systemInfo += "<br><br><b>Main Version:</b><br>" + setupFile->getSectionValue("Updater","MainVersion");
-        systemInfo += "<br><br><b>Daily Version:</b><br> " + setupFile->getSectionValue("Updater","DailyVersion");
-        systemInfo += "<br><br><b>Bytecode Version:</b><br>" + setupFile->getSectionValue("Updater","BytecodeVersion");
+        QString value = setupFile->getSectionValue("Updater","DailyVersion");
+        value = value.mid(value.indexOf(" "), value.indexOf(",") - value.indexOf(" "));
+        systemInfo = "<b>Antivirus Database:</b><font color='#1b8755'>" + value + "</font><br>";
+        systemInfo += "<b>Date:</b> <font color='#1b8755'>" + setupFile->getSectionValue("Updater","LastUpdate") + "</font>";
         emit sendSystemInfo(systemInfo);
     }
 
@@ -64,7 +63,7 @@ void setupTab::slot_updateSystemInfo(){
         ui->clamonaccPID->setText(setupFile->getSectionValue("Clamd","ClamonaccPid"));
         if (setupFile->getSectionValue("Clamd","ClamonaccPid") == "n/a") {
             ui->clamonaccActivityLabel->setPixmap(QPixmap(":/icons/icons/gifs/activity.gif"));
-            ui->clamonaccStatus->setText(setupFile->getSectionValue("Clamd","Status"));
+            ui->clamonaccStatus->setText(setupFile->getSectionValue("Clamd","Status2"));
             ui->clamonaccStatus->setStyleSheet("background-color:red;color:white");
         } else {
             ui->clamonaccActivityLabel->setMovie(new QMovie(":/icons/icons/gifs/activity.gif"));
@@ -82,14 +81,18 @@ void setupTab::slot_updateSystemInfo(){
             if ((message == "starting up ...") || (message == "shutting down ...")){
                 ui->clamdStatus->setStyleSheet("background-color:yellow;color:black");
                 ui->clamdStatus->setText(message);
-                ui->clamonaccStatus->setStyleSheet("background-color:yellow;color:black");
-                ui->clamonaccStatus->setText(message);
+                if (setupFile->getSectionValue("Clamd","Status2") != "n/a") {
+                    ui->clamonaccStatus->setStyleSheet("background-color:yellow;color:black");
+                    ui->clamonaccStatus->setText(message);
+                }
             }
             if  (message == "is running") {
                 ui->clamdStatus->setStyleSheet("background-color:green;color:yellow");
                 ui->clamdStatus->setText(message);
-                ui->clamonaccStatus->setStyleSheet("background-color:green;color:yellow");
-                ui->clamonaccStatus->setText(message);
+                if (setupFile->getSectionValue("Clamd","Status2") != "is running") {
+                    ui->clamonaccStatus->setStyleSheet("background-color:green;color:yellow");
+                    ui->clamonaccStatus->setText(message);
+                }
             }
             if  ((message == "shut down") || (message == "not running")) {
                 ui->clamdStatus->setStyleSheet("background-color:red;color:yellow");

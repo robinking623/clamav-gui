@@ -262,7 +262,7 @@ void scanTab::slot_disableScanButton()
 
 void scanTab::slot_receiveVersionInformation(QString info)
 {
-    ui->versionTextBrowser->setHtml(info);
+    ui->signatureInfoLabel->setHtml(info);
 }
 
 void scanTab::slot_hiddenFoldersCheckBoxClicked()

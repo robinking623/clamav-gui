@@ -135,6 +135,11 @@ QString checked;
     }
 }
 
+void scanLimitsTab::slot_updateKeywordList()
+{
+    updateLimits();
+}
+
 
 void scanLimitsTab::updateLimits(){
 QString value;

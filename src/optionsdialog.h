@@ -76,6 +76,7 @@ signals:
     void updateDatabase();
     void updateClamdConf();
     void systemStatusChanged();
+    void assembleKeywordsDone();
 
 public:
     QString getCopyDirectory();

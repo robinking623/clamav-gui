@@ -9,8 +9,9 @@ class translator
 {
 public:
     translator(QString lang);
-    QString translateit(QString original);
     QString languageset;
+    QString translateit(QString original);
+    static QString beautifyString(QString value, int length = 50);
 };
 
 #endif // TRANSLATOR_H

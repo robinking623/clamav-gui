@@ -46,6 +46,7 @@ private:
 
 private slots:
     void writeLimits();
+    void slot_updateKeywordList();
 
 signals:
     void updateClamdConf();

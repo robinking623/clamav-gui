@@ -17,11 +17,11 @@ scanoption::scanoption(QWidget *parent, QString setupFileName, QString section, 
     ui->checkBox->setChecked(checked);
 
     if (checked == true) {
-        this->setStyleSheet("background-color:lightgreen");
+        this->setStyleSheet("background-color:#dfdf48");
         setupFile->setSectionValue(setupFileSection,option,com);
     }
 
-    ui->checkBox->setText(com);
+    ui->checkBox->setText(trans->beautifyString(com));
     ui->checkBox->setToolTip(option);
 }
 
@@ -36,7 +36,7 @@ void scanoption::slot_checkboxClicked(){
         this->setStyleSheet("");
     } else {
         setupFile->setSectionValue(setupFileSection,option,com);
-        this->setStyleSheet("background-color:lightgreen");
+        this->setStyleSheet("background-color:#dfdf48");
     }
 
     emit valuechanged();

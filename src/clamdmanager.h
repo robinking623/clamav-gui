@@ -7,8 +7,12 @@
 #include <QWidget>
 #include <QTimer>
 #include <QMovie>
+#include "clamdconfstringoption.h"
+#include "clamdconfspinboxoption.h"
+#include "clamdconfcomboboxoption.h"
 #include "setupfilehandler.h"
 #include "highlighter.h"
+#include "translator.h"
 
 namespace Ui {
 class clamdManager;
@@ -40,6 +44,7 @@ public:
     highlighter         * logHighlighter; // clamd
     QFileSystemWatcher  * clamdLogWatcher; // clamd
     QFileSystemWatcher  * clamdPidWatcher; // clamd
+    int                   dirsUnderMonitoring;
     bool                  clamdRestartInProgress; // clamd
     QString               trimLocationOutput(QString);
     bool                  startup;
@@ -48,6 +53,7 @@ public:
     int                   clamdStartupCounter;
     void initClamdSettings(); // clamd
     void restartClamonacc(); // clamd
+    void initClamdConfElements();
     bool checkClamdRunning(); // clamd
 
 private slots:

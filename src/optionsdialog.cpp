@@ -13,6 +13,7 @@ optionsDialog::optionsDialog(QWidget *parent) : QWidget(parent), ui(new Ui::opti
 
     connect(incExcOptTab,SIGNAL(updateClamdConf()),this,SLOT(slot_updateClamdConf()));
     connect(scanLimits,SIGNAL(updateClamdConf()),this,SLOT(slot_updateClamdConf()));
+    connect(this,SIGNAL(assembleKeywordsDone()),scanLimits,SLOT(slot_updateKeywordList()));
 
     ui->tabWidget->addTab(incExcOptTab,QIcon(":/icons/icons/includeexclude.png"),tr("Include/Exclude"));
     ui->tabWidget->setIconSize(QSize(24,24));
@@ -120,6 +121,7 @@ void optionsDialog::slot_getClamscanProcessFinished(){
                 setupFile->setSectionValue("OtherKeywords",keyword,"exists");
             }
         }
+        emit assembleKeywordsDone();
     }
 
     /*For Debuggin-Reasons only*/

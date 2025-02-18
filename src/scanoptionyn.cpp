@@ -18,10 +18,10 @@ scanoptionyn::scanoptionyn(QWidget *parent, QString setupFileName, QString secti
     ui->comboBox->setEnabled(checked);
 
     if (checked == true) {
-        this->setStyleSheet("background-color:lightgreen");
+        this->setStyleSheet("background-color:#dfdf48");
     }
 
-    ui->checkBox->setText(com);
+    ui->checkBox->setText(trans->beautifyString(com));
     ui->checkBox->setToolTip(option);
 
     if (label.indexOf("<equal>yes") != -1) ui->comboBox->setCurrentText("yes");else ui->comboBox->setCurrentText("no");
@@ -39,7 +39,7 @@ void scanoptionyn::slot_checkboxClicked(){
     } else {
         setupFile->setSectionValue(setupFileSection,option + "<equal>" + ui->comboBox->currentText(), com);
         ui->comboBox->setEnabled(true);
-        this->setStyleSheet("background-color:lightgreen");
+        this->setStyleSheet("background-color:#dfdf48");
     }
 
     emit valuechanged();
