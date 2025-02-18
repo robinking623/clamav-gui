@@ -205,19 +205,6 @@
               </widget>
              </item>
              <item>
-              <widget class="QCheckBox" name="startClamdOnStartupCheckBox">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>Start Clamd on Startup</string>
-               </property>
-              </widget>
-             </item>
-             <item>
               <widget class="QPushButton" name="restartClamdPushButton">
                <property name="enabled">
                 <bool>true</bool>
@@ -283,6 +270,19 @@ for changes made to take effect.</string>
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QGridLayout" name="gridLayout_2">
+             <item row="0" column="2">
+              <spacer name="horizontalSpacer_3">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
              <item row="0" column="0">
               <widget class="QLabel" name="clamdLabel_3">
                <property name="minimumSize">
@@ -310,20 +310,7 @@ for changes made to take effect.</string>
                </property>
               </widget>
              </item>
-             <item row="0" column="1">
-              <spacer name="horizontalSpacer_3">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item row="1" column="0" colspan="2">
+             <item row="1" column="0" colspan="3">
               <widget class="QFrame" name="clamdSelectionFrame">
                <layout class="QHBoxLayout" name="horizontalLayout_6">
                 <item>
@@ -366,6 +353,19 @@ for changes made to take effect.</string>
                  </widget>
                 </item>
                </layout>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QCheckBox" name="startClamdOnStartupCheckBox">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Start Clamd on Startup</string>
+               </property>
               </widget>
              </item>
             </layout>
@@ -645,8 +645,8 @@ for changes made to take effect.</string>
    <slot>slot_startClamdOnStartupCheckBoxClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>505</x>
-     <y>89</y>
+     <x>390</x>
+     <y>166</y>
     </hint>
     <hint type="destinationlabel">
      <x>4</x>
@@ -661,8 +661,8 @@ for changes made to take effect.</string>
    <slot>slot_monitoringDelButtonClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>910</x>
-     <y>212</y>
+     <x>931</x>
+     <y>489</y>
     </hint>
     <hint type="destinationlabel">
      <x>986</x>
@@ -677,8 +677,8 @@ for changes made to take effect.</string>
    <slot>slot_monitoringAddButtonClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>849</x>
-     <y>217</y>
+     <x>875</x>
+     <y>489</y>
     </hint>
     <hint type="destinationlabel">
      <x>985</x>
