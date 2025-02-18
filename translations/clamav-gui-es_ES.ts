@@ -75,10 +75,6 @@
 <context>
     <name>ProfileWizardDialog</name>
     <message>
-        <source>G</source>
-        <translation>G</translation>
-    </message>
-    <message>
         <source>K</source>
         <translation>K</translation>
     </message>
@@ -185,10 +181,6 @@
     <message>
         <source>Log-File</source>
         <translation>Archivo Log</translation>
-    </message>
-    <message>
-        <source>Number of seconds to wait for waiting a response back from the stats server</source>
-        <translation>Nº de Segundos para esperar una respuesta de vuelta desde el servidor de estadísticas</translation>
     </message>
     <message>
         <source>always</source>
@@ -474,6 +466,14 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <source>Options</source>
         <translation>Opciones</translation>
     </message>
+    <message>
+        <source>show hidden folders</source>
+        <translation>mostrar carpetas ocultas</translation>
+    </message>
+    <message>
+        <source>Minimum number of seconds to Wait for Response</source>
+        <translation>Número mínimo de segundos para esperar una respuesta</translation>
+    </message>
 </context>
 <context>
     <name>clamav_ctrl</name>
@@ -590,6 +590,17 @@ li.checked::marker { content: &quot;\2612&quot;; }
     </message>
 </context>
 <context>
+    <name>clamdConfStringOption</name>
+    <message>
+        <source>Form</source>
+        <translation>Formulario</translation>
+    </message>
+    <message>
+        <source>CheckBox</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
     <name>clamdManager</name>
     <message>
         <source>Form</source>
@@ -620,129 +631,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <translation>Clamd &amp;&amp; Scan on Configuración de acceso</translation>
     </message>
     <message>
-        <source>Report only</source>
-        <translation>sólo informe</translation>
-    </message>
-    <message>
-        <source>Copy to Quarantine</source>
-        <translation>copiar archivo a la carpeta de cuarentena</translation>
-    </message>
-    <message>
-        <source>Move to Quarantine</source>
-        <translation>Mover archivo a la carpeta de cuarentena</translation>
-    </message>
-    <message>
-        <source>Remove (be carefull)</source>
-        <translation>Eliminar archivo (tenga cuidado)</translation>
-    </message>
-    <message>
-        <source>Log time for each message.</source>
-        <translation>Registre la hora con cada mensaje.</translation>
-    </message>
-    <message>
-        <source>Log Times</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>yes</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>no</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Max  number  of  scanning  threads to allocate to the OnAccess thread pool at startup.</source>
-        <translation>Número máximo de subprocesos de exploración que se asignarán al grupo de subprocesos de OnAccess al inicio.</translation>
-    </message>
-    <message>
-        <source>On Access max Threats</source>
-        <translation>Sobre las amenazas máximas de acceso</translation>
-    </message>
-    <message>
-        <source>How to proceed if infected files are found</source>
-        <translation>Cómo proceder si se encuentran archivos infectados</translation>
-    </message>
-    <message>
-        <source>Infected Files</source>
-        <translation>Archivos infectados</translation>
-    </message>
-    <message>
-        <source>Enables fanotify blocking when malicious files are found.</source>
-        <translation>Activa el bloqueo de fanotify cuando se encuentran archivos maliciosos.</translation>
-    </message>
-    <message>
-        <source>On Access Prevention</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Log additional information about the infected file, such as its size and hash, together with the virus name.</source>
-        <translation>Registrar información adicional sobre el archivo infectado, como su tamaño y hash, junto con el nombre del virus.</translation>
-    </message>
-    <message>
-        <source>Extended Detection Info</source>
-        <translation>Información ampliada sobre la detección</translation>
-    </message>
-    <message>
-        <source>MByte</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Number of times the OnAccess client will retry a failed scan due to connection problems (or other issues).</source>
-        <translation>Número de veces que el cliente OnAccess reintentará un escaneo fallido debido a problemas de conexión (u otros problemas).</translation>
-    </message>
-    <message>
-        <source>On Access retry Attempts</source>
-        <translation>En intentos de reintento de acceso</translation>
-    </message>
-    <message>
-        <source>When using prevention, if this option is turned on, any errors that occur during  scanning will result in the event attempt being denied. This could potentially lead to unwanted system behaviour  with  certain  configura-
-              tions, so the client defaults this to off and prefers allowing access events in case of scan or connection error.</source>
-        <translation>Cuando se utiliza la prevención, si esta opción está activada, cualquier error que se produzca durante el escaneo hará que se deniegue el intento de evento. Esto podría provocar un comportamiento no deseado del sistema con determinadas configuraciones, por lo que el cliente desactiva esta opción por defecto y prefiere permitir los eventos de acceso en caso de error de exploración o de conexión.</translation>
-    </message>
-    <message>
-        <source>On Access deny on Error</source>
-        <translation>En Acceso denegar en Error</translation>
-    </message>
-    <message>
-        <source>Maximum size of the log file.
-Value of 0 disables the limit.
-Default: 1 MByte
-</source>
-        <translation>Tamaño máximo del archivo de registro.
-El valor 0 desactiva el límite.
-Por defecto: 1 MByte
-</translation>
-    </message>
-    <message>
-        <source>Log-File max Size</source>
-        <translation>Tamaño máximo del archivo de registro</translation>
-    </message>
-    <message>
-        <source>On Access Extra Scanning</source>
-        <translation>Acceso Escaneado adicional</translation>
-    </message>
-    <message>
-        <source>Rotate log file. Requires LogFileMaxSize option set prior to this option.</source>
-        <translation>Rota el archivo de registro. Requiere que la opción LogFileMaxSize esté configurada antes que esta opción.</translation>
-    </message>
-    <message>
-        <source>Log Rotate</source>
-        <translation>Rotación de troncos</translation>
-    </message>
-    <message>
-        <source>Files larger than this value will not be scanned in on access.</source>
-        <translation>Los archivos mayores que este valor no se escanearán en el acceso.</translation>
-    </message>
-    <message>
-        <source>On Access max File Size</source>
-        <translation>Acceso al tamaño máximo de archivo</translation>
-    </message>
-    <message>
-        <source>Start Clamd on startup</source>
-        <translation>Iniciar Clamd al arrancar</translation>
-    </message>
-    <message>
         <source>Clamd has to be restarted
 for changes made to take effect.</source>
         <translation>Clamd tiene que ser reiniciado
@@ -763,10 +651,6 @@ para que los cambios realizados surtan efecto.</translation>
     <message>
         <source>  Stopping Clamd. Please wait!</source>
         <translation>  Deteniendo Clamd. Por favor, espere.</translation>
-    </message>
-    <message>
-        <source>Clamd and Clamonacc can not be launched. First you have to add at least one folder for monitoring!</source>
-        <translation>Clamd y Clamonacc no pueden ser lanzados. Primero tiene que añadir al menos una carpeta para la monitorización.</translation>
     </message>
     <message>
         <source>  Clamd not running - Start Clamd</source>
@@ -799,6 +683,36 @@ para que los cambios realizados surtan efecto.</translation>
     <message>
         <source>  Clamd restarting. Please wait!</source>
         <translation>  Clamd se reinicia. Por favor, espere.</translation>
+    </message>
+    <message>
+        <source>Start Clamd on Startup</source>
+        <translation>Iniciar Clamd al arrancar</translation>
+    </message>
+    <message>
+        <source>Clamd Settings</source>
+        <translation>Configuración de Clamd</translation>
+    </message>
+    <message>
+        <source>ClamonAcc Settings</source>
+        <translation>Configuración de ClamonAcc</translation>
+    </message>
+</context>
+<context>
+    <name>clamdconfcomboboxoption</name>
+    <message>
+        <source>Form</source>
+        <translation>Formulario</translation>
+    </message>
+</context>
+<context>
+    <name>clamdconfspinboxoption</name>
+    <message>
+        <source>Form</source>
+        <translation>Formulario</translation>
+    </message>
+    <message>
+        <source>CheckBox</source>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -1754,10 +1668,6 @@ Continue from the Start of the Log?</source>
 <context>
     <name>scanLimitsTab</name>
     <message>
-        <source>G</source>
-        <translation>G</translation>
-    </message>
-    <message>
         <source>K</source>
         <translation>K</translation>
     </message>
@@ -1969,8 +1879,8 @@ Continue from the Start of the Log?</source>
         <translation>mover archivo a la carpeta de cuarentena</translation>
     </message>
     <message>
-        <source>Signature Info</source>
-        <translation>Signature-Info</translation>
+        <source>show hidden folders</source>
+        <translation>mostrar carpetas ocultas</translation>
     </message>
 </context>
 <context>
@@ -2466,6 +2376,10 @@ Continue from the Start of the Log?</source>
     <message>
         <source>ClamAV System Status</source>
         <translation>ClamAV System Status</translation>
+    </message>
+    <message>
+        <source>[uk_UA] Ukraine</source>
+        <translation></translation>
     </message>
 </context>
 </TS>
