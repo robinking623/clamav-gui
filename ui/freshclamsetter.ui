@@ -181,7 +181,7 @@
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">background:#aa3</string>
+          <string notr="true">background:#dfdf48</string>
          </property>
          <property name="title">
           <string>Update Info</string>
