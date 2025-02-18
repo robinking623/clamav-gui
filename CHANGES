@@ -1,3 +1,11 @@
+* Mon Feb 17 2025 - Version 1.0.7
+- Complete revision of the Clamd Tab and ClamonAcc Section.
+- Now nearly all parameters for clamd.conf can now be adjusted.
+- Clamd can now be startet without ClamonAcc. If no directory for monitoring is selected, only clamd will be started.
+- Changed the Virus-Signature Information Label on the Scanner-Tab.
+- Updated the translation files.
+- Updated the desktop file.
+
 * Sun Feb 9 2025 - Version 1.0.6
 - Several changes made to the Profile Wizard, the Options Tab and the Scan Limits Tab.
 - Changed the Directory View. In the Scan Tab and the Profile Wizard now hidden folders can be displayes.
