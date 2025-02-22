@@ -71,6 +71,7 @@
         <file>icons/crosshair.png</file>
         <file>icons/systemstatus.png</file>
         <file>icons/gifs/activity.gif</file>
+        <file>icons/multithread.png</file>
     </qresource>
     <qresource prefix="/"/>
 </RCC>

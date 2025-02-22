@@ -1,3 +1,8 @@
+* Sat Feb 22 2025 - Version 1.0.8
+- Implemented the use of "clamdscan" if clamd is running.
+- You can set in the setup tab, whether clamdscan is always used when available, used for scheduled scans, used for direct scans, never used or you are asked every time a scan
+- is initiated whether to use clamdscan or clamscan.
+
 * Mon Feb 17 2025 - Version 1.0.7
 - Complete revision of the Clamd Tab and ClamonAcc Section.
 - Now nearly all parameters for clamd.conf can now be adjusted.
