@@ -1074,6 +1074,107 @@
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_2">
             <item>
+             <widget class="QFrame" name="frame">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>50</height>
+               </size>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_12">
+               <item row="0" column="0">
+                <widget class="QLabel" name="label">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">width:16px;height:16px</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="pixmap">
+                  <pixmap resource="../resources.qrc">:/icons/icons/multithread.png</pixmap>
+                 </property>
+                 <property name="scaledContents">
+                  <bool>false</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QLabel" name="label_2">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">font-size:16px;font-weight:bold;</string>
+                 </property>
+                 <property name="text">
+                  <string>ClamdScan</string>
+                 </property>
+                 <property name="scaledContents">
+                  <bool>false</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0" colspan="2">
+                <widget class="QComboBox" name="clamdscanComboBox">
+                 <item>
+                  <property name="text">
+                   <string>Never, even if available.</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Always, if available.</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>For scheduled scan, if available.</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>For direct scan, if available.</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Ask for permission, if available.</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+               <item row="1" column="0" colspan="2">
+                <widget class="QLabel" name="label_3">
+                 <property name="text">
+                  <string>use ClamdScan with multithreading ...</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
              <widget class="QFrame" name="windowstateFrame">
               <property name="styleSheet">
                <string notr="true">background-color:#c0c0c0;</string>
@@ -1085,8 +1186,33 @@
                <enum>QFrame::Raised</enum>
               </property>
               <layout class="QGridLayout" name="gridLayout_4">
+               <item row="1" column="0">
+                <widget class="QLabel" name="windowStateIconFrame">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">margin-right:10px;</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="pixmap">
+                  <pixmap resource="../resources.qrc">:/icons/icons/expand-button.png</pixmap>
+                 </property>
+                </widget>
+               </item>
                <item row="1" column="1">
                 <widget class="QLabel" name="windowStateLabel">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
                  <property name="styleSheet">
                   <string notr="true">font-size:16px;font-weight:bold;</string>
                  </property>
@@ -1095,7 +1221,7 @@
                  </property>
                 </widget>
                </item>
-               <item row="2" column="0" colspan="2">
+               <item row="2" column="0" colspan="3">
                 <widget class="QComboBox" name="windowStateComboBox">
                  <item>
                   <property name="text">
@@ -1107,19 +1233,6 @@
                    <string>Show Tray Icon only</string>
                   </property>
                  </item>
-                </widget>
-               </item>
-               <item row="1" column="0">
-                <widget class="QLabel" name="windowStateIconFrame">
-                 <property name="styleSheet">
-                  <string notr="true">margin-right:10px;</string>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="pixmap">
-                  <pixmap resource="../resources.qrc">:/icons/icons/expand-button.png</pixmap>
-                 </property>
                 </widget>
                </item>
               </layout>
@@ -1428,8 +1541,8 @@
    <slot>slot_selectedLanguageChanged()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>830</x>
-     <y>218</y>
+     <x>814</x>
+     <y>306</y>
     </hint>
     <hint type="destinationlabel">
      <x>5</x>
@@ -1444,8 +1557,8 @@
    <slot>slot_basicSettingsChanged()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>754</x>
-     <y>103</y>
+     <x>815</x>
+     <y>191</y>
     </hint>
     <hint type="destinationlabel">
      <x>1</x>
@@ -1492,12 +1605,28 @@
    <slot>slot_clamonaccButtonClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>552</x>
-     <y>129</y>
+     <x>536</x>
+     <y>145</y>
     </hint>
     <hint type="destinationlabel">
      <x>539</x>
      <y>5</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>clamdscanComboBox</sender>
+   <signal>activated(int)</signal>
+   <receiver>setupTab</receiver>
+   <slot>slot_clamdscanComboBoxClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>761</x>
+     <y>104</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>962</x>
+     <y>115</y>
     </hint>
    </hints>
   </connection>
@@ -1508,5 +1637,7 @@
   <slot>slot_freshclamButtonClicked()</slot>
   <slot>slot_clamdButtonClicked()</slot>
   <slot>slot_clamonaccButtonClicked()</slot>
+  <slot>slot_multithreadingCheckBoxClicked()</slot>
+  <slot>slot_clamdscanComboBoxClicked()</slot>
  </slots>
 </ui>
