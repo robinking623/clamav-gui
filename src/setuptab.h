@@ -35,6 +35,7 @@ private slots:
     void slot_clamdButtonClicked();
     void slot_clamonaccButtonClicked();
     void slot_freshclamButtonClicked();
+    void slot_clamdscanComboBoxClicked();
 
 signals:
     void switchActiveTab(int);

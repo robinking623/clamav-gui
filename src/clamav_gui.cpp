@@ -281,149 +281,195 @@ QString checked;
 QString option;
 QString value;
 QString temp;
+bool useclamdscan;
 
     emit setScannerForm(false);
 
     scannerTab->setStatusBarMessage(tr("Scanning started ......."),"#ffff00");
 
-    if (scannerTab->recursivChecked() == true){
-        parameters << "-r";
+    if (setupFile->getSectionValue("Clamd","Status") == "is running") {
+        switch (setupFile->getSectionIntValue("Clamd","ClamdScanMultithreading")) {
+            case 0 : useclamdscan = false;
+                        break;
+            case 1 : useclamdscan = true;
+                        break;
+            case 2 : useclamdscan = false;
+                        break;
+            case 3 : useclamdscan = true;
+                        break;
+            case 4 : if (QMessageBox::question(this,tr("Use ClamdScan"),tr("Perform scanning using clamdscan instead of clamscan?"),QMessageBox::Yes,QMessageBox::No) == QMessageBox::Yes) {
+                        useclamdscan = true;
+                     } else {
+                        useclamdscan = false;
+                     }
+        }
+    } else {
+        useclamdscan = false;
     }
 
-    switch (scannerTab->getVirusFoundComboBoxValue()) {
-    case 0:
-        break;
-    case 1: parameters << "--remove=yes";
-        break;
-    case 2: if (moveDirectory != "") parameters << "--move=" + moveDirectory;
-        break;
-    case 3: if (moveDirectory != "") parameters << "--copy=" + copyDirectory;
-        break;
-    }
+    if (useclamdscan == true) {
+        temp = "clamdscan --config-file " + QDir::homePath() + "/.clamav-gui/clamd.conf --multiscan --fdpass";
+        parameters << "--config-file" << QDir::homePath() + "/.clamav-gui/clamd.conf" << "--multiscan" << "--fdpass";
 
-    for (int i = 0; i < selectedOptions.count(); i++){
-        parameters << selectedOptions.at(i).left(selectedOptions.indexOf("|")).replace("<equal>","=");
-    }
+        for (int i = 0; i < scanObjects.count(); i++){
+            parameters << scanObjects.at(i);
+            temp = temp + " " + scanObjects.at(i);
+        }
 
-    keywords << "TmpFile" << "MoveInfectedFiles" << "CopyInfectedFiles" << "SCanFileFromFiles" << "FollowDirectorySymLinks" << "FollowFileSymLinks";
-    switches << "--tempdir=" << "--move=" << "--copy=" << "--file-list=" << "--follow-dir-symlinks=" << "--follow-file-symlinks=";
-    // Directory Options
-    for (int i = 0; i < directoryOptions.count(); i++){
-        option = directoryOptions.at(i);
-        value = setupFile->getSectionValue("Directories",option);
-        checked = value.left(value.indexOf("|"));
-        value = value.mid(value.indexOf("|") + 1);
+        slot_setMainWindowState(true);
+
+        if (setupFile->getSectionBoolValue("Settings","ShowHideDropZone") == true){
+            dropZone->close();
+        }
+
+        ui->tabWidget->setCurrentIndex(0);
+
+        scannerTab->clearLogMessage();
+        scannerTab->setStatusMessage(temp+char(13));
+
+        scanProcess->start("clamdscan",parameters);
+
+    } else {
+
+        if (scannerTab->recursivChecked() == true){
+            parameters << "-r";
+        }
+
+        switch (scannerTab->getVirusFoundComboBoxValue()) {
+        case 0:
+            break;
+        case 1: parameters << "--remove=yes";
+            break;
+        case 2: if (moveDirectory != "") parameters << "--move=" + moveDirectory;
+            break;
+        case 3: if (moveDirectory != "") parameters << "--copy=" + copyDirectory;
+            break;
+        }
+
+        for (int i = 0; i < selectedOptions.count(); i++){
+            parameters << selectedOptions.at(i).left(selectedOptions.indexOf("|")).replace("<equal>","=");
+        }
+
+        keywords << "TmpFile" << "MoveInfectedFiles" << "CopyInfectedFiles" << "SCanFileFromFiles" << "FollowDirectorySymLinks" << "FollowFileSymLinks";
+        switches << "--tempdir=" << "--move=" << "--copy=" << "--file-list=" << "--follow-dir-symlinks=" << "--follow-file-symlinks=";
+        // Directory Options
+        for (int i = 0; i < directoryOptions.count(); i++){
+            option = directoryOptions.at(i);
+            value = setupFile->getSectionValue("Directories",option);
+            checked = value.left(value.indexOf("|"));
+            value = value.mid(value.indexOf("|") + 1);
 
 
-        if ((checked == "checked") && (value != "")) {
-            if (option == "LoadSupportedDBFiles") parameters << "--database=" + value;
-            if (option == "ScanReportToFile") {
-                parameters << "--log=" + value;
-                if (value != "") {
-                    QFile file(value);
-                    if (file.open(QIODevice::ReadWrite|QIODevice::Append|QIODevice::Text)){
-                        QTextStream stream(&file);
-                        stream << "\n<Scanning startet> " << QDateTime::currentDateTime().toString("yyyy/M/d - hh:mm");
-                        file.close();
+            if ((checked == "checked") && (value != "")) {
+                if (option == "LoadSupportedDBFiles") parameters << "--database=" + value;
+                if (option == "ScanReportToFile") {
+                    parameters << "--log=" + value;
+                    if (value != "") {
+                        QFile file(value);
+                        if (file.open(QIODevice::ReadWrite|QIODevice::Append|QIODevice::Text)){
+                            QTextStream stream(&file);
+                            stream << "\n<Scanning startet> " << QDateTime::currentDateTime().toString("yyyy/M/d - hh:mm");
+                            file.close();
+                        }
+                    }
+                }
+                if (keywords.indexOf(option) != -1) parameters << switches.at(keywords.indexOf(option)) + value;
+            }
+        }
+
+        // Scan Limitations
+        QStringList SLKeywords;
+        QStringList SLSwitches;
+        SLKeywords << "Files larger than this will be skipped and assumed clean" << "The maximum amount of data to scan for each container file";
+        SLKeywords << "The maximum number of files to scan for each container file" << "Maximum archive recursion level for container file";
+        SLKeywords << "Maximum directory recursion level" << "Maximum size file to check for embedded PE" << "Maximum size of HTML file to normalize";
+        SLKeywords << "Maximum size of normalized HTML file to scan" << "Maximum size of script file to normalize" << "Maximum size zip to type reanalyze";
+        SLKeywords << "Maximum number of partitions in disk image to be scanned" << "Maximum number of icons in PE file to be scanned";
+        SLKeywords << "Number of seconds to wait for waiting a response back from the stats server" << "Bytecode timeout in milliseconds";
+        SLKeywords << "Collect and print execution statistics" << "Structured SSN Format" << "Structured SSN Count" << "Structured CC Count" << "Structured CC Mode";
+        SLKeywords << "Max Scan-Time" << "Max recursion to HWP3 parsing function" << "Max calls to PCRE match function" << "Max recursion calls to the PCRE match function";
+        SLKeywords << "Max PCRE file size" << "Database outdated if older than x days";
+        SLSwitches << "--max-filesize=" << "--max-scansize=" << "--max-files=" << "--max-recursion=" << "--max-dir-recursion=";
+        SLSwitches << "--max-embeddedpe=" << "--max-htmlnormalize=" << "--max-htmlnotags=" << "--max-scriptnormalize=" << "--max-ziptypercg=";
+        SLSwitches << "--max-partitions=" << "--max-iconspe=" << "--stats-timeout=" << "--bytecode-timeout=" << "--statistics=";
+        SLSwitches << "--structured-ssn-format=" << "--structured-ssn-count=" << "--structured-cc-count=" << "--structured-cc-mode=" << "--max-scantime=";
+        SLSwitches << "--max-rechwp3=" << "--pcre-match-limit=" << "--pcre-recmatch-limit=" << "--pcre-max-filesize=" << "--fail-if-cvd-older-than=";
+        for (int i = 0; i < scanLimitations.count(); i++){
+            option = scanLimitations.at(i);
+            value = setupFile->getSectionValue("ScanLimitations",option);
+            checked = value.left(value.indexOf("|"));
+            value = value.mid(value.indexOf("|") + 1);
+            if (checked == "checked"){
+                for (int i = 0; i < SLKeywords.length(); i++) {
+                    if (option == SLKeywords.at(i)){
+                        parameters << SLSwitches.at(i) + value;
                     }
                 }
             }
-            if (keywords.indexOf(option) != -1) parameters << switches.at(keywords.indexOf(option)) + value;
         }
-    }
 
-    // Scan Limitations
-    QStringList SLKeywords;
-    QStringList SLSwitches;
-    SLKeywords << "Files larger than this will be skipped and assumed clean" << "The maximum amount of data to scan for each container file";
-    SLKeywords << "The maximum number of files to scan for each container file" << "Maximum archive recursion level for container file";
-    SLKeywords << "Maximum directory recursion level" << "Maximum size file to check for embedded PE" << "Maximum size of HTML file to normalize";
-    SLKeywords << "Maximum size of normalized HTML file to scan" << "Maximum size of script file to normalize" << "Maximum size zip to type reanalyze";
-    SLKeywords << "Maximum number of partitions in disk image to be scanned" << "Maximum number of icons in PE file to be scanned";
-    SLKeywords << "Number of seconds to wait for waiting a response back from the stats server" << "Bytecode timeout in milliseconds";
-    SLKeywords << "Collect and print execution statistics" << "Structured SSN Format" << "Structured SSN Count" << "Structured CC Count" << "Structured CC Mode";
-    SLKeywords << "Max Scan-Time" << "Max recursion to HWP3 parsing function" << "Max calls to PCRE match function" << "Max recursion calls to the PCRE match function";
-    SLKeywords << "Max PCRE file size" << "Database outdated if older than x days";
-    SLSwitches << "--max-filesize=" << "--max-scansize=" << "--max-files=" << "--max-recursion=" << "--max-dir-recursion=";
-    SLSwitches << "--max-embeddedpe=" << "--max-htmlnormalize=" << "--max-htmlnotags=" << "--max-scriptnormalize=" << "--max-ziptypercg=";
-    SLSwitches << "--max-partitions=" << "--max-iconspe=" << "--stats-timeout=" << "--bytecode-timeout=" << "--statistics=";
-    SLSwitches << "--structured-ssn-format=" << "--structured-ssn-count=" << "--structured-cc-count=" << "--structured-cc-mode=" << "--max-scantime=";
-    SLSwitches << "--max-rechwp3=" << "--pcre-match-limit=" << "--pcre-recmatch-limit=" << "--pcre-max-filesize=" << "--fail-if-cvd-older-than=";
-    for (int i = 0; i < scanLimitations.count(); i++){
-        option = scanLimitations.at(i);
-        value = setupFile->getSectionValue("ScanLimitations",option);
+        // REGEXP and Include Exclude Options
+        value = setupFile->getSectionValue("REGEXP_and_IncludeExclude","DontScanFileNamesMatchingRegExp");
         checked = value.left(value.indexOf("|"));
         value = value.mid(value.indexOf("|") + 1);
-        if (checked == "checked"){
-            for (int i = 0; i < SLKeywords.length(); i++) {
-                if (option == SLKeywords.at(i)){
-                    parameters << SLSwitches.at(i) + value;
-                }
+        if (checked == "checked") parameters << "--exclude=" + value;
+
+        value = setupFile->getSectionValue("REGEXP_and_IncludeExclude","DontScanDirectoriesMatchingRegExp");
+        checked = value.left(value.indexOf("|"));
+        value = value.mid(value.indexOf("|") + 1);
+        if (checked == "checked") parameters << "--exclude-dir=" + value;
+
+        value = setupFile->getSectionValue("REGEXP_and_IncludeExclude","OnlyScanFileNamesMatchingRegExp");
+        checked = value.left(value.indexOf("|"));
+        value = value.mid(value.indexOf("|") + 1);
+        if (checked == "checked") parameters << "--include=" + value;
+
+        value = setupFile->getSectionValue("REGEXP_and_IncludeExclude","OnlyScanDirectoriesMatchingRegExp");
+        checked = value.left(value.indexOf("|"));
+        value = value.mid(value.indexOf("|") + 1);
+        if (checked == "checked") parameters << "--include-dir=" + value;
+
+        if (setupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","EnablePUAOptions") == true){
+            QStringList keywords;
+            QStringList switches;
+            keywords << "LoadPUAPacked" << "LoadPUAPWTool" << "LoadPUANetTool" << "LoadPUAP2P" << "LoadPUAIRC" << "LoadPUARAT" << "LoadPUANetToolSpy";
+            keywords << "LoadPUAServer" << "LoadPUAScript" << "LoadPUAAndr" << "LoadPUAJava" << "LoadPUAOsx" << "LoadPUATool" << "LoadPUAUnix" << "LoadPUAWin";
+            switches << "--include-pua=Packed" << "--include-pua=PWTool" << "--include-pua=NetTool" << "--include-pua=P2P" << "--include-pua=IRC" << "--include-pua=RAT";
+            switches << "--include-pua=NetToolSpy" << "--include-pua=Server" << "--include-pua=Script" << "--include-pua=Andr" << "--include-pua=Java";
+            switches << "--include-pua=Osx" << "--include-pua=Tool" << "--include-pua=Unix" << "--include-pua=Win";
+            for (int i = 0; i < keywords.length(); i++) {
+                if (setupFile->getSectionBoolValue("REGEXP_and_IncludeExclude",keywords.at(i)) == true) parameters << switches.at(i);
             }
         }
-    }
 
-    // REGEXP and Include Exclude Options
-    value = setupFile->getSectionValue("REGEXP_and_IncludeExclude","DontScanFileNamesMatchingRegExp");
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    if (checked == "checked") parameters << "--exclude=" + value;
-
-    value = setupFile->getSectionValue("REGEXP_and_IncludeExclude","DontScanDirectoriesMatchingRegExp");
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    if (checked == "checked") parameters << "--exclude-dir=" + value;
-
-    value = setupFile->getSectionValue("REGEXP_and_IncludeExclude","OnlyScanFileNamesMatchingRegExp");
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    if (checked == "checked") parameters << "--include=" + value;
-
-    value = setupFile->getSectionValue("REGEXP_and_IncludeExclude","OnlyScanDirectoriesMatchingRegExp");
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    if (checked == "checked") parameters << "--include-dir=" + value;
-
-    if (setupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","EnablePUAOptions") == true){
-        QStringList keywords;
-        QStringList switches;
-        keywords << "LoadPUAPacked" << "LoadPUAPWTool" << "LoadPUANetTool" << "LoadPUAP2P" << "LoadPUAIRC" << "LoadPUARAT" << "LoadPUANetToolSpy";
-        keywords << "LoadPUAServer" << "LoadPUAScript" << "LoadPUAAndr" << "LoadPUAJava" << "LoadPUAOsx" << "LoadPUATool" << "LoadPUAUnix" << "LoadPUAWin";
-        switches << "--include-pua=Packed" << "--include-pua=PWTool" << "--include-pua=NetTool" << "--include-pua=P2P" << "--include-pua=IRC" << "--include-pua=RAT";
-        switches << "--include-pua=NetToolSpy" << "--include-pua=Server" << "--include-pua=Script" << "--include-pua=Andr" << "--include-pua=Java";
-        switches << "--include-pua=Osx" << "--include-pua=Tool" << "--include-pua=Unix" << "--include-pua=Win";
-        for (int i = 0; i < keywords.length(); i++) {
-            if (setupFile->getSectionBoolValue("REGEXP_and_IncludeExclude",keywords.at(i)) == true) parameters << switches.at(i);
+        temp = "clamscan ";
+        QString path = temp;
+        path = setupFile->getSectionValue("Directories","LoadSupportedDBFiles");
+        path = path.mid(path.indexOf("|")+1);
+        if (path.indexOf("not checked") != - 1) temp = temp + "-d " + path;
+        for (int i = 0; i < parameters.count(); i++){
+            temp = temp + " " + parameters.at(i);
         }
+
+        // parameters << "-d" << path;
+        for (int i = 0; i < scanObjects.count(); i++){
+            parameters << scanObjects.at(i);
+            temp = temp + " " + scanObjects.at(i);
+        }
+
+        slot_setMainWindowState(true);
+
+        if (setupFile->getSectionBoolValue("Settings","ShowHideDropZone") == true){
+            dropZone->close();
+        }
+
+        ui->tabWidget->setCurrentIndex(0);
+
+        scannerTab->clearLogMessage();
+        scannerTab->setStatusMessage(temp+char(13));
+
+        scanProcess->start("clamscan",parameters);
     }
-
-    temp = "clamscan ";
-    QString path = temp;
-    path = setupFile->getSectionValue("Directories","LoadSupportedDBFiles");
-    path = path.mid(path.indexOf("|")+1);
-    if (path.indexOf("not checked") != - 1) temp = temp + "-d " + path;
-    for (int i = 0; i < parameters.count(); i++){
-        temp = temp + " " + parameters.at(i);
-    }
-
-    // parameters << "-d" << path;
-    for (int i = 0; i < scanObjects.count(); i++){
-        parameters << scanObjects.at(i);
-        temp = temp + " " + scanObjects.at(i);
-    }
-
-    slot_setMainWindowState(true);
-
-    if (setupFile->getSectionBoolValue("Settings","ShowHideDropZone") == true){
-        dropZone->close();
-    }
-
-    ui->tabWidget->setCurrentIndex(0);
-
-    scannerTab->clearLogMessage();
-    scannerTab->setStatusMessage(temp+char(13));
-
-    scanProcess->start("clamscan",parameters);
 }
 
 void clamav_gui::slot_mainWinTimerTimeout(){

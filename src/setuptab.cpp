@@ -30,6 +30,12 @@ setupTab::setupTab(QWidget *parent) :
         if (setupFile->getSectionValue("Setup","WindowState") == "minimized") ui->windowStateComboBox->setCurrentIndex(1); else ui->windowStateComboBox->setCurrentIndex(0);
     }
 
+    if (setupFile->keywordExists("Clamd","ClamdScanMultithreading") == true) {
+        ui->clamdscanComboBox->setCurrentIndex(setupFile->getSectionIntValue("Clamd","ClamdScanMultithreading"));
+    } else {
+        setupFile->setSectionValue("Clamd","ClamdScanMultithreading",0);
+    }
+
     slot_updateSystemInfo();
 
     supressMessage = false;
@@ -54,8 +60,8 @@ void setupTab::slot_updateSystemInfo(){
 
         QString value = setupFile->getSectionValue("Updater","DailyVersion");
         value = value.mid(value.indexOf(" "), value.indexOf(",") - value.indexOf(" "));
-        systemInfo = "<b>Antivirus Database:</b><font color='#1b8755'>" + value + "</font><br>";
-        systemInfo += "<b>Date:</b> <font color='#1b8755'>" + setupFile->getSectionValue("Updater","LastUpdate") + "</font>";
+        systemInfo = "<div style='line-height:20px;'><b>Antivirus Database:</b><font color='#1b8755'>" + value + "</font><br>";
+        systemInfo += "<b>Date:</b> <font color='#1b8755'>" + setupFile->getSectionValue("Updater","LastUpdate") + "</font></div>";
         emit sendSystemInfo(systemInfo);
     }
 
@@ -129,6 +135,11 @@ void setupTab::slot_clamdButtonClicked(){
 
 void setupTab::slot_freshclamButtonClicked() {
     emit switchActiveTab(5);
+}
+
+void setupTab::slot_clamdscanComboBoxClicked()
+{
+    setupFile->setSectionValue("Clamd","ClamdScanMultithreading",ui->clamdscanComboBox->currentIndex());
 }
 
 void setupTab::slot_clamonaccButtonClicked() {

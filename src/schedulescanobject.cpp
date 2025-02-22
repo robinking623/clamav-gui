@@ -3,6 +3,8 @@
 
 scheduleScanObject::scheduleScanObject(QWidget *parent, QString name, QStringList parameters) : QDialog(parent), ui(new Ui::scheduleScanObject),scanJob(name)
 {
+    bool useclamdscan;
+
     setWindowFlags(((this->windowFlags() | Qt::CustomizeWindowHint) & ~Qt::WindowCloseButtonHint & ~Qt::WindowContextHelpButtonHint) );
     ui->setupUi(this);
 
@@ -13,14 +15,9 @@ scheduleScanObject::scheduleScanObject(QWidget *parent, QString name, QStringLis
         directScan = false;
     }
 
+    setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini");
+
     logHighLighter = new highlighter(ui->logMessagePlainTextEdit->document());
-
-    QString message = "clamscan ";
-    for (int i = 0;i < parameters.count();i++){
-        message = message + " " + parameters.at(i);
-    }
-
-    if (directScan == true) ui->logMessagePlainTextEdit->appendPlainText(message);
 
     ui->scanJobHeader->setText(tr("Scan-Job: ") + name);
     this->setWindowTitle(tr("Scheduled Scan-Job: ") + name);
@@ -29,7 +26,73 @@ scheduleScanObject::scheduleScanObject(QWidget *parent, QString name, QStringLis
     connect(scanProcess,SIGNAL(readyReadStandardError()),this,SLOT(slot_scanProcessHasErrOutput()));
     connect(scanProcess,SIGNAL(readyReadStandardOutput()),this,SLOT(slot_scanProcessHasStdOutput()));
     connect(scanProcess,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(slot_scanProcessFinished(int,QProcess::ExitStatus)));
-    scanProcess->start("clamscan",parameters);
+
+    QString message;
+
+    if (setupFile->getSectionValue("Clamd","Status") == "is running") {
+        switch (setupFile->getSectionIntValue("Clamd","ClamdScanMultithreading")) {
+            case 0 : useclamdscan = false;
+                     message = "clamscan ";
+                        break;
+            case 1 : useclamdscan = true;
+                     message = "clamdscan ";
+                        break;
+            case 2 : if (directScan == true) {
+                        useclamdscan = false;
+                        message = "clamscan ";
+                     } else {
+                        useclamdscan = true;
+                        message = "clamdscan ";
+                     }
+                        break;
+            case 3 : if (directScan == false) {
+                        useclamdscan = false;
+                        message = "clamdscan ";
+                     } else {
+                        useclamdscan = true;
+                        message = "clamdscan ";
+                     }
+                        break;
+            case 4 : if (QMessageBox::question(this,tr("Use ClamdScan"),tr("Perform scanning using clamdscan instead of clamscan?"),QMessageBox::Yes,QMessageBox::No) == QMessageBox::Yes) {
+                        useclamdscan = true;
+                        message = "clamdscan ";
+                     } else {
+                        useclamdscan = false;
+                        message = "clamscan ";
+                     }
+        }
+    } else {
+        useclamdscan = false;
+        message = "clamscan ";
+    }
+
+    if (useclamdscan == false) {
+        for (int i = 0;i < parameters.count();i++){
+            message = message + " " + parameters.at(i);
+        }
+        message = message + "\n";
+    } else {
+        message = message + "--multiscan --fdpass --config-file " + QDir::homePath() + "/.clamav-gui/clamd.conf";
+        for (int i = 0;i < parameters.count();i++){
+            QString para = parameters.at(i);
+            if (para.indexOf("-") != 0) message = message + " " + parameters.at(i);
+        }
+        message = message + "\n";
+    }
+
+    ui->logMessagePlainTextEdit->appendPlainText(message);
+
+    if (useclamdscan == true) {
+        QStringList newParameters;
+        newParameters << "--multiscan" << "--fdpass" << "--config-file" << QDir::homePath() + "/.clamav-gui/clamd.conf";
+        foreach(const QString element,parameters) {
+            newParameters << element;
+        }
+        scanProcess->start("clamdscan",newParameters);
+    } else {
+        scanProcess->start("clamscan",parameters);
+    }
+
     ui->currentFileLabel->setText(tr("Scanning started ......."));
 
     busyLabel = new QLabel(this);

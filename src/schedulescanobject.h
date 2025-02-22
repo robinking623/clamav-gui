@@ -30,6 +30,7 @@
 #include <QMovie>
 #include "highlighter.h"
 #include "qroundprogressbar.h"
+#include "setupfilehandler.h"
 
 namespace Ui {
 class scheduleScanObject;
@@ -54,6 +55,7 @@ private:
     QMovie                  * movie;
     QLabel                  * busyLabel;
     QRoundProgressBar       * countDown;
+    setupFileHandler        * setupFile;
     int                       closeWindowCounter;
     int                       errorStart;
     int                       infectedStart;

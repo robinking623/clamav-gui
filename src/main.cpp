@@ -49,7 +49,6 @@ bool translatorLoaded = false;
     if (rc == "--scan") {
         if (file.exists(QDir::homePath() + "/.clamav-gui/settings.ini") == true) {
             setupFileHandler * setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini");
-            //QStringList parameters;
             QStringList selectedOptions = setupFile->getKeywords("SelectedOptions");
             QStringList directoryOptions = setupFile->getKeywords("Directories");
             QStringList scanLimitations = setupFile->getKeywords("ScanLimitations");
