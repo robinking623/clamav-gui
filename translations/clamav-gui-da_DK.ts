@@ -699,71 +699,81 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <translation>Afslut</translation>
     </message>
     <message>
-        <location filename="../src/clamav_gui.cpp" line="287"/>
+        <location filename="../src/clamav_gui.cpp" line="288"/>
         <source>Scanning started .......</source>
         <translation>Scanning startet .......</translation>
     </message>
     <message>
-        <location filename="../src/clamav_gui.cpp" line="454"/>
+        <location filename="../src/clamav_gui.cpp" line="300"/>
+        <source>Use ClamdScan</source>
+        <translation>Brug ClamdScan</translation>
+    </message>
+    <message>
+        <location filename="../src/clamav_gui.cpp" line="300"/>
+        <source>Perform scanning using clamdscan instead of clamscan?</source>
+        <translation>Udføre scanning ved hjælp af clamdscan i stedet for clamscan?</translation>
+    </message>
+    <message>
+        <location filename="../src/clamav_gui.cpp" line="500"/>
         <source>Scan-Process aborted ......</source>
         <translation>Scan-processen afbrudt ......</translation>
     </message>
     <message>
-        <location filename="../src/clamav_gui.cpp" line="455"/>
-        <location filename="../src/clamav_gui.cpp" line="459"/>
-        <location filename="../src/clamav_gui.cpp" line="463"/>
-        <location filename="../src/clamav_gui.cpp" line="466"/>
+        <location filename="../src/clamav_gui.cpp" line="501"/>
+        <location filename="../src/clamav_gui.cpp" line="505"/>
+        <location filename="../src/clamav_gui.cpp" line="509"/>
+        <location filename="../src/clamav_gui.cpp" line="512"/>
         <source>Scan-Status</source>
         <translation>Scan-status</translation>
     </message>
     <message>
-        <location filename="../src/clamav_gui.cpp" line="455"/>
+        <location filename="../src/clamav_gui.cpp" line="501"/>
         <source>Scan Process aborted .....</source>
         <translation>Scan processen afbrudt .....</translation>
     </message>
     <message>
-        <location filename="../src/clamav_gui.cpp" line="458"/>
+        <location filename="../src/clamav_gui.cpp" line="504"/>
         <source>Scan-Process finished ...... no Virus found!</source>
         <translation>Scan-processen færdig ...... Ingen virus fundet!</translation>
     </message>
     <message>
-        <location filename="../src/clamav_gui.cpp" line="459"/>
+        <location filename="../src/clamav_gui.cpp" line="505"/>
         <source>Scan Process finished ..... no virus found!</source>
         <translation>Scan processen færdig ..... Ingen virus fundet!</translation>
     </message>
     <message>
-        <location filename="../src/clamav_gui.cpp" line="462"/>
+        <location filename="../src/clamav_gui.cpp" line="508"/>
         <source>Scan-Process finished ...... Virus found!</source>
         <translation>Scan-proces afsluttet ...... Ingen virus fundet!</translation>
     </message>
     <message>
-        <location filename="../src/clamav_gui.cpp" line="463"/>
+        <location filename="../src/clamav_gui.cpp" line="509"/>
         <source>Scan Process finished ..... a virus was found!</source>
         <translation>Scan processen færdig ..... Virus blev fundet!</translation>
     </message>
     <message>
-        <location filename="../src/clamav_gui.cpp" line="465"/>
+        <location filename="../src/clamav_gui.cpp" line="511"/>
         <source>Scan-Process finished ...... an error occured!</source>
         <translation>Scan processen færdig ..... Fejl opstod!</translation>
     </message>
     <message>
-        <location filename="../src/clamav_gui.cpp" line="466"/>
+        <location filename="../src/clamav_gui.cpp" line="512"/>
         <source>Scan Process finished ..... an error occurred!</source>
         <translation>Scan processen færdig ..... Fejl opstod!</translation>
     </message>
     <message>
-        <location filename="../src/clamav_gui.cpp" line="480"/>
-        <location filename="../src/clamav_gui.cpp" line="481"/>
+        <location filename="../src/clamav_gui.cpp" line="526"/>
+        <location filename="../src/clamav_gui.cpp" line="527"/>
         <source>Scan-Process aborted!</source>
         <translation>Scan-processen afbrudt!</translation>
     </message>
     <message>
-        <location filename="../src/clamav_gui.cpp" line="589"/>
+        <location filename="../src/clamav_gui.cpp" line="635"/>
         <source>WARNING</source>
         <translation>ADVARSEL</translation>
     </message>
     <message>
-        <location filename="../src/clamav_gui.cpp" line="589"/>
+        <location filename="../src/clamav_gui.cpp" line="635"/>
         <source>Neither &quot;pkexec&quot; nor &quot;kdesu&quot; is installed. Please install at least one of this to apps!</source>
         <translation>Hverken &quot;pkexec&quot; eller &quot;kdesu&quot; er installeret. Installer venligst mindst en af disse til apps!</translation>
     </message>
@@ -804,7 +814,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <translation>Clamd &amp; Scan på adgang</translation>
     </message>
     <message>
-        <location filename="../ui/clamdmanager.ui" line="216"/>
+        <location filename="../ui/clamdmanager.ui" line="367"/>
         <source>Start Clamd on Startup</source>
         <translation>Start Clamd ved opstart</translation>
     </message>
@@ -834,7 +844,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <translation>Clamd &amp;&amp; Scan på adgangsindstillinger</translation>
     </message>
     <message>
-        <location filename="../ui/clamdmanager.ui" line="238"/>
+        <location filename="../ui/clamdmanager.ui" line="225"/>
         <source>Clamd has to be restarted
 for changes made to take effect.</source>
         <translation>Clamd skal genstartes
@@ -2606,106 +2616,116 @@ Fortsæt fra starten af loggen?</translation>
         <translation>Status : </translation>
     </message>
     <message>
-        <location filename="../src/schedulescanobject.cpp" line="33"/>
+        <location filename="../src/schedulescanobject.cpp" line="96"/>
         <source>Scanning started .......</source>
         <translation>Scan startet .......</translation>
     </message>
     <message>
-        <location filename="../src/schedulescanobject.cpp" line="92"/>
-        <location filename="../src/schedulescanobject.cpp" line="111"/>
+        <location filename="../src/schedulescanobject.cpp" line="155"/>
+        <location filename="../src/schedulescanobject.cpp" line="174"/>
         <source>Scanning : </source>
         <translation>Scanner : </translation>
     </message>
     <message>
-        <location filename="../src/schedulescanobject.cpp" line="131"/>
-        <location filename="../src/schedulescanobject.cpp" line="133"/>
+        <location filename="../src/schedulescanobject.cpp" line="194"/>
+        <location filename="../src/schedulescanobject.cpp" line="196"/>
         <source>Scan Process aborted .....</source>
         <translation>Scan proces afbrudt .....</translation>
     </message>
     <message>
-        <location filename="../src/schedulescanobject.cpp" line="25"/>
-        <location filename="../src/schedulescanobject.cpp" line="133"/>
+        <location filename="../src/schedulescanobject.cpp" line="22"/>
+        <location filename="../src/schedulescanobject.cpp" line="196"/>
         <source>Scan-Job: </source>
         <translation>Scan-Job: </translation>
     </message>
     <message>
-        <location filename="../src/schedulescanobject.cpp" line="26"/>
+        <location filename="../src/schedulescanobject.cpp" line="23"/>
         <source>Scheduled Scan-Job: </source>
         <translation>Planlagt scan-job: </translation>
     </message>
     <message>
-        <location filename="../src/schedulescanobject.cpp" line="136"/>
-        <location filename="../src/schedulescanobject.cpp" line="138"/>
+        <location filename="../src/schedulescanobject.cpp" line="56"/>
+        <source>Use ClamdScan</source>
+        <translation>Brug ClamdScan</translation>
+    </message>
+    <message>
+        <location filename="../src/schedulescanobject.cpp" line="56"/>
+        <source>Perform scanning using clamdscan instead of clamscan?</source>
+        <translation>Udføre scanning ved hjælp af clamdscan i stedet for clamscan?</translation>
+    </message>
+    <message>
+        <location filename="../src/schedulescanobject.cpp" line="199"/>
+        <location filename="../src/schedulescanobject.cpp" line="201"/>
         <source>Scan-Process finished ...... no Virus found!</source>
         <translation>Scan-proces afsluttet ...... Ingen virus fundet!</translation>
     </message>
     <message>
-        <location filename="../src/schedulescanobject.cpp" line="150"/>
+        <location filename="../src/schedulescanobject.cpp" line="213"/>
         <source>Scan-Process finished ...... a Virus was found!</source>
         <translation>Scan-proces afsluttet ...... Virus blev fundet!</translation>
     </message>
     <message>
-        <location filename="../src/schedulescanobject.cpp" line="152"/>
+        <location filename="../src/schedulescanobject.cpp" line="215"/>
         <source>Scan Process finished ..... a Virus was found!</source>
         <translation>Scan proces afsluttet ..... Virus blev fundet!</translation>
     </message>
     <message>
-        <location filename="../src/schedulescanobject.cpp" line="154"/>
+        <location filename="../src/schedulescanobject.cpp" line="217"/>
         <source>Scan-Process finished ...... an Error occurred!</source>
         <translation>Scan-proces afsluttet ...... En fejl opstod!</translation>
     </message>
     <message>
-        <location filename="../src/schedulescanobject.cpp" line="156"/>
+        <location filename="../src/schedulescanobject.cpp" line="219"/>
         <source>Scan Process finished ..... an Error occurred!</source>
         <translation>Scan proces afsluttet ..... En fejl opstod!</translation>
     </message>
     <message>
-        <location filename="../src/schedulescanobject.cpp" line="169"/>
+        <location filename="../src/schedulescanobject.cpp" line="232"/>
         <source>Engine Version: </source>
         <translation>Engine version: </translation>
     </message>
     <message>
-        <location filename="../src/schedulescanobject.cpp" line="171"/>
+        <location filename="../src/schedulescanobject.cpp" line="234"/>
         <source>Engine Version: n/a</source>
         <translation>Engine version: n/a</translation>
     </message>
     <message>
-        <location filename="../src/schedulescanobject.cpp" line="177"/>
+        <location filename="../src/schedulescanobject.cpp" line="240"/>
         <source>Infected files: </source>
         <translation>Inficerede filer: </translation>
     </message>
     <message>
-        <location filename="../src/schedulescanobject.cpp" line="179"/>
+        <location filename="../src/schedulescanobject.cpp" line="242"/>
         <source>Infected files: n/a</source>
         <translation>Inficerede filer: n/a</translation>
     </message>
     <message>
-        <location filename="../src/schedulescanobject.cpp" line="185"/>
+        <location filename="../src/schedulescanobject.cpp" line="248"/>
         <source>Scanned Directories: </source>
         <translation>Scannet biblioteker: </translation>
     </message>
     <message>
-        <location filename="../src/schedulescanobject.cpp" line="187"/>
+        <location filename="../src/schedulescanobject.cpp" line="250"/>
         <source>Scanned Directories: n/a</source>
         <translation>Scannet biblioteker: n/a</translation>
     </message>
     <message>
-        <location filename="../src/schedulescanobject.cpp" line="193"/>
+        <location filename="../src/schedulescanobject.cpp" line="256"/>
         <source>Scanned Files: </source>
         <translation>Scannet filer: </translation>
     </message>
     <message>
-        <location filename="../src/schedulescanobject.cpp" line="195"/>
+        <location filename="../src/schedulescanobject.cpp" line="258"/>
         <source>Scanned Files: n/a</source>
         <translation>Scannet filer: n/a</translation>
     </message>
     <message>
-        <location filename="../src/schedulescanobject.cpp" line="201"/>
+        <location filename="../src/schedulescanobject.cpp" line="264"/>
         <source>Total Errors: </source>
         <translation>Total fejl: </translation>
     </message>
     <message>
-        <location filename="../src/schedulescanobject.cpp" line="203"/>
+        <location filename="../src/schedulescanobject.cpp" line="266"/>
         <source>Total Errors: 0</source>
         <translation>Total fejl: 0</translation>
     </message>
@@ -3031,127 +3051,162 @@ Fortsæt fra starten af loggen?</translation>
         <translation>ClamAV System Status</translation>
     </message>
     <message>
-        <location filename="../ui/setuptab.ui" line="1181"/>
+        <location filename="../ui/setuptab.ui" line="1131"/>
+        <source>ClamdScan</source>
+        <translation>ClamdScan</translation>
+    </message>
+    <message>
+        <location filename="../ui/setuptab.ui" line="1142"/>
+        <source>Never, even if available.</source>
+        <translation>Aldrig, selv om det er muligt.</translation>
+    </message>
+    <message>
+        <location filename="../ui/setuptab.ui" line="1147"/>
+        <source>Always, if available.</source>
+        <translation>Altid, hvis den er tilgængelig.</translation>
+    </message>
+    <message>
+        <location filename="../ui/setuptab.ui" line="1152"/>
+        <source>For scheduled scan, if available.</source>
+        <translation>Til planlagt scanning, hvis den er tilgængelig.</translation>
+    </message>
+    <message>
+        <location filename="../ui/setuptab.ui" line="1157"/>
+        <source>For direct scan, if available.</source>
+        <translation>Til direkte scanning, hvis det er muligt.</translation>
+    </message>
+    <message>
+        <location filename="../ui/setuptab.ui" line="1162"/>
+        <source>Ask for permission, if available.</source>
+        <translation>Spørg om tilladelse, hvis det er muligt.</translation>
+    </message>
+    <message>
+        <location filename="../ui/setuptab.ui" line="1170"/>
+        <source>use ClamdScan with multithreading ...</source>
+        <translation>Brug ClamdScan med multithreading ...</translation>
+    </message>
+    <message>
+        <location filename="../ui/setuptab.ui" line="1294"/>
         <source>[da_DK] Denmark</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/setuptab.ui" line="1190"/>
+        <location filename="../ui/setuptab.ui" line="1303"/>
         <source>[de_DE] Germany</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/setuptab.ui" line="1199"/>
+        <location filename="../ui/setuptab.ui" line="1312"/>
         <source>[en_GB] Great Britain</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/setuptab.ui" line="1208"/>
+        <location filename="../ui/setuptab.ui" line="1321"/>
         <source>[en_IE] Ireland</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/setuptab.ui" line="1217"/>
+        <location filename="../ui/setuptab.ui" line="1330"/>
         <source>[en_US] United States</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/setuptab.ui" line="1226"/>
+        <location filename="../ui/setuptab.ui" line="1339"/>
         <source>[en_AU] Australia</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/setuptab.ui" line="1235"/>
+        <location filename="../ui/setuptab.ui" line="1348"/>
         <source>[en_NZ] New Zealand</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/setuptab.ui" line="1244"/>
+        <location filename="../ui/setuptab.ui" line="1357"/>
         <source>[es_ES] Spain</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/setuptab.ui" line="1253"/>
+        <location filename="../ui/setuptab.ui" line="1366"/>
         <source>[fr_FR] France</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/setuptab.ui" line="1262"/>
+        <location filename="../ui/setuptab.ui" line="1375"/>
         <source>[it_IT] Italy</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/setuptab.ui" line="1271"/>
+        <location filename="../ui/setuptab.ui" line="1384"/>
         <source>[pt_AO] Angola</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/setuptab.ui" line="1280"/>
+        <location filename="../ui/setuptab.ui" line="1393"/>
         <source>[pt_BR] Brasil</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/setuptab.ui" line="1289"/>
+        <location filename="../ui/setuptab.ui" line="1402"/>
         <source>[pt_CV] Cabo Verde</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/setuptab.ui" line="1298"/>
+        <location filename="../ui/setuptab.ui" line="1411"/>
         <source>[pt_MZ] Mozambique</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/setuptab.ui" line="1307"/>
+        <location filename="../ui/setuptab.ui" line="1420"/>
         <source>[pt_MO] Macau</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/setuptab.ui" line="1316"/>
+        <location filename="../ui/setuptab.ui" line="1429"/>
         <source>[pt_PT] Portugal</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/setuptab.ui" line="1325"/>
+        <location filename="../ui/setuptab.ui" line="1438"/>
         <source>[pt_ST] São Tomé</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/setuptab.ui" line="1334"/>
+        <location filename="../ui/setuptab.ui" line="1447"/>
         <source>[pt_TL] Timor Leste</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/setuptab.ui" line="1343"/>
+        <location filename="../ui/setuptab.ui" line="1456"/>
         <source>[uk_UA] Ukraine</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/setuptab.ui" line="1148"/>
+        <location filename="../ui/setuptab.ui" line="1261"/>
         <source>Language</source>
         <translation>sprog</translation>
     </message>
     <message>
-        <location filename="../ui/setuptab.ui" line="1094"/>
+        <location filename="../ui/setuptab.ui" line="1220"/>
         <source>Window State on Startup</source>
         <translation>Vinduesstatus ved opstart</translation>
     </message>
     <message>
-        <location filename="../ui/setuptab.ui" line="1102"/>
+        <location filename="../ui/setuptab.ui" line="1228"/>
         <source>Show Window maximized</source>
         <translation>Vis vindue maksimeret</translation>
     </message>
     <message>
-        <location filename="../ui/setuptab.ui" line="1107"/>
+        <location filename="../ui/setuptab.ui" line="1233"/>
         <source>Show Tray Icon only</source>
         <translation>Vis kun bakkeikonet</translation>
     </message>
     <message>
-        <location filename="../src/setuptab.cpp" line="140"/>
+        <location filename="../src/setuptab.cpp" line="151"/>
         <source>Warning</source>
         <translation>Advarsel</translation>
     </message>
     <message>
-        <location filename="../src/setuptab.cpp" line="140"/>
+        <location filename="../src/setuptab.cpp" line="151"/>
         <source>You have to restart the application for changes to take effect!</source>
         <translation>Du skal genstarte programmet, før ændringerne træder i kraft!</translation>
     </message>

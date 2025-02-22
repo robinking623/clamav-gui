@@ -588,6 +588,14 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <source>About</source>
         <translation>Acerca de</translation>
     </message>
+    <message>
+        <source>Use ClamdScan</source>
+        <translation>Utilice ClamdScan</translation>
+    </message>
+    <message>
+        <source>Perform scanning using clamdscan instead of clamscan?</source>
+        <translation>¿Realizar el escaneo utilizando clamdscan en lugar de clamscan?</translation>
+    </message>
 </context>
 <context>
     <name>clamdConfStringOption</name>
@@ -2043,6 +2051,14 @@ Continue from the Start of the Log?</source>
         <source>Scan-Process finished ...... no Virus found!</source>
         <translation>Proceso terminado ...... !no se han encontrado Virus!</translation>
     </message>
+    <message>
+        <source>Use ClamdScan</source>
+        <translation>Utilice ClamdScan</translation>
+    </message>
+    <message>
+        <source>Perform scanning using clamdscan instead of clamscan?</source>
+        <translation>¿Realizar el escaneo utilizando clamdscan en lugar de clamscan?</translation>
+    </message>
 </context>
 <context>
     <name>scheduler</name>
@@ -2380,6 +2396,34 @@ Continue from the Start of the Log?</source>
     <message>
         <source>[uk_UA] Ukraine</source>
         <translation></translation>
+    </message>
+    <message>
+        <source>ClamdScan</source>
+        <translation>ClamdScan</translation>
+    </message>
+    <message>
+        <source>Never, even if available.</source>
+        <translation>Nunca, aunque esté disponible.</translation>
+    </message>
+    <message>
+        <source>Always, if available.</source>
+        <translation>Siempre, si está disponible.</translation>
+    </message>
+    <message>
+        <source>For scheduled scan, if available.</source>
+        <translation>Para la exploración programada, si está disponible.</translation>
+    </message>
+    <message>
+        <source>For direct scan, if available.</source>
+        <translation>Para escaneado directo, si está disponible.</translation>
+    </message>
+    <message>
+        <source>Ask for permission, if available.</source>
+        <translation>Pida permiso, si dispone de él.</translation>
+    </message>
+    <message>
+        <source>use ClamdScan with multithreading ...</source>
+        <translation>usar ClamdScan con multithreading ...</translation>
     </message>
 </context>
 </TS>
