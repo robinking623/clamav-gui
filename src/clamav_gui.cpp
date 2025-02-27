@@ -3,21 +3,23 @@
 
 clamav_gui::clamav_gui(QWidget *parent) : QWidget(parent), ui(new Ui::clamav_gui){
     ui->setupUi(this);
-    //setWindowFlags(Qt::WindowTitleHint);
     this->setWindowFlags(Qt::WindowTitleHint | Qt::WindowMinimizeButtonHint | Qt::WindowMaximizeButtonHint);
 
     QString path = QDir::homePath() + "/.clamav-gui/settings.ini";
-    QDir tempDir;
-    QStringList scanObjects;
     bool createDefaultSettings = false;
     error = false;
     guisudoapp = "pkexec";
 //*****************************************************************************
 //creating service Menu
 //*****************************************************************************
-    if (tempDir.exists(QDir::homePath() + "/.local/share/kservices5/ServiceMenus/scanWithClamAV-GUI.desktop") == false) {
-        if (tempDir.exists(QDir::homePath() + "/.local/share/kservices5/ServiceMenus")) tempDir.mkdir(QDir::homePath() + "/.local/share/kservices5/ServiceMenus");
-        setupFileHandler * serviceFile = new setupFileHandler(QDir::homePath() + "/.local/share/kservices5/ServiceMenus/scanWithClamAV-GUI.desktop");
+    QDir tempDir;
+    QString serviceMenuPath = "";
+    if (tempDir.exists(QDir::homePath() + "/.local/share/kservices5/ServiceMenus") == true) serviceMenuPath = QDir::homePath() + "/.local/share/kservices5/ServiceMenus";
+    if ((serviceMenuPath == "") && (tempDir.exists(QDir::homePath() + "/.local/share/kio/servicemenus") == true)) serviceMenuPath = QDir::homePath() + "/.local/share/kio/servicemenus";
+    if (serviceMenuPath == "") serviceMenuPath = serviceMenuPath = QDir::homePath() + "/.local/share/kservices5/ServiceMenus";
+    if (tempDir.exists(serviceMenuPath + "/scanWithClamAV-GUI.desktop") == false) {
+        if (tempDir.exists(serviceMenuPath) == false) tempDir.mkdir(serviceMenuPath);
+        setupFileHandler * serviceFile = new setupFileHandler(serviceMenuPath + "/scanWithClamAV-GUI.desktop");
         serviceFile->setSectionValue("Desktop Entry","Type","Service");
         serviceFile->setSectionValue("Desktop Entry","ServiceTypes","KonqPopupMenu/Plugin");
         serviceFile->setSectionValue("Desktop Entry","MimeType","all/all;");
@@ -25,10 +27,18 @@ clamav_gui::clamav_gui(QWidget *parent) : QWidget(parent), ui(new Ui::clamav_gui
         serviceFile->setSectionValue("Desktop Entry","Icon","clamav-gui");
         serviceFile->setSectionValue("Desktop Entry","X-KDE-Priority","TopLevel");
         serviceFile->setSectionValue("Desktop Entry","X-KDE-StartupNotify","false");
-        serviceFile->setSectionValue("Desktop Entry","X-KDE-Submenu","Scan with ClamAV-GUI");
-        serviceFile->setSectionValue("Desktop Entry","X-KDE-Submenu[de]","Mit ClamAV-GUI scannen");
+        serviceFile->setSectionValue("Desktop Entry","NO-X-KDE-Submenu","Scan with ClamAV-GUI");
+        serviceFile->setSectionValue("Desktop Entry","NO-X-KDE-Submenu[de]","Mit ClamAV-GUI scannen");
         serviceFile->setSectionValue("Desktop Action scan","Name","scan");
-        serviceFile->setSectionValue("Desktop Action scan","Name[de]","Scannen");
+        serviceFile->setSectionValue("Desktop Action scan","Name[de]","Scannen mit ClamAV");
+        serviceFile->setSectionValue("Desktop Action scan","Name[es_ES]","Analizar con ClamAV");
+        serviceFile->setSectionValue("Desktop Action scan","Name[us]","scan with ClamAV");
+        serviceFile->setSectionValue("Desktop Action scan","Name[gb]","scan with ClamAV");
+        serviceFile->setSectionValue("Desktop Action scan","Name[pt]","investigar com ClamAV");
+        serviceFile->setSectionValue("Desktop Action scan","Name[br]","investigar com ClamAV");
+        serviceFile->setSectionValue("Desktop Action scan","Name[fr]","scanner avec ClamAV");
+        serviceFile->setSectionValue("Desktop Action scan","Name[it]","scansione con ClamAV");
+        serviceFile->setSectionValue("Desktop Action scan","Name[uk]","Сканування за допомогою ClamAV");
         serviceFile->setSectionValue("Desktop Action scan","Icon","clamav-gui");
         serviceFile->setSectionValue("Desktop Action scan","Exec","clamav-gui --scan %F");
     }
