@@ -1,3 +1,6 @@
+* Wed Feb 27 2025 - Version 1.0.9
+- Made a few adjustments on the ServerMenu.
+
 * Sat Feb 22 2025 - Version 1.0.8
 - Implemented the use of "clamdscan" if clamd is running.
 - You can set in the setup tab, whether clamdscan is always used when available, used for scheduled scans, used for direct scans, never used or you are asked every time a scan
