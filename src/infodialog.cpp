@@ -3,7 +3,7 @@
 
 infoDialog::infoDialog(QWidget *parent) : QWidget(parent), ui(new Ui::infoDialog)
 {
- QString version = "1.0.9 (QT5)";
+ QString version = "1.1.0 (QT5)";
 
     QString infoText =  "<html>";
             infoText += "  <head/>";
