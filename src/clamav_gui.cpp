@@ -636,8 +636,8 @@ void clamav_gui::slot_sudoGUIProcessFinished()
         }
     }
 
-    if (guisudoapp == "kdesudo") {
-        if (sudoGUIOutput != "kdesudo:\n") {
+    if (guisudoapp == "kdesu") {
+        if (sudoGUIOutput != "kdesu:\n") {
             QStringList values = sudoGUIOutput.split(" ");
             if (values.size() > 1) {
                 if (values.length() > 0) setupFile->setSectionValue("Settings","SudoGUI",values[1]);
