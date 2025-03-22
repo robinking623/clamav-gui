@@ -1,3 +1,9 @@
+* Fri Mar 22 2025 - Version 1.1.1
+- Found a bug in the process that determins what application to use (pkexec or kdesu) for the execution of scripts as root.
+
+* Tue Mar 18 2025 - Version 1.1.0
+- Bug while starting clamd as a different user.
+
 * Wed Feb 27 2025 - Version 1.0.9
 - Made a few adjustments on the ServerMenu.
 
