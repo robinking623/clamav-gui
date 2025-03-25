@@ -1,4 +1,7 @@
-* Fri Mar 22 2025 - Version 1.1.1
+* Tue Mar 25 2025 - Version 1.1.2
+- Clamonacc now takes over the settings for --move, --copy, --remove, --verbose and --allmatch from the global Directories Settings and the Scanner Settings.
+
+* Sat Mar 22 2025 - Version 1.1.1
 - Found a bug in the process that determins what application to use (pkexec or kdesu) for the execution of scripts as root.
 
 * Tue Mar 18 2025 - Version 1.1.0
