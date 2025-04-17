@@ -1,23 +1,39 @@
 [Desktop Entry]
 Type=Service
 ServiceTypes=KonqPopupMenu/Plugin
-MimeType=all/all
-Actions=scanwith;
-#X-KDE-Priority=TopLevel
+MimeType=all/all;
+Actions=scan;
+Icon=clamav-gui
+X-KDE-Priority=TopLevel
 X-KDE-StartupNotify=false
-NO-X-KDE-Submenu=ClamAV-GUI
+NO-X-KDE-Submenu=Scan with ClamAV-GUI
+NO-X-KDE-Submenu[de]=Scannen mit ClamAV-GUI
+NO-X-KDE-Submenu[de_DE]=Scannen mit ClamAV-GUI
+NO-X-KDE-Submenu[da_DK]=Scannen med ClamAV-GUI
+NO-X-KDE-Submenu[es_ES]=Analizar con ClamAV-GUI
+NO-X-KDE-Submenu[us]=Scan with ClamAV-GUI
+NO-X-KDE-Submenu[gb]=Scan with ClamAV-GUI
+NO-X-KDE-Submenu[pt]=Investigar com ClamAV-GUI
+NO-X-KDE-Submenu[br]=Investigar com ClamAV-GUI
+NO-X-KDE-Submenu[pt_BR]=Investigar com ClamAV-GUI
+NO-X-KDE-Submenu[fr]=Scanner avec ClamAV-GUI
+NO-X-KDE-Submenu[it]=Scansione con ClamAV-GUI
+NO-X-KDE-Submenu[uk]=Сканування за допомогою ClamAV-GUI
 
+[Desktop Action scan]
+Name=Scan with ClamAV-GUI
+Name[de]=Scannen mit ClamAV-GUI
+Name[de_DE]=Scannen mit ClamAV-GUI
+Name[da_DK]=Scannen med ClamAV-GUI
+Name[es_ES]=Analizar con ClamAV-GUI
+Name[us]=Scan with ClamAV-GUI
+Name[gb]=Scan with ClamAV-GUI
+Name[pt]=Investigar com ClamAV-GUI
+Name[br]=Investigar com ClamAV-GUI
+Name[pt_BR]=Investigar com ClamAV-GUI
+Name[fr]=Scanner avec ClamAV-GUI
+Name[it]=Scansione con ClamAV-GUI
+Name[uk]=Сканування за допомогою ClamAV-GUI
+Icon=clamav-gui
+Exec=clamav-gui --scan %F
 
-[Desktop Action scanwith]
-Name=scan with ClamAV
-Exec=clamav-gui --scan %f
-Icon=/usr/share/icons/hicolor/48x48/apps/clamav-gui.png
-Name[de]=scannen mit ClamAV
-Name[es_ES]=Analizar con ClamAV
-Name[us]=scan with ClamAV
-Name[gb]=scan with ClamAV
-Name[pt]=investigar com ClamAV
-Name[br]=investigar com ClamAV
-Name[fr]=scanner avec ClamAV
-Name[it]=scansione con ClamAV
-Name[uk]=Сканування за допомогою ClamAV
