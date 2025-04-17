@@ -16,6 +16,7 @@ SOURCES += src/main.cpp\
     src/clamdconfcomboboxoption.cpp \
     src/clamdconfspinboxoption.cpp \
     src/clamdconfstringoption.cpp \
+    src/myframe.cpp \
     src/scanoption.cpp \
     src/scanoptionyn.cpp \
     src/clamdmanager.cpp \
@@ -47,6 +48,7 @@ HEADERS  += src/clamav_gui.h \
     src/clamdconfcomboboxoption.h \
     src/clamdconfspinboxoption.h \
     src/clamdconfstringoption.h \
+    src/myframe.h \
     src/scanoption.h \
     src/scanoptionyn.h \
     src/clamdmanager.h \
@@ -74,6 +76,7 @@ HEADERS  += src/clamav_gui.h \
     src/translator.h
 
 FORMS    += ui/clamav_gui.ui \
+    ui/myframe.ui \
     ui/clamdconfcomboboxoption.ui \
     ui/clamdconfspinboxoption.ui \
     ui/clamdconfstringoption.ui \
