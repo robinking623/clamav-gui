@@ -59,9 +59,11 @@ void setupTab::slot_updateSystemInfo(){
         ui->databaseBytecodeFile->setText(setupFile->getSectionValue("Updater","BytecodeVersion"));
 
         QString value = setupFile->getSectionValue("Updater","DailyVersion");
+        QString scannerVersion = setupFile->getSectionValue("Updater","Version");
+        scannerVersion = scannerVersion.replace("Scanner ","");
         value = value.mid(value.indexOf(" "), value.indexOf(",") - value.indexOf(" "));
-        systemInfo = "<div style='line-height:20px;'><b>Antivirus Database:</b><font color='#1b8755'>" + value + "</font><br>";
-        systemInfo += "<b>Date:</b> <font color='#1b8755'>" + setupFile->getSectionValue("Updater","LastUpdate") + "</font></div>";
+        systemInfo = "<div style='font-size:12px;line-height:20px;'><b>Scanner: <font color='navy'>" + scannerVersion + "</font><br>Database: <font color='navy'>" + value + "</font><br>";
+        systemInfo += "Date: <font color='navy'>" + setupFile->getSectionValue("Updater","LastUpdate") + "</font></b></div>";
         emit sendSystemInfo(systemInfo);
     }
 

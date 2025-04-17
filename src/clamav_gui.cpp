@@ -28,17 +28,28 @@ clamav_gui::clamav_gui(QWidget *parent) : QWidget(parent), ui(new Ui::clamav_gui
         serviceFile->setSectionValue("Desktop Entry","X-KDE-Priority","TopLevel");
         serviceFile->setSectionValue("Desktop Entry","X-KDE-StartupNotify","false");
         serviceFile->setSectionValue("Desktop Entry","NO-X-KDE-Submenu","Scan with ClamAV-GUI");
-        serviceFile->setSectionValue("Desktop Entry","NO-X-KDE-Submenu[de]","Mit ClamAV-GUI scannen");
+        serviceFile->setSectionValue("Desktop Entry","NO-X-KDE-Submenu[de]","Scannen mit ClamAV-GUI");
+        serviceFile->setSectionValue("Desktop Entry","NO-X-KDE-Submenu[da_DK]","Scannen med ClamAV-GUI");
+        serviceFile->setSectionValue("Desktop Entry","NO-X-KDE-Submenu[es_ES]","Analizar con ClamAV-GUI");
+        serviceFile->setSectionValue("Desktop Entry","NO-X-KDE-Submenu[us]","Scan with ClamAV-GUI");
+        serviceFile->setSectionValue("Desktop Entry","NO-X-KDE-Submenu[gb]","Scan with ClamAV-GUI");
+        serviceFile->setSectionValue("Desktop Entry","NO-X-KDE-Submenu[pt]","Investigar com ClamAV-GUI");
+        serviceFile->setSectionValue("Desktop Entry","NO-X-KDE-Submenu[br]","Investigar com ClamAV-GUI");
+        serviceFile->setSectionValue("Desktop Entry","NO-X-KDE-Submenu[pt_BR]","Investigar com ClamAV-GUI");
+        serviceFile->setSectionValue("Desktop Entry","NO-X-KDE-Submenu[fr]","Scanner avec ClamAV-GUI");
+        serviceFile->setSectionValue("Desktop Entry","NO-X-KDE-Submenu[it]","Scansione con ClamAV-GUI");
+        serviceFile->setSectionValue("Desktop Entry","NO-X-KDE-Submenu[uk]","Сканування за допомогою ClamAV-GUI");
+
         serviceFile->setSectionValue("Desktop Action scan","Name","scan");
-        serviceFile->setSectionValue("Desktop Action scan","Name[de]","Scannen mit ClamAV");
-        serviceFile->setSectionValue("Desktop Action scan","Name[es_ES]","Analizar con ClamAV");
-        serviceFile->setSectionValue("Desktop Action scan","Name[us]","scan with ClamAV");
-        serviceFile->setSectionValue("Desktop Action scan","Name[gb]","scan with ClamAV");
-        serviceFile->setSectionValue("Desktop Action scan","Name[pt]","investigar com ClamAV");
-        serviceFile->setSectionValue("Desktop Action scan","Name[br]","investigar com ClamAV");
-        serviceFile->setSectionValue("Desktop Action scan","Name[fr]","scanner avec ClamAV");
-        serviceFile->setSectionValue("Desktop Action scan","Name[it]","scansione con ClamAV");
-        serviceFile->setSectionValue("Desktop Action scan","Name[uk]","Сканування за допомогою ClamAV");
+        serviceFile->setSectionValue("Desktop Action scan","Name[de]","Scannen mit ClamAV-GUI");
+        serviceFile->setSectionValue("Desktop Action scan","Name[es_ES]","Analizar con ClamAV-GUI");
+        serviceFile->setSectionValue("Desktop Action scan","Name[us]","Scan with ClamAV-GUI");
+        serviceFile->setSectionValue("Desktop Action scan","Name[gb]","Scan with ClamAV-GUI");
+        serviceFile->setSectionValue("Desktop Action scan","Name[pt]","Investigar com ClamAV-GUI");
+        serviceFile->setSectionValue("Desktop Action scan","Name[br]","Investigar com ClamAV-GUI");
+        serviceFile->setSectionValue("Desktop Action scan","Name[fr]","Scanner avec ClamAV-GUI");
+        serviceFile->setSectionValue("Desktop Action scan","Name[it]","Scansione con ClamAV-GUI");
+        serviceFile->setSectionValue("Desktop Action scan","Name[uk]","Сканування за допомогою ClamAV-GUI");
         serviceFile->setSectionValue("Desktop Action scan","Icon","clamav-gui");
         serviceFile->setSectionValue("Desktop Action scan","Exec","clamav-gui --scan %F");
     }
@@ -159,7 +170,7 @@ clamav_gui::clamav_gui(QWidget *parent) : QWidget(parent), ui(new Ui::clamav_gui
     connect(optionTab,SIGNAL(updateClamdConf()),clamdTab,SLOT(slot_updateClamdConf()));
     connect(optionTab,SIGNAL(systemStatusChanged()),setUpTab,SLOT(slot_updateSystemInfo()));
     connect(setUpTab,SIGNAL(switchActiveTab(int)),this,SLOT(slot_switchActiveTab(int)));
-    connect(setUpTab,SIGNAL(sendSystemInfo(QString)),scannerTab,SLOT(slot_receiveVersionInformation(QString)));
+    connect(setUpTab,SIGNAL(sendSystemInfo(QString)),this,SLOT(slot_receiveVersionInformation(QString)));
     connect(this,SIGNAL(scanJobFinished()),logTab,SLOT(slot_profilesChanged()));
     connect(this,SIGNAL(startDatabaseUpdate()),freshclamTab,SLOT(slot_updateNowButtonClicked()));
 
@@ -183,6 +194,10 @@ clamav_gui::clamav_gui(QWidget *parent) : QWidget(parent), ui(new Ui::clamav_gui
 
 clamav_gui::~clamav_gui(){
     delete ui;
+}
+
+void clamav_gui::slot_receiveVersionInformation(QString info) {
+    ui->frame->setVersionLabel(info);
 }
 
 void clamav_gui::closeEvent(QCloseEvent *event){

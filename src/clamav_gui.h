@@ -47,6 +47,7 @@
 #include "logviewerobject.h"
 #include "profilemanager.h"
 #include "clamdmanager.h"
+#include "myframe.h"
 
 namespace Ui {
 class clamav_gui;
@@ -117,6 +118,7 @@ private slots:
     void slot_sudoGUIProcessFinished();
     void slot_switchActiveTab(int index);
     void slot_quitApplication();
+    void slot_receiveVersionInformation(QString info);
 
 signals:
     void showHideDropZoneTriggered();
