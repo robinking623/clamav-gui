@@ -23,6 +23,7 @@ private:
     ProfileWizardDialog *profileWizard;
     void getProfileList();
     void readProfileSettings();
+    void checkMonochromeSettings();
 
 private slots:
     void slot_readProfileSettings();
@@ -30,6 +31,7 @@ private slots:
     void slot_eraseProfileButtonClicked();
     void slot_editProfileButtonClicked();
     void slot_profileSaved();
+    void monochromeModeChanged(bool state);
 
 signals:
     void triggerProfilesChanged();

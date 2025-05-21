@@ -1,5 +1,6 @@
 #include "clamdconfspinboxoption.h"
 #include "ui_clamdconfspinboxoption.h"
+#define css_mono "background-color:#404040;color:white"
 
 clamdconfspinboxoption::clamdconfspinboxoption(QWidget *parent, QString keyword, bool checked, QString label, QString options) :
     QWidget(parent),
@@ -69,7 +70,7 @@ void clamdconfspinboxoption::slot_checkboxClicked()
         bool state = ui->checkBox->isChecked();
         ui->spinBox->setEnabled(state);
         ui->label->setEnabled(state);
-        (state == true)?ui->frame->setStyleSheet("background-color:#dfdf48"):ui->frame->setStyleSheet("");
+        (state == true)?ui->frame->setStyleSheet(css_mono):ui->frame->setStyleSheet("");
         if (state == true) {
             if (ui->label->text() == "MB") {
                 setupFile->setSingleLineValue(optionKeyword,QString::number(ui->spinBox->value()) + "M");

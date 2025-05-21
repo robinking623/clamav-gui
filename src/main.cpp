@@ -154,7 +154,6 @@ bool translatorLoaded = false;
         }
 
         parameters << "-r";
-        // if (databaseDir != "") parameters << "--database=" + databaseDir;
 
         for (int i = 2; i < argc; i++){
             parameters << (QString)argv[i];

@@ -3,8 +3,12 @@
 
 scanTab::scanTab(QWidget *parent) : QWidget(parent),ui(new Ui::scanTab){
     ui->setupUi(this);
-    logHighLighter = new highlighter(ui->logPlainTextEdit->document());
     setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini");
+    logHighLighter = NULL;
+    monochrome = setupFile->getSectionBoolValue("Setup","DisableLogHighlighter");
+    if (monochrome == false) logHighLighter = new highlighter(ui->logPlainTextEdit->document());
+    devicelabel = ui->deviceLabel;
+    checkMonochromeSettings();
 
     model = new CFileSystemModel;
     model->setFilter(QDir::AllDirs|QDir::NoDotAndDotDot);
@@ -40,6 +44,17 @@ scanTab::scanTab(QWidget *parent) : QWidget(parent),ui(new Ui::scanTab){
 scanTab::~scanTab()
 {
     delete ui;
+}
+
+void scanTab::checkMonochromeSettings()
+{
+    if (monochrome == false) {
+        devicelabel->setStyleSheet("background-color:#c0c0c0;color:black;padding:4px;border-radius:5px;");
+        ui->pathLabel->setStyleSheet("background-color:#c0c0c0;color:black;padding:4px;border-radius:5px;");
+    } else {
+        devicelabel->setStyleSheet("background-color:#404040;color:white;padding:4px;border-radius:5px;");
+        ui->pathLabel->setStyleSheet("background-color:#404040;color:white;padding:4px;border-radius:5px;");
+    }
 }
 
 void scanTab::slot_scanButtonClicked(){
@@ -78,7 +93,7 @@ QStringList filters;
     filters << "*";
 QStringList dirs = dir.entryList(filters,QDir::AllDirs|QDir::NoDotAndDotDot);
 QStringList dirsUbuntu = dirUbuntu.entryList(filters,QDir::AllDirs|QDir::NoDotAndDotDot);
-QLabel * deviceLabel = new QLabel(tr("Devices"));
+devicelabel = new QLabel(tr("Devices"));
 QLayoutItem *item = NULL;
 
     while ((item = ui->devicesFrame->layout()->takeAt(0)) != 0) {
@@ -105,11 +120,15 @@ QLayoutItem *item = NULL;
         }
     }
 
-    deviceLabel->setStyleSheet("background:#c0c0c0;padding:3px;");
-    ui->devicesFrame->layout()->addWidget(deviceLabel);
+    if (setupFile->getSectionBoolValue("Setup","DisableLogHighlighter") == true) {
+        devicelabel->setStyleSheet("background-color:#404040;color:white;padding:3px;");
+    } else {
+        devicelabel->setStyleSheet("background-color:#c0c0c0;color:black;padding:3px;");
+    }
+    ui->devicesFrame->layout()->addWidget(devicelabel);
 
     deviceGroup = new QButtonGroup(this);
-    connect(deviceGroup,SIGNAL(buttonClicked(int)),this,SLOT(slot_deviceButtonClicked(int)));
+    connect(deviceGroup,SIGNAL(idClicked(int)),this,SLOT(slot_deviceButtonClicked(int)));
 
     if (dirs.count() > 0){
         devices.clear();
@@ -225,7 +244,7 @@ void scanTab::slot_enableForm(bool mode){
 
 void scanTab::setStatusBarMessage(QString message, QString bgColor){
     ui->currentFileLabel->setText(message);
-    ui->currentFileLabel->setStyleSheet("background:"+bgColor);
+    ui->currentFileLabel->setStyleSheet("background-color:"+bgColor);
 }
 
 int scanTab::getVirusFoundComboBoxValue(){
@@ -260,11 +279,6 @@ void scanTab::slot_disableScanButton()
     ui->startScanButton->setEnabled(false);
 }
 
-void scanTab::slot_receiveVersionInformation(QString info)
-{
-    ui->signatureInfoLabel->setHtml(info);
-}
-
 void scanTab::slot_hiddenFoldersCheckBoxClicked()
 {
     if (ui->showHiddenDirsCheckBox->isChecked() == true) {
@@ -273,4 +287,25 @@ void scanTab::slot_hiddenFoldersCheckBoxClicked()
         model->setFilter(QDir::AllDirs|QDir::NoDotAndDotDot);
     }
     setupFile->setSectionValue("Settings","ShowHiddenDirs",ui->showHiddenDirsCheckBox->isChecked());
+}
+
+void scanTab::slot_add_remove_highlighter(bool state)
+{
+    monochrome = state;
+    setupFile->setSectionValue("Setup","DisableLogHighlighter",state);
+
+    if (state == true) {
+      if (logHighLighter != NULL) {
+        delete logHighLighter;
+        logHighLighter = NULL;
+      }
+    } else {
+         if (logHighLighter == NULL) {
+             logHighLighter = new highlighter(ui->logPlainTextEdit->document());
+         } else {
+             delete logHighLighter;
+             logHighLighter = new highlighter(ui->logPlainTextEdit->document());
+         }
+    }
+    checkMonochromeSettings();
 }

@@ -3,7 +3,7 @@
 
 scheduleScanObject::scheduleScanObject(QWidget *parent, QString name, QStringList parameters) : QDialog(parent), ui(new Ui::scheduleScanObject),scanJob(name)
 {
-    bool useclamdscan;
+    bool useclamdscan = false;
 
     setWindowFlags(((this->windowFlags() | Qt::CustomizeWindowHint) & ~Qt::WindowCloseButtonHint & ~Qt::WindowContextHelpButtonHint) );
     ui->setupUi(this);
@@ -192,12 +192,12 @@ int pos,end;
 
     if (status == QProcess::CrashExit) {
         ui->currentFileLabel->setText(tr("Scan Process aborted ....."));
-        ui->currentFileLabel->setStyleSheet("background:red");
+        ui->currentFileLabel->setStyleSheet("background-color:red");
         emit sendStatusReport(1,tr("Scan-Job: ") + scanJob,tr("Scan Process aborted ....."));
     } else {
         if (exitCode == 0) {
             ui->currentFileLabel->setText(tr("Scan-Process finished ...... no Virus found!"));
-            ui->currentFileLabel->setStyleSheet("background:green");
+            ui->currentFileLabel->setStyleSheet("background-color:green");
             emit sendStatusReport(0,"Scan-Job: " + scanJob,tr("Scan-Process finished ...... no Virus found!"));
             closeWindowTimer->start(1000);
             countDown = new QRoundProgressBar(this);
@@ -211,11 +211,11 @@ int pos,end;
         } else
             if (exitCode == 1) {
                 ui->currentFileLabel->setText(tr("Scan-Process finished ...... a Virus was found!"));
-                ui->currentFileLabel->setStyleSheet("background:red");
+                ui->currentFileLabel->setStyleSheet("background-color:red");
                 emit sendStatusReport(2,"Scan-Job: " + scanJob,tr("Scan Process finished ..... a Virus was found!"));
             } else {
                 ui->currentFileLabel->setText(tr("Scan-Process finished ...... an Error occurred!"));
-                ui->currentFileLabel->setStyleSheet("background:red");
+                ui->currentFileLabel->setStyleSheet("background-color:red");
                 emit sendStatusReport(1,"Scan-Job: " + scanJob,tr("Scan Process finished ..... an Error occurred!"));
             }
     }

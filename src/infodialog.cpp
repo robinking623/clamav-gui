@@ -3,7 +3,7 @@
 
 infoDialog::infoDialog(QWidget *parent) : QWidget(parent), ui(new Ui::infoDialog)
 {
- QString version = "1.1.3 (QT5)";
+ QString version = "1.1.4 (QT5)";
 
     QString infoText =  "<html>";
             infoText += "  <head/>";
@@ -209,6 +209,20 @@ infoDialog::infoDialog(QWidget *parent) : QWidget(parent), ui(new Ui::infoDialog
             infoText += "              and implement useful new features.<br/>";
             infoText += "              <br/>";
             infoText += "              Many thanks for that.</span>";
+            infoText += "            </p>";
+            infoText += "          </td>";
+            infoText += "          <td>";
+            infoText += "            <p>";
+            infoText += "              <span style=' font-size:14px;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>";
+            infoText += "            </p>";
+            infoText += "          </td>";
+            infoText += "          <td>";
+            infoText += "            <p>";
+            infoText += "              <span style=' font-size:14px;'>Another big Thank you! goes to Neil Grayson.<br/>";
+            infoText += "              He used to work in electronics design and software development<br/>";
+            infoText += "              and drew my attention to something I had completely missed.<br/>";
+            infoText += "              <br/>";
+            infoText += "              Many thanks for that. <font style='font-size:24px;color:#d4de62'>&#128521;</font></span>";
             infoText += "            </p>";
             infoText += "          </td>";
             infoText += "        </tr>";

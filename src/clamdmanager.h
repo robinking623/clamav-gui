@@ -46,6 +46,7 @@ public:
     QFileSystemWatcher  * clamdPidWatcher; // clamd
     int                   dirsUnderMonitoring;
     bool                  clamdRestartInProgress; // clamd
+    bool                  monochrome;
     QString               trimLocationOutput(QString);
     bool                  startup;
     bool                  waitForFreshclam;
@@ -55,6 +56,7 @@ public:
     void restartClamonacc(); // clamd
     void initClamdConfElements();
     bool checkClamdRunning(); // clamd
+    QString selectColor(QString color);
 
 private slots:
     void slot_updateClamdConf(); // ab hier --> clamd
@@ -75,7 +77,7 @@ private slots:
     void slot_startDelayTimerExpired();
     void slot_waitForFreshclamStarted();
     void slot_processWatcherExpired();
-
+    void slot_add_remove_highlighter(bool);
 signals:
     void setBallonMessage(int, QString,QString); // clamd
     void setActiveTab();

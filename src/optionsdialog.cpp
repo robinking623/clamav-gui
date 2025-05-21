@@ -1,5 +1,6 @@
 #include "optionsdialog.h"
 #include "ui_optionsdialog.h"
+#define css "background-color:#404040;color:white"
 
 optionsDialog::optionsDialog(QWidget *parent) : QWidget(parent), ui(new Ui::optionsDialog){
     ui->setupUi(this);
@@ -13,7 +14,6 @@ optionsDialog::optionsDialog(QWidget *parent) : QWidget(parent), ui(new Ui::opti
 
     connect(incExcOptTab,SIGNAL(updateClamdConf()),this,SLOT(slot_updateClamdConf()));
     connect(scanLimits,SIGNAL(updateClamdConf()),this,SLOT(slot_updateClamdConf()));
-    connect(this,SIGNAL(assembleKeywordsDone()),scanLimits,SLOT(slot_updateKeywordList()));
 
     ui->tabWidget->addTab(incExcOptTab,QIcon(":/icons/icons/includeexclude.png"),tr("Include/Exclude"));
     ui->tabWidget->setIconSize(QSize(24,24));
@@ -121,7 +121,6 @@ void optionsDialog::slot_getClamscanProcessFinished(){
                 setupFile->setSectionValue("OtherKeywords",keyword,"exists");
             }
         }
-        emit assembleKeywordsDone();
     }
 
     /*For Debuggin-Reasons only*/
@@ -289,48 +288,48 @@ QStringList keywords;
         if (checked == "checked"){
             switch (i) {
                 case 0 : ui->loadVirusDatabaseCheckBox->setChecked(true);
-                         ui->databaseFrame->setStyleSheet("background-color:#dfdf48");
+                         ui->databaseFrame->setStyleSheet(css);
                          ui->loadVirusDatabaseLineEdit->setEnabled(true);
                          ui->selectLVDButton->setEnabled(true);
                          ui->loadVirusDatabaseLineEdit->setText(value);
                             break;
                 case 1 : ui->scanReportToFileCheckBox->setChecked(true);
-                         ui->scanReportFrame->setStyleSheet("background-color:#dfdf48");
+                         ui->scanReportFrame->setStyleSheet(css);
                          ui->scanReportToFileLineEdit->setEnabled(true);
                          ui->selectSCRFButton->setEnabled(true);
                          ui->scanReportToFileLineEdit->setText(value);
                             break;
                 case 2 : ui->scanFilesFromFileCheckBox->setChecked(true);
-                         ui->scanFileFrame->setStyleSheet("background-color:#dfdf48");
+                         ui->scanFileFrame->setStyleSheet(css);
                          ui->scanFilesFromFileLineEdit->setEnabled(true);
                          ui->selectSFFButton->setEnabled(true);
                          ui->scanFilesFromFileLineEdit->setText(value);
                             break;
                 case 3 : ui->tempFileCheckBox->setChecked(true);
-                         ui->tempFileFrame->setStyleSheet("background-color:#dfdf48");
+                         ui->tempFileFrame->setStyleSheet(css);
                          ui->tempFilesLineEdit->setEnabled(true);
                          ui->selectTFButton->setEnabled(true);
                          ui->tempFilesLineEdit->setText(value);
                             break;
                 case 4 : ui->moveDirectoryCheckBox->setChecked(true);
-                         ui->moveFrame->setStyleSheet("background-color:#dfdf48");
+                         ui->moveFrame->setStyleSheet(css);
                          ui->moveDirectoryLineEdit->setEnabled(true);
                          ui->selectMDButton->setEnabled(true);
                          ui->moveDirectoryLineEdit->setText(value);
                             break;
                 case 5 : ui->copyDirectoryCheckBox->setChecked(true);
-                         ui->copyFrame->setStyleSheet("background-color:#dfdf48");
+                         ui->copyFrame->setStyleSheet(css);
                          ui->copyDirectoryLineEdit->setEnabled(true);
                          ui->selectCFButton->setEnabled(true);
                          ui->copyDirectoryLineEdit->setText(value);
                             break;
                 case 6 : ui->followDirectorySymlinksCheckBox->setChecked(true);
-                         ui->followDirLinksFrame->setStyleSheet("background-color:#dfdf48");
+                         ui->followDirLinksFrame->setStyleSheet(css);
                          ui->followDirectorySymlinksComboBox->setEnabled(true);
                          ui->followDirectorySymlinksComboBox->setCurrentIndex(value.toInt());
                             break;
                 case 7 : ui->followFileSymlinksCheckBox->setChecked(true);
-                         ui->followFileLinksFrame->setStyleSheet("background-color:#dfdf48");
+                         ui->followFileLinksFrame->setStyleSheet(css);
                          ui->followFileSymlinksComboBox->setEnabled(true);
                          ui->followFileSymlinksComboBox->setCurrentIndex(value.toInt());
                             break;

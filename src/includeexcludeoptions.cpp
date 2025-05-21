@@ -1,5 +1,6 @@
 #include "includeexcludeoptions.h"
 #include "ui_includeexcludeoptions.h"
+#define css "background-color:#404040;color:white"
 
 includeExcludeOptions::includeExcludeOptions(QWidget *parent) : QWidget(parent), ui(new Ui::includeExcludeOptions)
 {
@@ -194,24 +195,24 @@ void includeExcludeOptions::slot_enablePUACheckBoxClicked(){
 
 void includeExcludeOptions::slot_highlightSettings()
 {
-    ui->dontScanFileNameCheckBox->isChecked()?ui->frame01->setStyleSheet("background-color:#dfdf48"):ui->frame01->setStyleSheet("");
-    ui->dontScanDirCheckBox->isChecked()?ui->frame02->setStyleSheet("background-color:#dfdf48"):ui->frame02->setStyleSheet("");
-    ui->onlyScanFileNameCheckBox->isChecked()?ui->frame03->setStyleSheet("background-color:#dfdf48"):ui->frame03->setStyleSheet("");
-    ui->onlyScanDirCheckBox->isChecked()?ui->frame04->setStyleSheet("background-color:#dfdf48"):ui->frame04->setStyleSheet("");
+    ui->dontScanFileNameCheckBox->isChecked()?ui->frame01->setStyleSheet(css):ui->frame01->setStyleSheet("");
+    ui->dontScanDirCheckBox->isChecked()?ui->frame02->setStyleSheet(css):ui->frame02->setStyleSheet("");
+    ui->onlyScanFileNameCheckBox->isChecked()?ui->frame03->setStyleSheet(css):ui->frame03->setStyleSheet("");
+    ui->onlyScanDirCheckBox->isChecked()?ui->frame04->setStyleSheet(css):ui->frame04->setStyleSheet("");
 
-    ui->loadPUAPackedRadioButon->isChecked()?ui->loadPUAPackedRadioButon->setStyleSheet("background-color:#dfdf48"):ui->loadPUAPackedRadioButon->setStyleSheet("");
-    ui->loadPUAPWToolRadioButton->isChecked()?ui->loadPUAPWToolRadioButton->setStyleSheet("background-color:#dfdf48"):ui->loadPUAPWToolRadioButton->setStyleSheet("");
-    ui->loadPUANetToolRadioButton->isChecked()?ui->loadPUANetToolRadioButton->setStyleSheet("background-color:#dfdf48"):ui->loadPUANetToolRadioButton->setStyleSheet("");
-    ui->loadPUAP2PRadioButton->isChecked()?ui->loadPUAP2PRadioButton->setStyleSheet("background-color:#dfdf48"):ui->loadPUAP2PRadioButton->setStyleSheet("");
-    ui->loadPUAIRCRadioButton->isChecked()?ui->loadPUAIRCRadioButton->setStyleSheet("background-color:#dfdf48"):ui->loadPUAIRCRadioButton->setStyleSheet("");
-    ui->loadPUARATRadioButton->isChecked()?ui->loadPUARATRadioButton->setStyleSheet("background-color:#dfdf48"):ui->loadPUARATRadioButton->setStyleSheet("");
-    ui->loadPUANetToolSpyRadioButton->isChecked()?ui->loadPUANetToolSpyRadioButton->setStyleSheet("background-color:#dfdf48"):ui->loadPUANetToolSpyRadioButton->setStyleSheet("");
-    ui->loadPUAServerRadioButton->isChecked()?ui->loadPUAServerRadioButton->setStyleSheet("background-color:#dfdf48"):ui->loadPUAServerRadioButton->setStyleSheet("");
-    ui->loadPUAScriptRadioButton->isChecked()?ui->loadPUAScriptRadioButton->setStyleSheet("background-color:#dfdf48"):ui->loadPUAScriptRadioButton->setStyleSheet("");
-    ui->loadPUAAndrRadioButton->isChecked()?ui->loadPUAAndrRadioButton->setStyleSheet("background-color:#dfdf48"):ui->loadPUAAndrRadioButton->setStyleSheet("");
-    ui->loadPUAJavaRadioButton->isChecked()?ui->loadPUAJavaRadioButton->setStyleSheet("background-color:#dfdf48"):ui->loadPUAJavaRadioButton->setStyleSheet("");
-    ui->loadPUAOsxRadioButton->isChecked()?ui->loadPUAOsxRadioButton->setStyleSheet("background-color:#dfdf48"):ui->loadPUAOsxRadioButton->setStyleSheet("");
-    ui->loadPUAToolRadioButton->isChecked()?ui->loadPUAToolRadioButton->setStyleSheet("background-color:#dfdf48"):ui->loadPUAToolRadioButton->setStyleSheet("");
-    ui->loadPUAUnixRadioButton->isChecked()?ui->loadPUAUnixRadioButton->setStyleSheet("background-color:#dfdf48"):ui->loadPUAUnixRadioButton->setStyleSheet("");
-    ui->loadPUAWinRadioButton->isChecked()?ui->loadPUAWinRadioButton->setStyleSheet("background-color:#dfdf48"):ui->loadPUAWinRadioButton->setStyleSheet("");
+    ui->loadPUAPackedRadioButon->isChecked()?ui->loadPUAPackedRadioButon->setStyleSheet(css):ui->loadPUAPackedRadioButon->setStyleSheet("");
+    ui->loadPUAPWToolRadioButton->isChecked()?ui->loadPUAPWToolRadioButton->setStyleSheet(css):ui->loadPUAPWToolRadioButton->setStyleSheet("");
+    ui->loadPUANetToolRadioButton->isChecked()?ui->loadPUANetToolRadioButton->setStyleSheet(css):ui->loadPUANetToolRadioButton->setStyleSheet("");
+    ui->loadPUAP2PRadioButton->isChecked()?ui->loadPUAP2PRadioButton->setStyleSheet(css):ui->loadPUAP2PRadioButton->setStyleSheet("");
+    ui->loadPUAIRCRadioButton->isChecked()?ui->loadPUAIRCRadioButton->setStyleSheet(css):ui->loadPUAIRCRadioButton->setStyleSheet("");
+    ui->loadPUARATRadioButton->isChecked()?ui->loadPUARATRadioButton->setStyleSheet(css):ui->loadPUARATRadioButton->setStyleSheet("");
+    ui->loadPUANetToolSpyRadioButton->isChecked()?ui->loadPUANetToolSpyRadioButton->setStyleSheet(css):ui->loadPUANetToolSpyRadioButton->setStyleSheet("");
+    ui->loadPUAServerRadioButton->isChecked()?ui->loadPUAServerRadioButton->setStyleSheet(css):ui->loadPUAServerRadioButton->setStyleSheet("");
+    ui->loadPUAScriptRadioButton->isChecked()?ui->loadPUAScriptRadioButton->setStyleSheet(css):ui->loadPUAScriptRadioButton->setStyleSheet("");
+    ui->loadPUAAndrRadioButton->isChecked()?ui->loadPUAAndrRadioButton->setStyleSheet(css):ui->loadPUAAndrRadioButton->setStyleSheet("");
+    ui->loadPUAJavaRadioButton->isChecked()?ui->loadPUAJavaRadioButton->setStyleSheet(css):ui->loadPUAJavaRadioButton->setStyleSheet("");
+    ui->loadPUAOsxRadioButton->isChecked()?ui->loadPUAOsxRadioButton->setStyleSheet(css):ui->loadPUAOsxRadioButton->setStyleSheet("");
+    ui->loadPUAToolRadioButton->isChecked()?ui->loadPUAToolRadioButton->setStyleSheet(css):ui->loadPUAToolRadioButton->setStyleSheet("");
+    ui->loadPUAUnixRadioButton->isChecked()?ui->loadPUAUnixRadioButton->setStyleSheet(css):ui->loadPUAUnixRadioButton->setStyleSheet("");
+    ui->loadPUAWinRadioButton->isChecked()?ui->loadPUAWinRadioButton->setStyleSheet(css):ui->loadPUAWinRadioButton->setStyleSheet("");
 }

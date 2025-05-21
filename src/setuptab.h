@@ -27,6 +27,8 @@ private:
     Ui::setupTab *ui;
     setupFileHandler    * setupFile; // clamd && freshclam
     bool                  supressMessage;
+    bool                  monochrome;
+    QString checkmonochrome(QString color);
 
 private slots:
     void slot_selectedLanguageChanged();
@@ -36,10 +38,12 @@ private slots:
     void slot_clamonaccButtonClicked();
     void slot_freshclamButtonClicked();
     void slot_clamdscanComboBoxClicked();
+    void slot_logHightlighterCheckBoxClicked();
 
 signals:
     void switchActiveTab(int);
     void sendSystemInfo(QString);
+    void logHighlightingChanged(bool);
 };
 
 #endif // SETUPTAB_H

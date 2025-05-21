@@ -43,6 +43,7 @@ private:
     setupFileHandler        * setupFile;
     int                      buttonID;
     bool                     newProfile;
+    bool                     monochrome;
     QString                  username;
     QStringList              devices;
     void readSettings();

@@ -27,6 +27,7 @@
 #include <QDialog>
 #include <QFile>
 #include "partiallogobject.h"
+#include "setupfilehandler.h"
 
 namespace Ui {
 class logViewObject;
@@ -52,9 +53,11 @@ private:
 private slots:
     void slot_closeButtonClicked();
     void slot_clearLogButtonClicked();
+    void slot_add_remove_highlighter(bool state);
 
 signals:
     void logChanged();
+    void logHighlighterChanged(bool);
 };
 
 #endif // LOGVIEWOBJECT_H

@@ -28,6 +28,8 @@ QFile file(filename);
 QString buffer;
 QStringList logs;
 QString tabHeader;
+setupFileHandler * sf = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini");
+bool css = sf->getSectionBoolValue("Setup","DisableLogHighlighter");
 
     while(ui->logTab->count() > 0){
         ui->logTab->removeTab(0);
@@ -39,7 +41,8 @@ QString tabHeader;
         logs = buffer.split("<Scanning startet>");
 
         for (int i = 1; i < logs.count(); i++){
-            partialLogObject * log = new partialLogObject(this,logs[i]);
+            partialLogObject * log = new partialLogObject(this,logs[i],css);
+            connect(this,SIGNAL(logHighlightingChanged(bool)),log,SLOT(slot_add_remove_highlighter(bool)));
             tabHeader = logs[i].mid(1,logs[i].indexOf("\n") - 1);
             ui->logTab->addTab(log,QIcon(":/icons/icons/information.png"),tabHeader);
         }
@@ -88,4 +91,9 @@ int currentTab= ui->logTab->currentIndex();
             emit logChanged();
         }
     }
+}
+
+void logViewObject::slot_add_remove_highlighter(bool state)
+{
+    emit logHighlighterChanged(state);
 }

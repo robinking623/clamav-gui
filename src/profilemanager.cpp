@@ -6,6 +6,7 @@ ProfileManager::ProfileManager(QWidget *parent) : QWidget(parent), ui(new Ui::Pr
     ui->setupUi(this);
     getProfileList();
     slot_readProfileSettings();
+    checkMonochromeSettings();
 
 }
 
@@ -24,6 +25,19 @@ QStringList selectableProfiles;
 
     ui->profileComboBox->clear();
     ui->profileComboBox->addItems(profiles);
+}
+
+void ProfileManager::checkMonochromeSettings()
+{
+    if (setupFile->getSectionBoolValue("Setup","DisableLogHighlighter") == true) {
+        ui->targetsLabel->setStyleSheet("background-color:#404040;color:white;padding:3px;border-radius:3px");
+        ui->filenameLabel->setStyleSheet("background-color:#404040;color:white;padding:3px;border-radius:3px");
+        ui->optionsLabel->setStyleSheet("background-color:#404040;color:white;padding:3px;border-radius:3px");
+    } else {
+        ui->targetsLabel->setStyleSheet("background-color:#c0c0c0;color:black;padding:3px;border-radius:3px");
+        ui->filenameLabel->setStyleSheet("background-color:#c0c0c0;color:black;padding:3px;border-radius:3px");
+        ui->optionsLabel->setStyleSheet("background-color:#c0c0c0;color:black;padding:3px;border-radius:3px");
+    }
 }
 
 void ProfileManager::slot_readProfileSettings(){
@@ -205,4 +219,10 @@ bool found = false;
 void ProfileManager::slot_profileSaved(){
     emit triggerProfilesChanged();
     getProfileList();
+}
+
+void ProfileManager::monochromeModeChanged(bool state)
+{
+Q_UNUSED(state)
+    checkMonochromeSettings();
 }

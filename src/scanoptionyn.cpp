@@ -1,5 +1,6 @@
 #include "scanoptionyn.h"
 #include "ui_scanoptionyn.h"
+#define css "background-color:#404040;color:white"
 
 scanoptionyn::scanoptionyn(QWidget *parent, QString setupFileName, QString section, bool checked, QString label, QString comment) :
     QWidget(parent),
@@ -18,7 +19,7 @@ scanoptionyn::scanoptionyn(QWidget *parent, QString setupFileName, QString secti
     ui->comboBox->setEnabled(checked);
 
     if (checked == true) {
-        this->setStyleSheet("background-color:#dfdf48");
+        this->setStyleSheet(css);
     }
 
     ui->checkBox->setText(trans->beautifyString(com));
@@ -39,7 +40,7 @@ void scanoptionyn::slot_checkboxClicked(){
     } else {
         setupFile->setSectionValue(setupFileSection,option + "<equal>" + ui->comboBox->currentText(), com);
         ui->comboBox->setEnabled(true);
-        this->setStyleSheet("background-color:#dfdf48");
+        this->setStyleSheet(css);
     }
 
     emit valuechanged();

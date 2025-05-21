@@ -72,12 +72,14 @@ private:
     QString               sudoGUI;
     bool                  lockFreshclamConf;
     bool                  startup;
+    bool                  monochrome;
     int                   freshclamStartupCounter;
     void setForm(bool);
     void setUpdaterInfo();
     void checkDaemonRunning();
     void initFreshclamSettings();
     QString extractPureNumber(QString value);
+    QString selectColor(QString color);
 
 private slots:
     void slot_updateNowButtonClicked();
@@ -108,6 +110,7 @@ private slots:
     void slot_onErrorExecuteButtonClicked();
     void slot_onOutdatedExecuteButtonClicked();
     void slot_processWatcherExpired();
+    void slot_add_remove_highlighter(bool state);
 
 signals:
     void setBallonMessage(int, QString,QString);

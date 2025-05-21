@@ -1,9 +1,10 @@
 #include "partiallogobject.h"
 #include "ui_partiallogobject.h"
 
-partialLogObject::partialLogObject(QWidget *parent, QString logText) : QWidget(parent), ui(new Ui::partialLogObject){
+partialLogObject::partialLogObject(QWidget *parent, QString logText, bool highlighterDisabled) : QWidget(parent), ui(new Ui::partialLogObject){
     ui->setupUi(this);
-    logHighlighter = new highlighter(ui->logPlainText->document());
+    logHighlighter = NULL;
+    if (highlighterDisabled == false) logHighlighter = new highlighter(ui->logPlainText->document());
     setLogText(logText);
     start = 0;
     errorStart = 0;
@@ -151,5 +152,22 @@ int pos = ui->logPlainText->toPlainText().indexOf(searchString,infectedStart);
         ui->logPlainText->setTextCursor(cursor);
         ui->logPlainText->ensureCursorVisible();
         if (ui->logPlainText->toPlainText().indexOf(searchString,infectedStart) == -1) infectedStart = 0;
+    }
+}
+
+void partialLogObject::slot_add_remove_highlighter(bool state)
+{
+    if (state == true) {
+      if (logHighlighter != NULL) {
+        delete logHighlighter;
+        logHighlighter = NULL;
+      }
+    } else {
+         if (logHighlighter == NULL) {
+             logHighlighter = new highlighter(ui->logPlainText->document());
+         } else {
+             delete logHighlighter;
+             logHighlighter = new highlighter(ui->logPlainText->document());
+         }
     }
 }

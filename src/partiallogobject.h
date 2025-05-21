@@ -34,13 +34,13 @@ class partialLogObject : public QWidget
     Q_OBJECT
 
 public:
-    explicit partialLogObject(QWidget *parent = 0, QString logText = "");
+    explicit partialLogObject(QWidget *parent = 0, QString logText = "", bool higlighterDisabled = false);
     ~partialLogObject();
     QString getLogText();
 
 private:
     Ui::partialLogObject *ui;
-    highlighter       *logHighlighter;
+    highlighter          *logHighlighter;
     int                  start;
     int                  errorStart;
     long                 infectedStart;
@@ -52,6 +52,7 @@ private slots:
     void slot_clearLineEditButtonClicked();
     void slot_totalErrorButtonClicked();
     void slot_infectedFilesButtonClicked();
+    void slot_add_remove_highlighter(bool state);
 };
 
 #endif // PARTIALLOGOBJECT_H

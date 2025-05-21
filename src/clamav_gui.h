@@ -47,7 +47,6 @@
 #include "logviewerobject.h"
 #include "profilemanager.h"
 #include "clamdmanager.h"
-#include "myframe.h"
 
 namespace Ui {
 class clamav_gui;

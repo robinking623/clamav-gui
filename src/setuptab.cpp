@@ -1,5 +1,9 @@
 #include "setuptab.h"
 #include "ui_setuptab.h"
+#define css_red "background-color:red;color:white"
+#define css_yellow "background-color:yellow;color:black"
+#define css_green "background-color:green;color:yellow"
+#define css_mono "background-color:#404040;color:white"
 
 setupTab::setupTab(QWidget *parent) :
     QWidget(parent),
@@ -14,6 +18,9 @@ setupTab::setupTab(QWidget *parent) :
     supressMessage = true; // verhindert, dass bei der Initialisierung der Sprachauswahl die Warnmeldung kommt.
 
     setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini");
+    monochrome = false;
+    if (setupFile->keywordExists("Setup","DisableLogHighlighter") == true) monochrome = setupFile->getSectionBoolValue("Setup","DisableLogHighlighter");
+
     if (setupFile->keywordExists("Setup","language") == true) {
         langhelper = setupFile->getSectionValue("Setup","language");
         index = ui->languageSelectComboBox->findText(langhelper,Qt::MatchStartsWith);
@@ -36,6 +43,12 @@ setupTab::setupTab(QWidget *parent) :
         setupFile->setSectionValue("Clamd","ClamdScanMultithreading",0);
     }
 
+    if (setupFile->keywordExists("Setup","DisableLogHighlighter") == true) {
+        ui->logHighlighterCheckBox->setChecked(setupFile->getSectionBoolValue("Setup","DisableLogHighlighter"));
+    } else {
+        setupFile->setSectionValue("Setup","DisableLogHighlighter",false);
+    }
+
     slot_updateSystemInfo();
 
     supressMessage = false;
@@ -43,6 +56,20 @@ setupTab::setupTab(QWidget *parent) :
 
 setupTab::~setupTab(){
     delete ui;
+}
+
+QString setupTab::checkmonochrome(QString color)
+{
+    QString rc = "";
+    if (monochrome == true) {
+        rc = css_mono;
+    } else {
+        if (color == "red") rc = css_red;
+        if (color == "yellow") rc = css_yellow;
+        if (color == "green") rc = css_green;
+    }
+
+    return rc;
 }
 
 void setupTab::slot_updateSystemInfo(){
@@ -72,12 +99,12 @@ void setupTab::slot_updateSystemInfo(){
         if (setupFile->getSectionValue("Clamd","ClamonaccPid") == "n/a") {
             ui->clamonaccActivityLabel->setPixmap(QPixmap(":/icons/icons/gifs/activity.gif"));
             ui->clamonaccStatus->setText(setupFile->getSectionValue("Clamd","Status2"));
-            ui->clamonaccStatus->setStyleSheet("background-color:red;color:white");
+            ui->clamonaccStatus->setStyleSheet(checkmonochrome("red"));
         } else {
             ui->clamonaccActivityLabel->setMovie(new QMovie(":/icons/icons/gifs/activity.gif"));
             ui->clamonaccActivityLabel->movie()->start();
-            ui->clamonaccStatus->setText("running");
-            ui->clamonaccStatus->setStyleSheet("background-color:green;color:yellow");
+            ui->clamonaccStatus->setText("is running");
+            ui->clamonaccStatus->setStyleSheet(checkmonochrome("green"));
         }
     }
 
@@ -87,32 +114,32 @@ void setupTab::slot_updateSystemInfo(){
             ui->clamdActivityLabel->setPixmap(QPixmap(":/icons/icons/gifs/activity.gif"));
             QString message = setupFile->getSectionValue("Clamd","Status");
             if ((message == "starting up ...") || (message == "shutting down ...")){
-                ui->clamdStatus->setStyleSheet("background-color:yellow;color:black");
+                ui->clamdStatus->setStyleSheet(checkmonochrome("yellow"));
                 ui->clamdStatus->setText(message);
                 if (setupFile->getSectionValue("Clamd","Status2") != "n/a") {
-                    ui->clamonaccStatus->setStyleSheet("background-color:yellow;color:black");
+                    ui->clamonaccStatus->setStyleSheet(checkmonochrome("yellow"));
                     ui->clamonaccStatus->setText(message);
                 }
             }
             if  (message == "is running") {
-                ui->clamdStatus->setStyleSheet("background-color:green;color:yellow");
+                ui->clamdStatus->setStyleSheet(checkmonochrome("green"));
                 ui->clamdStatus->setText(message);
                 if (setupFile->getSectionValue("Clamd","Status2") != "is running") {
-                    ui->clamonaccStatus->setStyleSheet("background-color:green;color:yellow");
+                    ui->clamonaccStatus->setStyleSheet(checkmonochrome("green"));
                     ui->clamonaccStatus->setText(message);
                 }
             }
             if  ((message == "shut down") || (message == "not running")) {
-                ui->clamdStatus->setStyleSheet("background-color:red;color:yellow");
+                ui->clamdStatus->setStyleSheet(checkmonochrome("red"));
                 ui->clamdStatus->setText("is down");
-                ui->clamonaccStatus->setStyleSheet("background-color:red;color:yellow");
+                ui->clamonaccStatus->setStyleSheet(checkmonochrome("red"));
                 ui->clamonaccStatus->setText("is down");
             }
         } else {
             ui->clamdActivityLabel->setMovie(new QMovie(":/icons/icons/gifs/activity.gif"));
             ui->clamdActivityLabel->movie()->start();
-            ui->clamdStatus->setText("running");
-            ui->clamdStatus->setStyleSheet("background-color:green;color:yellow");
+            ui->clamdStatus->setText("is running");
+            ui->clamdStatus->setStyleSheet(checkmonochrome("green"));
         }
     }
 
@@ -121,12 +148,12 @@ void setupTab::slot_updateSystemInfo(){
         if (setupFile->getSectionValue("Freshclam","Pid") == "n/a") {
             ui->freshclamActivityLabel->setPixmap(QPixmap(":/icons/icons/gifs/activity.gif"));
             ui->freshclamStatus->setText("is down");
-            ui->freshclamStatus->setStyleSheet("background-color:red;color:white");
+            ui->freshclamStatus->setStyleSheet(checkmonochrome("red"));
         } else {
             ui->freshclamActivityLabel->setMovie(new QMovie(":/icons/icons/gifs/activity.gif"));
             ui->freshclamActivityLabel->movie()->start();
-            ui->freshclamStatus->setText("running");
-            ui->freshclamStatus->setStyleSheet("background-color:green;color:yellow");
+            ui->freshclamStatus->setText("is running");
+            ui->freshclamStatus->setStyleSheet(checkmonochrome("green"));
         }
     }
 }
@@ -142,6 +169,14 @@ void setupTab::slot_freshclamButtonClicked() {
 void setupTab::slot_clamdscanComboBoxClicked()
 {
     setupFile->setSectionValue("Clamd","ClamdScanMultithreading",ui->clamdscanComboBox->currentIndex());
+}
+
+void setupTab::slot_logHightlighterCheckBoxClicked()
+{
+    setupFile->setSectionValue("Setup","DisableLogHighlighter",ui->logHighlighterCheckBox->isChecked());
+    logHighlightingChanged(ui->logHighlighterCheckBox->isChecked());
+    monochrome = ui->logHighlighterCheckBox->isChecked();
+    slot_updateSystemInfo();
 }
 
 void setupTab::slot_clamonaccButtonClicked() {

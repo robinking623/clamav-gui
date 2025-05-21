@@ -1,9 +1,13 @@
 #include "clamdmanager.h"
 #include "ui_clamdmanager.h"
+#define css_red "background-color:red;color:yellow"
+#define css_green "background-color:green;color:yellow"
+#define css_mono "background-color:#404040;color:white"
 
 clamdManager::clamdManager(QWidget *parent) : QWidget(parent), ui(new Ui::clamdManager){
     ui->setupUi(this);
     startup = true;
+    monochrome = false;
     waitForFreshclam = true;
     clamdStartupCounter = 0;
 
@@ -37,6 +41,7 @@ void clamdManager::initClamdSettings(){
     initprocessrunning = true;
     QStringList keywords;
     dirsUnderMonitoring = 0;
+    logHighlighter = NULL;
 
     setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini");
     sudoGUI = setupFile->getSectionValue("Settings","SudoGUI");
@@ -75,7 +80,6 @@ void clamdManager::initClamdSettings(){
     dirsUnderMonitoring = monitorings.length();
 
     ui->monitoringComboBox->addItems(monitorings);
-    logHighlighter = new highlighter(ui->clamdLogPlainTextEdit->document());
 
     clamdPidWatcher = new QFileSystemWatcher(this);
     connect(clamdPidWatcher,SIGNAL(fileChanged(QString)),this,SLOT(slot_pidWatcherTriggered()));
@@ -99,12 +103,12 @@ void clamdManager::initClamdSettings(){
     connect(restartClamonaccProcess,SIGNAL(finished(int)),this,SLOT(slot_restartClamonaccProcessFinished()));
 
     if (checkClamdRunning() == true) {
-        ui->startStopClamdPushButton->setStyleSheet("background-color:green");
+        ui->startStopClamdPushButton->setStyleSheet(selectColor("green"));
         ui->startStopClamdPushButton->setText(tr("  Clamd running - Stop clamd"));
         ui->startStopClamdPushButton->setIcon(QIcon(":/icons/icons/stopclamd.png"));
         clamdPidWatcher->addPath("/tmp/clamd.pid");
     } else {
-        ui->startStopClamdPushButton->setStyleSheet("background-color:red");
+        ui->startStopClamdPushButton->setStyleSheet(selectColor("red"));
     }
 
     clamdRestartInProgress = false;
@@ -416,8 +420,7 @@ void clamdManager::slot_startClamdProcessFinished(int exitCode, QProcess::ExitSt
 
     if (checkClamdRunning() == false) {
         clamdPidWatcher->removePath("/tmp/clamd.pid");
-
-        ui->startStopClamdPushButton->setStyleSheet("background-color:red;color:yellow");
+        ui->startStopClamdPushButton->setStyleSheet(selectColor("red"));
         ui->startStopClamdPushButton->setText(tr("  Clamd not running - Start Clamd"));
         ui->startStopClamdPushButton->setIcon(QIcon(":/icons/icons/startclamd.png"));
 
@@ -448,8 +451,7 @@ void clamdManager::slot_startClamdProcessFinished(int exitCode, QProcess::ExitSt
         pidFile.close();
 
         emit systemStatusChanged();
-
-        ui->startStopClamdPushButton->setStyleSheet("background-color:green;color:yellow");
+        ui->startStopClamdPushButton->setStyleSheet(selectColor("green"));
         ui->startStopClamdPushButton->setText(tr("  Clamd running - Stop Clamd"));
         ui->startStopClamdPushButton->setIcon(QIcon(":/icons/icons/stopclamd.png"));
 
@@ -476,7 +478,7 @@ void clamdManager::slot_killClamdProcessFinished(){
 
     if (checkClamdRunning() == false) {
         clamdPidWatcher->removePath("/tmp/clamd.pid");
-        ui->startStopClamdPushButton->setStyleSheet("background-color:red;color:yellow");
+        ui->startStopClamdPushButton->setStyleSheet(selectColor("red"));
         ui->startStopClamdPushButton->setText(tr("  Clamd not running - Start Clamd"));
         ui->startStopClamdPushButton->setIcon(QIcon(":/icons/icons/startclamd.png"));
 
@@ -488,8 +490,7 @@ void clamdManager::slot_killClamdProcessFinished(){
         emit systemStatusChanged();
     } else {
         clamdPidWatcher->addPath("/tmp/clamd.pid");
-
-        ui->startStopClamdPushButton->setStyleSheet("background-color:green;color:yellow");
+        ui->startStopClamdPushButton->setStyleSheet(selectColor("green"));
         ui->startStopClamdPushButton->setText(tr("  Clamd running - Stop Clamd"));
         ui->startStopClamdPushButton->setIcon(QIcon(":/icons/icons/stopclamd.png"));
     }
@@ -558,13 +559,36 @@ void clamdManager::slot_processWatcherExpired(){
     }
 }
 
+void clamdManager::slot_add_remove_highlighter(bool state)
+{
+    if (state == true) {
+      if (logHighlighter != NULL) {
+        delete logHighlighter;
+        logHighlighter = NULL;
+      }
+      monochrome = true;
+      ui->clamonaccLabel->setStyleSheet("padding:3px");
+      ui->clamdLabel_3->setStyleSheet("padding:3px");
+    } else {
+         if (logHighlighter == NULL) {
+             logHighlighter = new highlighter(ui->clamdLogPlainTextEdit->document());
+         } else {
+             delete logHighlighter;
+             logHighlighter = new highlighter(ui->clamdLogPlainTextEdit->document());
+         }
+         monochrome = false;
+         ui->clamonaccLabel->setStyleSheet("background-color:#c0c0c0;color:black;padding:3px");
+         ui->clamdLabel_3->setStyleSheet("background-color:#c0c0c0;color:black;padding:3px");
+    }
+    checkClamdRunning();
+}
+
 
 void clamdManager::slot_pidWatcherTriggered(){
     QFile pidFile("/tmp/clamd.pid");
     if ((pidFile.exists() == false) && (clamdRestartInProgress == false)){
         clamdPidWatcher->removePath("/tmp/clamd.pid");
-
-        ui->startStopClamdPushButton->setStyleSheet("background-color:red;color:yellow");
+        ui->startStopClamdPushButton->setStyleSheet(selectColor("red"));
         ui->startStopClamdPushButton->setText(tr("  Clamd not running - Start Clamd"));
         ui->startStopClamdPushButton->setIcon(QIcon(":/icons/icons/startclamd.png"));
         ui->startStopClamdPushButton->setEnabled(true);
@@ -714,7 +738,7 @@ void clamdManager::slot_clamdSettingsChanged(){
     if (initprocessrunning == false) {
         if (checkClamdRunning() == true) {
             ui->restartClamdPushButton->setVisible(true);
-            ui->restartClamdPushButton->setStyleSheet("background-color:green");
+            ui->restartClamdPushButton->setStyleSheet(selectColor("green"));
         }
     }
 }
@@ -770,20 +794,50 @@ bool clamdManager::checkClamdRunning(){
         pidString = pidString.replace("\n","");
         setupFile->setSectionValue("Clamd","ClamdPid",pidString);
         setupFile->setSectionValue("Clamd","Status","is running");
+        ui->startStopClamdPushButton->setStyleSheet(selectColor("green"));
         pidFile.close();
 
         emit systemStatusChanged();
     } else {
         setupFile->setSectionValue("Clamd","ClamdPid","n/a");
         setupFile->setSectionValue("Clamd","Status","not running");
-
+        ui->startStopClamdPushButton->setStyleSheet(selectColor("red"));
         emit systemStatusChanged();
     }
 
     return rc;
 }
 
+QString clamdManager::selectColor(QString color)
+{
+    QString rc = "";
+
+    if (monochrome == true) {
+        rc = css_mono;
+    } else {
+        if (color == "mono") rc = css_mono;
+        if (color == "red") rc = css_red;
+        if (color == "green") rc = css_green;
+    }
+
+    return rc;
+}
+
 void clamdManager::initClamdConfElements(){
+
+    if (setupFile->getSectionBoolValue("Setup","DisableLogHighlighter") == false) {
+      logHighlighter = new highlighter(ui->clamdLogPlainTextEdit->document());
+      monochrome = false;
+      ui->startStopClamdPushButton->setStyleSheet(selectColor("red"));
+      ui->clamonaccLabel->setStyleSheet("background-color:#c0c0c0;color:black;padding:3px");
+      ui->clamdLabel_3->setStyleSheet("background-color:#c0c0c0;color:black;padding:3px");
+    } else {
+      monochrome = true;
+      ui->startStopClamdPushButton->setStyleSheet(selectColor("mono"));
+      ui->clamonaccLabel->setStyleSheet("padding:3px");
+      ui->clamdLabel_3->setStyleSheet("padding:3px");
+    }
+
     QStringList clamdConfElements;
     //    clamdConfElements << "2OnAccessIncludePath STRING|This option specifies a directory (including all files and directories inside it), which should be scanned on access. This option can be used multiple times. Default: disabled|";
     //    clamdConfElements << "2OnAccessExcludePath STRING|This option allows excluding directories from on-access scanning. It can be used multiple times. Default: disabled|";
@@ -894,7 +948,7 @@ void clamdManager::initClamdConfElements(){
     clamdConfElements << "1MaxFileSize SIZE|Files larger than this limit won't be scanned. Affects the input file itself as well as files contained inside it (when the input file is an archive, a document or some other kind of container).  Warning:  disabling  this limit or setting it too high may result in severe damage to the system. Technical design limitations prevent ClamAV from scanning files greater than 2 GB at this time. Default: 100M|0,1048576000,104857600";
     clamdConfElements << "1MaxRecursion NUMBER|Nested  archives are scanned recursively, e.g. if a Zip archive contains a RAR file, all files within it will also be scanned. This options specifies how deeply the process should be continued. Warning: setting this limit too high may result in severe damage to the system. Default: 17|0,34,17";
     clamdConfElements << "1MaxFiles NUMBER|Number of files to be scanned within an archive, a document, or any other kind of container. Warning: disabling this limit or setting it too high may result in severe damage to the system. Default: 10000|0,20000,10000";
-    clamdConfElements << "1MaxEmbeddedPE SIZE|This option sets the maximum size of a file to check for embedded PE. Files larger than this value will skip the additional analysis step. Negative values are not allowed. Default: 40M|0,41943040,104857601";
+    clamdConfElements << "1MaxEmbeddedPE SIZE|This option sets the maximum size of a file to check for embedded PE. Files larger than this value will skip the additional analysis step. Negative values are not allowed. Default: 40M|0,41943040,104857600";
     clamdConfElements << "1MaxHTMLNormalize SIZE|This option sets the maximum size of a HTML file to normalize. HTML files larger than this value will not be normalized or scanned. Negative values are not allowed. Default: 40M|0,41943040,104857600";
     clamdConfElements << "1MaxHTMLNoTags SIZE|This option sets the maximum size of a normalized HTML file to scan. HTML files larger than this value after normalization will not be scanned. Negative values are not allowed. Default: 8M|0,16777216,8388608";
     clamdConfElements << "1MaxScriptNormalize SIZE|This option sets the maximum size of a script file to normalize. Script content larger than this value will not be normalized or scanned. Negative values are not allowed. Default: 20M|0,41943040,20971520";

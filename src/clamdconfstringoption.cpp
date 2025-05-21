@@ -1,5 +1,6 @@
 #include "clamdconfstringoption.h"
 #include "ui_clamdconfstringoption.h"
+#define css_mono "background-color:#404040;color:white"
 
 clamdConfStringOption::clamdConfStringOption(QWidget *parent, QString keyword, bool checked, QString label, QString options) :
     QWidget(parent),
@@ -52,7 +53,7 @@ void clamdConfStringOption::slot_checkBoxClicked()
             setupFile->removeSingleLine(optionKeyword,value);
         }
         emit settingChanged();
-        (state == true)?ui->frame->setStyleSheet("background-color:#dfdf48"):ui->frame->setStyleSheet("");
+        (state == true)?ui->frame->setStyleSheet(css_mono):ui->frame->setStyleSheet("");
     }
 }
 

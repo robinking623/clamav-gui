@@ -51,6 +51,10 @@ private slots:
     void slot_profileSeclectionChanged();
     void slot_clearLogButtonClicked();
     void slot_clearAllButtonClicked();
+    void slot_add_remove_highlighter(bool state);
+
+signals:
+    void logHighlightingChanged(bool);
 };
 
 #endif // LOGVIEWEROBJECT_H

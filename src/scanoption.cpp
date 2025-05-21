@@ -1,5 +1,6 @@
 #include "scanoption.h"
 #include "ui_scanoption.h"
+#define css "background-color:#404040;color:white"
 
 scanoption::scanoption(QWidget *parent, QString setupFileName, QString section, bool checked, QString label, QString comment) :
     QWidget(parent),
@@ -17,7 +18,7 @@ scanoption::scanoption(QWidget *parent, QString setupFileName, QString section, 
     ui->checkBox->setChecked(checked);
 
     if (checked == true) {
-        this->setStyleSheet("background-color:#dfdf48");
+        this->setStyleSheet(css);
         setupFile->setSectionValue(setupFileSection,option,com);
     }
 
@@ -36,7 +37,7 @@ void scanoption::slot_checkboxClicked(){
         this->setStyleSheet("");
     } else {
         setupFile->setSectionValue(setupFileSection,option,com);
-        this->setStyleSheet("background-color:#dfdf48");
+        this->setStyleSheet(css);
     }
 
     emit valuechanged();

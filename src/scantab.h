@@ -67,7 +67,10 @@ private:
     QString               username;
     QMovie              * movie;
     QLabel              * busyLabel;
+    QLabel              * devicelabel;
     int                   buttonID;
+    bool                  monochrome;
+    void                  checkMonochromeSettings();
 
 private slots:
     void slot_scanButtonClicked();
@@ -84,8 +87,8 @@ private slots:
     void slot_dirtreeSelectionChanged();
     void slot_updateDBPath(QString path);
     void slot_disableScanButton();
-    void slot_receiveVersionInformation(QString info);
     void slot_hiddenFoldersCheckBoxClicked();
+    void slot_add_remove_highlighter(bool state);
 
 signals:
     void triggerScanRequest(QStringList);

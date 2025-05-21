@@ -1,5 +1,6 @@
 #include "clamdconfcomboboxoption.h"
 #include "ui_clamdconfcomboboxoption.h"
+#define css_mono "background-color:#404040;color:white"
 
 clamdconfcomboboxoption::clamdconfcomboboxoption(QWidget *parent, QString keyword, bool checked, QString label, QString options) :
     QWidget(parent),
@@ -51,7 +52,7 @@ void clamdconfcomboboxoption::slot_checkBoxClicked()
         bool state = ui->checkBox->isChecked();
 
         ui->comboBox->setEnabled(state);
-        (state == true)?ui->frame->setStyleSheet("background-color:#dfdf48"):ui->frame->setStyleSheet("");
+        (state == true)?ui->frame->setStyleSheet(css_mono):ui->frame->setStyleSheet("");
         if (state == true) {
             QString value = setupFile->getSingleLineValue(optionKeyword);
             setupFile->removeSingleLine(optionKeyword,value);

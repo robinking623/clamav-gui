@@ -1,5 +1,8 @@
 #include "freshclamsetter.h"
 #include "ui_freshclamsetter.h"
+#define css_green "background-color:green;color:yellow"
+#define css_red "background-color:red;color:yellow"
+#define css_mono "background-color:#404040;color:white"
 
 freshclamsetter::freshclamsetter(QWidget *parent) : QWidget(parent), ui(new Ui::freshclamsetter){
 QDir tempDir;
@@ -10,10 +13,19 @@ QDir tempDir;
 
     lockFreshclamConf = true;
 
-    updateLogHighLighter = new highlighter(ui->logPlainText->document());
-    freshclamLogHighLighter = new highlighter(ui->deamonLogText->document());
-
     setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini");
+    updateLogFileWatcher = NULL;
+    updateLogHighLighter = NULL;
+    monochrome = true;
+    ui->groupBox->setStyleSheet("");
+    if (setupFile->getSectionBoolValue("Setup","DisableLogHighlighter") == false) {
+      monochrome = false;
+      updateLogHighLighter = new highlighter(ui->logPlainText->document());
+      freshclamLogHighLighter = new highlighter(ui->deamonLogText->document());
+      ui->groupBox->setStyleSheet(css_mono);
+      ui->updateInfoText->setStyleSheet(css_mono);
+    }
+
     sudoGUI = setupFile->getSectionValue("Settings","SudoGUI");
 
     QFile freshclamConfFile(QDir::homePath() + "/.clamav-gui/freshclam.conf");
@@ -223,9 +235,10 @@ void freshclamsetter::slot_ps_processFinished(int rc){
         freshclamStartupCounter = 0;
 
         emit freshclamStarted();
-
         ui->startStopDeamonButton->setText(tr("Deamon running - stop deamon"));
-        ui->startStopDeamonButton->setStyleSheet("background:green");
+        ui->startStopDeamonButton->setStyleSheet(selectColor("green"));
+        ui->updateNowButton->setStyleSheet(selectColor("green"));
+/*        if (monochrome == false) ui->frame->setStyleSheet("background-color:#c0c0c0;"); else ui->frame->setStyleSheet("");*/
         ui->startStopDeamonButton->setIcon(QIcon(":/icons/icons/Clam.png"));
 
         setupFile->setSectionValue("Freshclam","Started",true);
@@ -247,7 +260,10 @@ void freshclamsetter::slot_ps_processFinished(int rc){
         pidFile = "";
 
         ui->startStopDeamonButton->setText(tr("Deamon not running - start deamon"));
-        ui->startStopDeamonButton->setStyleSheet("background:red");
+        ui->startStopDeamonButton->setStyleSheet(selectColor("red"));
+        ui->updateNowButton->setStyleSheet(selectColor("green"));
+
+//        if (monochrome == false) ui->frame->setStyleSheet("background-color:#c0c0c0;"); else ui->frame->setStyleSheet("");
         ui->startStopDeamonButton->setIcon(QIcon(":/icons/icons/Clam.png"));
 
         setupFile->setSectionValue("Freshclam","Started",false);
@@ -332,13 +348,20 @@ QDir tempDir;
 
     if ((pidFile != "") && (tempDir.exists(pidFile) == true)){
         ui->startStopDeamonButton->setText(tr("Deamon running - stop deamon"));
-        ui->startStopDeamonButton->setStyleSheet("background:green");
+        ui->startStopDeamonButton->setStyleSheet(selectColor("green"));
+        ui->updateNowButton->setStyleSheet("green");
+
+//        if (monochrome == false) ui->frame->setStyleSheet("background-color:#c0c0c0;"); else ui->frame->setStyleSheet("");
+
         ui->startStopDeamonButton->setIcon(QIcon(":/icons/icons/Clam.png"));
         pidFileWatcher->addPath(pidFile);
     } else {
         pidFile = "";
         ui->startStopDeamonButton->setText(tr("Deamon not running - start deamon"));
-        ui->startStopDeamonButton->setStyleSheet("background:red");
+        ui->startStopDeamonButton->setStyleSheet(selectColor("red"));
+        ui->updateNowButton->setStyleSheet(selectColor("green"));
+//        if (monochrome == false) ui->frame->setStyleSheet("background-color:#c0c0c0;"); else ui->frame->setStyleSheet("");
+
         ui->startStopDeamonButton->setIcon(QIcon(":/icons/icons/freshclam.png"));
         setupFile->setSectionValue("Freshclam","Pid","n/a");
         emit systemStatusChanged();
@@ -570,6 +593,21 @@ QString freshclamsetter::extractPureNumber(QString value){
     return rc;
 }
 
+QString freshclamsetter::selectColor(QString color)
+{
+    QString rc = "";
+
+    if (monochrome == true) {
+        rc = css_mono;
+    } else {
+        if (color == "mono") rc = css_mono;
+        if (color == "red") rc = css_red;
+        if (color == "green") rc = css_green;
+    }
+
+    return rc;
+}
+
 void freshclamsetter::slot_updaterHasOutput(){
     static QString oldLine;
     QString output = updater->readAll();
@@ -604,7 +642,10 @@ void freshclamsetter::slot_startDeamonProcessFinished(int exitCode,QProcess::Exi
     if ((exitCode != 0) || (exitStatus == QProcess::CrashExit)) freshclamStartupCounter = 0;
     if (exitCode == 0){
         ui->startStopDeamonButton->setText(tr("Deamon running - stop deamon"));
-        ui->startStopDeamonButton->setStyleSheet("background:green");
+        ui->startStopDeamonButton->setStyleSheet(selectColor("green"));
+        ui->updateNowButton->setStyleSheet(selectColor("green"));
+//        if (monochrome == false) ui->frame->setStyleSheet("background-color:#c0c0c0;"); else ui->frame->setStyleSheet("");
+
         ui->startStopDeamonButton->setIcon(QIcon(":/icons/icons/Clam.png"));
         pidFileWatcher->addPath(pidFile);
         logFileWatcher->addPath(logFile);
@@ -614,7 +655,10 @@ void freshclamsetter::slot_startDeamonProcessFinished(int exitCode,QProcess::Exi
     } else {
         pidFile = "";
         ui->startStopDeamonButton->setText(tr("Deamon not running - start deamon"));
-        ui->startStopDeamonButton->setStyleSheet("background:red");
+        ui->startStopDeamonButton->setStyleSheet(selectColor("red"));
+        ui->updateNowButton->setStyleSheet(selectColor("green"));
+//        if (monochrome == false) ui->frame->setStyleSheet("background-color:#c0c0c0;"); else ui->frame->setStyleSheet("");
+
         ui->startStopDeamonButton->setIcon(QIcon(":/icons/icons/Clam.png"));
         setupFile->setSectionValue("Freshclam","Pid","n/a");
         emit systemStatusChanged();
@@ -933,4 +977,38 @@ void freshclamsetter::slot_processWatcherExpired(){
             checkDaemonRunning();
         }
     }
+}
+
+void freshclamsetter::slot_add_remove_highlighter(bool state)
+{
+    if (state == true) {
+      if (updateLogHighLighter != NULL) {
+        delete updateLogHighLighter;
+        delete freshclamLogHighLighter;
+        updateLogHighLighter = NULL;
+        freshclamLogHighLighter = NULL;
+        ui->groupBox->setStyleSheet("");
+        ui->updateInfoText->setStyleSheet("");
+        ui->updateNowButton->setStyleSheet(css_mono);
+      }
+      monochrome = true;
+    } else {
+         if (updateLogHighLighter == NULL) {
+             updateLogHighLighter = new highlighter(ui->logPlainText->document());
+             freshclamLogHighLighter = new highlighter(ui->deamonLogText->document());
+             ui->groupBox->setStyleSheet(css_mono);
+             ui->updateInfoText->setStyleSheet(css_mono);
+         } else {
+             delete updateLogHighLighter;
+             delete freshclamLogHighLighter;
+             updateLogHighLighter = new highlighter(ui->logPlainText->document());
+             freshclamLogHighLighter = new highlighter(ui->deamonLogText->document());
+             ui->groupBox->setStyleSheet(css_mono);
+             ui->updateInfoText->setStyleSheet(css_mono);
+         }
+         ui->startStopDeamonButton->setStyleSheet(css_green);
+         ui->updateNowButton->setStyleSheet(css_green);
+         monochrome = false;
+    }
+    checkDaemonRunning();
 }

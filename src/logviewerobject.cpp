@@ -38,6 +38,8 @@ QString actualProfileName = ui->profileComboBox->currentText();
 
 void logViewerObject::loadLogFile(QString profile){
 setupFileHandler * sf = new setupFileHandler(QDir::homePath() + "/.clamav-gui/profiles/" + profile + ".ini");
+setupFileHandler * sf2 = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini");
+bool css = sf2->getSectionBoolValue("Setup","DisableLogHighlighter");
 QString buffer;
 QStringList logs;
 QString tabHeader;
@@ -56,7 +58,8 @@ QStringList values;
             buffer = stream.readAll();
             logs = buffer.split("<Scanning startet>");
             for (int i = 1; i < logs.count(); i++){
-                partialLogObject * log = new partialLogObject(this,logs[i]);
+                partialLogObject * log = new partialLogObject(this,logs[i],css);
+                connect(this,SIGNAL(logHighlightingChanged(bool)),log,SLOT(slot_add_remove_highlighter(bool)));
                 tabHeader = logs[i].mid(1,logs[i].indexOf("\n") - 1);
                 ui->logTab->insertTab(0,log,QIcon(":/icons/icons/information.png"),tabHeader);
                 //ui->logTab->addTab(log,QIcon(":/icons/icons/information.png"),tabHeader);
@@ -107,4 +110,9 @@ int count = ui->logTab->count();
         }
     }
     saveLog();
+}
+
+void logViewerObject::slot_add_remove_highlighter(bool state)
+{
+    emit logHighlightingChanged(state);
 }

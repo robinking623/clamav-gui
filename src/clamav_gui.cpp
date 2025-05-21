@@ -173,6 +173,11 @@ clamav_gui::clamav_gui(QWidget *parent) : QWidget(parent), ui(new Ui::clamav_gui
     connect(setUpTab,SIGNAL(sendSystemInfo(QString)),this,SLOT(slot_receiveVersionInformation(QString)));
     connect(this,SIGNAL(scanJobFinished()),logTab,SLOT(slot_profilesChanged()));
     connect(this,SIGNAL(startDatabaseUpdate()),freshclamTab,SLOT(slot_updateNowButtonClicked()));
+    connect(setUpTab,SIGNAL(logHighlightingChanged(bool)),clamdTab,SLOT(slot_add_remove_highlighter(bool)));
+    connect(setUpTab,SIGNAL(logHighlightingChanged(bool)),scannerTab,SLOT(slot_add_remove_highlighter(bool)));
+    connect(setUpTab,SIGNAL(logHighlightingChanged(bool)),logTab,SLOT(slot_add_remove_highlighter(bool)));
+    connect(setUpTab,SIGNAL(logHighlightingChanged(bool)),freshclamTab,SLOT(slot_add_remove_highlighter(bool)));
+    connect(setUpTab,SIGNAL(logHighlightingChanged(bool)),profileManagerTab,SLOT(monochromeModeChanged(bool)));
 
     ui->tabWidget->setCurrentIndex(0);
 
@@ -306,11 +311,13 @@ QString checked;
 QString option;
 QString value;
 QString temp;
-bool useclamdscan;
+bool useclamdscan = false;
+bool monochrome = setupFile->getSectionBoolValue("Setup","DisableLogHighlighter");
+QString color;
 
     emit setScannerForm(false);
-
-    scannerTab->setStatusBarMessage(tr("Scanning started ......."),"#ffff00");
+    monochrome == true?color="#404040;color:white":color="#ffff00";
+    scannerTab->setStatusBarMessage(tr("Scanning started ......."),color);
 
     if (setupFile->getSectionValue("Clamd","Status") == "is running") {
         switch (setupFile->getSectionIntValue("Clamd","ClamdScanMultithreading")) {
@@ -519,21 +526,26 @@ void clamav_gui::slot_scanProcessFinished(int exitCode,QProcess::ExitStatus stat
 Q_UNUSED(exitCode);
 Q_UNUSED(status);
 QStringList parameters;
-//QString temp;
+bool monochrome = setupFile->getSectionBoolValue("Setup","DisableLogHighlighter");
+QString color;
 
     if (status == QProcess::CrashExit) {
-        scannerTab->setStatusBarMessage(tr("Scan-Process aborted ......"),"#ff0000");
+        monochrome == true?color="#404040;color:white":color="#ff0000";
+        scannerTab->setStatusBarMessage(tr("Scan-Process aborted ......"),color);
         trayIcon->showMessage(tr("Scan-Status"),tr("Scan Process aborted ....."),QSystemTrayIcon::Warning,5000);
     } else {
         if (exitCode == 0) {
-            scannerTab->setStatusBarMessage(tr("Scan-Process finished ...... no Virus found!"),"#00ff00");
+            monochrome == true?color="#404040;color:white":color="#00ff00";
+            scannerTab->setStatusBarMessage(tr("Scan-Process finished ...... no Virus found!"),color);
             trayIcon->showMessage(tr("Scan-Status"),tr("Scan Process finished ..... no virus found!"),QSystemTrayIcon::Information,5000);
         } else
             if (exitCode == 1) {
-                scannerTab->setStatusBarMessage(tr("Scan-Process finished ...... Virus found!"),"#ff0000");
+                monochrome == true?color="#404040;color:white":color="#ff0000";
+                scannerTab->setStatusBarMessage(tr("Scan-Process finished ...... Virus found!"),color);
                 trayIcon->showMessage(tr("Scan-Status"),tr("Scan Process finished ..... a virus was found!"),QSystemTrayIcon::Critical,5000);
             } else {
-                scannerTab->setStatusBarMessage(tr("Scan-Process finished ...... an error occured!"),"#ff0000");
+                monochrome == true?color="#404040;color:white":color="#ff0000";
+                scannerTab->setStatusBarMessage(tr("Scan-Process finished ...... an error occured!"),color);
                 trayIcon->showMessage(tr("Scan-Status"),tr("Scan Process finished ..... an error occurred!"),QSystemTrayIcon::Warning,5000);
             }
     }
@@ -548,8 +560,12 @@ QStringList parameters;
 }
 
 void clamav_gui::slot_abortScan(){
+bool monochrome = setupFile->getSectionBoolValue("Setup","DisableLogHighlighter");
+QString color;
+
+    monochrome == true?color="#404040;color:white":color="#ff0000";
     scannerTab->setStatusMessage(tr("Scan-Process aborted!"));
-    scannerTab->setStatusBarMessage(tr("Scan-Process aborted!"),"#ff0000");
+    scannerTab->setStatusBarMessage(tr("Scan-Process aborted!"),color);
 
     if (scanProcess->state() == QProcess::Running) scanProcess->kill();
 }
