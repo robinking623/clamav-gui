@@ -181,7 +181,7 @@
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">background:#dfdf48</string>
+          <string notr="true"/>
          </property>
          <property name="title">
           <string>Update Info</string>
@@ -227,7 +227,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
        <item row="0" column="0">
         <widget class="QFrame" name="frame">
          <property name="styleSheet">
-          <string notr="true">background-color:#c0c0c0;</string>
+          <string notr="true"/>
          </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
@@ -621,13 +621,6 @@ Default: database.clamav.net
                </item>
               </widget>
              </item>
-             <item row="11" column="0" colspan="8">
-              <widget class="Line" name="line">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-              </widget>
-             </item>
              <item row="12" column="0">
               <widget class="QLabel" name="freshclamImageLabel">
                <property name="styleSheet">
@@ -848,6 +841,13 @@ manual update as root</string>
                </property>
                <property name="text">
                 <string>OnOutdatedExecute</string>
+               </property>
+              </widget>
+             </item>
+             <item row="11" column="0" colspan="9">
+              <widget class="Line" name="line">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
                </property>
               </widget>
              </item>

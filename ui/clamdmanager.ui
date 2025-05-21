@@ -32,7 +32,7 @@
       <item row="0" column="1">
        <widget class="QTabWidget" name="tabWidget">
         <property name="styleSheet">
-         <string notr="true">background-color:#c0c0c0</string>
+         <string notr="true"/>
         </property>
         <property name="currentIndex">
          <number>0</number>
@@ -61,7 +61,7 @@
              <item row="2" column="1" colspan="2">
               <widget class="QPlainTextEdit" name="clamdLogPlainTextEdit">
                <property name="styleSheet">
-                <string notr="true">background-color:white;</string>
+                <string notr="true"/>
                </property>
                <property name="readOnly">
                 <bool>true</bool>
@@ -111,7 +111,7 @@
              <item row="1" column="1" colspan="2">
               <widget class="QPushButton" name="startStopClamdPushButton">
                <property name="styleSheet">
-                <string notr="true">background-color:red;color:yellow</string>
+                <string notr="true"/>
                </property>
                <property name="text">
                 <string>  clamd not running - start clamd</string>
@@ -300,7 +300,7 @@ for changes made to take effect.</string>
                 <string notr="true">padding:3</string>
                </property>
                <property name="frameShape">
-                <enum>QFrame::Panel</enum>
+                <enum>QFrame::WinPanel</enum>
                </property>
                <property name="frameShadow">
                 <enum>QFrame::Raised</enum>
@@ -409,7 +409,7 @@ for changes made to take effect.</string>
                 <string notr="true">padding:3</string>
                </property>
                <property name="frameShape">
-                <enum>QFrame::Panel</enum>
+                <enum>QFrame::WinPanel</enum>
                </property>
                <property name="frameShadow">
                 <enum>QFrame::Raised</enum>
@@ -428,10 +428,10 @@ for changes made to take effect.</string>
                    <bool>false</bool>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">background-color:#d0d0d0</string>
+                   <string notr="true"/>
                   </property>
                   <property name="frameShape">
-                   <enum>QFrame::StyledPanel</enum>
+                   <enum>QFrame::WinPanel</enum>
                   </property>
                   <property name="frameShadow">
                    <enum>QFrame::Raised</enum>
@@ -550,7 +550,7 @@ for changes made to take effect.</string>
                      <x>0</x>
                      <y>0</y>
                      <width>891</width>
-                     <height>112</height>
+                     <height>110</height>
                     </rect>
                    </property>
                    <layout class="QVBoxLayout" name="verticalLayout">

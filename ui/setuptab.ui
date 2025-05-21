@@ -7,8 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>968</width>
-    <height>617</height>
+    <height>700</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>0</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Form</string>
@@ -17,7 +23,7 @@
    <bool>false</bool>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color:#c0c0c0;</string>
+   <string notr="true"/>
   </property>
   <layout class="QGridLayout" name="gridLayout_10">
    <item row="0" column="0">
@@ -32,308 +38,33 @@
       <item row="0" column="0">
        <widget class="QFrame" name="wrapperFrame">
         <property name="frameShape">
-         <enum>QFrame::NoFrame</enum>
+         <enum>QFrame::WinPanel</enum>
         </property>
         <property name="frameShadow">
          <enum>QFrame::Raised</enum>
         </property>
         <layout class="QGridLayout" name="gridLayout_9">
-         <item row="0" column="0">
+         <item row="1" column="0">
           <widget class="QFrame" name="freshclamSettingsFrame">
            <property name="styleSheet">
-            <string notr="true">background-color:#c0c0c0;</string>
+            <string notr="true"/>
            </property>
            <property name="frameShape">
-            <enum>QFrame::Panel</enum>
+            <enum>QFrame::WinPanel</enum>
            </property>
            <property name="frameShadow">
-            <enum>QFrame::Sunken</enum>
+            <enum>QFrame::Raised</enum>
            </property>
            <layout class="QGridLayout" name="gridLayout_8">
-            <item row="1" column="2" colspan="2">
-             <widget class="QFrame" name="clamonaccFrame">
-              <property name="frameShape">
-               <enum>QFrame::Panel</enum>
-              </property>
-              <property name="frameShadow">
-               <enum>QFrame::Raised</enum>
-              </property>
-              <layout class="QGridLayout" name="gridLayout_6">
-               <item row="1" column="0">
-                <widget class="QLabel" name="clamonaccPathLabel">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>100</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>Path: </string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="0">
-                <widget class="QLabel" name="clamonaccStatusLabel">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>100</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>Status: </string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="1">
-                <widget class="QLabel" name="clamonaccStatus">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">padding:3px;</string>
-                 </property>
-                 <property name="frameShape">
-                  <enum>QFrame::Panel</enum>
-                 </property>
-                 <property name="frameShadow">
-                  <enum>QFrame::Sunken</enum>
-                 </property>
-                 <property name="text">
-                  <string>n/a</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="1" colspan="2">
-                <widget class="QLabel" name="clamonaccPath">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">padding:3px;</string>
-                 </property>
-                 <property name="frameShape">
-                  <enum>QFrame::Panel</enum>
-                 </property>
-                 <property name="frameShadow">
-                  <enum>QFrame::Sunken</enum>
-                 </property>
-                 <property name="text">
-                  <string>n/a</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="0">
-                <widget class="QLabel" name="clamonaccPIDLabel">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>100</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>PID: </string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="1" colspan="2">
-                <widget class="QLabel" name="clamonaccPID">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">padding:3px;</string>
-                 </property>
-                 <property name="frameShape">
-                  <enum>QFrame::Panel</enum>
-                 </property>
-                 <property name="frameShadow">
-                  <enum>QFrame::Sunken</enum>
-                 </property>
-                 <property name="text">
-                  <string>n/a</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="2">
-                <widget class="QLabel" name="clamonaccActivityLabel">
-                 <property name="minimumSize">
-                  <size>
-                   <width>40</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>40</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="pixmap">
-                  <pixmap resource="../resources.qrc">:/icons/icons/gifs/activity.gif</pixmap>
-                 </property>
-                 <property name="scaledContents">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="0" colspan="3">
-                <widget class="QPushButton" name="clamonaccPushButton">
-                 <property name="styleSheet">
-                  <string notr="true">font-size:16px;font-weight:bold</string>
-                 </property>
-                 <property name="text">
-                  <string>  Clamonacc</string>
-                 </property>
-                 <property name="icon">
-                  <iconset resource="../resources.qrc">
-                   <normaloff>:/icons/icons/onaccess.png</normaloff>:/icons/icons/onaccess.png</iconset>
-                 </property>
-                 <property name="iconSize">
-                  <size>
-                   <width>32</width>
-                   <height>32</height>
-                  </size>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item row="1" column="0">
+            <item row="0" column="0">
              <widget class="QFrame" name="freshclamFrame">
               <property name="frameShape">
-               <enum>QFrame::Panel</enum>
+               <enum>QFrame::WinPanel</enum>
               </property>
               <property name="frameShadow">
                <enum>QFrame::Raised</enum>
               </property>
               <layout class="QGridLayout" name="gridLayout">
-               <item row="3" column="1" colspan="3">
-                <widget class="QLabel" name="freshclamPID">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">padding:3px;</string>
-                 </property>
-                 <property name="frameShape">
-                  <enum>QFrame::Panel</enum>
-                 </property>
-                 <property name="frameShadow">
-                  <enum>QFrame::Sunken</enum>
-                 </property>
-                 <property name="text">
-                  <string>n/a</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="0">
-                <widget class="QLabel" name="freshclamPIDLabel">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>100</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>PID: </string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                 </property>
-                </widget>
-               </item>
                <item row="1" column="0">
                 <widget class="QLabel" name="freshclamPathLabel">
                  <property name="sizePolicy">
@@ -362,25 +93,31 @@
                  </property>
                 </widget>
                </item>
-               <item row="1" column="1" colspan="3">
-                <widget class="QLabel" name="freshclamPath">
+               <item row="2" column="0">
+                <widget class="QLabel" name="freshclamStatusLabel">
                  <property name="sizePolicy">
-                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+                  <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
                    <horstretch>0</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
                  </property>
-                 <property name="styleSheet">
-                  <string notr="true">padding:3px;</string>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>0</height>
+                  </size>
                  </property>
-                 <property name="frameShape">
-                  <enum>QFrame::Panel</enum>
-                 </property>
-                 <property name="frameShadow">
-                  <enum>QFrame::Sunken</enum>
+                 <property name="maximumSize">
+                  <size>
+                   <width>100</width>
+                   <height>16777215</height>
+                  </size>
                  </property>
                  <property name="text">
-                  <string>n/a</string>
+                  <string>Status: </string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                  </property>
                 </widget>
                </item>
@@ -451,8 +188,30 @@
                  </property>
                 </widget>
                </item>
-               <item row="2" column="0">
-                <widget class="QLabel" name="freshclamStatusLabel">
+               <item row="3" column="1" colspan="3">
+                <widget class="QLabel" name="freshclamPID">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">padding:3px;</string>
+                 </property>
+                 <property name="frameShape">
+                  <enum>QFrame::Panel</enum>
+                 </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Sunken</enum>
+                 </property>
+                 <property name="text">
+                  <string>n/a</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0">
+                <widget class="QLabel" name="freshclamPIDLabel">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
                    <horstretch>0</horstretch>
@@ -472,20 +231,147 @@
                   </size>
                  </property>
                  <property name="text">
-                  <string>Status: </string>
+                  <string>PID: </string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                  </property>
                 </widget>
                </item>
+               <item row="1" column="1" colspan="3">
+                <widget class="QLabel" name="freshclamPath">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">padding:3px;</string>
+                 </property>
+                 <property name="frameShape">
+                  <enum>QFrame::Panel</enum>
+                 </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Sunken</enum>
+                 </property>
+                 <property name="text">
+                  <string>n/a</string>
+                 </property>
+                </widget>
+               </item>
               </layout>
              </widget>
             </item>
-            <item row="1" column="1">
+            <item row="0" column="1">
+             <widget class="QFrame" name="frame">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>50</height>
+               </size>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::WinPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_3">
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout">
+                 <item>
+                  <widget class="QLabel" name="label">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">width:16px;height:16px</string>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="pixmap">
+                    <pixmap resource="../resources.qrc">:/icons/icons/multithread.png</pixmap>
+                   </property>
+                   <property name="scaledContents">
+                    <bool>false</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_2">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">font-size:16px;font-weight:bold;</string>
+                   </property>
+                   <property name="text">
+                    <string>ClamdScan</string>
+                   </property>
+                   <property name="scaledContents">
+                    <bool>false</bool>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_3">
+                 <property name="text">
+                  <string>use ClamdScan with multithreading ...</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QComboBox" name="clamdscanComboBox">
+                 <item>
+                  <property name="text">
+                   <string>Never, even if available.</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Always, if available.</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>For scheduled scan, if available.</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>For direct scan, if available.</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Ask for permission, if available.</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item row="1" column="0">
              <widget class="QFrame" name="clamdFrame">
               <property name="frameShape">
-               <enum>QFrame::Panel</enum>
+               <enum>QFrame::WinPanel</enum>
               </property>
               <property name="frameShadow">
                <enum>QFrame::Raised</enum>
@@ -689,10 +575,10 @@
               </layout>
              </widget>
             </item>
-            <item row="2" column="0" colspan="4">
+            <item row="1" column="1" rowspan="2">
              <widget class="QFrame" name="databaseFrame">
               <property name="frameShape">
-               <enum>QFrame::Panel</enum>
+               <enum>QFrame::WinPanel</enum>
               </property>
               <property name="frameShadow">
                <enum>QFrame::Raised</enum>
@@ -723,6 +609,149 @@
                  </property>
                  <property name="text">
                   <string>n/a</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="5" column="1">
+                <widget class="QLabel" name="databaseBytecodeFile">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">padding:3px;</string>
+                 </property>
+                 <property name="frameShape">
+                  <enum>QFrame::Panel</enum>
+                 </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Sunken</enum>
+                 </property>
+                 <property name="text">
+                  <string>n/a</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="1">
+                <widget class="QLabel" name="databaseMainFile">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">padding:3px;</string>
+                 </property>
+                 <property name="frameShape">
+                  <enum>QFrame::Panel</enum>
+                 </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Sunken</enum>
+                 </property>
+                 <property name="text">
+                  <string>n/a</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="0">
+                <widget class="QLabel" name="databaseDailyFileLabel">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>100</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Daily File: </string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="databasePathLabel">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="frameShape">
+                  <enum>QFrame::NoFrame</enum>
+                 </property>
+                 <property name="text">
+                  <string>Path: </string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0">
+                <widget class="QLabel" name="databaseMainFileLabel">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>100</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Main File: </string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                  </property>
                 </widget>
                </item>
@@ -787,90 +816,6 @@
                  </property>
                 </widget>
                </item>
-               <item row="4" column="0">
-                <widget class="QLabel" name="databaseDailyFileLabel">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>100</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>Daily File: </string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="1">
-                <widget class="QLabel" name="databaseMainFile">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">padding:3px;</string>
-                 </property>
-                 <property name="frameShape">
-                  <enum>QFrame::Panel</enum>
-                 </property>
-                 <property name="frameShadow">
-                  <enum>QFrame::Sunken</enum>
-                 </property>
-                 <property name="text">
-                  <string>n/a</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="1">
-                <widget class="QLabel" name="databaseLastUpdate">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">padding:3px;</string>
-                 </property>
-                 <property name="frameShape">
-                  <enum>QFrame::Panel</enum>
-                 </property>
-                 <property name="frameShadow">
-                  <enum>QFrame::Sunken</enum>
-                 </property>
-                 <property name="text">
-                  <string>n/a</string>
-                 </property>
-                </widget>
-               </item>
                <item row="1" column="1">
                 <widget class="QLabel" name="databasePath">
                  <property name="sizePolicy">
@@ -896,65 +841,6 @@
                  </property>
                  <property name="text">
                   <string>n/a</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="0">
-                <widget class="QLabel" name="databaseMainFileLabel">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>100</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>Main File: </string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="0">
-                <widget class="QLabel" name="databasePathLabel">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="frameShape">
-                  <enum>QFrame::NoFrame</enum>
-                 </property>
-                 <property name="text">
-                  <string>Path: </string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                  </property>
                 </widget>
                </item>
@@ -986,8 +872,8 @@
                  </property>
                 </widget>
                </item>
-               <item row="5" column="1">
-                <widget class="QLabel" name="databaseBytecodeFile">
+               <item row="2" column="1">
+                <widget class="QLabel" name="databaseLastUpdate">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
                    <horstretch>0</horstretch>
@@ -1017,81 +903,19 @@
               </layout>
              </widget>
             </item>
-            <item row="0" column="0" colspan="4">
-             <widget class="QFrame" name="clamavSysteStatusHeaderFrame">
+            <item row="2" column="0">
+             <widget class="QFrame" name="clamonaccFrame">
               <property name="frameShape">
-               <enum>QFrame::Panel</enum>
+               <enum>QFrame::WinPanel</enum>
               </property>
               <property name="frameShadow">
                <enum>QFrame::Raised</enum>
               </property>
-              <layout class="QHBoxLayout" name="horizontalLayout_5">
-               <item>
-                <widget class="QLabel" name="clamavSystemStatusHeaderIconLabel">
-                 <property name="maximumSize">
-                  <size>
-                   <width>34</width>
-                   <height>34</height>
-                  </size>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">Font-size:16px;</string>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="pixmap">
-                  <pixmap resource="../resources.qrc">:/icons/icons/systemstatus.png</pixmap>
-                 </property>
-                 <property name="scaledContents">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="clamavSystemStatusHeaderLabel">
-                 <property name="styleSheet">
-                  <string notr="true">font-size:16px;</string>
-                 </property>
-                 <property name="text">
-                  <string>ClamAV System Status</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QFrame" name="setupFrame">
-           <property name="frameShape">
-            <enum>QFrame::Panel</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Sunken</enum>
-           </property>
-           <layout class="QVBoxLayout" name="verticalLayout_2">
-            <item>
-             <widget class="QFrame" name="frame">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>50</height>
-               </size>
-              </property>
-              <property name="frameShape">
-               <enum>QFrame::StyledPanel</enum>
-              </property>
-              <property name="frameShadow">
-               <enum>QFrame::Raised</enum>
-              </property>
-              <layout class="QGridLayout" name="gridLayout_12">
-               <item row="0" column="0">
-                <widget class="QLabel" name="label">
+              <layout class="QGridLayout" name="gridLayout_6">
+               <item row="3" column="0">
+                <widget class="QLabel" name="clamonaccPIDLabel">
                  <property name="sizePolicy">
-                  <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
+                  <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
                    <horstretch>0</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
@@ -1102,149 +926,227 @@
                    <height>0</height>
                   </size>
                  </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>100</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>PID: </string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QLabel" name="clamonaccStatusLabel">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>100</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Status: </string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="QLabel" name="clamonaccStatus">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
                  <property name="styleSheet">
-                  <string notr="true">width:16px;height:16px</string>
+                  <string notr="true">padding:3px;</string>
+                 </property>
+                 <property name="frameShape">
+                  <enum>QFrame::Panel</enum>
+                 </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Sunken</enum>
+                 </property>
+                 <property name="text">
+                  <string>n/a</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="2">
+                <widget class="QLabel" name="clamonaccActivityLabel">
+                 <property name="minimumSize">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
                  </property>
                  <property name="text">
                   <string/>
                  </property>
                  <property name="pixmap">
-                  <pixmap resource="../resources.qrc">:/icons/icons/multithread.png</pixmap>
+                  <pixmap resource="../resources.qrc">:/icons/icons/gifs/activity.gif</pixmap>
                  </property>
                  <property name="scaledContents">
-                  <bool>false</bool>
+                  <bool>true</bool>
                  </property>
                 </widget>
                </item>
-               <item row="0" column="1">
-                <widget class="QLabel" name="label_2">
+               <item row="0" column="0" colspan="3">
+                <widget class="QPushButton" name="clamonaccPushButton">
+                 <property name="styleSheet">
+                  <string notr="true">font-size:16px;font-weight:bold</string>
+                 </property>
+                 <property name="text">
+                  <string>  Clamonacc</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="../resources.qrc">
+                   <normaloff>:/icons/icons/onaccess.png</normaloff>:/icons/icons/onaccess.png</iconset>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>32</width>
+                   <height>32</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="1" colspan="2">
+                <widget class="QLabel" name="clamonaccPID">
                  <property name="sizePolicy">
-                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
                    <horstretch>0</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
                  </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
                  <property name="styleSheet">
-                  <string notr="true">font-size:16px;font-weight:bold;</string>
+                  <string notr="true">padding:3px;</string>
+                 </property>
+                 <property name="frameShape">
+                  <enum>QFrame::Panel</enum>
+                 </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Sunken</enum>
                  </property>
                  <property name="text">
-                  <string>ClamdScan</string>
-                 </property>
-                 <property name="scaledContents">
-                  <bool>false</bool>
+                  <string>n/a</string>
                  </property>
                 </widget>
                </item>
-               <item row="2" column="0" colspan="2">
-                <widget class="QComboBox" name="clamdscanComboBox">
-                 <item>
-                  <property name="text">
-                   <string>Never, even if available.</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Always, if available.</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>For scheduled scan, if available.</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>For direct scan, if available.</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Ask for permission, if available.</string>
-                  </property>
-                 </item>
-                </widget>
-               </item>
-               <item row="1" column="0" colspan="2">
-                <widget class="QLabel" name="label_3">
+               <item row="1" column="1" colspan="2">
+                <widget class="QLabel" name="clamonaccPath">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">padding:3px;</string>
+                 </property>
+                 <property name="frameShape">
+                  <enum>QFrame::Panel</enum>
+                 </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Sunken</enum>
+                 </property>
                  <property name="text">
-                  <string>use ClamdScan with multithreading ...</string>
+                  <string>n/a</string>
                  </property>
                 </widget>
                </item>
-              </layout>
-             </widget>
-            </item>
-            <item>
-             <widget class="QFrame" name="windowstateFrame">
-              <property name="styleSheet">
-               <string notr="true">background-color:#c0c0c0;</string>
-              </property>
-              <property name="frameShape">
-               <enum>QFrame::Panel</enum>
-              </property>
-              <property name="frameShadow">
-               <enum>QFrame::Raised</enum>
-              </property>
-              <layout class="QGridLayout" name="gridLayout_4">
                <item row="1" column="0">
-                <widget class="QLabel" name="windowStateIconFrame">
+                <widget class="QLabel" name="clamonaccPathLabel">
                  <property name="sizePolicy">
-                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
                    <horstretch>0</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
                  </property>
-                 <property name="styleSheet">
-                  <string notr="true">margin-right:10px;</string>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>100</width>
+                   <height>16777215</height>
+                  </size>
                  </property>
                  <property name="text">
-                  <string/>
+                  <string>Path: </string>
                  </property>
-                 <property name="pixmap">
-                  <pixmap resource="../resources.qrc">:/icons/icons/expand-button.png</pixmap>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                  </property>
-                </widget>
-               </item>
-               <item row="1" column="1">
-                <widget class="QLabel" name="windowStateLabel">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">font-size:16px;font-weight:bold;</string>
-                 </property>
-                 <property name="text">
-                  <string>Window State on Startup</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="0" colspan="3">
-                <widget class="QComboBox" name="windowStateComboBox">
-                 <item>
-                  <property name="text">
-                   <string>Show Window maximized</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Show Tray Icon only</string>
-                  </property>
-                 </item>
                 </widget>
                </item>
               </layout>
              </widget>
             </item>
+           </layout>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QFrame" name="setupFrame">
+           <property name="frameShape">
+            <enum>QFrame::WinPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_2">
             <item>
              <widget class="QFrame" name="languageFrame">
               <property name="styleSheet">
-               <string notr="true">background-color:#c0c0c0</string>
+               <string notr="true"/>
               </property>
               <property name="frameShape">
-               <enum>QFrame::Panel</enum>
+               <enum>QFrame::WinPanel</enum>
               </property>
               <property name="frameShadow">
                <enum>QFrame::Raised</enum>
@@ -1285,6 +1187,9 @@
                   <widget class="QComboBox" name="languageSelectComboBox">
                    <property name="toolTip">
                     <string/>
+                   </property>
+                   <property name="autoFillBackground">
+                    <bool>true</bool>
                    </property>
                    <property name="styleSheet">
                     <string notr="true">margin-top:10px;</string>
@@ -1468,6 +1373,70 @@
              </widget>
             </item>
             <item>
+             <widget class="QFrame" name="windowstateFrame">
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::WinPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_4">
+               <item row="1" column="0">
+                <widget class="QLabel" name="windowStateIconFrame">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">margin-right:10px;</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="pixmap">
+                  <pixmap resource="../resources.qrc">:/icons/icons/expand-button.png</pixmap>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QLabel" name="windowStateLabel">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">font-size:16px;font-weight:bold;</string>
+                 </property>
+                 <property name="text">
+                  <string>Window State on Startup</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0" colspan="3">
+                <widget class="QComboBox" name="windowStateComboBox">
+                 <item>
+                  <property name="text">
+                   <string>Show Window maximized</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Show Tray Icon only</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
              <spacer name="verticalSpacer_3">
               <property name="orientation">
                <enum>Qt::Vertical</enum>
@@ -1475,15 +1444,90 @@
               <property name="sizeHint" stdset="0">
                <size>
                 <width>20</width>
-                <height>127</height>
+                <height>40</height>
                </size>
               </property>
              </spacer>
             </item>
+            <item>
+             <widget class="QFrame" name="frame_2">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="toolTip">
+               <string/>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::WinPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout">
+               <item>
+                <widget class="QCheckBox" name="logHighlighterCheckBox">
+                 <property name="toolTip">
+                  <string extracomment="For people with color blindness">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For people with color blindness. Removes all the fancy color stuff from the log files and indicators.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 </property>
+                 <property name="text">
+                  <string>Switch the application to monochrome mode.</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
            </layout>
           </widget>
          </item>
-         <item row="0" column="2">
+         <item row="0" column="0" colspan="2">
+          <widget class="QFrame" name="clamavSysteStatusHeaderFrame">
+           <property name="frameShape">
+            <enum>QFrame::WinPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_5">
+            <item>
+             <widget class="QLabel" name="clamavSystemStatusHeaderIconLabel">
+              <property name="maximumSize">
+               <size>
+                <width>34</width>
+                <height>34</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">Font-size:16px;</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="pixmap">
+               <pixmap resource="../resources.qrc">:/icons/icons/systemstatus.png</pixmap>
+              </property>
+              <property name="scaledContents">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="clamavSystemStatusHeaderLabel">
+              <property name="styleSheet">
+               <string notr="true">font-size:16px;</string>
+              </property>
+              <property name="text">
+               <string>ClamAV System Status</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item row="0" column="2" rowspan="2">
           <spacer name="horizontalSpacer">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
@@ -1492,19 +1536,6 @@
             <size>
              <width>40</width>
              <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item row="1" column="0" colspan="2">
-          <spacer name="verticalSpacer_5">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>808</width>
-             <height>38</height>
             </size>
            </property>
           </spacer>
@@ -1520,7 +1551,7 @@
         <property name="sizeHint" stdset="0">
          <size>
           <width>20</width>
-          <height>330</height>
+          <height>40</height>
          </size>
         </property>
        </spacer>
@@ -1630,6 +1661,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>logHighlighterCheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>setupTab</receiver>
+   <slot>slot_logHightlighterCheckBoxClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>642</x>
+     <y>345</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>959</x>
+     <y>341</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>slot_selectedLanguageChanged()</slot>
@@ -1639,5 +1686,6 @@
   <slot>slot_clamonaccButtonClicked()</slot>
   <slot>slot_multithreadingCheckBoxClicked()</slot>
   <slot>slot_clamdscanComboBoxClicked()</slot>
+  <slot>slot_logHightlighterCheckBoxClicked()</slot>
  </slots>
 </ui>

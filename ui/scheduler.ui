@@ -113,7 +113,7 @@
              <string notr="true">padding:5px</string>
             </property>
             <property name="frameShape">
-             <enum>QFrame::Panel</enum>
+             <enum>QFrame::WinPanel</enum>
             </property>
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
@@ -247,7 +247,7 @@
              <string notr="true">padding:5px</string>
             </property>
             <property name="frameShape">
-             <enum>QFrame::Panel</enum>
+             <enum>QFrame::WinPanel</enum>
             </property>
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
@@ -352,7 +352,7 @@
              <string notr="true">padding:5px</string>
             </property>
             <property name="frameShape">
-             <enum>QFrame::Panel</enum>
+             <enum>QFrame::WinPanel</enum>
             </property>
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
@@ -426,13 +426,13 @@
          <item row="0" column="0">
           <widget class="QLabel" name="profileInfoHeaderLabel">
            <property name="styleSheet">
-            <string notr="true">padding:5px;background:#c0c0c0</string>
+            <string notr="true">padding:5px;</string>
            </property>
            <property name="frameShape">
             <enum>QFrame::WinPanel</enum>
            </property>
            <property name="frameShadow">
-            <enum>QFrame::Sunken</enum>
+            <enum>QFrame::Raised</enum>
            </property>
            <property name="text">
             <string>Available Profiles and Profile Information</string>
@@ -631,8 +631,8 @@
    <slot>slot_addMonthlyScanJobButtonClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>110</x>
-     <y>279</y>
+     <x>568</x>
+     <y>443</y>
     </hint>
     <hint type="destinationlabel">
      <x>3</x>
@@ -647,8 +647,8 @@
    <slot>slot_addWeeklyScanJobButtonClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>110</x>
-     <y>279</y>
+     <x>568</x>
+     <y>443</y>
     </hint>
     <hint type="destinationlabel">
      <x>7</x>
@@ -663,8 +663,8 @@
    <slot>slot_addDailyScanJobButtonClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>517</x>
-     <y>389</y>
+     <x>656</x>
+     <y>443</y>
     </hint>
     <hint type="destinationlabel">
      <x>6</x>
@@ -674,17 +674,17 @@
   </connection>
   <connection>
    <sender>profileComboBox</sender>
-   <signal>activated(QString)</signal>
+   <signal>activated(int)</signal>
    <receiver>scheduler</receiver>
    <slot>slot_profileSelectionChanged()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1037</x>
-     <y>289</y>
+     <x>969</x>
+     <y>238</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1089</x>
-     <y>248</y>
+     <x>1087</x>
+     <y>230</y>
     </hint>
    </hints>
   </connection>

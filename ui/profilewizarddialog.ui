@@ -35,7 +35,7 @@
       </size>
      </property>
      <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
+      <enum>QFrame::WinPanel</enum>
      </property>
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
@@ -163,7 +163,7 @@
    <item row="1" column="0" colspan="7">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>6</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="wizardPage_1">
       <layout class="QGridLayout" name="gridLayout_2">
@@ -349,7 +349,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
              </size>
             </property>
             <property name="frameShape">
-             <enum>QFrame::Panel</enum>
+             <enum>QFrame::WinPanel</enum>
             </property>
             <property name="frameShadow">
              <enum>QFrame::Sunken</enum>
@@ -412,7 +412,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                    </size>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">background:#c0c0c0;padding:2px;border-radius:3px;</string>
+                   <string notr="true">background:#404040;color:white;padding:2px;border-radius:3px;</string>
                   </property>
                   <property name="text">
                    <string>Pathes</string>
@@ -517,8 +517,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>98</width>
-            <height>28</height>
+            <width>784</width>
+            <height>469</height>
            </rect>
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout_6">
@@ -1012,7 +1012,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>589</width>
+            <width>770</width>
             <height>953</height>
            </rect>
           </property>

@@ -49,10 +49,10 @@
       </size>
      </property>
      <property name="frameShape">
-      <enum>QFrame::Panel</enum>
+      <enum>QFrame::WinPanel</enum>
      </property>
      <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
+      <enum>QFrame::Raised</enum>
      </property>
      <layout class="QGridLayout" name="gridLayout">
       <item row="0" column="1" rowspan="2">
@@ -68,7 +68,7 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>577</width>
+           <width>575</width>
            <height>139</height>
           </rect>
          </property>
@@ -120,7 +120,7 @@
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">background:#c0c0c0;padding:5px;border-radius:5px;</string>
+         <string notr="true">background:#404040;color:white;padding:5px;border-radius:5px;</string>
         </property>
         <property name="text">
          <string>Options:</string>
@@ -149,10 +149,10 @@
    <item row="4" column="1" colspan="8">
     <widget class="QFrame" name="logFileFrame">
      <property name="frameShape">
-      <enum>QFrame::Panel</enum>
+      <enum>QFrame::WinPanel</enum>
      </property>
      <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
+      <enum>QFrame::Raised</enum>
      </property>
      <layout class="QGridLayout" name="gridLayout_4">
       <item row="0" column="1">
@@ -195,7 +195,7 @@
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">background:#c0c0c0;padding:3px;border-radius:3px;</string>
+         <string notr="true">background:#404040;color:white;padding:3px;border-radius:3px;</string>
         </property>
         <property name="text">
          <string>Log-File:</string>
@@ -237,7 +237,7 @@
    <item row="0" column="1" colspan="8">
     <widget class="QFrame" name="frame">
      <property name="frameShape">
-      <enum>QFrame::Panel</enum>
+      <enum>QFrame::WinPanel</enum>
      </property>
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
@@ -285,10 +285,10 @@
       </size>
      </property>
      <property name="frameShape">
-      <enum>QFrame::Panel</enum>
+      <enum>QFrame::WinPanel</enum>
      </property>
      <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
+      <enum>QFrame::Raised</enum>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="0" column="0">
@@ -312,7 +312,7 @@
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">background:#c0c0c0;padding:5px;border-radius:5px;</string>
+         <string notr="true">background:#404040;color:white;padding:5px;border-radius:5px;</string>
         </property>
         <property name="text">
          <string>Targets:</string>
@@ -335,7 +335,7 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>577</width>
+           <width>575</width>
            <height>79</height>
           </rect>
          </property>
