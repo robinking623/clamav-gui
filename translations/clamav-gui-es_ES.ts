@@ -1487,6 +1487,13 @@ li.checked::marker { content: &quot;\2612&quot;; }
     </message>
 </context>
 <context>
+    <name>myFrame</name>
+    <message>
+        <source>Frame</source>
+        <translation>Frame</translation>
+    </message>
+</context>
+<context>
     <name>optionsDialog</name>
     <message>
         <source>...</source>
@@ -2424,6 +2431,10 @@ Continue from the Start of the Log?</source>
     <message>
         <source>use ClamdScan with multithreading ...</source>
         <translation>usar ClamdScan con multithreading ...</translation>
+    </message>
+    <message>
+        <source>Switch the application to monochrome mode.</source>
+        <translation>Cambia la aplicación al modo monocromo.</translation>
     </message>
 </context>
 </TS>
