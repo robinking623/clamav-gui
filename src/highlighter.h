@@ -22,6 +22,9 @@
 #define HIGHLIGHTER_H
 //
 #include <QSyntaxHighlighter>
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#include <QRegExp>
+#endif
 //
 class highlighter : public QSyntaxHighlighter
 {
