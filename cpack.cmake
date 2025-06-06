@@ -15,7 +15,7 @@ set(CPACK_DEB_COMPONENT_INSTALL ON)
 
 set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Jörg Macedo da Costa Zopes")
 set(CPACK_DEBIAN_PACKAGE_SECTION "utils")
-set(CPACK_DEBIAN_PACKAGE_REQUIRES "clamav, clamav-daemon, clamav-freshclam, clamav-lib")
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "clamav, clamav-daemon, clamav-freshclam, clamav-lib")
 set(CPACK_DEBIAN_PACKAGE_DESCRIPTION "ClamAV GUI for Linux")
 
 set(CPACK_RPM_COMPONENT_INSTALL ON)

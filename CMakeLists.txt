@@ -81,8 +81,6 @@ target_link_libraries(ClamAV-qt
     Qt${QT_VERSION}::Core5Compat
     )
 
-install(TARGETS ClamAV-qt
-    RUNTIME DESTINATION usr/bin/
-)
+include(install.cmake)
 
-include(CPack.cmake)
+include(cpack.cmake)
