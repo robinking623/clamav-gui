@@ -56,3 +56,13 @@ jobs:
       # Execute cpack defined by the CMake configuration.
       run: cpack -G DEB; cpack -G RPM
 
+    - name: Upload build artifacts
+      if: success()  # Only upload if previous steps succeeded
+      uses: actions/upload-artifact@v4
+      with:
+        name: packages-${{ github.run_number }}
+        path: |
+          ${{ github.workspace }}/build/*.deb
+          ${{ github.workspace }}/build/*.rpm
+        retention-days: 7  # Automatically clean up after a week
+
