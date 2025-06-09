@@ -12,13 +12,13 @@
 
 int main(int argc, char *argv[])
 {
-QTranslator translator(0);
-QTcpServer server;
-QStringList parameters;
-QString lang;
-QString setLang;
-QString rc;
-bool translatorLoaded = false;
+    QTranslator translator(0);
+    QTcpServer server;
+    QStringList parameters;
+    QString lang;
+    QString setLang;
+    QString rc;
+    bool translatorLoaded = false;
 
     QApplication a(argc, argv);
     lang = QLocale::system().name();
@@ -32,9 +32,9 @@ bool translatorLoaded = false;
 
     QFile file;
     if (file.exists(QDir::homePath() + "/.clamav-gui/settings.ini") == true) {
-        setupFileHandler * setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini");
-        if (setupFile->keywordExists("Setup","language") == true) {
-            lang = setupFile->getSectionValue("Setup","language").mid(1,5);
+        setupFileHandler setupFile(QDir::homePath() + "/.clamav-gui/settings.ini");
+        if (setupFile.keywordExists("Setup","language") == true) {
+            lang = setupFile.getSectionValue("Setup","language").mid(1,5);
         } else {
             lang = "en_GB";
         }
@@ -48,10 +48,10 @@ bool translatorLoaded = false;
 
     if (rc == "--scan") {
         if (file.exists(QDir::homePath() + "/.clamav-gui/settings.ini") == true) {
-            setupFileHandler * setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini");
-            QStringList selectedOptions = setupFile->getKeywords("SelectedOptions");
-            QStringList directoryOptions = setupFile->getKeywords("Directories");
-            QStringList scanLimitations = setupFile->getKeywords("ScanLimitations");
+            setupFileHandler setupFile(QDir::homePath() + "/.clamav-gui/settings.ini");
+            QStringList selectedOptions = setupFile.getKeywords("SelectedOptions");
+            QStringList directoryOptions = setupFile.getKeywords("Directories");
+            QStringList scanLimitations = setupFile.getKeywords("ScanLimitations");
             QString option;
             QString checked;
             QString value;
@@ -63,7 +63,7 @@ bool translatorLoaded = false;
             // Directory Options
             for (int i = 0; i < directoryOptions.count(); i++){
                 option = directoryOptions.at(i);
-                value = setupFile->getSectionValue("Directories",option);
+                value = setupFile.getSectionValue("Directories",option);
                 checked = value.left(value.indexOf("|"));
                 value = value.mid(value.indexOf("|") + 1);
                 if ((checked == "checked") && (value != "")) {
@@ -106,7 +106,7 @@ bool translatorLoaded = false;
 
             for (int i = 0; i < scanLimitations.count(); i++){
                 option = scanLimitations.at(i);
-                value = setupFile->getSectionValue("ScanLimitations",option);
+                value = setupFile.getSectionValue("ScanLimitations",option);
                 checked = value.left(value.indexOf("|"));
                 value = value.mid(value.indexOf("|") + 1);
                 if (checked == "checked"){
@@ -119,27 +119,27 @@ bool translatorLoaded = false;
             }
 
             // REGEXP and Include Exclude Options
-            value = setupFile->getSectionValue("REGEXP_and_IncludeExclude","DontScanFileNamesMatchingRegExp");
+            value = setupFile.getSectionValue("REGEXP_and_IncludeExclude","DontScanFileNamesMatchingRegExp");
             checked = value.left(value.indexOf("|"));
             value = value.mid(value.indexOf("|") + 1);
             if (checked == "checked") parameters << "--exclude=" + value;
 
-            value = setupFile->getSectionValue("REGEXP_and_IncludeExclude","DontScanDirectoriesMatchingRegExp");
+            value = setupFile.getSectionValue("REGEXP_and_IncludeExclude","DontScanDirectoriesMatchingRegExp");
             checked = value.left(value.indexOf("|"));
             value = value.mid(value.indexOf("|") + 1);
             if (checked == "checked") parameters << "--exclude-dir=" + value;
 
-            value = setupFile->getSectionValue("REGEXP_and_IncludeExclude","OnlyScanFileNamesMatchingRegExp");
+            value = setupFile.getSectionValue("REGEXP_and_IncludeExclude","OnlyScanFileNamesMatchingRegExp");
             checked = value.left(value.indexOf("|"));
             value = value.mid(value.indexOf("|") + 1);
             if (checked == "checked") parameters << "--include=" + value;
 
-            value = setupFile->getSectionValue("REGEXP_and_IncludeExclude","OnlyScanDirectoriesMatchingRegExp");
+            value = setupFile.getSectionValue("REGEXP_and_IncludeExclude","OnlyScanDirectoriesMatchingRegExp");
             checked = value.left(value.indexOf("|"));
             value = value.mid(value.indexOf("|") + 1);
             if (checked == "checked") parameters << "--include-dir=" + value;
 
-            if (setupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","EnablePUAOptions") == true){
+            if (setupFile.getSectionBoolValue("REGEXP_and_IncludeExclude","EnablePUAOptions") == true){
                 QStringList keywords;
                 QStringList switches;
                 keywords << "LoadPUAPacked" << "LoadPUAPWTool" << "LoadPUANetTool" << "LoadPUAP2P" << "LoadPUAIRC" << "LoadPUARAT" << "LoadPUANetToolSpy";
@@ -148,7 +148,7 @@ bool translatorLoaded = false;
                 switches << "--include-pua=NetToolSpy" << "--include-pua=Server" << "--include-pua=Script" << "--include-pua=Andr" << "--include-pua=Java";
                 switches << "--include-pua=Osx" << "--include-pua=Tool" << "--include-pua=Unix" << "--include-pua=Win";
                 for (int i = 0; i < keywords.length(); i++) {
-                    if (setupFile->getSectionBoolValue("REGEXP_and_IncludeExclude",keywords.at(i)) == true) parameters << switches.at(i);
+                    if (setupFile.getSectionBoolValue("REGEXP_and_IncludeExclude",keywords.at(i)) == true) parameters << switches.at(i);
                 }
             }
         }

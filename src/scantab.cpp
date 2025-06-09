@@ -3,8 +3,8 @@
 
 scanTab::scanTab(QWidget *parent) : QWidget(parent),ui(new Ui::scanTab){
     ui->setupUi(this);
-    setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini");
-    logHighLighter = NULL;
+    setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini", this);
+        logHighLighter = NULL;
     monochrome = setupFile->getSectionBoolValue("Setup","DisableLogHighlighter");
     if (monochrome == false) logHighLighter = new highlighter(ui->logPlainTextEdit->document());
     devicelabel = ui->deviceLabel;

@@ -82,6 +82,20 @@ target_link_libraries(ClamAV-GUI
     Qt${QT_VERSION}::Core5Compat
     )
 
+option(BUILD_TESTING "Build tests" OFF)
+if(BUILD_TESTING)
+    if(DEFINED ENV{GITHUB_ACTIONS} AND "$ENV{GITHUB_ACTIONS}" STREQUAL "true")
+        add_subdirectory(test)
+        message(STATUS "Running in GitHub Actions")
+    # Add GitHub Actions-specific logic here
+    else()
+        add_subdirectory(qtest)
+        message(STATUS "Not running in GitHub Actions")
+    endif()
+    message(STATUS "Building tests")
+    enable_testing()
+endif()
+
 include(install.cmake)
 
 include(cpack.cmake)

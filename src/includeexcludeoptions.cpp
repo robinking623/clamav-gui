@@ -5,7 +5,7 @@
 includeExcludeOptions::includeExcludeOptions(QWidget *parent) : QWidget(parent), ui(new Ui::includeExcludeOptions)
 {
     ui->setupUi(this);
-    setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini");
+    setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini", this);
     if (setupFile->sectionExists("REGEXP_and_IncludeExclude") == true){
         readSettingsInProgress = true;
         readSettings();
