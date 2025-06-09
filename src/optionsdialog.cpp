@@ -4,7 +4,7 @@
 
 optionsDialog::optionsDialog(QWidget *parent) : QWidget(parent), ui(new Ui::optionsDialog){
     ui->setupUi(this);
-    setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini", this);
+    setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini",this);
     updateDirectories();
     ui->tabWidget->setTabText(0,tr("Options"));
     ui->tabWidget->setTabText(1,tr("Directories"));

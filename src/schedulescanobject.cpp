@@ -15,7 +15,7 @@ scheduleScanObject::scheduleScanObject(QWidget *parent, QString name, QStringLis
         directScan = false;
     }
 
-    setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini", this);
+    setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini",this);
 
     logHighLighter = new highlighter(ui->logMessagePlainTextEdit->document());
 

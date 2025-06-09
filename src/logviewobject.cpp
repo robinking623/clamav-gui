@@ -24,12 +24,12 @@ void logViewObject::keyPressEvent(QKeyEvent * event){
 }
 
 void logViewObject::loadLogFile(QString filename){
-    QFile file(filename);
-    QString buffer;
-    QStringList logs;
-    QString tabHeader;
-    setupFileHandler sf(QDir::homePath() + "/.clamav-gui/settings.ini");
-    bool css = sf.getSectionBoolValue("Setup","DisableLogHighlighter");
+QFile file(filename);
+QString buffer;
+QStringList logs;
+QString tabHeader;
+setupFileHandler * sf = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini",this);
+bool css = sf->getSectionBoolValue("Setup","DisableLogHighlighter");
 
     while(ui->logTab->count() > 0){
         ui->logTab->removeTab(0);

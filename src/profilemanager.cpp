@@ -2,7 +2,7 @@
 #include "ui_profilemanager.h"
 
 ProfileManager::ProfileManager(QWidget *parent) : QWidget(parent), ui(new Ui::ProfileManager){
-    setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini");
+    setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini",this);
     ui->setupUi(this);
     getProfileList();
     slot_readProfileSettings();
@@ -17,10 +17,11 @@ ProfileManager::~ProfileManager(){
 void ProfileManager::getProfileList(){
 QStringList profiles = setupFile->getKeywords("Profiles");
 QStringList selectableProfiles;
+setupFileHandler sf(this);
 
     foreach(QString profile,profiles){
-        setupFileHandler * sf = new setupFileHandler(QDir::homePath() + "/.clamav-gui/profiles/" + profile + ".ini");
-        if (sf->getSectionValue(profile,"Directories") != "") selectableProfiles << profile;
+        sf.setSetupFileName(QDir::homePath() + "/.clamav-gui/profiles/" + profile + ".ini");
+        if (sf.getSectionValue(profile,"Directories") != "") selectableProfiles << profile;
     }
 
     ui->profileComboBox->clear();
@@ -45,7 +46,7 @@ QString profileName = ui->profileComboBox->currentText();
 if (profileName == "")
     return;
 
-setupFileHandler * tempSetupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/profiles/" + profileName + ".ini");
+setupFileHandler * tempSetupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/profiles/" + profileName + ".ini",this);
 QStringList targets;
 QString targetLabel;
 QStringList options;
@@ -195,7 +196,7 @@ bool found = false;
             int rc = QMessageBox::question(this,tr("WARNING"),tr("Do you realy want to remove this (") + profileName + tr(") profile"),QMessageBox::Yes,QMessageBox::No);
             QFile tempFile(QDir::homePath() + "/.clamav-gui/profiles/" + ui->profileComboBox->currentText() + ".ini");
                 if (rc == QMessageBox::Yes){
-                    setupFileHandler * sf = new setupFileHandler(QDir::homePath() + "/.clamav-gui/profiles/" + ui->profileComboBox->currentText() + ".ini");
+                    setupFileHandler * sf = new setupFileHandler(QDir::homePath() + "/.clamav-gui/profiles/" + ui->profileComboBox->currentText() + ".ini",this);
                     logfileName = sf->getSectionValue("Directories","ScanReportToFile").mid(sf->getSectionValue("Directories","ScanReportToFile").indexOf("|") + 1);
                     if (logfileName != "" ){
                         if (QMessageBox::question(this,tr("Info"),tr("There is a log-file associated with this profile. Shall I remove the log-file as well?"),QMessageBox::Yes,QMessageBox::No) == QMessageBox::Yes){

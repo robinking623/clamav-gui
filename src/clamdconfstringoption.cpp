@@ -9,10 +9,10 @@ clamdConfStringOption::clamdConfStringOption(QWidget *parent, QString keyword, b
     optionValue(options)
 {
     startup = true;
-    setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/clamd.conf", this);
-    setupFileHandler baseSetup(QDir::homePath() + "/.clamav-gui/settings.ini");
+    setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/clamd.conf",this);
+    setupFileHandler * baseSetup = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini",this);
 
-    languageset = baseSetup.getSectionValue("Setup","language");
+    languageset = baseSetup->getSectionValue("Setup","language");
     translator * trans = new translator(languageset);
 
     ui->setupUi(this);

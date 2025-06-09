@@ -2,7 +2,7 @@
 #include "ui_logviewerobject.h"
 
 logViewerObject::logViewerObject(QWidget *parent) : QWidget(parent), ui(new Ui::logViewerObject){
-    setupfile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini", this);
+    setupfile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini",this);
     ui->setupUi(this);
     slot_profilesChanged();
 }
@@ -16,9 +16,11 @@ QStringList profiles = setupfile->getKeywords("Profiles");
 QStringList profilesWithLog;
 QStringList values;
 QString actualProfileName = ui->profileComboBox->currentText();
+setupFileHandler sf(this);
 
     foreach(QString profile,profiles){
-        setupFileHandler sf(QDir::homePath() + "/.clamav-gui/profiles/" + profile + ".ini");
+        sf.setSetupFileName(QDir::homePath() + "/.clamav-gui/profiles/" + profile + ".ini");
+        //setupFileHandler * sf = new setupFileHandler(QDir::homePath() + "/.clamav-gui/profiles/" + profile + ".ini");
         values = sf.getSectionValue("Directories","ScanReportToFile").split("|");
         if (values.count() == 2){
             QFile tempFile(values[1]);
@@ -36,21 +38,20 @@ QString actualProfileName = ui->profileComboBox->currentText();
     }
 }
 
-void logViewerObject::loadLogFile(QString profile)
-{
-    setupFileHandler sf(QDir::homePath() + "/.clamav-gui/profiles/" + profile + ".ini");
-    setupFileHandler sf2(QDir::homePath() + "/.clamav-gui/settings.ini");
-    bool css = sf2.getSectionBoolValue("Setup","DisableLogHighlighter");
-    QString buffer;
-    QStringList logs;
-    QString tabHeader;
-    QStringList values;
+void logViewerObject::loadLogFile(QString profile){
+setupFileHandler * sf = new setupFileHandler(QDir::homePath() + "/.clamav-gui/profiles/" + profile + ".ini",this);
+setupFileHandler * sf2 = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini",this);
+bool css = sf2->getSectionBoolValue("Setup","DisableLogHighlighter");
+QString buffer;
+QStringList logs;
+QString tabHeader;
+QStringList values;
 
     while(ui->logTab->count() > 0){
         ui->logTab->removeTab(0);
     }
 
-    values = sf.getSectionValue("Directories","ScanReportToFile").split("|");
+    values = sf->getSectionValue("Directories","ScanReportToFile").split("|");
     if (values.count() == 2){
         QFile file(values[1]);
         logFileName = values[1];

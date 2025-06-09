@@ -17,7 +17,7 @@ setupTab::setupTab(QWidget *parent) :
 
     supressMessage = true; // verhindert, dass bei der Initialisierung der Sprachauswahl die Warnmeldung kommt.
 
-    setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini");
+    setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini",this);
     monochrome = false;
     if (setupFile->keywordExists("Setup","DisableLogHighlighter") == true) monochrome = setupFile->getSectionBoolValue("Setup","DisableLogHighlighter");
 

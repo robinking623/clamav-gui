@@ -5,7 +5,7 @@
 scanLimitsTab::scanLimitsTab(QWidget *parent) : QWidget(parent), ui(new Ui::scanLimitsTab)
 {
     ui->setupUi(this);
-    setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini", this);
+    setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini",this);
     if (setupFile->sectionExists("ScanLimitations") == true) updateLimits(); else writeLimits();
 }
 

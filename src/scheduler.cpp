@@ -5,7 +5,7 @@ scheduler::scheduler(QWidget *parent) : QWidget(parent), ui(new Ui::scheduler)
 {
 QStringList header;
 
-    setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini", this);
+    setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini",this);
     ui->setupUi(this);
     header << tr("ID") << tr("Interval") << tr("Profile") << tr("Last Scan") << tr("Next Scan") << tr("Remove") << tr("Scan Now") << tr("Log-File");
     ui->scanJobTableWidget->setHorizontalHeaderLabels(header);
@@ -90,12 +90,12 @@ QDateTime nextScanObject = QDateTime(QDate(QDate::currentDate().year(),QDate::cu
     updateScheduleList();}
 
 void scheduler::slot_updateProfiles(){
-    QStringList profiles = setupFile->getKeywords("Profiles");
-    QStringList selectableProfiles;
-    QStringList directories;
+QStringList profiles = setupFile->getKeywords("Profiles");
+QStringList selectableProfiles;
+setupFileHandler sf(this);
 
     foreach(QString profile,profiles){
-        setupFileHandler sf(QDir::homePath() + "/.clamav-gui/profiles/" + profile + ".ini");
+        sf.setSetupFileName(QDir::homePath() + "/.clamav-gui/profiles/" + profile + ".ini");
         if (sf.getSectionValue(profile,"Directories") != "") selectableProfiles << profile;
     }
 
@@ -212,8 +212,8 @@ QString logFile;
 
     QTableWidgetItem *item = (QTableWidgetItem*)ui->scanJobTableWidget->item(id,2);
     profileName = item->text();
-    setupFileHandler tempSF(QDir::homePath() + "/.clamav-gui/profiles/" + profileName + ".ini");
-    logFile = tempSF.getSectionValue("Directories","ScanReportToFile");
+    setupFileHandler * tempSF = new setupFileHandler(QDir::homePath() + "/.clamav-gui/profiles/" + profileName + ".ini",this);
+    logFile = tempSF->getSectionValue("Directories","ScanReportToFile");
     if (logFile.left(logFile.indexOf("|")) == "checked"){
         logFile = logFile.mid(logFile.indexOf("|") + 1);
         logViewObject * logViewer = new logViewObject(this,logFile);
@@ -227,16 +227,16 @@ QString logFile;
 
 
 void scheduler::startScanJob(QString profileName){
-    setupFileHandler profileSetting(QDir::homePath() + "/.clamav-gui/profiles/" + profileName + ".ini");
-    QStringList parameters;
-    QStringList selectedOptions = profileSetting.getKeywords("SelectedOptions");
-    QStringList directoryOptions = profileSetting.getKeywords("Directories");
-    QStringList scanLimitations = profileSetting.getKeywords("ScanLimitations");
-    QString option;
-    QString checked;
-    QString value;
+setupFileHandler * setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/profiles/" + profileName + ".ini",this);
+QStringList parameters;
+QStringList selectedOptions = setupFile->getKeywords("SelectedOptions");
+QStringList directoryOptions = setupFile->getKeywords("Directories");
+QStringList scanLimitations = setupFile->getKeywords("ScanLimitations");
+QString option;
+QString checked;
+QString value;
 
-    if (profileSetting.getSectionBoolValue(profileName,"Recursion") == true){
+    if (setupFile->getSectionBoolValue(profileName,"Recursion") == true){
         parameters << "-r";
     }
     for (int i = 0; i < selectedOptions.count(); i++){
@@ -272,7 +272,7 @@ void scheduler::startScanJob(QString profileName){
     // Scan Limitations
     for (int i = 0; i < scanLimitations.count(); i++){
         option = scanLimitations.at(i);
-        value = profileSetting.getSectionValue("ScanLimitations",option);
+        value = setupFile->getSectionValue("ScanLimitations",option);
         checked = value.left(value.indexOf("|"));
         value = value.mid(value.indexOf("|") + 1);
         if (checked == "checked"){
@@ -293,39 +293,39 @@ void scheduler::startScanJob(QString profileName){
     }
 
     // REGEXP and Include Exclude Options
-    value = profileSetting.getSectionValue("REGEXP_and_IncludeExclude","DontScanFileNamesMatchingRegExp");
+    value = setupFile->getSectionValue("REGEXP_and_IncludeExclude","DontScanFileNamesMatchingRegExp");
     checked = value.left(value.indexOf("|"));
     value = value.mid(value.indexOf("|") + 1);
     if (checked == "checked") parameters << "--exclude=" + value;
 
-    value = profileSetting.getSectionValue("REGEXP_and_IncludeExclude","DontScanDirectoriesMatchingRegExp");
+    value = setupFile->getSectionValue("REGEXP_and_IncludeExclude","DontScanDirectoriesMatchingRegExp");
     checked = value.left(value.indexOf("|"));
     value = value.mid(value.indexOf("|") + 1);
     if (checked == "checked") parameters << "--exclude-dir=" + value;
 
-    value = profileSetting.getSectionValue("REGEXP_and_IncludeExclude","OnlyScanFileNamesMatchingRegExp");
+    value = setupFile->getSectionValue("REGEXP_and_IncludeExclude","OnlyScanFileNamesMatchingRegExp");
     checked = value.left(value.indexOf("|"));
     value = value.mid(value.indexOf("|") + 1);
     if (checked == "checked") parameters << "--include=" + value;
 
-    value = profileSetting.getSectionValue("REGEXP_and_IncludeExclude","OnlyScanDirectoriesMatchingRegExp");
+    value = setupFile->getSectionValue("REGEXP_and_IncludeExclude","OnlyScanDirectoriesMatchingRegExp");
     checked = value.left(value.indexOf("|"));
     value = value.mid(value.indexOf("|") + 1);
     if (checked == "checked") parameters << "--include-dir=" + value;
 
-    if (profileSetting.getSectionBoolValue("REGEXP_and_IncludeExclude","EnablePUAOptions") == true){
-        profileSetting.getSectionBoolValue("REGEXP_and_IncludeExclude","SkipPUAPacked") == true?parameters << "--exclude-pua=Packed":parameters << "--include-pua=Packed";
-        profileSetting.getSectionBoolValue("REGEXP_and_IncludeExclude","SkipPUAPWTool") == true?parameters << "--exclude-pua=PWTool":parameters << "--include-pua=PWTool";
-        profileSetting.getSectionBoolValue("REGEXP_and_IncludeExclude","SkipPUANetTool") == true?parameters << "--exclude-pua=NetTool":parameters << "--include-pua=NetTool";
-        profileSetting.getSectionBoolValue("REGEXP_and_IncludeExclude","SkipPUAP2P") == true?parameters << "--exclude-pua=P2P":parameters << "--include-pua=P2P";
-        profileSetting.getSectionBoolValue("REGEXP_and_IncludeExclude","SkipPUAIRC") == true?parameters << "--exclude-pua=IRC":parameters << "--include-pua=IRC";
-        profileSetting.getSectionBoolValue("REGEXP_and_IncludeExclude","SkipPUARAT") == true?parameters << "--exclude-pua=RAT":parameters << "--include-pua=RAT";
-        profileSetting.getSectionBoolValue("REGEXP_and_IncludeExclude","SkipPUANetToolSpy") == true?parameters << "--exclude-pua=NetToolSpy":parameters << "--include-pua=NetToolSpy";
-        profileSetting.getSectionBoolValue("REGEXP_and_IncludeExclude","SkipPUAServer") == true?parameters << "--exclude-pua=Server":parameters << "--include-pua=Server";
-        profileSetting.getSectionBoolValue("REGEXP_and_IncludeExclude","SkipPUAScript") == true?parameters << "--exclude-pua=Script":parameters << "--include-pua=Script";
+    if (setupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","EnablePUAOptions") == true){
+        setupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","SkipPUAPacked") == true?parameters << "--exclude-pua=Packed":parameters << "--include-pua=Packed";
+        setupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","SkipPUAPWTool") == true?parameters << "--exclude-pua=PWTool":parameters << "--include-pua=PWTool";
+        setupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","SkipPUANetTool") == true?parameters << "--exclude-pua=NetTool":parameters << "--include-pua=NetTool";
+        setupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","SkipPUAP2P") == true?parameters << "--exclude-pua=P2P":parameters << "--include-pua=P2P";
+        setupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","SkipPUAIRC") == true?parameters << "--exclude-pua=IRC":parameters << "--include-pua=IRC";
+        setupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","SkipPUARAT") == true?parameters << "--exclude-pua=RAT":parameters << "--include-pua=RAT";
+        setupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","SkipPUANetToolSpy") == true?parameters << "--exclude-pua=NetToolSpy":parameters << "--include-pua=NetToolSpy";
+        setupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","SkipPUAServer") == true?parameters << "--exclude-pua=Server":parameters << "--include-pua=Server";
+        setupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","SkipPUAScript") == true?parameters << "--exclude-pua=Script":parameters << "--include-pua=Script";
     }
 
-    QStringList directories = profileSetting.getSectionValue(profileName,"Directories").split("\n");
+    QStringList directories = setupFile->getSectionValue(profileName,"Directories").split("\n");
 
     for (int i = 0; i < directories.count(); i++){
         if (directories.at(i) != "") parameters << directories.at(i);
@@ -374,7 +374,7 @@ QDateTime scanDateTime;
 
 void scheduler::slot_profileSelectionChanged(){
 QString profileName = ui->profileComboBox->currentText();
-setupFileHandler * tempSetupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/profiles/" + profileName + ".ini", this);
+setupFileHandler * tempSetupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/profiles/" + profileName + ".ini",this);
 QStringList targets;
 QString targetLabel;
 QStringList options;
