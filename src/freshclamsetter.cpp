@@ -13,7 +13,7 @@ QDir tempDir;
 
     lockFreshclamConf = true;
 
-    setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini");
+    setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini", this);
     updateLogFileWatcher = NULL;
     updateLogHighLighter = NULL;
     monochrome = true;
@@ -31,7 +31,7 @@ QDir tempDir;
     QFile freshclamConfFile(QDir::homePath() + "/.clamav-gui/freshclam.conf");
     freshclamConfFile.setPermissions(QFileDevice::ReadOwner|QFileDevice::WriteOwner);
 
-    freshclamConf = new setupFileHandler(QDir::homePath() + "/.clamav-gui/freshclam.conf");
+    freshclamConf = new setupFileHandler(QDir::homePath() + "/.clamav-gui/freshclam.conf", this);
 
     updater = new QProcess(this);
     connect(updater,SIGNAL(readyReadStandardError()),this,SLOT(slot_updaterHasOutput()));
@@ -670,7 +670,6 @@ void freshclamsetter::initFreshclamSettings(){
     QFile tempFile;
 
     lockFreshclamConf = true;
-    setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini");
     if (setupFile->keywordExists("FreshClam","runasroot") == true) ui->runasrootCheckBox->setChecked(setupFile->getSectionBoolValue("FreshClam","runasroot")); else {
         setupFile->setSectionValue("FreshClam","runasroot","true");
         ui->runasrootCheckBox->setChecked(true);
@@ -692,7 +691,6 @@ void freshclamsetter::initFreshclamSettings(){
     connect(clamscanLocationProcess,SIGNAL(finished(int)),this,SLOT(slot_clamscanLocationProcessFinished()));
     connect(clamscanLocationProcess,SIGNAL(readyRead()),this,SLOT(slot_clamscanLocationProcessHasOutput()));
 
-    freshclamConf = new setupFileHandler(QDir::homePath() + "/.clamav-gui/freshclam.conf");
     if (freshclamConf->singleLineExists("DatabaseDirectory") == true) {
         ui->databaseDirectoryPathLabel->setText(freshclamConf->getSingleLineValue("DatabaseDirectory"));
     } else {

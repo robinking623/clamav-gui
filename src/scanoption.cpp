@@ -8,8 +8,8 @@ scanoption::scanoption(QWidget *parent, QString setupFileName, QString section, 
 {
     ui->setupUi(this);
     setupFile = new setupFileHandler(setupFileName);
-    setupFileHandler * baseSetup = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini");
-    languageset = baseSetup->getSectionValue("Setup","language");
+    setupFileHandler baseSetup(QDir::homePath() + "/.clamav-gui/settings.ini");
+    languageset = baseSetup.getSectionValue("Setup","language");
     trans = new translator(languageset);
 
     setupFileSection = section;

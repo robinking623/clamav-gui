@@ -7,10 +7,10 @@ scanoptionyn::scanoptionyn(QWidget *parent, QString setupFileName, QString secti
     ui(new Ui::scanoptionyn)
 {
     ui->setupUi(this);
-    setupFile = new setupFileHandler(setupFileName);
+    setupFile = new setupFileHandler(setupFileName, this);
     setupFileSection = section;
-    setupFileHandler * baseSetup = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini");
-    languageset = baseSetup->getSectionValue("Setup","language");
+    setupFileHandler baseSetup(QDir::homePath() + "/.clamav-gui/settings.ini");
+    languageset = baseSetup.getSectionValue("Setup","language");
     trans = new translator(languageset);
 
     option = label.mid(0,label.indexOf("<equal>"));
