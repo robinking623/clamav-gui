@@ -22,15 +22,21 @@
 
 /********************************************************************
  * setupFileHandler                                                 *
+ * Parameter    : None                                              *
+ * Return Value : None                                              *
+ * Description  : Standard Costructor                               *
+ ********************************************************************/
+setupFileHandler::setupFileHandler(QObject *parent) : QObject(parent) {
+}
+
+/********************************************************************
+ * setupFileHandler                                                 *
  * Parameter    : QString (filename of the setup file               *
  * Return Value : None                                              *
  * Description  : overloaded standard costructor                    *
  ********************************************************************/
-setupFileHandler::setupFileHandler(QString filename, QObject *parent)
-: setupFileName(filename)
-, QObject(parent)
-{
-    setSetupFileName(setupFileName);
+setupFileHandler::setupFileHandler(QString filename, QObject *parent) : QObject(parent) {
+    setSetupFileName(filename);
 }
 
 /********************************************************************
@@ -39,9 +45,8 @@ setupFileHandler::setupFileHandler(QString filename, QObject *parent)
  * Return Value : None                                              *
  * Description  : Function to set the filename for the setup file   *
  ********************************************************************/
-void setupFileHandler::setSetupFileName(QString filename)
-{
-    QFile file(filename);
+void setupFileHandler::setSetupFileName(QString filename){
+QFile file(filename);
 
     setupFileName = filename;
 
