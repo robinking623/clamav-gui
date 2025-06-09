@@ -1,3 +1,6 @@
+* Mon Jun 9 2025 - Version 1.1.5
+- Fixed a problem with setupfilehandler that caused a memory leak under certain circumstances.
+
 * Wed May 21 2025 - Version 1.1.4
 - Added a switch in the setup tab to switch the application to a monochrome mode for people with color blindness. Thank you Neil.
 
