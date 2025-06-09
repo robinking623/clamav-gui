@@ -43,12 +43,12 @@ void clamdManager::initClamdSettings(){
     dirsUnderMonitoring = 0;
     logHighlighter = NULL;
 
-    setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini");
+    setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini", this);
     sudoGUI = setupFile->getSectionValue("Settings","SudoGUI");
 
     QFile clamdConfFile(QDir::homePath() + "/.clamav-gui/clamd.conf");
-    if (clamdConfFile.exists() == false) {
-        clamdConf = new setupFileHandler(QDir::homePath() + "/.clamav-gui/clamd.conf");
+    clamdConf = new setupFileHandler(QDir::homePath() + "/.clamav-gui/clamd.conf", this);
+    if (clamdConfFile.exists() == false) {        
         QString value = setupFile->getSectionValue("Directories","LoadSupportedDBFiles");
         if (value.indexOf("checked|") == 0) clamdConf->addSingleLineValue("DatabaseDirectory",value.mid(value.indexOf("|") + 1));
         clamdConf->setSingleLineValue("LogSyslog","no");
@@ -71,9 +71,7 @@ void clamdManager::initClamdSettings(){
         clamdConf->setSingleLineValue("OnAccessRetryAttempts","0");
         clamdConf->setSingleLineValue("OnAccessExcludeUname","root");
         clamdConf->setSingleLineValue("OnAccessExcludeUID","0");
-    } else {
-        clamdConf = new setupFileHandler(QDir::homePath() + "/.clamav-gui/clamd.conf");
-    }
+    } 
 
     QStringList parameters;
     QStringList monitorings = setupFile->getKeywords("Clamonacc");
@@ -211,11 +209,7 @@ void clamdManager::slot_updateClamdConf(){
     clamdLogWatcher = new QFileSystemWatcher(path,this);
     connect(clamdLogWatcher,SIGNAL(fileChanged(QString)),this,SLOT(slot_logFileContentChanged()));
 
-    setupFileHandler * helperHandler = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini");
-
-    freshclamConf = new setupFileHandler(QDir::homePath() + "/.clamav-gui/freshclam.conf");
-    clamdConf = new setupFileHandler(QDir::homePath() + "/.clamav-gui/clamd.conf");
-
+    freshclamConf = new setupFileHandler(QDir::homePath() + "/.clamav-gui/freshclam.conf", this);
     QStringList watchList = setupFile->getKeywords("Clamonacc");
     foreach (QString entry, watchList) {
         clamdConf->addSingleLineValue("OnAccessIncludePath",entry);
@@ -240,16 +234,16 @@ void clamdManager::slot_updateClamdConf(){
         if (SOKeywords.at(i).indexOf("[yn]") != -1){
             QString tempkey = SOKeywords.at(i);
             tempkey = tempkey.mid(0,tempkey.indexOf("<equal>"));
-            if (helperHandler->keywordExists("SelectedOptions",tempkey + "<equal>yes") == true) clamdConf->setSingleLineValue(SOSwitches.at(i), "yes");
-            if (helperHandler->keywordExists("SelectedOptions",tempkey + "<equal>no") == true) clamdConf->setSingleLineValue(SOSwitches.at(i), "no");
+            if (setupFile->keywordExists("SelectedOptions",tempkey + "<equal>yes") == true) clamdConf->setSingleLineValue(SOSwitches.at(i), "yes");
+            if (setupFile->keywordExists("SelectedOptions",tempkey + "<equal>no") == true) clamdConf->setSingleLineValue(SOSwitches.at(i), "no");
         } else {
-            if (helperHandler->keywordExists("SelectedOptions",SOKeywords.at(i)) == true) clamdConf->setSingleLineValue(SOSwitches.at(i), "yes");
+            if (setupFile->keywordExists("SelectedOptions",SOKeywords.at(i)) == true) clamdConf->setSingleLineValue(SOSwitches.at(i), "yes");
         }
     } ----- */
 
-    if ((helperHandler->sectionExists("REGEXP_and_IncludeExclude")) && (helperHandler->getSectionValue("REGEXP_and_IncludeExclude","DontScanDiretoriesMatchingRegExp").indexOf("checked|") == 0 )) clamdConf->addSingleLineValue("ExcludePath",helperHandler->getSectionValue("REGEXP_and_IncludeExclude","DontScanDiretoriesMatchingRegExp").mid(8));
-    if ((helperHandler->sectionExists("REGEXP_and_IncludeExclude")) && (helperHandler->getSectionValue("REGEXP_and_IncludeExclude","DontScanFileNamesMatchingRegExp").indexOf("checked|") == 0 )) clamdConf->addSingleLineValue("ExcludePath",helperHandler->getSectionValue("REGEXP_and_IncludeExclude","DontScanDiretoriesMatchingRegExp").mid(8));
-    if (helperHandler->getSectionBoolValue("REGEXP_and_IncludeExclude","EnablePUAOptions") == true) {
+    if ((setupFile->sectionExists("REGEXP_and_IncludeExclude")) && (setupFile->getSectionValue("REGEXP_and_IncludeExclude","DontScanDiretoriesMatchingRegExp").indexOf("checked|") == 0 )) clamdConf->addSingleLineValue("ExcludePath",setupFile->getSectionValue("REGEXP_and_IncludeExclude","DontScanDiretoriesMatchingRegExp").mid(8));
+    if ((setupFile->sectionExists("REGEXP_and_IncludeExclude")) && (setupFile->getSectionValue("REGEXP_and_IncludeExclude","DontScanFileNamesMatchingRegExp").indexOf("checked|") == 0 )) clamdConf->addSingleLineValue("ExcludePath",setupFile->getSectionValue("REGEXP_and_IncludeExclude","DontScanDiretoriesMatchingRegExp").mid(8));
+    if (setupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","EnablePUAOptions") == true) {
         QStringList PUAKeywords;
         PUAKeywords << "LoadPUAPacked" << "LoadPUAPWTool" << "LoadPUANetTool" << "LoadPUAP2P" << "LoadPUAIRC" << "LoadPUARAT" << "LoadPUANetToolSpy" << "LoadPUAServer";
         PUAKeywords << "LoadPUAScript" << "LoadPUAAndr" << "LoadPUAJava" << "LoadPUAOsx" << "LoadPUATool" << "LoadPUAUnix" << "LoadPUAWin";
@@ -258,35 +252,35 @@ void clamdManager::slot_updateClamdConf(){
         PUASwitches << "Packed" << "PWTool" << "NetTool" << "P2P" << "IRC" << "RAT" << "NetToolSpy" << "Server" << "Script" << "Andr" << "Java" << "Osx" << "Tool" << "Unix" << "Win";
 
         for (int i = 0; i < PUAKeywords.length(); i++){
-            if (helperHandler->getSectionBoolValue("REGEXP_and_IncludeExclude",PUAKeywords.at(i)) == true) clamdConf->addSingleLineValue("IncludePUA",PUASwitches.at(i));
+            if (setupFile->getSectionBoolValue("REGEXP_and_IncludeExclude",PUAKeywords.at(i)) == true) clamdConf->addSingleLineValue("IncludePUA",PUASwitches.at(i));
         }
     }
-    /*if (helperHandler->getSectionValue("ScanLimitations","Files larger than this will be skipped and assumed clean").indexOf("checked|") == 0) clamdConf->setSingleLineValue("MaxFileSize",helperHandler->getSectionValue("ScanLimitations","Files larger than this will be skipped and assumed clean").mid(8));
-    if (helperHandler->getSectionValue("ScanLimitations","The maximum amount of data to scan for each container file").indexOf("checked|") == 0) clamdConf->setSingleLineValue("MaxScanSize",helperHandler->getSectionValue("ScanLimitations","The maximum amount of data to scan for each container file").mid(8));
-    if (helperHandler->getSectionValue("ScanLimitations","The maximum number of files to scan for each container file").indexOf("checked|") == 0) clamdConf->setSingleLineValue("MaxFiles",helperHandler->getSectionValue("ScanLimitations","The maximum number of files to scan for each container file").mid(8));
-    if (helperHandler->getSectionValue("ScanLimitations","Max Scan-Time").indexOf("checked|") == 0) clamdConf->setSingleLineValue("MaxScanTime",helperHandler->getSectionValue("ScanLimitations","Max Scan-Time").mid(8));
-    if (helperHandler->getSectionValue("ScanLimitations","Maximum directory recursion level").indexOf("checked|") == 0) clamdConf->setSingleLineValue("MaxRecursion",helperHandler->getSectionValue("ScanLimitations","Maximum directory recursion level").mid(8));
-    if (helperHandler->getSectionValue("ScanLimitations","Maximum size file to check for embedded PE").indexOf("checked|") == 0) clamdConf->setSingleLineValue("MaxEmbeddedPE",helperHandler->getSectionValue("ScanLimitations","Maximum size file to check for embedded PE").mid(8));
-    if (helperHandler->getSectionValue("ScanLimitations","Maximum size of HTML file to normalize").indexOf("checked|") == 0) clamdConf->setSingleLineValue("MaxHTMLNormalize",helperHandler->getSectionValue("ScanLimitations","Maximum size of HTML file to normalize").mid(8));
-    if (helperHandler->getSectionValue("ScanLimitations","Maximum size of normalized HTML file to scan").indexOf("checked|") == 0) clamdConf->setSingleLineValue("MaxHTMLNoTags",helperHandler->getSectionValue("ScanLimitations","Maximum size of normalized HTML file to scan").mid(8));
-    if (helperHandler->getSectionValue("ScanLimitations","Maximum size of script file to normalize").indexOf("checked|") == 0) clamdConf->setSingleLineValue("MaxScriptNormalize",helperHandler->getSectionValue("ScanLimitations","Maximum size of script file to normalize").mid(8));
-    if (helperHandler->getSectionValue("ScanLimitations","Maximum size zip to type reanalyze").indexOf("checked|") == 0) clamdConf->setSingleLineValue("MaxZipTypeRcg",helperHandler->getSectionValue("ScanLimitations","Maximum size zip to type reanalyze").mid(8));
-    if (helperHandler->getSectionValue("ScanLimitations","Maximum number of partitions in disk image to be scanned").indexOf("checked|") == 0) clamdConf->setSingleLineValue("MaxPartitions",helperHandler->getSectionValue("ScanLimitations","Maximum number of partitions in disk image to be scanned").mid(8));
-    if (helperHandler->getSectionValue("ScanLimitations","Maximum number of icons in PE file to be scanned").indexOf("checked|") == 0) clamdConf->setSingleLineValue("MaxIconsPE",helperHandler->getSectionValue("ScanLimitations","Maximum number of icons in PE file to be scanned").mid(8));
-    if (helperHandler->getSectionValue("ScanLimitations","Max recursion to HWP3 parsing function").indexOf("checked|") == 0) clamdConf->setSingleLineValue("MaxRecHWP3",helperHandler->getSectionValue("ScanLimitations","Max recursion to HWP3 parsing function").mid(8));
-    if (helperHandler->getSectionValue("ScanLimitations","Max calls to PCRE match function").indexOf("checked|") == 0) clamdConf->setSingleLineValue("PCREMatchLimit",helperHandler->getSectionValue("ScanLimitations","Max calls to PCRE match function").mid(8));
-    if (helperHandler->getSectionValue("ScanLimitations","Max recursion calls to the PCRE match function").indexOf("checked|") == 0) clamdConf->setSingleLineValue("PCRERecMatchLimit",helperHandler->getSectionValue("ScanLimitations","Max recursion calls to the PCRE match function").mid(8));
-    if (helperHandler->getSectionValue("ScanLimitations","Max PCRE file size").indexOf("checked|") == 0) clamdConf->setSingleLineValue("PCREMaxFileSize",helperHandler->getSectionValue("ScanLimitations","Max PCRE file size").mid(8));
-    if (helperHandler->getSectionValue("ScanLimitations","Structured CC Count").indexOf("checked|") == 0) clamdConf->setSingleLineValue("StructuredMinCreditCardCount",helperHandler->getSectionValue("ScanLimitations","Structured CC Count").mid(8));
-    if ((helperHandler->getSectionValue("ScanLimitations","Structured CC Mode").indexOf("checked|") == 0) && (helperHandler->getSectionValue("ScanLimitations","Structured CC Mode").right(1) == "1")) clamdConf->setSingleLineValue("StructuredCCOnly","yes");
-    if (helperHandler->getSectionValue("ScanLimitations","Structured SSN Count").indexOf("checked|") == 0) clamdConf->setSingleLineValue("StructuredMinSSNCount",helperHandler->getSectionValue("ScanLimitations","Structured SSN Count").mid(8));
-    if ((helperHandler->getSectionValue("ScanLimitations","Structured SSN Format").indexOf("checked|") == 0) && (helperHandler->getSectionValue("ScanLimitations","Structured SSN Format").right(1) == "0")) clamdConf->setSingleLineValue("StructuredSSNFormatNormal","yes");
-    if ((helperHandler->getSectionValue("ScanLimitations","Structured SSN Format").indexOf("checked|") == 0) && (helperHandler->getSectionValue("ScanLimitations","Structured SSN Format").right(1) == "1")) clamdConf->setSingleLineValue("StructuredSSNFormatStripped","yes");
-    if ((helperHandler->getSectionValue("ScanLimitations","Structured SSN Format").indexOf("checked|") == 0) && (helperHandler->getSectionValue("ScanLimitations","Structured SSN Format").right(1) == "2")) {
+    /*if (setupFile->getSectionValue("ScanLimitations","Files larger than this will be skipped and assumed clean").indexOf("checked|") == 0) clamdConf->setSingleLineValue("MaxFileSize",setupFile->getSectionValue("ScanLimitations","Files larger than this will be skipped and assumed clean").mid(8));
+    if (setupFile->getSectionValue("ScanLimitations","The maximum amount of data to scan for each container file").indexOf("checked|") == 0) clamdConf->setSingleLineValue("MaxScanSize",setupFile->getSectionValue("ScanLimitations","The maximum amount of data to scan for each container file").mid(8));
+    if (setupFile->getSectionValue("ScanLimitations","The maximum number of files to scan for each container file").indexOf("checked|") == 0) clamdConf->setSingleLineValue("MaxFiles",setupFile->getSectionValue("ScanLimitations","The maximum number of files to scan for each container file").mid(8));
+    if (setupFile->getSectionValue("ScanLimitations","Max Scan-Time").indexOf("checked|") == 0) clamdConf->setSingleLineValue("MaxScanTime",setupFile->getSectionValue("ScanLimitations","Max Scan-Time").mid(8));
+    if (setupFile->getSectionValue("ScanLimitations","Maximum directory recursion level").indexOf("checked|") == 0) clamdConf->setSingleLineValue("MaxRecursion",setupFile->getSectionValue("ScanLimitations","Maximum directory recursion level").mid(8));
+    if (setupFile->getSectionValue("ScanLimitations","Maximum size file to check for embedded PE").indexOf("checked|") == 0) clamdConf->setSingleLineValue("MaxEmbeddedPE",setupFile->getSectionValue("ScanLimitations","Maximum size file to check for embedded PE").mid(8));
+    if (setupFile->getSectionValue("ScanLimitations","Maximum size of HTML file to normalize").indexOf("checked|") == 0) clamdConf->setSingleLineValue("MaxHTMLNormalize",setupFile->getSectionValue("ScanLimitations","Maximum size of HTML file to normalize").mid(8));
+    if (setupFile->getSectionValue("ScanLimitations","Maximum size of normalized HTML file to scan").indexOf("checked|") == 0) clamdConf->setSingleLineValue("MaxHTMLNoTags",setupFile->getSectionValue("ScanLimitations","Maximum size of normalized HTML file to scan").mid(8));
+    if (setupFile->getSectionValue("ScanLimitations","Maximum size of script file to normalize").indexOf("checked|") == 0) clamdConf->setSingleLineValue("MaxScriptNormalize",setupFile->getSectionValue("ScanLimitations","Maximum size of script file to normalize").mid(8));
+    if (setupFile->getSectionValue("ScanLimitations","Maximum size zip to type reanalyze").indexOf("checked|") == 0) clamdConf->setSingleLineValue("MaxZipTypeRcg",setupFile->getSectionValue("ScanLimitations","Maximum size zip to type reanalyze").mid(8));
+    if (setupFile->getSectionValue("ScanLimitations","Maximum number of partitions in disk image to be scanned").indexOf("checked|") == 0) clamdConf->setSingleLineValue("MaxPartitions",setupFile->getSectionValue("ScanLimitations","Maximum number of partitions in disk image to be scanned").mid(8));
+    if (setupFile->getSectionValue("ScanLimitations","Maximum number of icons in PE file to be scanned").indexOf("checked|") == 0) clamdConf->setSingleLineValue("MaxIconsPE",setupFile->getSectionValue("ScanLimitations","Maximum number of icons in PE file to be scanned").mid(8));
+    if (setupFile->getSectionValue("ScanLimitations","Max recursion to HWP3 parsing function").indexOf("checked|") == 0) clamdConf->setSingleLineValue("MaxRecHWP3",setupFile->getSectionValue("ScanLimitations","Max recursion to HWP3 parsing function").mid(8));
+    if (setupFile->getSectionValue("ScanLimitations","Max calls to PCRE match function").indexOf("checked|") == 0) clamdConf->setSingleLineValue("PCREMatchLimit",setupFile->getSectionValue("ScanLimitations","Max calls to PCRE match function").mid(8));
+    if (setupFile->getSectionValue("ScanLimitations","Max recursion calls to the PCRE match function").indexOf("checked|") == 0) clamdConf->setSingleLineValue("PCRERecMatchLimit",setupFile->getSectionValue("ScanLimitations","Max recursion calls to the PCRE match function").mid(8));
+    if (setupFile->getSectionValue("ScanLimitations","Max PCRE file size").indexOf("checked|") == 0) clamdConf->setSingleLineValue("PCREMaxFileSize",setupFile->getSectionValue("ScanLimitations","Max PCRE file size").mid(8));
+    if (setupFile->getSectionValue("ScanLimitations","Structured CC Count").indexOf("checked|") == 0) clamdConf->setSingleLineValue("StructuredMinCreditCardCount",setupFile->getSectionValue("ScanLimitations","Structured CC Count").mid(8));
+    if ((setupFile->getSectionValue("ScanLimitations","Structured CC Mode").indexOf("checked|") == 0) && (setupFile->getSectionValue("ScanLimitations","Structured CC Mode").right(1) == "1")) clamdConf->setSingleLineValue("StructuredCCOnly","yes");
+    if (setupFile->getSectionValue("ScanLimitations","Structured SSN Count").indexOf("checked|") == 0) clamdConf->setSingleLineValue("StructuredMinSSNCount",setupFile->getSectionValue("ScanLimitations","Structured SSN Count").mid(8));
+    if ((setupFile->getSectionValue("ScanLimitations","Structured SSN Format").indexOf("checked|") == 0) && (setupFile->getSectionValue("ScanLimitations","Structured SSN Format").right(1) == "0")) clamdConf->setSingleLineValue("StructuredSSNFormatNormal","yes");
+    if ((setupFile->getSectionValue("ScanLimitations","Structured SSN Format").indexOf("checked|") == 0) && (setupFile->getSectionValue("ScanLimitations","Structured SSN Format").right(1) == "1")) clamdConf->setSingleLineValue("StructuredSSNFormatStripped","yes");
+    if ((setupFile->getSectionValue("ScanLimitations","Structured SSN Format").indexOf("checked|") == 0) && (setupFile->getSectionValue("ScanLimitations","Structured SSN Format").right(1) == "2")) {
         clamdConf->setSingleLineValue("StructuredSSNFormatNormal","yes");
         clamdConf->setSingleLineValue("StructuredSSNFormatStripped","yes");
     }
-    if (helperHandler->getSectionValue("ScanLimitations","Bytecode timeout in milliseconds").indexOf("checked|") == 0 ) clamdConf->setSingleLineValue("BytecodeTimeout",helperHandler->getSectionValue("ScanLimitations","Bytecode timeout in milliseconds").mid(8));*/
+    if (setupFile->getSectionValue("ScanLimitations","Bytecode timeout in milliseconds").indexOf("checked|") == 0 ) clamdConf->setSingleLineValue("BytecodeTimeout",setupFile->getSectionValue("ScanLimitations","Bytecode timeout in milliseconds").mid(8));*/
 }
 
 void clamdManager::slot_logFileContentChanged(){

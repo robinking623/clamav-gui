@@ -30,11 +30,11 @@
 #include <QFile>
 #include <QDir>
 
-class setupFileHandler
+class setupFileHandler : public QObject
 {
 public:
-    setupFileHandler();
-    setupFileHandler(QString filename = "");
+    setupFileHandler(QObject *parent = nullptr);
+    setupFileHandler(QString filename = "", QObject *parent = nullptr);
     void setSetupFileName(QString filename);
     void setSectionValue(QString section, QString keyword, const char* value, bool overwrite = true);
     void setSectionValue(QString section, QString keyword, QString value, bool overwrite = true);

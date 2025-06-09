@@ -1,7 +1,10 @@
 #include "clamav_gui.h"
 #include "ui_clamav_gui.h"
 
-clamav_gui::clamav_gui(QWidget *parent) : QWidget(parent), ui(new Ui::clamav_gui){
+clamav_gui::clamav_gui(QWidget *parent) 
+: QWidget(parent)
+, ui(new Ui::clamav_gui) 
+{
     ui->setupUi(this);
     this->setWindowFlags(Qt::WindowTitleHint | Qt::WindowMinimizeButtonHint | Qt::WindowMaximizeButtonHint);
 
@@ -19,7 +22,7 @@ clamav_gui::clamav_gui(QWidget *parent) : QWidget(parent), ui(new Ui::clamav_gui
     if (serviceMenuPath == "") serviceMenuPath = serviceMenuPath = QDir::homePath() + "/.local/share/kservices5/ServiceMenus";
     if (tempDir.exists(serviceMenuPath + "/scanWithClamAV-GUI.desktop") == false) {
         if (tempDir.exists(serviceMenuPath) == false) tempDir.mkdir(serviceMenuPath);
-        setupFileHandler * serviceFile = new setupFileHandler(serviceMenuPath + "/scanWithClamAV-GUI.desktop");
+        setupFileHandler * serviceFile = new setupFileHandler(serviceMenuPath + "/scanWithClamAV-GUI.desktop", this);
         serviceFile->setSectionValue("Desktop Entry","Type","Service");
         serviceFile->setSectionValue("Desktop Entry","ServiceTypes","KonqPopupMenu/Plugin");
         serviceFile->setSectionValue("Desktop Entry","MimeType","all/all;");
@@ -82,8 +85,8 @@ clamav_gui::clamav_gui(QWidget *parent) : QWidget(parent), ui(new Ui::clamav_gui
     }
 //______________________________________________________________________________________________________________________________________
 
-    if (createDefaultSettings == true){
-        setupFile = new setupFileHandler(path);
+    setupFile = new setupFileHandler(path, this);
+    if (createDefaultSettings == true){        
         if ((tempDir.exists("/var/lib/clamav") == true) && (destChecker.exists("/var/lib/clamav/freshclam.dat") == true)){
             setupFile->setSectionValue("Directories","LoadSupportedDBFiles","checked|/var/lib/clamav");
         } else {
@@ -94,8 +97,6 @@ clamav_gui::clamav_gui(QWidget *parent) : QWidget(parent), ui(new Ui::clamav_gui
         if (setupFile->keywordExists("Directories","MoveInfectedFiles") == false) setupFile->setSectionValue("Directories","MoveInfectedFiles","not checked|" + QDir::homePath()+"/.clamav-gui/quarantine");
         if (setupFile->keywordExists("Directories","CopyInfectedFiles") == false) setupFile->setSectionValue("Directories","CopyInfectedFiles","not checked|" + QDir::homePath()+"/.clamav-gui/quarantine");
         if (setupFile->keywordExists("Setup","language") == false) setupFile->setSectionValue("Setup","language",2);
-    } else {
-        setupFile = new setupFileHandler(path);
     }
 
     scanProcess = new QProcess(this);

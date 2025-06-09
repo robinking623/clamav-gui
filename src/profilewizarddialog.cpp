@@ -4,19 +4,19 @@
 
 ProfileWizardDialog::ProfileWizardDialog(QWidget *parent, QString name) : QDialog(parent), profileName(name), ui(new Ui::ProfileWizardDialog)
 {
-    ui->setupUi(this);
-    setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini");
-    if (setupFile->keywordExists("Setup","DisableLogHighlighter") == true) monochrome = setupFile->getSectionBoolValue("Setup","DisableLogHighlighter");
-
-    delete setupFile;
-
+    ui->setupUi(this);    
+    setupFileHandler guiSetting(QDir::homePath() + "/.clamav-gui/settings.ini");
+    if (guiSetting.keywordExists("Setup","DisableLogHighlighter") == true) {
+        monochrome = guiSetting.getSectionBoolValue("Setup","DisableLogHighlighter");
+    }
+    
     if (profileName == ""){
         setupFileFilename = QDir::homePath() + "/.clamav-gui/settings.ini";
-        setupFile = new setupFileHandler(setupFileFilename);
+        setupFile = new setupFileHandler(setupFileFilename, this);
         newProfile = true;
     } else {
         setupFileFilename = QDir::homePath() + "/.clamav-gui/profiles/" + profileName + ".ini";
-        setupFile = new setupFileHandler(setupFileFilename);
+        setupFile = new setupFileHandler(setupFileFilename, this);
         ui->profileNameLineEdit->setReadOnly(true);
         ui->createButton->setText(tr("Save"));
         newProfile = false;
@@ -464,13 +464,13 @@ QStringList availableOptions = setupFile->getKeywords("AvailableOptions");
     scanoption * option;
     scanoptionyn * optionyn;
     QString newFileFilename = QDir::homePath() + "/.clamav-gui/profiles/" + profileName + ".ini";
-    setupFileHandler * tempconfig = new setupFileHandler(newFileFilename);
+    setupFileHandler tempconfig(newFileFilename);
 
     if (ui->optionLayout->count() == 0) {
         for (int i = 0; i < availableOptions.count(); i++){
             optionText = availableOptions.at(i);
             tooltipText = setupFile->getSectionValue("AvailableOptions",optionText);
-            tempconfig->setSectionValue("AvailableOptions",optionText,tooltipText);
+            tempconfig.setSectionValue("AvailableOptions",optionText,tooltipText);
             if (optionText.indexOf(lastOption) == -1) {
                 if (optionText.indexOf("<equal>") != -1) lastOption = optionText.left(optionText.indexOf("<equal>")); else lastOption = optionText;
                 if (optionText.indexOf("<equal>") != -1) {
@@ -614,7 +614,7 @@ void ProfileWizardDialog::slot_createButtonClicked(){
 QList <QPersistentModelIndex> list = model->checkedIndexes.values();
 QString directories;
 QString profileName = ui->profileNameLineEdit->text();
-setupFileHandler * profiles = new setupFileHandler(QDir::homePath() + "/.clamav-gui/profiles/" + profileName + ".ini");
+setupFileHandler profiles(QDir::homePath() + "/.clamav-gui/profiles/" + profileName + ".ini");
 QString section = "REGEXP_and_IncludeExclude";
 QString checked;
 QString keyword;
@@ -631,245 +631,245 @@ QString tooltipString;
         }
     }
 
-    profiles->setSectionValue(profileName,"Directories",directories);
-    profiles->setSectionValue(profileName,"Recursion",ui->recursivCheckBox->isChecked());
+    profiles.setSectionValue(profileName,"Directories",directories);
+    profiles.setSectionValue(profileName,"Recursion",ui->recursivCheckBox->isChecked());
     setupFile->setSectionValue("Profiles",profileName,profileName);
 
     keyword = "LoadSupportedDBFiles";
     value = ui->loadVirusDatabaseLineEdit->text();
     ui->loadVirusDatabaseCheckBox->isChecked() == true?checked="checked":checked="not checked";
-    profiles->setSectionValue("Directories",keyword,checked + "|" + value);
+    profiles.setSectionValue("Directories",keyword,checked + "|" + value);
 
     keyword = "ScanReportToFile";
     value = ui->scanReportToFileLineEdit->text();
     ui->scanReportToFileCheckBox->isChecked() == true?checked="checked":checked="not checked";
-    profiles->setSectionValue("Directories",keyword,checked + "|" + value);
+    profiles.setSectionValue("Directories",keyword,checked + "|" + value);
 
     keyword = "ScanFilesFromFile";
     value = ui->scanFilesFromFileLineEdit->text();
     ui->scanFilesFromFileCheckBox->isChecked() == true?checked="checked":checked="not checked";
-    profiles->setSectionValue("Directories",keyword,checked + "|" + value);
+    profiles.setSectionValue("Directories",keyword,checked + "|" + value);
 
     keyword = "TmpFile";
     value = ui->tempFilesLineEdit->text();
     ui->tempFileCheckBox->isChecked() == true?checked="checked":checked="not checked";
-    profiles->setSectionValue("Directories",keyword,checked + "|" + value);
+    profiles.setSectionValue("Directories",keyword,checked + "|" + value);
 
     keyword = "MoveInfectedFiles";
     value = ui->moveDirectoryLineEdit->text();
     ui->moveDirectoryCheckBox->isChecked() == true?checked="checked":checked="not checked";
-    profiles->setSectionValue("Directories",keyword,checked + "|" + value);
+    profiles.setSectionValue("Directories",keyword,checked + "|" + value);
 
     keyword = "CopyInfectedFiles";
     value = ui->copyDirectoryLineEdit->text();
     ui->copyDirectoryCheckBox->isChecked() == true?checked="checked":checked="not checked";
-    profiles->setSectionValue("Directories",keyword,checked + "|" + value);
+    profiles.setSectionValue("Directories",keyword,checked + "|" + value);
 
     keyword = "FollowDirectorySymLinks";
     value = QString::number(ui->followDirectorySymlinksComboBox->currentIndex());
     ui->followDirectorySymlinksCheckBox->isChecked() == true?checked="checked":checked="not checked";
-    profiles->setSectionValue("Directories",keyword,checked + "|" + value);
+    profiles.setSectionValue("Directories",keyword,checked + "|" + value);
 
     keyword = "FollowFileSymLinks";
     value = QString::number(ui->followFileSymlinksComboBox->currentIndex());
     ui->followFileSymlinksCheckBox->isChecked() == true?checked="checked":checked="not checked";
-    profiles->setSectionValue("Directories",keyword,checked + "|" + value);
+    profiles.setSectionValue("Directories",keyword,checked + "|" + value);
 
-//    profiles->removeSection("AvailableOptions");
-//    profiles->removeSection("SelectedOptions");
+//    profiles.removeSection("AvailableOptions");
+//    profiles.removeSection("SelectedOptions");
 
     keyword = "DontScanFileNamesMatchingRegExp";
     value = ui->pwdontScanFileNameLineEdit->text();
     ui->pwdontScanFileNameCheckBox->isChecked()?checked="checked":checked="not checked";
-    profiles->setSectionValue(section,keyword,checked + "|" + value);
+    profiles.setSectionValue(section,keyword,checked + "|" + value);
 
     keyword = "DontScanDiretoriesMatchingRegExp";
     value = ui->pwdontScanDirLineEdit->text();
     ui->pwdontScanDirCheckBox->isChecked()?checked="checked":checked="not checked";
-    profiles->setSectionValue(section,keyword,checked + "|" + value);
+    profiles.setSectionValue(section,keyword,checked + "|" + value);
 
     keyword = "OnlyScanFileNamesMatchingRegExp";
     value = ui->pwonlyScanFileNameLineEdit->text();
     ui->pwonlyScanFileNameCheckBox->isChecked()?checked="checked":checked="not checked";
-    profiles->setSectionValue(section,keyword,checked + "|" + value);
+    profiles.setSectionValue(section,keyword,checked + "|" + value);
 
     keyword = "OnlyScanDiretoriesMatchingRegExp";
     value = ui->pwonlyScanDirLineEdit->text();
     ui->pwonlyScanDirCheckBox->isChecked()?checked="checked":checked="not checked";
-    profiles->setSectionValue(section,keyword,checked + "|" + value);
+    profiles.setSectionValue(section,keyword,checked + "|" + value);
 
     keyword = "EnablePUAOptions";
-    profiles->setSectionValue(section,keyword,ui->pwenablePUACheckBox->isChecked());
+    profiles.setSectionValue(section,keyword,ui->pwenablePUACheckBox->isChecked());
 
     keyword = "LoadPUAPacked";
-    profiles->setSectionValue(section,keyword,ui->pwloadPUAPackedRadioButon->isChecked());
+    profiles.setSectionValue(section,keyword,ui->pwloadPUAPackedRadioButon->isChecked());
 
     keyword = "LoadPUAPWTool";
-    profiles->setSectionValue(section,keyword,ui->pwloadPUAPWToolRadioButton->isChecked());
+    profiles.setSectionValue(section,keyword,ui->pwloadPUAPWToolRadioButton->isChecked());
 
     keyword = "LoadPUANetTool";
-    profiles->setSectionValue(section,keyword,ui->pwloadPUANetToolRadioButton->isChecked());
+    profiles.setSectionValue(section,keyword,ui->pwloadPUANetToolRadioButton->isChecked());
 
     keyword = "LoadPUAP2P";
-    profiles->setSectionValue(section,keyword,ui->pwloadPUAP2PRadioButton->isChecked());
+    profiles.setSectionValue(section,keyword,ui->pwloadPUAP2PRadioButton->isChecked());
 
     keyword = "LoadPUAIRC";
-    profiles->setSectionValue(section,keyword,ui->pwloadPUAIRCRadioButton->isChecked());
+    profiles.setSectionValue(section,keyword,ui->pwloadPUAIRCRadioButton->isChecked());
 
     keyword = "LoadPUARAT";
-    profiles->setSectionValue(section,keyword,ui->pwloadPUARATRadioButton->isChecked());
+    profiles.setSectionValue(section,keyword,ui->pwloadPUARATRadioButton->isChecked());
 
     keyword = "LoadPUANetToolSpy";
-    profiles->setSectionValue(section,keyword,ui->pwloadPUANetToolSpyRadioButton->isChecked());
+    profiles.setSectionValue(section,keyword,ui->pwloadPUANetToolSpyRadioButton->isChecked());
 
     keyword = "LoadPUAServer";
-    profiles->setSectionValue(section,keyword,ui->pwloadPUAServerRadioButton->isChecked());
+    profiles.setSectionValue(section,keyword,ui->pwloadPUAServerRadioButton->isChecked());
 
     keyword = "LoadPUAScript";
-    profiles->setSectionValue(section,keyword,ui->pwloadPUAScriptRadioButton->isChecked());
+    profiles.setSectionValue(section,keyword,ui->pwloadPUAScriptRadioButton->isChecked());
 
     keyword = "LoadPUAAndr";
-    profiles->setSectionValue(section,keyword,ui->pwloadPUAAndrRadioButton->isChecked());
+    profiles.setSectionValue(section,keyword,ui->pwloadPUAAndrRadioButton->isChecked());
 
     keyword = "LoadPUAJava";
-    profiles->setSectionValue(section,keyword,ui->pwloadPUAJavaRadioButton->isChecked());
+    profiles.setSectionValue(section,keyword,ui->pwloadPUAJavaRadioButton->isChecked());
 
     keyword = "LoadPUAOsx";
-    profiles->setSectionValue(section,keyword,ui->pwloadPUAOsxRadioButton->isChecked());
+    profiles.setSectionValue(section,keyword,ui->pwloadPUAOsxRadioButton->isChecked());
 
     keyword = "LoadPUATool";
-    profiles->setSectionValue(section,keyword,ui->pwloadPUAToolRadioButton->isChecked());
+    profiles.setSectionValue(section,keyword,ui->pwloadPUAToolRadioButton->isChecked());
 
     keyword = "LoadPUAUnix";
-    profiles->setSectionValue(section,keyword,ui->pwloadPUAUnixRadioButton->isChecked());
+    profiles.setSectionValue(section,keyword,ui->pwloadPUAUnixRadioButton->isChecked());
 
     keyword = "LoadPUAWin";
-    profiles->setSectionValue(section,keyword,ui->pwloadPUAWinRadioButton->isChecked());
+    profiles.setSectionValue(section,keyword,ui->pwloadPUAWinRadioButton->isChecked());
 
     keyword = "Files larger than this will be skipped and assumed clean";
     value = QString::number(ui->pwfilesLargerThanThisSpinBox->value()) + ui->pwfilesLargerThanThisComboBox->currentText();
     ui->pwfilesLargerThanThisCheckBox->isChecked() == true?checked="checked":checked="not checked";
-    profiles->setSectionValue("ScanLimitations",keyword,checked + "|" + value);
+    profiles.setSectionValue("ScanLimitations",keyword,checked + "|" + value);
 
     keyword = "The maximum amount of data to scan for each container file";
     value = QString::number(ui->pwmaxAmountForContainerSpinBox->value()) + ui->pwmaxAmountForContainerComboBox->currentText();
     ui->pwmaxAmountForContainerCheckBox->isChecked() == true?checked="checked":checked="not checked";
-    profiles->setSectionValue("ScanLimitations",keyword,checked + "|" + value);
+    profiles.setSectionValue("ScanLimitations",keyword,checked + "|" + value);
 
     keyword = "The maximum number of files to scan for each container file";
     value = QString::number(ui->pwmaxNumberForContainerSpinBox->value()) + ui->pwmaxNumberForContainerComboBox->currentText();
     ui->pwmaxNumberForContainerCheckBox->isChecked() == true?checked="checked":checked="not checked";
-    profiles->setSectionValue("ScanLimitations",keyword,checked + "|" + value);
+    profiles.setSectionValue("ScanLimitations",keyword,checked + "|" + value);
 
     keyword = "Maximum archive recursion level for container file";
     value = QString::number(ui->pwmaxArchiveRecursionForContainerSpinBox->value()) + ui->pwmaxArchiveRecursionForContainerComboBox->currentText();
     ui->pwmaxArchiveRecursionForContainerCheckBox->isChecked() == true?checked="checked":checked="not checked";
-    profiles->setSectionValue("ScanLimitations",keyword,checked + "|" + value);
+    profiles.setSectionValue("ScanLimitations",keyword,checked + "|" + value);
 
     keyword = "Maximum directory recursion level";
     value = QString::number(ui->pwmaxDirRecursionLevelSpinBox->value()) + ui->pwmaxDirRecursionLevelComboBox->currentText();
     ui->pwmaxDirRecursionLevelCheckBox->isChecked() == true?checked="checked":checked="not checked";
-    profiles->setSectionValue("ScanLimitations",keyword,checked + "|" + value);
+    profiles.setSectionValue("ScanLimitations",keyword,checked + "|" + value);
 
     keyword = "Maximum size file to check for embedded PE";
     value = QString::number(ui->pwmaxSizeFileForPESpinBox->value()) + ui->pwmaxSizeFileForPEComboBox->currentText();
     ui->pwmaxSizeFileForPECheckBox->isChecked() == true?checked="checked":checked="not checked";
-    profiles->setSectionValue("ScanLimitations",keyword,checked + "|" + value);
+    profiles.setSectionValue("ScanLimitations",keyword,checked + "|" + value);
 
     keyword = "Maximum size of HTML file to normalize";
     value = QString::number(ui->pwmaxSizeHTMLFileToNormalizeSpinBox->value()) + ui->pwmaxSizeHTMLFileToNormalizeComboBox->currentText();
     ui->pwmaxSizeHTMLFileToNormalizeCheckBox->isChecked() == true?checked="checked":checked="not checked";
-    profiles->setSectionValue("ScanLimitations",keyword,checked + "|" + value);
+    profiles.setSectionValue("ScanLimitations",keyword,checked + "|" + value);
 
     keyword = "Maximum size of normalized HTML file to scan";
     value = QString::number(ui->pwmaxSizeOfNormalizedHTMLFileSpinBox->value()) + ui->pwmaxSizeOfNormalizedHTMLFileComboBox->currentText();
     ui->pwmaxSizeOfNormalizedHTMLFileCheckBox->isChecked() == true?checked="checked":checked="not checked";
-    profiles->setSectionValue("ScanLimitations",keyword,checked + "|" + value);
+    profiles.setSectionValue("ScanLimitations",keyword,checked + "|" + value);
 
     keyword = "Maximum size of script file to normalize";
     value = QString::number(ui->pwmaxSizeOfScriptFileToNormalizeSpinBox->value()) + ui->pwmaxSizeOfScriptFileToNormalizeComboBox->currentText();
     ui->pwmaxSizeOfScriptFileToNormalizeCheckBox->isChecked() == true?checked="checked":checked="not checked";
-    profiles->setSectionValue("ScanLimitations",keyword,checked + "|" + value);
+    profiles.setSectionValue("ScanLimitations",keyword,checked + "|" + value);
 
     keyword = "Maximum size zip to type reanalyze";
     value = QString::number(ui->pwmaxSizeZipToTypeReanalzeSpinBox->value()) + ui->pwmaxSizeZipToTypeReanalzeComboBox->currentText();
     ui->pwmaxSizeZipToTypeReanalzeCheckBox->isChecked() == true?checked="checked":checked="not checked";
-    profiles->setSectionValue("ScanLimitations",keyword,checked + "|" + value);
+    profiles.setSectionValue("ScanLimitations",keyword,checked + "|" + value);
 
     keyword = "Maximum number of partitions in disk image to be scanned";
     value = QString::number(ui->pwmaxNumberOfPartitionsInDiskImageSpinBox->value()) + ui->pwmaxNumberOfPartitionsInDiskImageComboBox->currentText();
     ui->pwmaxNumberOfPartitionsInDiskImageCheckBox->isChecked() == true?checked="checked":checked="not checked";
-    profiles->setSectionValue("ScanLimitations",keyword,checked + "|" + value);
+    profiles.setSectionValue("ScanLimitations",keyword,checked + "|" + value);
 
     keyword = "Maximum number of icons in PE file to be scanned";
     value = QString::number(ui->pwmaxNumberOfIconsInPEFileSpinBox->value()) + ui->pwmaxNumberOfIconsInPEFileComboBox->currentText();
     ui->pwmaxNumberOfIconsInPEFileCheckBox->isChecked() == true?checked="checked":checked="not checked";
-    profiles->setSectionValue("ScanLimitations",keyword,checked + "|" + value);
+    profiles.setSectionValue("ScanLimitations",keyword,checked + "|" + value);
 
     keyword = "Number of seconds to wait for waiting a response back from the stats server";
     value = QString::number(ui->pwnumberOfSecondsForResponseSpinBox->value());
     ui->pwnumberOfSecondsForResponseCheckBox->isChecked() == true?checked="checked":checked="not checked";
-    profiles->setSectionValue("ScanLimitations",keyword,checked + "|" + value);
+    profiles.setSectionValue("ScanLimitations",keyword,checked + "|" + value);
 
     keyword = "Bytecode timeout in milliseconds";
     value = QString::number(ui->pwBytecodeTimeoutSpinBox->value());
     ui->pwBytecodeTimeoutCheckBox->isChecked() == true?checked="checked":checked="not checked";
-    profiles->setSectionValue("ScanLimitations",keyword,checked + "|" + value);
+    profiles.setSectionValue("ScanLimitations",keyword,checked + "|" + value);
 
     keyword = "Collect and print execution statistics";
     value = QString::number(ui->pwExecutionStatisticsComboBox->currentIndex());
     ui->pwExecutionStatisticsCheckBox->isChecked() == true?checked="checked":checked="not checked";
-    profiles->setSectionValue("ScanLimitations",keyword,checked + "|" + value);
+    profiles.setSectionValue("ScanLimitations",keyword,checked + "|" + value);
 
     keyword = "Structured SSN Format";
     value = QString::number(ui->pwStructuredSSNFormatComboBox->currentIndex());
     ui->pwstructuredSSNFormatCheckBox->isChecked() == true?checked="checked":checked="not checked";
-    profiles->setSectionValue("ScanLimitations",keyword,checked + "|" + value);
+    profiles.setSectionValue("ScanLimitations",keyword,checked + "|" + value);
 
     keyword = "Structured SSN Count";
     value = QString::number(ui->pwStructuredSSNCountSpinBox->value());
     ui->pwStructuredSSNCountCheckBox->isChecked() == true?checked="checked":checked="not checked";
-    profiles->setSectionValue("ScanLimitations",keyword,checked + "|" + value);
+    profiles.setSectionValue("ScanLimitations",keyword,checked + "|" + value);
 
     keyword = "Structured CC Count";
     value = QString::number(ui->pwStructuredCCCountSpinBox->value());
     ui->pwStructuredCCCountCheckBox->isChecked() == true?checked="checked":checked="not checked";
-    profiles->setSectionValue("ScanLimitations",keyword,checked + "|" + value);
+    profiles.setSectionValue("ScanLimitations",keyword,checked + "|" + value);
 
     keyword = "Structured CC Mode";
     value = QString::number(ui->pwStructuredCCModeComboBox->currentIndex());
     ui->pwStructuredCCModeCheckBox->isChecked() == true?checked="checked":checked="not checked";
-    profiles->setSectionValue("ScanLimitations",keyword,checked + "|" + value);
+    profiles.setSectionValue("ScanLimitations",keyword,checked + "|" + value);
 
     keyword = "Max Scan-Time";
     value = QString::number(ui->pwMaxScanTimeSpinBox->value());
     ui->pwMaxScanTimeCheckBox->isChecked() == true?checked="checked":checked="not checked";
-    profiles->setSectionValue("ScanLimitations",keyword,checked + "|" + value);
+    profiles.setSectionValue("ScanLimitations",keyword,checked + "|" + value);
 
     keyword = "Max recursion to HWP3 parsing function";
     value = QString::number(ui->pwMaxRecursionHWP3SpinBox->value());
     ui->pwMaxRecursionHWP3CheckBox->isChecked() == true?checked="checked":checked="not checked";
-    profiles->setSectionValue("ScanLimitations",keyword,checked + "|" + value);
+    profiles.setSectionValue("ScanLimitations",keyword,checked + "|" + value);
 
     keyword = "Max calls to PCRE match function";
     value = QString::number(ui->pwMaxCallsPCREMatchFunctionSpinBox->value());
     ui->pwMaxCallsPCREMatchFunctionCheckBox->isChecked() == true?checked="checked":checked="not checked";
-    profiles->setSectionValue("ScanLimitations",keyword,checked + "|" + value);
+    profiles.setSectionValue("ScanLimitations",keyword,checked + "|" + value);
 
     keyword = "Max recursion calls to the PCRE match function";
     value = QString::number(ui->pwMaxRecursionCallsPCREMatchFunctionCpinBox->value());
     ui->pwMaxRecursionCallsPCREMatchFunctionCheckBox->isChecked() == true?checked="checked":checked="not checked";
-    profiles->setSectionValue("ScanLimitations",keyword,checked + "|" + value);
+    profiles.setSectionValue("ScanLimitations",keyword,checked + "|" + value);
 
     keyword = "Max PCRE file size";
     value = QString::number(ui->pwMaxPCREFileSizeSpinBox->value()) + ui->pwMaxPCREFileSizeComboBox->currentText();
     ui->pwMaxPCREFileSizeCheckBox->isChecked() == true?checked="checked":checked="not checked";
-    profiles->setSectionValue("ScanLimitations",keyword,checked + "|" + value);
+    profiles.setSectionValue("ScanLimitations",keyword,checked + "|" + value);
 
     keyword = "Database outdated if older than x days";
     value = QString::number(ui->pwdatabaseOutdatedSpinBox->value());
     ui->pwdatabaseOutdatedCheckbox->isChecked() == true?checked="checked":checked="not checked";
-    profiles->setSectionValue("ScanLimitations",keyword,checked + "|" + value);
+    profiles.setSectionValue("ScanLimitations",keyword,checked + "|" + value);
 
     emit signal_profileSaved();
     this->accept();
