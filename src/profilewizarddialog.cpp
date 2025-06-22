@@ -48,10 +48,10 @@ ProfileWizardDialog::ProfileWizardDialog(QWidget *parent, QString name) : QDialo
     connect(getClamscanParametersProcess,SIGNAL(finished(int)),this,SLOT(slot_getClamscanProcessFinished()));
 
 
-    QStringList parameters;
-    parameters << "--help";
+    QStringList m_parameters;
+    m_parameters << "--help";
 
-    getClamscanParametersProcess->start("clamscan",parameters);
+    getClamscanParametersProcess->start("clamscan",m_parameters);
 
 
 }
@@ -62,22 +62,22 @@ ProfileWizardDialog::~ProfileWizardDialog()
 }
 
 void ProfileWizardDialog::closeEvent(QCloseEvent *) {
-    QString profileFile = QDir::homePath()+"/.clamav-gui/profiles/" + ui->profileNameLineEdit->text()+".ini";
-    if ((newProfile == true) && (profileFile != QDir::homePath()+"/.clamav-gui/settings.ini")){
-        QFile killfile(profileFile);
-        if (killfile.exists() == true) killfile.remove();
+    QString m_profileFile = QDir::homePath()+"/.clamav-gui/profiles/" + ui->profileNameLineEdit->text()+".ini";
+    if ((newProfile == true) && (m_profileFile != QDir::homePath()+"/.clamav-gui/settings.ini")){
+        QFile m_killfile(m_profileFile);
+        if (m_killfile.exists() == true) m_killfile.remove();
     }
 }
 
 void ProfileWizardDialog::readSettings(){
-QString section = "REGEXP_and_IncludeExclude";
-QString keyword;
-QString value;
-QString checked;
-QString optionText;
-QString tooltipText;
-QStringList directories = setupFile->getSectionValue(ui->profileNameLineEdit->text(),"Directories").split("\n");
-QStringList availableOptions = setupFile->getKeywords("AvailableOptions");
+QString m_section = "REGEXP_and_IncludeExclude";
+QString m_keyword;
+QString m_value;
+QString m_checked;
+QString m_optionText;
+QString m_tooltipText;
+QStringList m_directories = setupFile->getSectionValue(ui->profileNameLineEdit->text(),"Directories").split("\n");
+QStringList m_availableOptions = setupFile->getKeywords("AvailableOptions");
 
 // DIRTREE
     ui->treeView->collapseAll();
@@ -87,98 +87,98 @@ QStringList availableOptions = setupFile->getKeywords("AvailableOptions");
         ui->recursivCheckBox->setChecked(setupFile->getSectionBoolValue(profileName,"Recursion"));
     }
     model->unCheckAll();
-    foreach(QString dir,directories){
-        if (dir != ""){
-            model->setChecked(dir,true);
-            QModelIndex index = model->index(dir);
-            ui->treeView->scrollTo(index);
-            ui->treeView->setCurrentIndex(index);
+    foreach(QString m_dir,m_directories){
+        if (m_dir != ""){
+            model->setChecked(m_dir,true);
+            QModelIndex m_index = model->index(m_dir);
+            ui->treeView->scrollTo(m_index);
+            ui->treeView->setCurrentIndex(m_index);
         }
     }
 
 // DIRECTORIES
-    value=setupFile->getSectionValue("Directories","LoadSupportedDBFiles");
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    checked=="checked"?ui->loadVirusDatabaseCheckBox->setChecked(true):ui->loadVirusDatabaseCheckBox->setChecked(false);
-    ui->loadVirusDatabaseLineEdit->setText(value);
+    m_value=setupFile->getSectionValue("Directories","LoadSupportedDBFiles");
+    m_checked = m_value.left(m_value.indexOf("|"));
+    m_value = m_value.mid(m_value.indexOf("|") + 1);
+    m_checked=="m_checked"?ui->loadVirusDatabaseCheckBox->setChecked(true):ui->loadVirusDatabaseCheckBox->setChecked(false);
+    ui->loadVirusDatabaseLineEdit->setText(m_value);
 
-    value=setupFile->getSectionValue("Directories","ScanReportToFile");
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    checked=="checked"?ui->scanReportToFileCheckBox->setChecked(true):ui->scanReportToFileCheckBox->setChecked(false);
-    ui->scanReportToFileLineEdit->setText(value);
+    m_value=setupFile->getSectionValue("Directories","ScanReportToFile");
+    m_checked = m_value.left(m_value.indexOf("|"));
+    m_value = m_value.mid(m_value.indexOf("|") + 1);
+    m_checked=="m_checked"?ui->scanReportToFileCheckBox->setChecked(true):ui->scanReportToFileCheckBox->setChecked(false);
+    ui->scanReportToFileLineEdit->setText(m_value);
 
-    value=setupFile->getSectionValue("Directories","ScanFilesFromFile");
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    checked=="checked"?ui->scanFilesFromFileCheckBox->setChecked(true):ui->scanFilesFromFileCheckBox->setChecked(false);
-    ui->scanFilesFromFileLineEdit->setText(value);
+    m_value=setupFile->getSectionValue("Directories","ScanFilesFromFile");
+    m_checked = m_value.left(m_value.indexOf("|"));
+    m_value = m_value.mid(m_value.indexOf("|") + 1);
+    m_checked=="m_checked"?ui->scanFilesFromFileCheckBox->setChecked(true):ui->scanFilesFromFileCheckBox->setChecked(false);
+    ui->scanFilesFromFileLineEdit->setText(m_value);
 
-    value=setupFile->getSectionValue("Directories","TmpFile");
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    checked=="checked"?ui->tempFileCheckBox->setChecked(true):ui->tempFileCheckBox->setChecked(false);
-    ui->tempFilesLineEdit->setText(value);
+    m_value=setupFile->getSectionValue("Directories","TmpFile");
+    m_checked = m_value.left(m_value.indexOf("|"));
+    m_value = m_value.mid(m_value.indexOf("|") + 1);
+    m_checked=="m_checked"?ui->tempFileCheckBox->setChecked(true):ui->tempFileCheckBox->setChecked(false);
+    ui->tempFilesLineEdit->setText(m_value);
 
-    value=setupFile->getSectionValue("Directories","MoveInfectedFiles");
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    checked=="checked"?ui->moveDirectoryCheckBox->setChecked(true):ui->moveDirectoryCheckBox->setChecked(false);
-    ui->moveDirectoryLineEdit->setText(value);
+    m_value=setupFile->getSectionValue("Directories","MoveInfectedFiles");
+    m_checked = m_value.left(m_value.indexOf("|"));
+    m_value = m_value.mid(m_value.indexOf("|") + 1);
+    m_checked=="m_checked"?ui->moveDirectoryCheckBox->setChecked(true):ui->moveDirectoryCheckBox->setChecked(false);
+    ui->moveDirectoryLineEdit->setText(m_value);
 
-    value=setupFile->getSectionValue("Directories","CopyInfectedFiles");
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    checked=="checked"?ui->copyDirectoryCheckBox->setChecked(true):ui->copyDirectoryCheckBox->setChecked(false);
-    ui->copyDirectoryLineEdit->setText(value);
+    m_value=setupFile->getSectionValue("Directories","CopyInfectedFiles");
+    m_checked = m_value.left(m_value.indexOf("|"));
+    m_value = m_value.mid(m_value.indexOf("|") + 1);
+    m_checked=="m_checked"?ui->copyDirectoryCheckBox->setChecked(true):ui->copyDirectoryCheckBox->setChecked(false);
+    ui->copyDirectoryLineEdit->setText(m_value);
 
-    value=setupFile->getSectionValue("Directories","FollowDirectorySymLinks");
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    checked=="checked"?ui->followDirectorySymlinksCheckBox->setChecked(true):ui->followDirectorySymlinksCheckBox->setChecked(false);
-    ui->followDirectorySymlinksComboBox->setCurrentIndex(value.toInt());
+    m_value=setupFile->getSectionValue("Directories","FollowDirectorySymLinks");
+    m_checked = m_value.left(m_value.indexOf("|"));
+    m_value = m_value.mid(m_value.indexOf("|") + 1);
+    m_checked=="m_checked"?ui->followDirectorySymlinksCheckBox->setChecked(true):ui->followDirectorySymlinksCheckBox->setChecked(false);
+    ui->followDirectorySymlinksComboBox->setCurrentIndex(m_value.toInt());
 
-    value=setupFile->getSectionValue("Directories","FollowFileSymLinks");
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    checked=="checked"?ui->followFileSymlinksCheckBox->setChecked(true):ui->followFileSymlinksCheckBox->setChecked(false);
-    ui->followFileSymlinksComboBox->setCurrentIndex(value.toInt());
+    m_value=setupFile->getSectionValue("Directories","FollowFileSymLinks");
+    m_checked = m_value.left(m_value.indexOf("|"));
+    m_value = m_value.mid(m_value.indexOf("|") + 1);
+    m_checked=="m_checked"?ui->followFileSymlinksCheckBox->setChecked(true):ui->followFileSymlinksCheckBox->setChecked(false);
+    ui->followFileSymlinksComboBox->setCurrentIndex(m_value.toInt());
 
     slot_directoryCheckBoxesClicked();
 
 // INCLUDE / EXCLUDE
-    keyword = "DontScanFileNamesMatchingRegExp";
-    value = setupFile->getSectionValue(section,keyword);
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    checked=="checked"?ui->pwdontScanFileNameCheckBox->setChecked(true):ui->pwdontScanFileNameCheckBox->setChecked(false);
-    ui->pwdontScanFileNameLineEdit->setText(value);
+    m_keyword = "DontScanFileNamesMatchingRegExp";
+    m_value = setupFile->getSectionValue(m_section,m_keyword);
+    m_checked = m_value.left(m_value.indexOf("|"));
+    m_value = m_value.mid(m_value.indexOf("|") + 1);
+    m_checked=="m_checked"?ui->pwdontScanFileNameCheckBox->setChecked(true):ui->pwdontScanFileNameCheckBox->setChecked(false);
+    ui->pwdontScanFileNameLineEdit->setText(m_value);
 
-    keyword = "DontScanDiretoriesMatchingRegExp";
-    value = setupFile->getSectionValue(section,keyword);
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    checked=="checked"?ui->pwdontScanDirCheckBox->setChecked(true):ui->pwdontScanDirCheckBox->setChecked(false);
-    ui->pwdontScanDirLineEdit->setText(value);
+    m_keyword = "DontScanDiretoriesMatchingRegExp";
+    m_value = setupFile->getSectionValue(m_section,m_keyword);
+    m_checked = m_value.left(m_value.indexOf("|"));
+    m_value = m_value.mid(m_value.indexOf("|") + 1);
+    m_checked=="m_checked"?ui->pwdontScanDirCheckBox->setChecked(true):ui->pwdontScanDirCheckBox->setChecked(false);
+    ui->pwdontScanDirLineEdit->setText(m_value);
 
-    keyword = "OnlyScanFileNamesMatchingRegExp";
-    value = setupFile->getSectionValue(section,keyword);
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    checked=="checked"?ui->pwonlyScanFileNameCheckBox->setChecked(true):ui->pwonlyScanFileNameCheckBox->setChecked(false);
-    ui->pwonlyScanFileNameLineEdit->setText(value);
+    m_keyword = "OnlyScanFileNamesMatchingRegExp";
+    m_value = setupFile->getSectionValue(m_section,m_keyword);
+    m_checked = m_value.left(m_value.indexOf("|"));
+    m_value = m_value.mid(m_value.indexOf("|") + 1);
+    m_checked=="m_checked"?ui->pwonlyScanFileNameCheckBox->setChecked(true):ui->pwonlyScanFileNameCheckBox->setChecked(false);
+    ui->pwonlyScanFileNameLineEdit->setText(m_value);
 
-    keyword = "OnlyScanDiretoriesMatchingRegExp";
-    value = setupFile->getSectionValue(section,keyword);
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    checked=="checked"?ui->pwonlyScanDirCheckBox->setChecked(true):ui->pwonlyScanDirCheckBox->setChecked(false);
-    ui->pwonlyScanDirLineEdit->setText(value);
+    m_keyword = "OnlyScanDiretoriesMatchingRegExp";
+    m_value = setupFile->getSectionValue(m_section,m_keyword);
+    m_checked = m_value.left(m_value.indexOf("|"));
+    m_value = m_value.mid(m_value.indexOf("|") + 1);
+    m_checked=="m_checked"?ui->pwonlyScanDirCheckBox->setChecked(true):ui->pwonlyScanDirCheckBox->setChecked(false);
+    ui->pwonlyScanDirLineEdit->setText(m_value);
 
 // PUA
-    keyword = "EnablePUAOptions";
-    if (setupFile->getSectionBoolValue(section,keyword) == true){
+    m_keyword = "EnablePUAOptions";
+    if (setupFile->getSectionBoolValue(m_section,m_keyword) == true){
         ui->pwenablePUACheckBox->setChecked(true);
         ui->pwPUAFrame->setEnabled(true);
     } else {
@@ -186,318 +186,318 @@ QStringList availableOptions = setupFile->getKeywords("AvailableOptions");
         ui->pwPUAFrame->setEnabled(false);
     }
 
-    keyword = "LoadPUAPacked";
-    ui->pwloadPUAPackedRadioButon->setChecked(setupFile->getSectionBoolValue(section,keyword));
+    m_keyword = "LoadPUAPacked";
+    ui->pwloadPUAPackedRadioButon->setChecked(setupFile->getSectionBoolValue(m_section,m_keyword));
 
-    keyword = "LoadPUAPWTool";
-    ui->pwloadPUAPWToolRadioButton->setChecked(setupFile->getSectionBoolValue(section,keyword));
+    m_keyword = "LoadPUAPWTool";
+    ui->pwloadPUAPWToolRadioButton->setChecked(setupFile->getSectionBoolValue(m_section,m_keyword));
 
-    keyword = "LoadPUANetTool";
-    ui->pwloadPUANetToolRadioButton->setChecked(setupFile->getSectionBoolValue(section,keyword));
+    m_keyword = "LoadPUANetTool";
+    ui->pwloadPUANetToolRadioButton->setChecked(setupFile->getSectionBoolValue(m_section,m_keyword));
 
-    keyword = "LoadPUAP2P";
-    ui->pwloadPUAP2PRadioButton->setChecked(setupFile->getSectionBoolValue(section,keyword));
+    m_keyword = "LoadPUAP2P";
+    ui->pwloadPUAP2PRadioButton->setChecked(setupFile->getSectionBoolValue(m_section,m_keyword));
 
-    keyword = "LoadPUAIRC";
-    ui->pwloadPUAIRCRadioButton->setChecked(setupFile->getSectionBoolValue(section,keyword));
+    m_keyword = "LoadPUAIRC";
+    ui->pwloadPUAIRCRadioButton->setChecked(setupFile->getSectionBoolValue(m_section,m_keyword));
 
-    keyword = "LoadPUARAT";
-    ui->pwloadPUARATRadioButton->setChecked(setupFile->getSectionBoolValue(section,keyword));
+    m_keyword = "LoadPUARAT";
+    ui->pwloadPUARATRadioButton->setChecked(setupFile->getSectionBoolValue(m_section,m_keyword));
 
-    keyword = "LoadPUANetToolSpy";
-    ui->pwloadPUANetToolSpyRadioButton->setChecked(setupFile->getSectionBoolValue(section,keyword));
+    m_keyword = "LoadPUANetToolSpy";
+    ui->pwloadPUANetToolSpyRadioButton->setChecked(setupFile->getSectionBoolValue(m_section,m_keyword));
 
-    keyword = "LoadPUAServer";
-    ui->pwloadPUAServerRadioButton->setChecked(setupFile->getSectionBoolValue(section,keyword));
+    m_keyword = "LoadPUAServer";
+    ui->pwloadPUAServerRadioButton->setChecked(setupFile->getSectionBoolValue(m_section,m_keyword));
 
-    keyword = "LoadPUAScript";
-    ui->pwloadPUAScriptRadioButton->setChecked(setupFile->getSectionBoolValue(section,keyword));
+    m_keyword = "LoadPUAScript";
+    ui->pwloadPUAScriptRadioButton->setChecked(setupFile->getSectionBoolValue(m_section,m_keyword));
 
-    keyword = "LoadPUAAndr";
-    ui->pwloadPUAAndrRadioButton->setChecked(setupFile->getSectionBoolValue(section,keyword));
+    m_keyword = "LoadPUAAndr";
+    ui->pwloadPUAAndrRadioButton->setChecked(setupFile->getSectionBoolValue(m_section,m_keyword));
 
-    keyword = "LoadPUAJava";
-    ui->pwloadPUAJavaRadioButton->setChecked(setupFile->getSectionBoolValue(section,keyword));
+    m_keyword = "LoadPUAJava";
+    ui->pwloadPUAJavaRadioButton->setChecked(setupFile->getSectionBoolValue(m_section,m_keyword));
 
-    keyword = "LoadPUAOsx";
-    ui->pwloadPUAOsxRadioButton->setChecked(setupFile->getSectionBoolValue(section,keyword));
+    m_keyword = "LoadPUAOsx";
+    ui->pwloadPUAOsxRadioButton->setChecked(setupFile->getSectionBoolValue(m_section,m_keyword));
 
-    keyword = "LoadPUATool";
-    ui->pwloadPUAToolRadioButton->setChecked(setupFile->getSectionBoolValue(section,keyword));
+    m_keyword = "LoadPUATool";
+    ui->pwloadPUAToolRadioButton->setChecked(setupFile->getSectionBoolValue(m_section,m_keyword));
 
-    keyword = "LoadPUAUnix";
-    ui->pwloadPUAUnixRadioButton->setChecked(setupFile->getSectionBoolValue(section,keyword));
+    m_keyword = "LoadPUAUnix";
+    ui->pwloadPUAUnixRadioButton->setChecked(setupFile->getSectionBoolValue(m_section,m_keyword));
 
-    keyword = "LoadPUAWin";
-    ui->pwloadPUAWinRadioButton->setChecked(setupFile->getSectionBoolValue(section,keyword));
+    m_keyword = "LoadPUAWin";
+    ui->pwloadPUAWinRadioButton->setChecked(setupFile->getSectionBoolValue(m_section,m_keyword));
 
 // SCANLIMITS
-    value = setupFile->getSectionValue("ScanLimitations","Files larger than this will be skipped and assumed clean");
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    if ((value.right(1) == "K") || (value.right(1) == "M")){
-        ui->pwfilesLargerThanThisComboBox->setCurrentIndex(ui->pwfilesLargerThanThisComboBox->findText(value.right(1)));
-        value = value.left(value.length() - 1);
+    m_value = setupFile->getSectionValue("ScanLimitations","Files larger than this will be skipped and assumed clean");
+    m_checked = m_value.left(m_value.indexOf("|"));
+    m_value = m_value.mid(m_value.indexOf("|") + 1);
+    if ((m_value.right(1) == "K") || (m_value.right(1) == "M")){
+        ui->pwfilesLargerThanThisComboBox->setCurrentIndex(ui->pwfilesLargerThanThisComboBox->findText(m_value.right(1)));
+        m_value = m_value.left(m_value.length() - 1);
     } else {
         ui->pwfilesLargerThanThisComboBox->setCurrentIndex(0);
     }
-    checked=="checked"?ui->pwfilesLargerThanThisCheckBox->setChecked(true):ui->pwfilesLargerThanThisCheckBox->setChecked(false);
-    ui->pwfilesLargerThanThisSpinBox->setValue(value.toInt());
+    m_checked=="m_checked"?ui->pwfilesLargerThanThisCheckBox->setChecked(true):ui->pwfilesLargerThanThisCheckBox->setChecked(false);
+    ui->pwfilesLargerThanThisSpinBox->setValue(m_value.toInt());
 
-    value = setupFile->getSectionValue("ScanLimitations","The maximum amount of data to scan for each container file");
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    if ((value.right(1) == "K") || (value.right(1) == "M")){
-        ui->pwmaxAmountForContainerComboBox->setCurrentIndex(ui->pwmaxAmountForContainerComboBox->findText(value.right(1)));
-        value = value.left(value.length() - 1);
+    m_value = setupFile->getSectionValue("ScanLimitations","The maximum amount of data to scan for each container file");
+    m_checked = m_value.left(m_value.indexOf("|"));
+    m_value = m_value.mid(m_value.indexOf("|") + 1);
+    if ((m_value.right(1) == "K") || (m_value.right(1) == "M")){
+        ui->pwmaxAmountForContainerComboBox->setCurrentIndex(ui->pwmaxAmountForContainerComboBox->findText(m_value.right(1)));
+        m_value = m_value.left(m_value.length() - 1);
     } else {
        ui->pwmaxAmountForContainerComboBox->setCurrentIndex(0);
     }
-    checked=="checked"?ui->pwmaxAmountForContainerCheckBox->setChecked(true):ui->pwmaxAmountForContainerCheckBox->setChecked(false);
-    ui->pwmaxAmountForContainerSpinBox->setValue(value.toInt());
+    m_checked=="m_checked"?ui->pwmaxAmountForContainerCheckBox->setChecked(true):ui->pwmaxAmountForContainerCheckBox->setChecked(false);
+    ui->pwmaxAmountForContainerSpinBox->setValue(m_value.toInt());
 
-    value = setupFile->getSectionValue("ScanLimitations","The maximum number of files to scan for each container file");
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    if ((value.right(1) == "K") || (value.right(1) == "M")){
-        ui->pwmaxNumberForContainerComboBox->setCurrentIndex(ui->pwmaxNumberForContainerComboBox->findText(value.right(1)));
-        value = value.left(value.length() - 1);
+    m_value = setupFile->getSectionValue("ScanLimitations","The maximum number of files to scan for each container file");
+    m_checked = m_value.left(m_value.indexOf("|"));
+    m_value = m_value.mid(m_value.indexOf("|") + 1);
+    if ((m_value.right(1) == "K") || (m_value.right(1) == "M")){
+        ui->pwmaxNumberForContainerComboBox->setCurrentIndex(ui->pwmaxNumberForContainerComboBox->findText(m_value.right(1)));
+        m_value = m_value.left(m_value.length() - 1);
     } else {
         ui->pwmaxNumberForContainerComboBox->setCurrentIndex(0);
     }
-    checked=="checked"?ui->pwmaxNumberForContainerCheckBox->setChecked(true):ui->pwmaxNumberForContainerCheckBox->setChecked(false);
-    ui->pwmaxNumberForContainerSpinBox->setValue(value.toInt());
+    m_checked=="m_checked"?ui->pwmaxNumberForContainerCheckBox->setChecked(true):ui->pwmaxNumberForContainerCheckBox->setChecked(false);
+    ui->pwmaxNumberForContainerSpinBox->setValue(m_value.toInt());
 
-    value = setupFile->getSectionValue("ScanLimitations","Maximum archive recursion level for container file");
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    if ((value.right(1) == "K") || (value.right(1) == "M")){
-        ui->pwmaxArchiveRecursionForContainerComboBox->setCurrentIndex(ui->pwmaxArchiveRecursionForContainerComboBox->findText(value.right(1)));
-        value = value.left(value.length() - 1);
+    m_value = setupFile->getSectionValue("ScanLimitations","Maximum archive recursion level for container file");
+    m_checked = m_value.left(m_value.indexOf("|"));
+    m_value = m_value.mid(m_value.indexOf("|") + 1);
+    if ((m_value.right(1) == "K") || (m_value.right(1) == "M")){
+        ui->pwmaxArchiveRecursionForContainerComboBox->setCurrentIndex(ui->pwmaxArchiveRecursionForContainerComboBox->findText(m_value.right(1)));
+        m_value = m_value.left(m_value.length() - 1);
     } else {
         ui->pwmaxArchiveRecursionForContainerComboBox->setCurrentIndex(0);
     }
-    checked=="checked"?ui->pwmaxArchiveRecursionForContainerCheckBox->setChecked(true):ui->pwmaxArchiveRecursionForContainerCheckBox->setChecked(false);
-    ui->pwmaxArchiveRecursionForContainerSpinBox->setValue(value.toInt());
+    m_checked=="m_checked"?ui->pwmaxArchiveRecursionForContainerCheckBox->setChecked(true):ui->pwmaxArchiveRecursionForContainerCheckBox->setChecked(false);
+    ui->pwmaxArchiveRecursionForContainerSpinBox->setValue(m_value.toInt());
 
-    value = setupFile->getSectionValue("ScanLimitations","Maximum directory recursion level");
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    if ((value.right(1) == "K") || (value.right(1) == "M")){
-        ui->pwmaxDirRecursionLevelComboBox->setCurrentIndex(ui->pwmaxDirRecursionLevelComboBox->findText(value.right(1)));
-        value = value.left(value.length() - 1);
+    m_value = setupFile->getSectionValue("ScanLimitations","Maximum directory recursion level");
+    m_checked = m_value.left(m_value.indexOf("|"));
+    m_value = m_value.mid(m_value.indexOf("|") + 1);
+    if ((m_value.right(1) == "K") || (m_value.right(1) == "M")){
+        ui->pwmaxDirRecursionLevelComboBox->setCurrentIndex(ui->pwmaxDirRecursionLevelComboBox->findText(m_value.right(1)));
+        m_value = m_value.left(m_value.length() - 1);
     } else {
         ui->pwmaxDirRecursionLevelComboBox->setCurrentIndex(0);
     }
-    checked=="checked"?ui->pwmaxDirRecursionLevelCheckBox->setChecked(true):ui->pwmaxDirRecursionLevelCheckBox->setChecked(false);
-    ui->pwmaxDirRecursionLevelSpinBox->setValue(value.toInt());
+    m_checked=="m_checked"?ui->pwmaxDirRecursionLevelCheckBox->setChecked(true):ui->pwmaxDirRecursionLevelCheckBox->setChecked(false);
+    ui->pwmaxDirRecursionLevelSpinBox->setValue(m_value.toInt());
 
-    value = setupFile->getSectionValue("ScanLimitations","Maximum size file to check for embedded PE");
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    if ((value.right(1) == "K") || (value.right(1) == "M")){
-        ui->pwmaxSizeFileForPEComboBox->setCurrentIndex(ui->pwmaxSizeFileForPEComboBox->findText(value.right(1)));
-        value = value.left(value.length() - 1);
+    m_value = setupFile->getSectionValue("ScanLimitations","Maximum size file to check for embedded PE");
+    m_checked = m_value.left(m_value.indexOf("|"));
+    m_value = m_value.mid(m_value.indexOf("|") + 1);
+    if ((m_value.right(1) == "K") || (m_value.right(1) == "M")){
+        ui->pwmaxSizeFileForPEComboBox->setCurrentIndex(ui->pwmaxSizeFileForPEComboBox->findText(m_value.right(1)));
+        m_value = m_value.left(m_value.length() - 1);
     } else {
         ui->pwmaxSizeFileForPEComboBox->setCurrentIndex(0);
     }
-    checked=="checked"?ui->pwmaxSizeFileForPECheckBox->setChecked(true):ui->pwmaxSizeFileForPECheckBox->setChecked(false);
-    ui->pwmaxSizeFileForPESpinBox->setValue(value.toInt());
+    m_checked=="m_checked"?ui->pwmaxSizeFileForPECheckBox->setChecked(true):ui->pwmaxSizeFileForPECheckBox->setChecked(false);
+    ui->pwmaxSizeFileForPESpinBox->setValue(m_value.toInt());
 
-    value = setupFile->getSectionValue("ScanLimitations","Maximum size of HTML file to normalize");
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    if ((value.right(1) == "K") || (value.right(1) == "M")){
-        ui->pwmaxSizeHTMLFileToNormalizeComboBox->setCurrentIndex(ui->pwmaxSizeHTMLFileToNormalizeComboBox->findText(value.right(1)));
-        value = value.left(value.length() - 1);
+    m_value = setupFile->getSectionValue("ScanLimitations","Maximum size of HTML file to normalize");
+    m_checked = m_value.left(m_value.indexOf("|"));
+    m_value = m_value.mid(m_value.indexOf("|") + 1);
+    if ((m_value.right(1) == "K") || (m_value.right(1) == "M")){
+        ui->pwmaxSizeHTMLFileToNormalizeComboBox->setCurrentIndex(ui->pwmaxSizeHTMLFileToNormalizeComboBox->findText(m_value.right(1)));
+        m_value = m_value.left(m_value.length() - 1);
     } else {
         ui->pwmaxSizeHTMLFileToNormalizeComboBox->setCurrentIndex(0);
     }
-    checked=="checked"?ui->pwmaxSizeHTMLFileToNormalizeCheckBox->setChecked(true):ui->pwmaxSizeHTMLFileToNormalizeCheckBox->setChecked(false);
-    ui->pwmaxSizeHTMLFileToNormalizeSpinBox->setValue(value.toInt());
+    m_checked=="m_checked"?ui->pwmaxSizeHTMLFileToNormalizeCheckBox->setChecked(true):ui->pwmaxSizeHTMLFileToNormalizeCheckBox->setChecked(false);
+    ui->pwmaxSizeHTMLFileToNormalizeSpinBox->setValue(m_value.toInt());
 
-    value = setupFile->getSectionValue("ScanLimitations","Maximum size of normalized HTML file to scan");
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    if ((value.right(1) == "K") || (value.right(1) == "M")){
-        ui->pwmaxSizeOfNormalizedHTMLFileComboBox->setCurrentIndex(ui->pwmaxSizeOfNormalizedHTMLFileComboBox->findText(value.right(1)));
-        value = value.left(value.length() - 1);
+    m_value = setupFile->getSectionValue("ScanLimitations","Maximum size of normalized HTML file to scan");
+    m_checked = m_value.left(m_value.indexOf("|"));
+    m_value = m_value.mid(m_value.indexOf("|") + 1);
+    if ((m_value.right(1) == "K") || (m_value.right(1) == "M")){
+        ui->pwmaxSizeOfNormalizedHTMLFileComboBox->setCurrentIndex(ui->pwmaxSizeOfNormalizedHTMLFileComboBox->findText(m_value.right(1)));
+        m_value = m_value.left(m_value.length() - 1);
     } else {
         ui->pwmaxSizeOfNormalizedHTMLFileComboBox->setCurrentIndex(0);
     }
-    checked=="checked"?ui->pwmaxSizeOfNormalizedHTMLFileCheckBox->setChecked(true):ui->pwmaxSizeOfNormalizedHTMLFileCheckBox->setChecked(false);
-    ui->pwmaxSizeOfNormalizedHTMLFileSpinBox->setValue(value.toInt());
+    m_checked=="m_checked"?ui->pwmaxSizeOfNormalizedHTMLFileCheckBox->setChecked(true):ui->pwmaxSizeOfNormalizedHTMLFileCheckBox->setChecked(false);
+    ui->pwmaxSizeOfNormalizedHTMLFileSpinBox->setValue(m_value.toInt());
 
-    value = setupFile->getSectionValue("ScanLimitations","Maximum size of script file to normalize");
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    if ((value.right(1) == "K") || (value.right(1) == "M")){
-        ui->pwmaxSizeOfScriptFileToNormalizeComboBox->setCurrentIndex(ui->pwmaxSizeOfScriptFileToNormalizeComboBox->findText(value.right(1)));
-        value = value.left(value.length() - 1);
+    m_value = setupFile->getSectionValue("ScanLimitations","Maximum size of script file to normalize");
+    m_checked = m_value.left(m_value.indexOf("|"));
+    m_value = m_value.mid(m_value.indexOf("|") + 1);
+    if ((m_value.right(1) == "K") || (m_value.right(1) == "M")){
+        ui->pwmaxSizeOfScriptFileToNormalizeComboBox->setCurrentIndex(ui->pwmaxSizeOfScriptFileToNormalizeComboBox->findText(m_value.right(1)));
+        m_value = m_value.left(m_value.length() - 1);
     } else {
         ui->pwmaxSizeOfScriptFileToNormalizeComboBox->setCurrentIndex(0);
     }
-    checked=="checked"?ui->pwmaxSizeOfScriptFileToNormalizeCheckBox->setChecked(true):ui->pwmaxSizeOfScriptFileToNormalizeCheckBox->setChecked(false);
-    ui->pwmaxSizeOfScriptFileToNormalizeSpinBox->setValue(value.toInt());
+    m_checked=="m_checked"?ui->pwmaxSizeOfScriptFileToNormalizeCheckBox->setChecked(true):ui->pwmaxSizeOfScriptFileToNormalizeCheckBox->setChecked(false);
+    ui->pwmaxSizeOfScriptFileToNormalizeSpinBox->setValue(m_value.toInt());
 
-    value = setupFile->getSectionValue("ScanLimitations","Maximum size zip to type reanalyze");
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    if ((value.right(1) == "K") || (value.right(1) == "M")){
-        ui->pwmaxSizeZipToTypeReanalzeComboBox->setCurrentIndex(ui->pwmaxSizeZipToTypeReanalzeComboBox->findText(value.right(1)));
-        value = value.left(value.length() - 1);
+    m_value = setupFile->getSectionValue("ScanLimitations","Maximum size zip to type reanalyze");
+    m_checked = m_value.left(m_value.indexOf("|"));
+    m_value = m_value.mid(m_value.indexOf("|") + 1);
+    if ((m_value.right(1) == "K") || (m_value.right(1) == "M")){
+        ui->pwmaxSizeZipToTypeReanalzeComboBox->setCurrentIndex(ui->pwmaxSizeZipToTypeReanalzeComboBox->findText(m_value.right(1)));
+        m_value = m_value.left(m_value.length() - 1);
     } else {
         ui->pwmaxSizeZipToTypeReanalzeComboBox->setCurrentIndex(0);
     }
-    checked=="checked"?ui->pwmaxSizeZipToTypeReanalzeCheckBox->setChecked(true):ui->pwmaxSizeZipToTypeReanalzeCheckBox->setChecked(false);
-    ui->pwmaxSizeZipToTypeReanalzeSpinBox->setValue(value.toInt());
+    m_checked=="m_checked"?ui->pwmaxSizeZipToTypeReanalzeCheckBox->setChecked(true):ui->pwmaxSizeZipToTypeReanalzeCheckBox->setChecked(false);
+    ui->pwmaxSizeZipToTypeReanalzeSpinBox->setValue(m_value.toInt());
 
-    value = setupFile->getSectionValue("ScanLimitations","Maximum number of partitions in disk image to be scanned");
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    if ((value.right(1) == "K") || (value.right(1) == "M")){
-        ui->pwmaxNumberOfPartitionsInDiskImageComboBox->setCurrentIndex(ui->pwmaxNumberOfPartitionsInDiskImageComboBox->findText(value.right(1)));
-        value = value.left(value.length() - 1);
+    m_value = setupFile->getSectionValue("ScanLimitations","Maximum number of partitions in disk image to be scanned");
+    m_checked = m_value.left(m_value.indexOf("|"));
+    m_value = m_value.mid(m_value.indexOf("|") + 1);
+    if ((m_value.right(1) == "K") || (m_value.right(1) == "M")){
+        ui->pwmaxNumberOfPartitionsInDiskImageComboBox->setCurrentIndex(ui->pwmaxNumberOfPartitionsInDiskImageComboBox->findText(m_value.right(1)));
+        m_value = m_value.left(m_value.length() - 1);
     } else {
         ui->pwmaxNumberOfPartitionsInDiskImageComboBox->setCurrentIndex(0);
     }
-    checked=="checked"?ui->pwmaxNumberOfPartitionsInDiskImageCheckBox->setChecked(true):ui->pwmaxNumberOfPartitionsInDiskImageCheckBox->setChecked(false);
-    ui->pwmaxNumberOfPartitionsInDiskImageSpinBox->setValue(value.toInt());
+    m_checked=="m_checked"?ui->pwmaxNumberOfPartitionsInDiskImageCheckBox->setChecked(true):ui->pwmaxNumberOfPartitionsInDiskImageCheckBox->setChecked(false);
+    ui->pwmaxNumberOfPartitionsInDiskImageSpinBox->setValue(m_value.toInt());
 
-    value = setupFile->getSectionValue("ScanLimitations","Maximum number of icons in PE file to be scanned");
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    if ((value.right(1) == "K") || (value.right(1) == "M")){
-        ui->pwmaxNumberOfIconsInPEFileComboBox->setCurrentIndex(ui->pwmaxNumberOfIconsInPEFileComboBox->findText(value.right(1)));
-        value = value.left(value.length() - 1);
+    m_value = setupFile->getSectionValue("ScanLimitations","Maximum number of icons in PE file to be scanned");
+    m_checked = m_value.left(m_value.indexOf("|"));
+    m_value = m_value.mid(m_value.indexOf("|") + 1);
+    if ((m_value.right(1) == "K") || (m_value.right(1) == "M")){
+        ui->pwmaxNumberOfIconsInPEFileComboBox->setCurrentIndex(ui->pwmaxNumberOfIconsInPEFileComboBox->findText(m_value.right(1)));
+        m_value = m_value.left(m_value.length() - 1);
     } else {
         ui->pwmaxNumberOfIconsInPEFileComboBox->setCurrentIndex(0);
     }
-    checked=="checked"?ui->pwmaxNumberOfIconsInPEFileCheckBox->setChecked(true):ui->pwmaxNumberOfIconsInPEFileCheckBox->setChecked(false);
-    ui->pwmaxNumberOfIconsInPEFileSpinBox->setValue(value.toInt());
+    m_checked=="m_checked"?ui->pwmaxNumberOfIconsInPEFileCheckBox->setChecked(true):ui->pwmaxNumberOfIconsInPEFileCheckBox->setChecked(false);
+    ui->pwmaxNumberOfIconsInPEFileSpinBox->setValue(m_value.toInt());
 
-    value = setupFile->getSectionValue("ScanLimitations","Number of seconds to wait for waiting a response back from the stats server");
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    checked=="checked"?ui->pwnumberOfSecondsForResponseCheckBox->setChecked(true):ui->pwnumberOfSecondsForResponseCheckBox->setChecked(false);
-    ui->pwnumberOfSecondsForResponseSpinBox->setValue(value.toInt());
+    m_value = setupFile->getSectionValue("ScanLimitations","Number of seconds to wait for waiting a response back from the stats server");
+    m_checked = m_value.left(m_value.indexOf("|"));
+    m_value = m_value.mid(m_value.indexOf("|") + 1);
+    m_checked=="m_checked"?ui->pwnumberOfSecondsForResponseCheckBox->setChecked(true):ui->pwnumberOfSecondsForResponseCheckBox->setChecked(false);
+    ui->pwnumberOfSecondsForResponseSpinBox->setValue(m_value.toInt());
 
-    value = setupFile->getSectionValue("ScanLimitations","Bytecode timeout in milliseconds");
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    checked=="checked"?ui->pwBytecodeTimeoutCheckBox->setChecked(true):ui->pwBytecodeTimeoutCheckBox->setChecked(false);
-    ui->pwBytecodeTimeoutSpinBox->setValue(value.toInt());
+    m_value = setupFile->getSectionValue("ScanLimitations","Bytecode timeout in milliseconds");
+    m_checked = m_value.left(m_value.indexOf("|"));
+    m_value = m_value.mid(m_value.indexOf("|") + 1);
+    m_checked=="m_checked"?ui->pwBytecodeTimeoutCheckBox->setChecked(true):ui->pwBytecodeTimeoutCheckBox->setChecked(false);
+    ui->pwBytecodeTimeoutSpinBox->setValue(m_value.toInt());
 
-    value = setupFile->getSectionValue("ScanLimitations","Collect and print execution statistics");
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    checked=="checked"?ui->pwExecutionStatisticsCheckBox->setChecked(true):ui->pwExecutionStatisticsCheckBox->setChecked(false);
-    ui->pwExecutionStatisticsComboBox->setCurrentIndex(value.toInt());
+    m_value = setupFile->getSectionValue("ScanLimitations","Collect and print execution statistics");
+    m_checked = m_value.left(m_value.indexOf("|"));
+    m_value = m_value.mid(m_value.indexOf("|") + 1);
+    m_checked=="m_checked"?ui->pwExecutionStatisticsCheckBox->setChecked(true):ui->pwExecutionStatisticsCheckBox->setChecked(false);
+    ui->pwExecutionStatisticsComboBox->setCurrentIndex(m_value.toInt());
 
-    value = setupFile->getSectionValue("ScanLimitations","Structured SSN Format");
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    checked=="checked"?ui->pwstructuredSSNFormatCheckBox->setChecked(true):ui->pwstructuredSSNFormatCheckBox->setChecked(false);
-    ui->pwStructuredSSNFormatComboBox->setCurrentIndex(value.toInt());
+    m_value = setupFile->getSectionValue("ScanLimitations","Structured SSN Format");
+    m_checked = m_value.left(m_value.indexOf("|"));
+    m_value = m_value.mid(m_value.indexOf("|") + 1);
+    m_checked=="m_checked"?ui->pwstructuredSSNFormatCheckBox->setChecked(true):ui->pwstructuredSSNFormatCheckBox->setChecked(false);
+    ui->pwStructuredSSNFormatComboBox->setCurrentIndex(m_value.toInt());
 
-    value = setupFile->getSectionValue("ScanLimitations","Structured SSN Count");
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    checked=="checked"?ui->pwStructuredSSNCountCheckBox->setChecked(true):ui->pwStructuredSSNCountCheckBox->setChecked(false);
-    ui->pwStructuredSSNCountSpinBox->setValue(value.toInt());
+    m_value = setupFile->getSectionValue("ScanLimitations","Structured SSN Count");
+    m_checked = m_value.left(m_value.indexOf("|"));
+    m_value = m_value.mid(m_value.indexOf("|") + 1);
+    m_checked=="m_checked"?ui->pwStructuredSSNCountCheckBox->setChecked(true):ui->pwStructuredSSNCountCheckBox->setChecked(false);
+    ui->pwStructuredSSNCountSpinBox->setValue(m_value.toInt());
 
-    value = setupFile->getSectionValue("ScanLimitations","Structured CC Count");
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    checked=="checked"?ui->pwStructuredCCCountCheckBox->setChecked(true):ui->pwStructuredCCCountCheckBox->setChecked(false);
-    ui->pwStructuredCCCountSpinBox->setValue(value.toInt());
+    m_value = setupFile->getSectionValue("ScanLimitations","Structured CC Count");
+    m_checked = m_value.left(m_value.indexOf("|"));
+    m_value = m_value.mid(m_value.indexOf("|") + 1);
+    m_checked=="m_checked"?ui->pwStructuredCCCountCheckBox->setChecked(true):ui->pwStructuredCCCountCheckBox->setChecked(false);
+    ui->pwStructuredCCCountSpinBox->setValue(m_value.toInt());
 
-    value = setupFile->getSectionValue("ScanLimitations","Structured CC Mode");
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    checked=="checked"?ui->pwStructuredCCModeCheckBox->setChecked(true):ui->pwStructuredCCModeCheckBox->setChecked(false);
-    ui->pwStructuredCCModeComboBox->setCurrentIndex(value.toInt());
+    m_value = setupFile->getSectionValue("ScanLimitations","Structured CC Mode");
+    m_checked = m_value.left(m_value.indexOf("|"));
+    m_value = m_value.mid(m_value.indexOf("|") + 1);
+    m_checked=="m_checked"?ui->pwStructuredCCModeCheckBox->setChecked(true):ui->pwStructuredCCModeCheckBox->setChecked(false);
+    ui->pwStructuredCCModeComboBox->setCurrentIndex(m_value.toInt());
 
-    value = setupFile->getSectionValue("ScanLimitations","Max Scan-Time");
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    checked=="checked"?ui->pwMaxScanTimeCheckBox->setChecked(true):ui->pwMaxScanTimeCheckBox->setChecked(false);
-    ui->pwMaxScanTimeSpinBox->setValue(value.toInt());
+    m_value = setupFile->getSectionValue("ScanLimitations","Max Scan-Time");
+    m_checked = m_value.left(m_value.indexOf("|"));
+    m_value = m_value.mid(m_value.indexOf("|") + 1);
+    m_checked=="m_checked"?ui->pwMaxScanTimeCheckBox->setChecked(true):ui->pwMaxScanTimeCheckBox->setChecked(false);
+    ui->pwMaxScanTimeSpinBox->setValue(m_value.toInt());
 
-    value = setupFile->getSectionValue("ScanLimitations","Max recursion to HWP3 parsing function");
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    checked=="checked"?ui->pwMaxRecursionHWP3CheckBox->setChecked(true):ui->pwMaxRecursionHWP3CheckBox->setChecked(false);
-    ui->pwMaxRecursionHWP3SpinBox->setValue(value.toInt());
+    m_value = setupFile->getSectionValue("ScanLimitations","Max recursion to HWP3 parsing function");
+    m_checked = m_value.left(m_value.indexOf("|"));
+    m_value = m_value.mid(m_value.indexOf("|") + 1);
+    m_checked=="m_checked"?ui->pwMaxRecursionHWP3CheckBox->setChecked(true):ui->pwMaxRecursionHWP3CheckBox->setChecked(false);
+    ui->pwMaxRecursionHWP3SpinBox->setValue(m_value.toInt());
 
-    value = setupFile->getSectionValue("ScanLimitations","Max calls to PCRE match function");
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    checked=="checked"?ui->pwMaxCallsPCREMatchFunctionCheckBox->setChecked(true):ui->pwMaxCallsPCREMatchFunctionCheckBox->setChecked(false);
-    ui->pwMaxCallsPCREMatchFunctionSpinBox->setValue(value.toInt());
+    m_value = setupFile->getSectionValue("ScanLimitations","Max calls to PCRE match function");
+    m_checked = m_value.left(m_value.indexOf("|"));
+    m_value = m_value.mid(m_value.indexOf("|") + 1);
+    m_checked=="m_checked"?ui->pwMaxCallsPCREMatchFunctionCheckBox->setChecked(true):ui->pwMaxCallsPCREMatchFunctionCheckBox->setChecked(false);
+    ui->pwMaxCallsPCREMatchFunctionSpinBox->setValue(m_value.toInt());
 
-    value = setupFile->getSectionValue("ScanLimitations","Max recursion calls to the PCRE match function");
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    checked=="checked"?ui->pwMaxRecursionCallsPCREMatchFunctionCheckBox->setChecked(true):ui->pwMaxRecursionCallsPCREMatchFunctionCheckBox->setChecked(false);
-    ui->pwMaxRecursionCallsPCREMatchFunctionCpinBox->setValue(value.toInt());
+    m_value = setupFile->getSectionValue("ScanLimitations","Max recursion calls to the PCRE match function");
+    m_checked = m_value.left(m_value.indexOf("|"));
+    m_value = m_value.mid(m_value.indexOf("|") + 1);
+    m_checked=="m_checked"?ui->pwMaxRecursionCallsPCREMatchFunctionCheckBox->setChecked(true):ui->pwMaxRecursionCallsPCREMatchFunctionCheckBox->setChecked(false);
+    ui->pwMaxRecursionCallsPCREMatchFunctionCpinBox->setValue(m_value.toInt());
 
-    value = setupFile->getSectionValue("ScanLimitations","Max PCRE file size");
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    if ((value.right(1) == "K") || (value.right(1) == "M")){
-        ui->pwMaxPCREFileSizeComboBox->setCurrentIndex(ui->pwMaxPCREFileSizeComboBox->findText(value.right(1)));
-        value = value.left(value.length() - 1);
+    m_value = setupFile->getSectionValue("ScanLimitations","Max PCRE file size");
+    m_checked = m_value.left(m_value.indexOf("|"));
+    m_value = m_value.mid(m_value.indexOf("|") + 1);
+    if ((m_value.right(1) == "K") || (m_value.right(1) == "M")){
+        ui->pwMaxPCREFileSizeComboBox->setCurrentIndex(ui->pwMaxPCREFileSizeComboBox->findText(m_value.right(1)));
+        m_value = m_value.left(m_value.length() - 1);
     }
-    checked=="checked"?ui->pwMaxPCREFileSizeCheckBox->setChecked(true):ui->pwMaxPCREFileSizeCheckBox->setChecked(false);
-    ui->pwMaxPCREFileSizeSpinBox->setValue(value.toInt());
+    m_checked=="m_checked"?ui->pwMaxPCREFileSizeCheckBox->setChecked(true):ui->pwMaxPCREFileSizeCheckBox->setChecked(false);
+    ui->pwMaxPCREFileSizeSpinBox->setValue(m_value.toInt());
 
-    value = setupFile->getSectionValue("ScanLimitations","Database outdated if older than x days");
-    checked = value.left(value.indexOf("|"));
-    value = value.mid(value.indexOf("|") + 1);
-    checked=="checked"?ui->pwdatabaseOutdatedCheckbox->setChecked(true):ui->pwdatabaseOutdatedCheckbox->setChecked(false);
-    ui->pwdatabaseOutdatedSpinBox->setValue(value.toInt());
+    m_value = setupFile->getSectionValue("ScanLimitations","Database outdated if older than x days");
+    m_checked = m_value.left(m_value.indexOf("|"));
+    m_value = m_value.mid(m_value.indexOf("|") + 1);
+    m_checked=="m_checked"?ui->pwdatabaseOutdatedCheckbox->setChecked(true):ui->pwdatabaseOutdatedCheckbox->setChecked(false);
+    ui->pwdatabaseOutdatedSpinBox->setValue(m_value.toInt());
 
 // OPTIONS
 
-    QString lastOption = "xyz";
-    scanoption * option;
-    scanoptionyn * optionyn;
-    QString newFileFilename = QDir::homePath() + "/.clamav-gui/profiles/" + profileName + ".ini";
-    setupFileHandler * tempconfig = new setupFileHandler(newFileFilename,this);
+    QString m_lastOption = "xyz";
+    scanoption * m_option;
+    scanoptionyn * m_optionyn;
+    QString m_newFileFilename = QDir::homePath() + "/.clamav-gui/profiles/" + profileName + ".ini";
+    setupFileHandler * m_tempconfig = new setupFileHandler(m_newFileFilename,this);
 
     if (ui->optionLayout->count() == 0) {
-        for (int i = 0; i < availableOptions.count(); i++){
-            optionText = availableOptions.at(i);
-            tooltipText = setupFile->getSectionValue("AvailableOptions",optionText);
-            tempconfig->setSectionValue("AvailableOptions",optionText,tooltipText);
-            if (optionText.indexOf(lastOption) == -1) {
-                if (optionText.indexOf("<equal>") != -1) lastOption = optionText.left(optionText.indexOf("<equal>")); else lastOption = optionText;
-                if (optionText.indexOf("<equal>") != -1) {
-                    // --Switches with yes/no option
-                    QString keyword = optionText.left(optionText.indexOf("<equal>"));
-                    QString yes_no = optionText.mid(optionText.indexOf("<equal>") + 7);
-                    bool optionfound = false;
-                    if (setupFile->keywordExists("SelectedOptions",keyword+"<equal>yes") == true) {
-                        optionyn = new scanoptionyn(nullptr,newFileFilename,"SelectedOptions",true,keyword + "<equal>yes",setupFile->getSectionValue("AvailableOptions",optionText));
-                        optionfound = true;
+        for (int i = 0; i < m_availableOptions.count(); i++){
+            m_optionText = m_availableOptions.at(i);
+            m_tooltipText = setupFile->getSectionValue("AvailableOptions",m_optionText);
+            m_tempconfig->setSectionValue("AvailableOptions",m_optionText,m_tooltipText);
+            if (m_optionText.indexOf(m_lastOption) == -1) {
+                if (m_optionText.indexOf("<equal>") != -1) m_lastOption = m_optionText.left(m_optionText.indexOf("<equal>")); else m_lastOption = m_optionText;
+                if (m_optionText.indexOf("<equal>") != -1) {
+                    // --Switches with yes/no m_option
+                    QString m_keyword = m_optionText.left(m_optionText.indexOf("<equal>"));
+                    QString m_yes_no = m_optionText.mid(m_optionText.indexOf("<equal>") + 7);
+                    bool m_optionfound = false;
+                    if (setupFile->keywordExists("SelectedOptions",m_keyword+"<equal>yes") == true) {
+                        m_optionyn = new scanoptionyn(nullptr,m_newFileFilename,"SelectedOptions",true,m_keyword + "<equal>yes",setupFile->getSectionValue("AvailableOptions",m_optionText));
+                        m_optionfound = true;
                     }
-                    if ((setupFile->keywordExists("SelectedOptions",keyword+"<equal>no") == true) && (optionfound == false)) {
-                        optionyn = new scanoptionyn(nullptr,newFileFilename,"SelectedOptions",true,keyword + "<equal>no",setupFile->getSectionValue("AvailableOptions",optionText));
-                        optionfound = true;
+                    if ((setupFile->keywordExists("SelectedOptions",m_keyword+"<equal>no") == true) && (m_optionfound == false)) {
+                        m_optionyn = new scanoptionyn(nullptr,m_newFileFilename,"SelectedOptions",true,m_keyword + "<equal>no",setupFile->getSectionValue("AvailableOptions",m_optionText));
+                        m_optionfound = true;
                     }
-                    if (optionfound == false) {
-                        optionyn = new scanoptionyn(nullptr,newFileFilename,"SelectedOptions",false,keyword+"<equal>" + yes_no,setupFile->getSectionValue("AvailableOptions",optionText));
+                    if (m_optionfound == false) {
+                        m_optionyn = new scanoptionyn(nullptr,m_newFileFilename,"SelectedOptions",false,m_keyword+"<equal>" + m_yes_no,setupFile->getSectionValue("AvailableOptions",m_optionText));
                     }
-                    ui->optionLayout->addWidget(optionyn);
+                    ui->optionLayout->addWidget(m_optionyn);
                 } else {
                     // --Switches without yes/no
-                    if (setupFile->keywordExists("SelectedOptions",optionText) == true) {
-                        option = new scanoption(nullptr,newFileFilename,"SelectedOptions",true,optionText,setupFile->getSectionValue("AvailableOptions",optionText));
+                    if (setupFile->keywordExists("SelectedOptions",m_optionText) == true) {
+                        m_option = new scanoption(nullptr,m_newFileFilename,"SelectedOptions",true,m_optionText,setupFile->getSectionValue("AvailableOptions",m_optionText));
                     } else {
-                        option = new scanoption(nullptr,newFileFilename,"SelectedOptions",false,optionText,setupFile->getSectionValue("AvailableOptions",optionText));
+                        m_option = new scanoption(nullptr,m_newFileFilename,"SelectedOptions",false,m_optionText,setupFile->getSectionValue("AvailableOptions",m_optionText));
                     }
-                    ui->optionLayout->addWidget(option);
+                    ui->optionLayout->addWidget(m_option);
                 }
             }
         }

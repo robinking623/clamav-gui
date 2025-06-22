@@ -10,10 +10,10 @@ clamdConfStringOption::clamdConfStringOption(QWidget *parent, QString keyword, b
 {
     startup = true;
     setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/clamd.conf",this);
-    setupFileHandler * baseSetup = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini",this);
+    setupFileHandler * m_baseSetup = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini",this);
 
-    languageset = baseSetup->getSectionValue("Setup","language");
-    translator * trans = new translator(languageset);
+    languageset = m_baseSetup->getSectionValue("Setup","language");
+    translator * m_trans = new translator(languageset);
 
     ui->setupUi(this);
 
@@ -25,7 +25,7 @@ clamdConfStringOption::clamdConfStringOption(QWidget *parent, QString keyword, b
         ui->lineEdit->setText(options);
     }
 
-    label = trans->translateit(label);
+    label = m_trans->translateit(label);
     label = translator::beautifyString(label,120);
 
     ui->checkBox->setText(label);
@@ -45,12 +45,12 @@ void clamdConfStringOption::slot_checkBoxClicked()
         bool state = ui->checkBox->isChecked();
         ui->lineEdit->setEnabled(state);
         if (state == true) {
-            QString value = setupFile->getSingleLineValue(optionKeyword);
-            setupFile->removeSingleLine(optionKeyword,value);
+            QString m_value = setupFile->getSingleLineValue(optionKeyword);
+            setupFile->removeSingleLine(optionKeyword,m_value);
             setupFile->setSingleLineValue(optionKeyword,ui->lineEdit->text());
         } else {
-            QString value = setupFile->getSingleLineValue(optionKeyword);
-            setupFile->removeSingleLine(optionKeyword,value);
+            QString m_value = setupFile->getSingleLineValue(optionKeyword);
+            setupFile->removeSingleLine(optionKeyword,m_value);
         }
         emit settingChanged();
         (state == true)?ui->frame->setStyleSheet(css_mono):ui->frame->setStyleSheet("");
@@ -61,8 +61,8 @@ void clamdConfStringOption::slot_lineEditChanged()
 {
     if (startup == false) {
         if (ui->checkBox->isChecked() == true){
-            QString value = setupFile->getSingleLineValue(optionKeyword);
-            setupFile->removeSingleLine(optionKeyword,value);
+            QString m_value = setupFile->getSingleLineValue(optionKeyword);
+            setupFile->removeSingleLine(optionKeyword,m_value);
             setupFile->setSingleLineValue(optionKeyword,ui->lineEdit->text());
             emit settingChanged();
         }

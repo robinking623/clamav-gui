@@ -16,55 +16,55 @@ partialLogObject::~partialLogObject(){
 }
 
 void partialLogObject::setLogText(QString logText){
-QString engine;
-QString scannedDirs;
-QString scannedFiles;
-QString errors;
-QString infectedFiles;
-int pos;
+QString m_engine;
+QString m_scannedDirs;
+QString m_scannedFiles;
+QString m_errors;
+QString m_infectedFiles;
+int m_pos;
 
     ui->logPlainText->setPlainText(logText);
 
-    pos = logText.indexOf("Engine version:");
-    if (pos > -1){
-        engine = logText.mid(pos + 15,logText.indexOf("\n",pos + 15) - (pos + 15));
+    m_pos = logText.indexOf("Engine version:");
+    if (m_pos > -1){
+        m_engine = logText.mid(m_pos + 15,logText.indexOf("\n",m_pos + 15) - (m_pos + 15));
     } else {
-        engine = "n/a";
+        m_engine = "n/a";
     }
 
-    pos = logText.indexOf("Scanned directories:");
-    if (pos > -1){
-        scannedDirs = logText.mid(pos + 20,logText.indexOf("\n",pos + 20) - (pos + 20));
+    m_pos = logText.indexOf("Scanned directories:");
+    if (m_pos > -1){
+        m_scannedDirs = logText.mid(m_pos + 20,logText.indexOf("\n",m_pos + 20) - (m_pos + 20));
     } else {
-        scannedDirs = "n/a";
+        m_scannedDirs = "n/a";
     }
 
-    pos = logText.indexOf("Scanned files:");
-    if (pos > -1){
-        scannedFiles = logText.mid(pos + 14,logText.indexOf("\n",pos + 14) - (pos + 14));
+    m_pos = logText.indexOf("Scanned files:");
+    if (m_pos > -1){
+        m_scannedFiles = logText.mid(m_pos + 14,logText.indexOf("\n",m_pos + 14) - (m_pos + 14));
     } else {
-        scannedFiles = "n/a";
+        m_scannedFiles = "n/a";
     }
 
-    pos = logText.indexOf("Total errors:");
-    if (pos > -1){
-        errors = logText.mid(pos + 13,logText.indexOf("\n",pos + 13) - (pos + 13));
+    m_pos = logText.indexOf("Total m_errors:");
+    if (m_pos > -1){
+        m_errors = logText.mid(m_pos + 13,logText.indexOf("\n",m_pos + 13) - (m_pos + 13));
     } else {
-        errors = "n/a";
+        m_errors = "n/a";
     }
 
-    pos = logText.indexOf("Infected files:");
-    if (pos > -1){
-        infectedFiles = logText.mid(pos + 15,logText.indexOf("\n",pos + 15) - (pos + 15));
+    m_pos = logText.indexOf("Infected files:");
+    if (m_pos > -1){
+        m_infectedFiles = logText.mid(m_pos + 15,logText.indexOf("\n",m_pos + 15) - (m_pos + 15));
     } else {
-        infectedFiles = "n/a";
+        m_infectedFiles = "n/a";
     }
 
-    ui->engineVersionLabel->setText(tr("Engine Version: ") + engine);
-    ui->scannedDirectoriesLabel->setText(tr("Scanned Directories: ") + scannedDirs);
-    ui->scannedFilesLabel->setText(tr("Scanned Files: ") + scannedFiles);
-    ui->totalErrorsLabel->setText(tr("Total Errors: ") + errors);
-    ui->infectedFilesLabel->setText(tr("Infected Files: ") + infectedFiles);
+    ui->engineVersionLabel->setText(tr("Engine Version: ") + m_engine);
+    ui->scannedDirectoriesLabel->setText(tr("Scanned Directories: ") + m_scannedDirs);
+    ui->scannedFilesLabel->setText(tr("Scanned Files: ") + m_scannedFiles);
+    ui->totalErrorsLabel->setText(tr("Total Errors: ") + m_errors);
+    ui->infectedFilesLabel->setText(tr("Infected Files: ") + m_infectedFiles);
 }
 
 QString partialLogObject::getLogText(){
@@ -72,29 +72,29 @@ QString partialLogObject::getLogText(){
 }
 
 void partialLogObject::slot_searchButtonClicked(){
-QTextCursor cursor = ui->logPlainText->textCursor();
-QString searchString = ui->searchTextLineEdit->text();
-int pos = ui->logPlainText->toPlainText().toUpper().indexOf(searchString.toUpper(),start);
+QTextCursor m_cursor = ui->logPlainText->textCursor();
+QString m_searchString = ui->searchTextLineEdit->text();
+int m_pos = ui->logPlainText->toPlainText().toUpper().indexOf(m_searchString.toUpper(),start);
 
-    if (pos > -1){
+    if (m_pos > -1){
         ui->searchButton->setText(tr("continue"));
-        start = pos + searchString.length();
-        cursor.movePosition(QTextCursor::Start);
-        cursor.movePosition(QTextCursor::Right,QTextCursor::MoveAnchor,pos);
-        cursor.movePosition(QTextCursor::Right,QTextCursor::KeepAnchor,searchString.length());
-        ui->logPlainText->setTextCursor(cursor);
+        start = m_pos + m_searchString.length();
+        m_cursor.movePosition(QTextCursor::Start);
+        m_cursor.movePosition(QTextCursor::Right,QTextCursor::MoveAnchor,m_pos);
+        m_cursor.movePosition(QTextCursor::Right,QTextCursor::KeepAnchor,m_searchString.length());
+        ui->logPlainText->setTextCursor(m_cursor);
         ui->logPlainText->ensureCursorVisible();
     } else {
         if (QMessageBox::question(this,"INFO",tr("Searchstring not found!\nContinue from the Start of the Log?"),QMessageBox::Yes,QMessageBox::No) == QMessageBox::Yes){
             start = 0;
-            pos = ui->logPlainText->toPlainText().toUpper().indexOf(searchString.toUpper(),start);
-            if (pos > -1){
+            m_pos = ui->logPlainText->toPlainText().toUpper().indexOf(m_searchString.toUpper(),start);
+            if (m_pos > -1){
                 ui->searchButton->setText(tr("continue"));
-                start = pos + searchString.length();
-                cursor.movePosition(QTextCursor::Start);
-                cursor.movePosition(QTextCursor::Right,QTextCursor::MoveAnchor,pos);
-                cursor.movePosition(QTextCursor::Right,QTextCursor::KeepAnchor,searchString.length());
-                ui->logPlainText->setTextCursor(cursor);
+                start = m_pos + m_searchString.length();
+                m_cursor.movePosition(QTextCursor::Start);
+                m_cursor.movePosition(QTextCursor::Right,QTextCursor::MoveAnchor,m_pos);
+                m_cursor.movePosition(QTextCursor::Right,QTextCursor::KeepAnchor,m_searchString.length());
+                ui->logPlainText->setTextCursor(m_cursor);
                 ui->logPlainText->ensureCursorVisible();
             } else {
                 QMessageBox::information(this,tr("INFO"),tr("Searchstring not found!"));
@@ -114,44 +114,44 @@ void partialLogObject::slot_clearLineEditButtonClicked(){
 }
 
 void partialLogObject::slot_totalErrorButtonClicked(){
-QTextCursor cursor = ui->logPlainText->textCursor();
-QStringList searchStrings;
-QString searchString;
-int pos = -1;
-int index = 0;
+QTextCursor m_cursor = ui->logPlainText->textCursor();
+QStringList m_searchStrings;
+QString m_searchString;
+int m_pos = -1;
+int m_index = 0;
 
-    searchStrings << "Access denied" << "Empty file";
+    m_searchStrings << "Access denied" << "Empty file";
 
-    while ((pos == -1) & (index < searchStrings.count())){
-        searchString = searchStrings.at(index);
-        index ++;
-        pos = ui->logPlainText->toPlainText().indexOf(searchString,errorStart);
+    while ((m_pos == -1) & (m_index < m_searchStrings.count())){
+        m_searchString = m_searchStrings.at(m_index);
+        m_index ++;
+        m_pos = ui->logPlainText->toPlainText().indexOf(m_searchString,errorStart);
     }
 
-    if (pos > -1){
-        errorStart = pos + searchString.length();
-        cursor.movePosition(QTextCursor::Start);
-        cursor.movePosition(QTextCursor::Right,QTextCursor::MoveAnchor,pos);
-        cursor.movePosition(QTextCursor::Right,QTextCursor::KeepAnchor,searchString.length());
-        ui->logPlainText->setTextCursor(cursor);
+    if (m_pos > -1){
+        errorStart = m_pos + m_searchString.length();
+        m_cursor.movePosition(QTextCursor::Start);
+        m_cursor.movePosition(QTextCursor::Right,QTextCursor::MoveAnchor,m_pos);
+        m_cursor.movePosition(QTextCursor::Right,QTextCursor::KeepAnchor,m_searchString.length());
+        ui->logPlainText->setTextCursor(m_cursor);
         ui->logPlainText->ensureCursorVisible();
-        if (ui->logPlainText->toPlainText().indexOf(searchString,errorStart) == -1) errorStart = 0;
+        if (ui->logPlainText->toPlainText().indexOf(m_searchString,errorStart) == -1) errorStart = 0;
     }
 }
 
 void partialLogObject::slot_infectedFilesButtonClicked(){
-QTextCursor cursor = ui->logPlainText->textCursor();
-QString searchString = "FOUND";
-int pos = ui->logPlainText->toPlainText().indexOf(searchString,infectedStart);
+QTextCursor m_cursor = ui->logPlainText->textCursor();
+QString m_searchString = "FOUND";
+int m_pos = ui->logPlainText->toPlainText().indexOf(m_searchString,infectedStart);
 
-    if (pos > -1){
-        infectedStart = pos + searchString.length();
-        cursor.movePosition(QTextCursor::Start);
-        cursor.movePosition(QTextCursor::Right,QTextCursor::MoveAnchor,pos);
-        cursor.movePosition(QTextCursor::Right,QTextCursor::KeepAnchor,searchString.length());
-        ui->logPlainText->setTextCursor(cursor);
+    if (m_pos > -1){
+        infectedStart = m_pos + m_searchString.length();
+        m_cursor.movePosition(QTextCursor::Start);
+        m_cursor.movePosition(QTextCursor::Right,QTextCursor::MoveAnchor,m_pos);
+        m_cursor.movePosition(QTextCursor::Right,QTextCursor::KeepAnchor,m_searchString.length());
+        ui->logPlainText->setTextCursor(m_cursor);
         ui->logPlainText->ensureCursorVisible();
-        if (ui->logPlainText->toPlainText().indexOf(searchString,infectedStart) == -1) infectedStart = 0;
+        if (ui->logPlainText->toPlainText().indexOf(m_searchString,infectedStart) == -1) infectedStart = 0;
     }
 }
 

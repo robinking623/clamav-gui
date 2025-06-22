@@ -15,17 +15,17 @@ ProfileManager::~ProfileManager(){
 }
 
 void ProfileManager::getProfileList(){
-QStringList profiles = setupFile->getKeywords("Profiles");
-QStringList selectableProfiles;
-setupFileHandler sf(this);
+QStringList m_profiles = setupFile->getKeywords("Profiles");
+QStringList m_selectableProfiles;
+setupFileHandler m_sf(this);
 
-    foreach(QString profile,profiles){
-        sf.setSetupFileName(QDir::homePath() + "/.clamav-gui/profiles/" + profile + ".ini");
-        if (sf.getSectionValue(profile,"Directories") != "") selectableProfiles << profile;
+    foreach(QString profile,m_profiles){
+        m_sf.setSetupFileName(QDir::homePath() + "/.clamav-gui/profiles/" + profile + ".ini");
+        if (m_sf.getSectionValue(profile,"Directories") != "") m_selectableProfiles << profile;
     }
 
     ui->profileComboBox->clear();
-    ui->profileComboBox->addItems(profiles);
+    ui->profileComboBox->addItems(m_profiles);
 }
 
 void ProfileManager::checkMonochromeSettings()
@@ -42,122 +42,122 @@ void ProfileManager::checkMonochromeSettings()
 }
 
 void ProfileManager::slot_readProfileSettings(){
-QString profileName = ui->profileComboBox->currentText();
-if (profileName == "")
+QString m_profileName = ui->profileComboBox->currentText();
+if (m_profileName == "")
     return;
 
-setupFileHandler * tempSetupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/profiles/" + profileName + ".ini",this);
-QStringList targets;
-QString targetLabel;
-QStringList options;
-QString optionLabel;
-QString logFile = tempSetupFile->getSectionValue("Directories","ScanReportToFile");
+setupFileHandler * m_tempSetupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/profiles/" + m_profileName + ".ini",this);
+QStringList m_targets;
+QString m_targetLabel;
+QStringList m_options;
+QString m_optionLabel;
+QString m_logFile = m_tempSetupFile->getSectionValue("Directories","ScanReportToFile");
 
-    targets = tempSetupFile->getSectionValue(profileName,"Directories").split('\n');
-    options = tempSetupFile->getKeywords("SelectedOptions");
+    m_targets = m_tempSetupFile->getSectionValue(m_profileName,"Directories").split('\n');
+    m_options = m_tempSetupFile->getKeywords("SelectedOptions");
 
-    if ((targets[0] != "") &(targets.count() > 0)) targetLabel = targetLabel + targets[0];
-    for (int i = 1; i < targets.count(); i++){
-        if ((targets[i] != "") & (targetLabel != "")){
-            targetLabel = targetLabel + "\n" + targets[i];
+    if ((m_targets[0] != "") &(m_targets.count() > 0)) m_targetLabel = m_targetLabel + m_targets[0];
+    for (int i = 1; i < m_targets.count(); i++){
+        if ((m_targets[i] != "") & (m_targetLabel != "")){
+            m_targetLabel = m_targetLabel + "\n" + m_targets[i];
         } else {
-            if (targets[i] != "") targetLabel = targets[i];
+            if (m_targets[i] != "") m_targetLabel = m_targets[i];
         }
     }
 
-    ui->targetsListLabel->setText(targetLabel);
+    ui->targetsListLabel->setText(m_targetLabel);
 
-    if (options.count() > 0) optionLabel = optionLabel + options[0];
-    for (int i = 1; i < options.count(); i++){
-        optionLabel = optionLabel + "\n" + options[i];
+    if (m_options.count() > 0) m_optionLabel = m_optionLabel + m_options[0];
+    for (int i = 1; i < m_options.count(); i++){
+        m_optionLabel = m_optionLabel + "\n" + m_options[i];
     }
 
-    if (tempSetupFile->getSectionValue("REGEXP_and_IncludeExclude","DontScanFileNamesMatchingRegExp").indexOf("not checked") == -1) optionLabel = optionLabel + "\n" + "--exclude=" + tempSetupFile->getSectionValue("REGEXP_and_IncludeExclude","DontScanFileNamesMatchingRegExp").mid(tempSetupFile->getSectionValue("REGEXP_and_IncludeExclude","DontScanFileNamesMatchingRegExp").indexOf("|") + 1);
-    if (tempSetupFile->getSectionValue("REGEXP_and_IncludeExclude","DontScanDiretoriesMatchingRegExp").indexOf("not checked") == -1) optionLabel = optionLabel + "\n" + "--exclude-dir=" + tempSetupFile->getSectionValue("REGEXP_and_IncludeExclude","DontScanDiretoriesMatchingRegExp").mid(tempSetupFile->getSectionValue("REGEXP_and_IncludeExclude","DontScanDiretoriesMatchingRegExp").indexOf("|") + 1);
-    if (tempSetupFile->getSectionValue("REGEXP_and_IncludeExclude","OnlyScanFileNamesMatchingRegExp").indexOf("not checked") == -1) optionLabel = optionLabel + "\n" + "--include=" + tempSetupFile->getSectionValue("REGEXP_and_IncludeExclude","OnlyScanFileNamesMatchingRegExp").mid(tempSetupFile->getSectionValue("REGEXP_and_IncludeExclude","OnlyScanFileNamesMatchingRegExp").indexOf("|") + 1);
-    if (tempSetupFile->getSectionValue("REGEXP_and_IncludeExclude","OnlyScanDiretoriesMatchingRegExp").indexOf("not checked") == -1) optionLabel = optionLabel + "\n" + "--include-dir=" + tempSetupFile->getSectionValue("REGEXP_and_IncludeExclude","OnlyScanDiretoriesMatchingRegExp").mid(tempSetupFile->getSectionValue("REGEXP_and_IncludeExclude","OnlyScanDiretoriesMatchingRegExp").indexOf("|") + 1);
+    if (m_tempSetupFile->getSectionValue("REGEXP_and_IncludeExclude","DontScanFileNamesMatchingRegExp").indexOf("not checked") == -1) m_optionLabel = m_optionLabel + "\n" + "--exclude=" + m_tempSetupFile->getSectionValue("REGEXP_and_IncludeExclude","DontScanFileNamesMatchingRegExp").mid(m_tempSetupFile->getSectionValue("REGEXP_and_IncludeExclude","DontScanFileNamesMatchingRegExp").indexOf("|") + 1);
+    if (m_tempSetupFile->getSectionValue("REGEXP_and_IncludeExclude","DontScanDiretoriesMatchingRegExp").indexOf("not checked") == -1) m_optionLabel = m_optionLabel + "\n" + "--exclude-dir=" + m_tempSetupFile->getSectionValue("REGEXP_and_IncludeExclude","DontScanDiretoriesMatchingRegExp").mid(m_tempSetupFile->getSectionValue("REGEXP_and_IncludeExclude","DontScanDiretoriesMatchingRegExp").indexOf("|") + 1);
+    if (m_tempSetupFile->getSectionValue("REGEXP_and_IncludeExclude","OnlyScanFileNamesMatchingRegExp").indexOf("not checked") == -1) m_optionLabel = m_optionLabel + "\n" + "--include=" + m_tempSetupFile->getSectionValue("REGEXP_and_IncludeExclude","OnlyScanFileNamesMatchingRegExp").mid(m_tempSetupFile->getSectionValue("REGEXP_and_IncludeExclude","OnlyScanFileNamesMatchingRegExp").indexOf("|") + 1);
+    if (m_tempSetupFile->getSectionValue("REGEXP_and_IncludeExclude","OnlyScanDiretoriesMatchingRegExp").indexOf("not checked") == -1) m_optionLabel = m_optionLabel + "\n" + "--include-dir=" + m_tempSetupFile->getSectionValue("REGEXP_and_IncludeExclude","OnlyScanDiretoriesMatchingRegExp").mid(m_tempSetupFile->getSectionValue("REGEXP_and_IncludeExclude","OnlyScanDiretoriesMatchingRegExp").indexOf("|") + 1);
 
-    if (tempSetupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","EnablePUAOptions") == true) {
-        QStringList keywords;
-        QStringList switches;
-        keywords << "LoadPUAPacked" << "LoadPUAPWTool" << "LoadPUANetTool" << "LoadPUAP2P" << "LoadPUAIRC" << "LoadPUARAT" << "LoadPUANetToolSpy";
-        keywords << "LoadPUAServer" << "LoadPUAScript" << "LoadPUAAndr" << "LoadPUAJava" << "LoadPUAOsx" << "LoadPUATool" << "LoadPUAUnix" << "LoadPUAWin";
-        switches << "--include-pua=Packed" << "--include-pua=PWTool" << "--include-pua=NetTool" << "--include-pua=P2P" << "--include-pua=IRC" << "--include-pua=RAT";
-        switches << "--include-pua=NetToolSpy" << "--include-pua=Server" << "--include-pua=Script" << "--include-pua=Andr" << "--include-pua=Java";
-        switches << "--include-pua=Osx" << "--include-pua=Tool" << "--include-pua=Unix" << "--include-pua=Win";
-        for (int i = 0; i < keywords.length(); i++) {
-            if (tempSetupFile->getSectionBoolValue("REGEXP_and_IncludeExclude",keywords.at(i)) == true) optionLabel = optionLabel + "\n" + switches.at(i);
+    if (m_tempSetupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","EnablePUAOptions") == true) {
+        QStringList m_keywords;
+        QStringList m_switches;
+        m_keywords << "LoadPUAPacked" << "LoadPUAPWTool" << "LoadPUANetTool" << "LoadPUAP2P" << "LoadPUAIRC" << "LoadPUARAT" << "LoadPUANetToolSpy";
+        m_keywords << "LoadPUAServer" << "LoadPUAScript" << "LoadPUAAndr" << "LoadPUAJava" << "LoadPUAOsx" << "LoadPUATool" << "LoadPUAUnix" << "LoadPUAWin";
+        m_switches << "--include-pua=Packed" << "--include-pua=PWTool" << "--include-pua=NetTool" << "--include-pua=P2P" << "--include-pua=IRC" << "--include-pua=RAT";
+        m_switches << "--include-pua=NetToolSpy" << "--include-pua=Server" << "--include-pua=Script" << "--include-pua=Andr" << "--include-pua=Java";
+        m_switches << "--include-pua=Osx" << "--include-pua=Tool" << "--include-pua=Unix" << "--include-pua=Win";
+        for (int i = 0; i < m_keywords.length(); i++) {
+            if (m_tempSetupFile->getSectionBoolValue("REGEXP_and_IncludeExclude",m_keywords.at(i)) == true) m_optionLabel = m_optionLabel + "\n" + m_switches.at(i);
         }
     }
     // Scan Limitations
-    QString value = "";
-    value = tempSetupFile->getSectionValue("ScanLimitations","Files larger than this will be skipped and assumed clean");
-    if ((value != "") && (value.indexOf("not checked") == -1)) optionLabel = optionLabel + "\n" + "--max-filesize=" + value.mid(value.indexOf("|") + 1);
-    value = tempSetupFile->getSectionValue("ScanLimitations","The maximum amount of data to scan for each container file");
-    if ((value != "") && (value.indexOf("not checked") == -1)) optionLabel = optionLabel + "\n" + "--max-scansize=" + value.mid(value.indexOf("|") + 1);
-    value = tempSetupFile->getSectionValue("ScanLimitations","The maximum number of files to scan for each container file");
-    if ((value != "") && (value.indexOf("not checked") == -1)) optionLabel = optionLabel + "\n" + "--max-files=" + value.mid(value.indexOf("|") + 1);
-    value = tempSetupFile->getSectionValue("ScanLimitations","Maximum archive recursion level for container file");
-    if ((value != "") && (value.indexOf("not checked") == -1)) optionLabel = optionLabel + "\n" + "--max-recursion=" + value.mid(value.indexOf("|") + 1);
-    value = tempSetupFile->getSectionValue("ScanLimitations","Maximum directory recursion level");
-    if ((value != "") && (value.indexOf("not checked") == -1)) optionLabel = optionLabel + "\n" + "--max-dir-recursion=" + value.mid(value.indexOf("|") + 1);
-    value = tempSetupFile->getSectionValue("ScanLimitations","Maximum size file to check for embedded PE");
-    if ((value != "") && (value.indexOf("not checked") == -1)) optionLabel = optionLabel + "\n" + "--max-embeddedpe=" + value.mid(value.indexOf("|") + 1);
-    value = tempSetupFile->getSectionValue("ScanLimitations","Maximum size of HTML file to normalize");
-    if ((value != "") && (value.indexOf("not checked") == -1)) optionLabel = optionLabel + "\n" + "--max-htmlnormalized=" + value.mid(value.indexOf("|") + 1);
-    value = tempSetupFile->getSectionValue("ScanLimitations","Maximum size of normalized HTML file to scan");
-    if ((value != "") && (value.indexOf("not checked") == -1)) optionLabel = optionLabel + "\n" + "--max-htmlnotags=" + value.mid(value.indexOf("|") + 1);
-    value = tempSetupFile->getSectionValue("ScanLimitations","Maximum size of script file to normalize");
-    if ((value != "") && (value.indexOf("not checked") == -1)) optionLabel = optionLabel + "\n" + "--max-scriptnormalize=" + value.mid(value.indexOf("|") + 1);
-    value = tempSetupFile->getSectionValue("ScanLimitations","Maximum size zip to type reanalyze");
-    if ((value != "") && (value.indexOf("not checked") == -1)) optionLabel = optionLabel + "\n" + "--max-ziptypercg=" + value.mid(value.indexOf("|") + 1);
-    value = tempSetupFile->getSectionValue("ScanLimitations","Maximum number of partitions in disk image to be scanned");
-    if ((value != "") && (value.indexOf("not checked") == -1)) optionLabel = optionLabel + "\n" + "--max-partitions=" + value.mid(value.indexOf("|") + 1);
-    value = tempSetupFile->getSectionValue("ScanLimitations","Maximum number of icons in PE file to be scanned");
-    if ((value != "") && (value.indexOf("not checked") == -1)) optionLabel = optionLabel + "\n" + "--max-iconspe=" + value.mid(value.indexOf("|") + 1);
-    value = tempSetupFile->getSectionValue("ScanLimitations","Bytecode timeout in milliseconds");
-    if ((value != "") && (value.indexOf("not checked") == -1)) optionLabel = optionLabel + "\n" + "--bytecode-timeout=" + value.mid(value.indexOf("|") + 1);
-    value = tempSetupFile->getSectionValue("ScanLimitations","Collect and print execution statistics");
-    if ((value != "") && (value.indexOf("not checked") == -1)) optionLabel = optionLabel + "\n" + "--statistics " + value.mid(value.indexOf("|") + 1);
-    value = tempSetupFile->getSectionValue("ScanLimitations","Structured SSN Format");
-    if ((value != "") && (value.indexOf("not checked") == -1)) optionLabel = optionLabel + "\n" + "--structured-ssn-format=" + value.mid(value.indexOf("|") + 1);
-    value = tempSetupFile->getSectionValue("ScanLimitations","Structured SSN Count");
-    if ((value != "") && (value.indexOf("not checked") == -1)) optionLabel = optionLabel + "\n" + "--structured-ssn-count=" + value.mid(value.indexOf("|") + 1);
-    value = tempSetupFile->getSectionValue("ScanLimitations","Structured CC Count");
-    if ((value != "") && (value.indexOf("not checked") == -1)) optionLabel = optionLabel + "\n" + "--structured-cc-count=" + value.mid(value.indexOf("|") + 1);
-    value = tempSetupFile->getSectionValue("ScanLimitations","Structured CC Mode");
-    if ((value != "") && (value.indexOf("not checked") == -1)) optionLabel = optionLabel + "\n" + "--structured-cc-mode=" + value.mid(value.indexOf("|") + 1);
-    value = tempSetupFile->getSectionValue("ScanLimitations","Max Scan-Time");
-    if ((value != "") && (value.indexOf("not checked") == -1)) optionLabel = optionLabel + "\n" + "--max-scantime=" + value.mid(value.indexOf("|") + 1);
-    value = tempSetupFile->getSectionValue("ScanLimitations","Max recursion to HWP3 parsing function");
-    if ((value != "") && (value.indexOf("not checked") == -1)) optionLabel = optionLabel + "\n" + "--max-rechwp3=" + value.mid(value.indexOf("|") + 1);
-    value = tempSetupFile->getSectionValue("ScanLimitations","Max calls to PCRE match function");
-    if ((value != "") && (value.indexOf("not checked") == -1)) optionLabel = optionLabel + "\n" + "--pcre-match-limit=" + value.mid(value.indexOf("|") + 1);
-    value = tempSetupFile->getSectionValue("ScanLimitations","Max recursion calls to the PCRE match function");
-    if ((value != "") && (value.indexOf("not checked") == -1)) optionLabel = optionLabel + "\n" + "--pcre-recmatch-limit=" + value.mid(value.indexOf("|") + 1);
-    value = tempSetupFile->getSectionValue("ScanLimitations","Max PCRE file size");
-    if ((value != "") && (value.indexOf("not checked") == -1)) optionLabel = optionLabel + "\n" + "--pcre-max-filesize=" + value.mid(value.indexOf("|") + 1);
-    value = tempSetupFile->getSectionValue("ScanLimitations","Database outdated if older than x days");
-    if ((value != "") && (value.indexOf("not checked") == -1)) optionLabel = optionLabel + "\n" + " --fail-if-cvd-older-than=" + value.mid(value.indexOf("|") + 1);
+    QString m_value = "";
+    m_value = m_tempSetupFile->getSectionValue("ScanLimitations","Files larger than this will be skipped and assumed clean");
+    if ((m_value != "") && (m_value.indexOf("not checked") == -1)) m_optionLabel = m_optionLabel + "\n" + "--max-filesize=" + m_value.mid(m_value.indexOf("|") + 1);
+    m_value = m_tempSetupFile->getSectionValue("ScanLimitations","The maximum amount of data to scan for each container file");
+    if ((m_value != "") && (m_value.indexOf("not checked") == -1)) m_optionLabel = m_optionLabel + "\n" + "--max-scansize=" + m_value.mid(m_value.indexOf("|") + 1);
+    m_value = m_tempSetupFile->getSectionValue("ScanLimitations","The maximum number of files to scan for each container file");
+    if ((m_value != "") && (m_value.indexOf("not checked") == -1)) m_optionLabel = m_optionLabel + "\n" + "--max-files=" + m_value.mid(m_value.indexOf("|") + 1);
+    m_value = m_tempSetupFile->getSectionValue("ScanLimitations","Maximum archive recursion level for container file");
+    if ((m_value != "") && (m_value.indexOf("not checked") == -1)) m_optionLabel = m_optionLabel + "\n" + "--max-recursion=" + m_value.mid(m_value.indexOf("|") + 1);
+    m_value = m_tempSetupFile->getSectionValue("ScanLimitations","Maximum directory recursion level");
+    if ((m_value != "") && (m_value.indexOf("not checked") == -1)) m_optionLabel = m_optionLabel + "\n" + "--max-dir-recursion=" + m_value.mid(m_value.indexOf("|") + 1);
+    m_value = m_tempSetupFile->getSectionValue("ScanLimitations","Maximum size file to check for embedded PE");
+    if ((m_value != "") && (m_value.indexOf("not checked") == -1)) m_optionLabel = m_optionLabel + "\n" + "--max-embeddedpe=" + m_value.mid(m_value.indexOf("|") + 1);
+    m_value = m_tempSetupFile->getSectionValue("ScanLimitations","Maximum size of HTML file to normalize");
+    if ((m_value != "") && (m_value.indexOf("not checked") == -1)) m_optionLabel = m_optionLabel + "\n" + "--max-htmlnormalized=" + m_value.mid(m_value.indexOf("|") + 1);
+    m_value = m_tempSetupFile->getSectionValue("ScanLimitations","Maximum size of normalized HTML file to scan");
+    if ((m_value != "") && (m_value.indexOf("not checked") == -1)) m_optionLabel = m_optionLabel + "\n" + "--max-htmlnotags=" + m_value.mid(m_value.indexOf("|") + 1);
+    m_value = m_tempSetupFile->getSectionValue("ScanLimitations","Maximum size of script file to normalize");
+    if ((m_value != "") && (m_value.indexOf("not checked") == -1)) m_optionLabel = m_optionLabel + "\n" + "--max-scriptnormalize=" + m_value.mid(m_value.indexOf("|") + 1);
+    m_value = m_tempSetupFile->getSectionValue("ScanLimitations","Maximum size zip to type reanalyze");
+    if ((m_value != "") && (m_value.indexOf("not checked") == -1)) m_optionLabel = m_optionLabel + "\n" + "--max-ziptypercg=" + m_value.mid(m_value.indexOf("|") + 1);
+    m_value = m_tempSetupFile->getSectionValue("ScanLimitations","Maximum number of partitions in disk image to be scanned");
+    if ((m_value != "") && (m_value.indexOf("not checked") == -1)) m_optionLabel = m_optionLabel + "\n" + "--max-partitions=" + m_value.mid(m_value.indexOf("|") + 1);
+    m_value = m_tempSetupFile->getSectionValue("ScanLimitations","Maximum number of icons in PE file to be scanned");
+    if ((m_value != "") && (m_value.indexOf("not checked") == -1)) m_optionLabel = m_optionLabel + "\n" + "--max-iconspe=" + m_value.mid(m_value.indexOf("|") + 1);
+    m_value = m_tempSetupFile->getSectionValue("ScanLimitations","Bytecode timeout in milliseconds");
+    if ((m_value != "") && (m_value.indexOf("not checked") == -1)) m_optionLabel = m_optionLabel + "\n" + "--bytecode-timeout=" + m_value.mid(m_value.indexOf("|") + 1);
+    m_value = m_tempSetupFile->getSectionValue("ScanLimitations","Collect and print execution statistics");
+    if ((m_value != "") && (m_value.indexOf("not checked") == -1)) m_optionLabel = m_optionLabel + "\n" + "--statistics " + m_value.mid(m_value.indexOf("|") + 1);
+    m_value = m_tempSetupFile->getSectionValue("ScanLimitations","Structured SSN Format");
+    if ((m_value != "") && (m_value.indexOf("not checked") == -1)) m_optionLabel = m_optionLabel + "\n" + "--structured-ssn-format=" + m_value.mid(m_value.indexOf("|") + 1);
+    m_value = m_tempSetupFile->getSectionValue("ScanLimitations","Structured SSN Count");
+    if ((m_value != "") && (m_value.indexOf("not checked") == -1)) m_optionLabel = m_optionLabel + "\n" + "--structured-ssn-count=" + m_value.mid(m_value.indexOf("|") + 1);
+    m_value = m_tempSetupFile->getSectionValue("ScanLimitations","Structured CC Count");
+    if ((m_value != "") && (m_value.indexOf("not checked") == -1)) m_optionLabel = m_optionLabel + "\n" + "--structured-cc-count=" + m_value.mid(m_value.indexOf("|") + 1);
+    m_value = m_tempSetupFile->getSectionValue("ScanLimitations","Structured CC Mode");
+    if ((m_value != "") && (m_value.indexOf("not checked") == -1)) m_optionLabel = m_optionLabel + "\n" + "--structured-cc-mode=" + m_value.mid(m_value.indexOf("|") + 1);
+    m_value = m_tempSetupFile->getSectionValue("ScanLimitations","Max Scan-Time");
+    if ((m_value != "") && (m_value.indexOf("not checked") == -1)) m_optionLabel = m_optionLabel + "\n" + "--max-scantime=" + m_value.mid(m_value.indexOf("|") + 1);
+    m_value = m_tempSetupFile->getSectionValue("ScanLimitations","Max recursion to HWP3 parsing function");
+    if ((m_value != "") && (m_value.indexOf("not checked") == -1)) m_optionLabel = m_optionLabel + "\n" + "--max-rechwp3=" + m_value.mid(m_value.indexOf("|") + 1);
+    m_value = m_tempSetupFile->getSectionValue("ScanLimitations","Max calls to PCRE match function");
+    if ((m_value != "") && (m_value.indexOf("not checked") == -1)) m_optionLabel = m_optionLabel + "\n" + "--pcre-match-limit=" + m_value.mid(m_value.indexOf("|") + 1);
+    m_value = m_tempSetupFile->getSectionValue("ScanLimitations","Max recursion calls to the PCRE match function");
+    if ((m_value != "") && (m_value.indexOf("not checked") == -1)) m_optionLabel = m_optionLabel + "\n" + "--pcre-recmatch-limit=" + m_value.mid(m_value.indexOf("|") + 1);
+    m_value = m_tempSetupFile->getSectionValue("ScanLimitations","Max PCRE file size");
+    if ((m_value != "") && (m_value.indexOf("not checked") == -1)) m_optionLabel = m_optionLabel + "\n" + "--pcre-max-filesize=" + m_value.mid(m_value.indexOf("|") + 1);
+    m_value = m_tempSetupFile->getSectionValue("ScanLimitations","Database outdated if older than x days");
+    if ((m_value != "") && (m_value.indexOf("not checked") == -1)) m_optionLabel = m_optionLabel + "\n" + " --fail-if-cvd-older-than=" + m_value.mid(m_value.indexOf("|") + 1);
 
-    if (tempSetupFile->getSectionBoolValue(profileName,"Recursion") == true){
-        if (optionLabel != ""){
-            optionLabel = optionLabel + "\n" + "-r";
+    if (m_tempSetupFile->getSectionBoolValue(m_profileName,"Recursion") == true){
+        if (m_optionLabel != ""){
+            m_optionLabel = m_optionLabel + "\n" + "-r";
         } else {
-            optionLabel = "-r";
+            m_optionLabel = "-r";
         }
     }
 
-    optionLabel = optionLabel.replace("<equal>","=");
-    ui->optionsListLabel->setText(optionLabel);
+    m_optionLabel = m_optionLabel.replace("<equal>","=");
+    ui->optionsListLabel->setText(m_optionLabel);
 
-    if (logFile.left(logFile.indexOf("|")) == "checked"){
-        logFile = logFile.mid(logFile.indexOf("|") + 1);
+    if (m_logFile.left(m_logFile.indexOf("|")) == "checked"){
+        m_logFile = m_logFile.mid(m_logFile.indexOf("|") + 1);
     } else {
-        logFile = "";
+        m_logFile = "";
     }
 
-    ui->filenameTextLabel->setText(logFile);
+    ui->filenameTextLabel->setText(m_logFile);
 }
 
 void ProfileManager::slot_addProfileButtonClicked(){
@@ -169,10 +169,10 @@ void ProfileManager::slot_addProfileButtonClicked(){
 }
 
 void ProfileManager::slot_editProfileButtonClicked(){
-QString profileName = ui->profileComboBox->currentText();
+QString m_profileName = ui->profileComboBox->currentText();
 
-    if (profileName != ""){
-        profileWizard = new ProfileWizardDialog(this,profileName);
+    if (m_profileName != ""){
+        profileWizard = new ProfileWizardDialog(this,m_profileName);
         connect(profileWizard,SIGNAL(signal_profileSaved()),this,SLOT(slot_profileSaved()));
         profileWizard->setModal(true);
         profileWizard->show();
@@ -181,31 +181,31 @@ QString profileName = ui->profileComboBox->currentText();
 }
 
 void ProfileManager::slot_eraseProfileButtonClicked(){
-QString profileName = ui->profileComboBox->currentText();
-QStringList scanJobs = setupFile->getKeywords("ScanJobs");
-QString line;
-QString logfileName;
-bool found = false;
+QString m_profileName = ui->profileComboBox->currentText();
+QStringList m_scanJobs = setupFile->getKeywords("ScanJobs");
+QString m_line;
+QString m_logfileName;
+bool m_found = false;
 
-    if (profileName != ""){
-        foreach(QString scanJob,scanJobs){
-            line = setupFile->getSectionValue("ScanJobs",scanJob);
-            if (line.indexOf("|"+profileName+"|") != -1) found = true;
+    if (m_profileName != ""){
+        foreach(QString scanJob,m_scanJobs){
+            m_line = setupFile->getSectionValue("ScanJobs",scanJob);
+            if (m_line.indexOf("|"+m_profileName+"|") != -1) m_found = true;
         }
-        if (found == false){
-            int rc = QMessageBox::question(this,tr("WARNING"),tr("Do you realy want to remove this (") + profileName + tr(") profile"),QMessageBox::Yes,QMessageBox::No);
-            QFile tempFile(QDir::homePath() + "/.clamav-gui/profiles/" + ui->profileComboBox->currentText() + ".ini");
-                if (rc == QMessageBox::Yes){
-                    setupFileHandler * sf = new setupFileHandler(QDir::homePath() + "/.clamav-gui/profiles/" + ui->profileComboBox->currentText() + ".ini",this);
-                    logfileName = sf->getSectionValue("Directories","ScanReportToFile").mid(sf->getSectionValue("Directories","ScanReportToFile").indexOf("|") + 1);
-                    if (logfileName != "" ){
+        if (m_found == false){
+            int m_rc = QMessageBox::question(this,tr("WARNING"),tr("Do you realy want to remove this (") + m_profileName + tr(") profile"),QMessageBox::Yes,QMessageBox::No);
+            QFile m_tempFile(QDir::homePath() + "/.clamav-gui/profiles/" + ui->profileComboBox->currentText() + ".ini");
+                if (m_rc == QMessageBox::Yes){
+                    setupFileHandler * m_sf = new setupFileHandler(QDir::homePath() + "/.clamav-gui/profiles/" + ui->profileComboBox->currentText() + ".ini",this);
+                    m_logfileName = m_sf->getSectionValue("Directories","ScanReportToFile").mid(m_sf->getSectionValue("Directories","ScanReportToFile").indexOf("|") + 1);
+                    if (m_logfileName != "" ){
                         if (QMessageBox::question(this,tr("Info"),tr("There is a log-file associated with this profile. Shall I remove the log-file as well?"),QMessageBox::Yes,QMessageBox::No) == QMessageBox::Yes){
-                            QFile fileRemover(logfileName);
-                            fileRemover.remove();
+                            QFile m_fileRemover(m_logfileName);
+                            m_fileRemover.remove();
                         }
                     }
                     setupFile->removeKeyword("Profiles",ui->profileComboBox->currentText());
-                    tempFile.remove();
+                    m_tempFile.remove();
                     QMessageBox::information(this,tr("Info"),tr("Profile \"") + ui->profileComboBox->currentText() + tr("\" removed"));
                     getProfileList();
                     slot_readProfileSettings();

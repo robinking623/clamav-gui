@@ -11,9 +11,9 @@ setupTab::setupTab(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    int index = -1;
+    int m_index = -1;
 
-    QString langhelper;
+    QString m_langhelper;
 
     supressMessage = true; // verhindert, dass bei der Initialisierung der Sprachauswahl die Warnmeldung kommt.
 
@@ -22,15 +22,15 @@ setupTab::setupTab(QWidget *parent) :
     if (setupFile->keywordExists("Setup","DisableLogHighlighter") == true) monochrome = setupFile->getSectionBoolValue("Setup","DisableLogHighlighter");
 
     if (setupFile->keywordExists("Setup","language") == true) {
-        langhelper = setupFile->getSectionValue("Setup","language");
-        index = ui->languageSelectComboBox->findText(langhelper,Qt::MatchStartsWith);
-        if (index == -1) index = ui->languageSelectComboBox->findText("[en_GB]",Qt::MatchStartsWith);
-        ui->languageSelectComboBox->setCurrentIndex(index);
+        m_langhelper = setupFile->getSectionValue("Setup","language");
+        m_index = ui->languageSelectComboBox->findText(m_langhelper,Qt::MatchStartsWith);
+        if (m_index == -1) m_index = ui->languageSelectComboBox->findText("[en_GB]",Qt::MatchStartsWith);
+        ui->languageSelectComboBox->setCurrentIndex(m_index);
     } else {
-        QString lang = QLocale::system().name();
-        index = ui->languageSelectComboBox->findText("["+lang+"]",Qt::MatchStartsWith);
-        if (index == -1) index = ui->languageSelectComboBox->findText("[en_GB]",Qt::MatchStartsWith);
-        ui->languageSelectComboBox->setCurrentIndex(index);
+        QString m_lang = QLocale::system().name();
+        m_index = ui->languageSelectComboBox->findText("["+m_lang+"]",Qt::MatchStartsWith);
+        if (m_index == -1) m_index = ui->languageSelectComboBox->findText("[en_GB]",Qt::MatchStartsWith);
+        ui->languageSelectComboBox->setCurrentIndex(m_index);
     }
 
     if (setupFile->keywordExists("Setup","WindowState") == true) {
@@ -60,20 +60,20 @@ setupTab::~setupTab(){
 
 QString setupTab::checkmonochrome(QString color)
 {
-    QString rc = "";
+    QString m_rc = "";
     if (monochrome == true) {
-        rc = css_mono;
+        m_rc = css_mono;
     } else {
-        if (color == "red") rc = css_red;
-        if (color == "yellow") rc = css_yellow;
-        if (color == "green") rc = css_green;
+        if (color == "red") m_rc = css_red;
+        if (color == "yellow") m_rc = css_yellow;
+        if (color == "green") m_rc = css_green;
     }
 
-    return rc;
+    return m_rc;
 }
 
 void setupTab::slot_updateSystemInfo(){
-    QString systemInfo;
+    QString m_systemInfo;
     if (setupFile->keywordExists("Clamd","ClamdLocation") == true) ui->clamdPath->setText(setupFile->getSectionValue("Clamd","ClamdLocation").replace("\n",""));
     if (setupFile->keywordExists("Clamd","ClamonaccLocation") == true) ui->clamonaccPath->setText(setupFile->getSectionValue("Clamd","ClamonaccLocation").replace("\n",""));
     if (setupFile->keywordExists("FreshclamSettings","FreshclamLocation") == true) ui->freshclamPath->setText(setupFile->getSectionValue("FreshclamSettings","FreshclamLocation").replace("\n",""));
@@ -85,13 +85,13 @@ void setupTab::slot_updateSystemInfo(){
         ui->databaseDailyFile->setText(setupFile->getSectionValue("Updater","DailyVersion"));
         ui->databaseBytecodeFile->setText(setupFile->getSectionValue("Updater","BytecodeVersion"));
 
-        QString value = setupFile->getSectionValue("Updater","DailyVersion");
-        QString scannerVersion = setupFile->getSectionValue("Updater","Version");
-        scannerVersion = scannerVersion.replace("Scanner ","");
-        value = value.mid(value.indexOf(" "), value.indexOf(",") - value.indexOf(" "));
-        systemInfo = "<div style='font-size:12px;line-height:20px;'><b>Scanner: <font color='navy'>" + scannerVersion + "</font><br>Database: <font color='navy'>" + value + "</font><br>";
-        systemInfo += "Date: <font color='navy'>" + setupFile->getSectionValue("Updater","LastUpdate") + "</font></b></div>";
-        emit sendSystemInfo(systemInfo);
+        QString m_value = setupFile->getSectionValue("Updater","DailyVersion");
+        QString m_scannerVersion = setupFile->getSectionValue("Updater","Version");
+        m_scannerVersion = m_scannerVersion.replace("Scanner ","");
+        m_value = m_value.mid(m_value.indexOf(" "), m_value.indexOf(",") - m_value.indexOf(" "));
+        m_systemInfo = "<div style='font-size:12px;line-height:20px;'><b>Scanner: <font color='navy'>" + m_scannerVersion + "</font><br>Database: <font color='navy'>" + m_value + "</font><br>";
+        m_systemInfo += "Date: <font color='navy'>" + setupFile->getSectionValue("Updater","LastUpdate") + "</font></b></div>";
+        emit sendSystemInfo(m_systemInfo);
     }
 
     if (setupFile->keywordExists("Clamd","ClamonaccPid") == true) {
@@ -112,24 +112,24 @@ void setupTab::slot_updateSystemInfo(){
         ui->clamdPID->setText(setupFile->getSectionValue("Clamd","ClamdPid"));
         if (setupFile->getSectionValue("Clamd","ClamdPid") == "n/a") {
             ui->clamdActivityLabel->setPixmap(QPixmap(":/icons/icons/gifs/activity.gif"));
-            QString message = setupFile->getSectionValue("Clamd","Status");
-            if ((message == "starting up ...") || (message == "shutting down ...")){
+            QString m_message = setupFile->getSectionValue("Clamd","Status");
+            if ((m_message == "starting up ...") || (m_message == "shutting down ...")){
                 ui->clamdStatus->setStyleSheet(checkmonochrome("yellow"));
-                ui->clamdStatus->setText(message);
+                ui->clamdStatus->setText(m_message);
                 if (setupFile->getSectionValue("Clamd","Status2") != "n/a") {
                     ui->clamonaccStatus->setStyleSheet(checkmonochrome("yellow"));
-                    ui->clamonaccStatus->setText(message);
+                    ui->clamonaccStatus->setText(m_message);
                 }
             }
-            if  (message == "is running") {
+            if  (m_message == "is running") {
                 ui->clamdStatus->setStyleSheet(checkmonochrome("green"));
-                ui->clamdStatus->setText(message);
+                ui->clamdStatus->setText(m_message);
                 if (setupFile->getSectionValue("Clamd","Status2") != "is running") {
                     ui->clamonaccStatus->setStyleSheet(checkmonochrome("green"));
-                    ui->clamonaccStatus->setText(message);
+                    ui->clamonaccStatus->setText(m_message);
                 }
             }
-            if  ((message == "shut down") || (message == "not running")) {
+            if  ((m_message == "shut down") || (m_message == "not running")) {
                 ui->clamdStatus->setStyleSheet(checkmonochrome("red"));
                 ui->clamdStatus->setText("is down");
                 ui->clamonaccStatus->setStyleSheet(checkmonochrome("red"));

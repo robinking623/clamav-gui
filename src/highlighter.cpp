@@ -22,45 +22,45 @@
 //
 highlighter::highlighter(QTextDocument * parent) : QSyntaxHighlighter(parent)
 {
-     HighlightingRule rule;
+     HighlightingRule m_rule;
 
      keywordFormat.setForeground(Qt::darkYellow);
      keywordFormat.setFontWeight(QFont::Bold);
 
      singleLineCommentFormat.setForeground(Qt::blue);
      singleLineCommentFormat.setBackground(Qt::white);
-     rule.pattern = QRegExp("^Downloading.*|^ClamInotif:|.-> .*|^/.*|^Database updated.*|^ClamAV update process started.*|^---.*|.Testing database:*|.Database Test passed.");
+     m_rule.pattern = QRegExp("^Downloading.*|^ClamInotif:|.-> .*|^/.*|^Database updated.*|^ClamAV update process started.*|^---.*|.Testing database:*|.Database Test passed.");
      singleLineCommentFormat.setFontWeight(QFont::Normal);
-     rule.format = singleLineCommentFormat;
-     highlightingRules.append(rule);
+     m_rule.format = singleLineCommentFormat;
+     highlightingRules.append(m_rule);
 
      singleLineCommentFormat.setForeground(QColor(0x4f,0x7e,0x8a,0xff));
      singleLineCommentFormat.setBackground(Qt::white);
      singleLineCommentFormat.setFontWeight(QFont::Bold);
-     rule.pattern = QRegExp("^Known viruses:.|^Engine version:.|^Data scanned:.|^Data read:.|^Time:.|^Start Date:.|^End Date:.");
-     rule.format = singleLineCommentFormat;
-     highlightingRules.append(rule);
+     m_rule.pattern = QRegExp("^Known viruses:.|^Engine version:.|^Data scanned:.|^Data read:.|^Time:.|^Start Date:.|^End Date:.");
+     m_rule.format = singleLineCommentFormat;
+     highlightingRules.append(m_rule);
 
      singleLineCommentFormat.setForeground(Qt::darkGreen);
      singleLineCommentFormat.setBackground(Qt::white);
      singleLineCommentFormat.setFontWeight(QFont::Normal);
-     rule.pattern = QRegExp("LOCAL:|OLE2:|Phishing:|Heuristic:|Structured:|Local:|Limits:|.enabled|.disabled|.watching .*|^daily.cvd.*|^daily.cld.*|^bytecode.cvd.*|^main.cvd.*|^freshclam deamon.*|. OK|^Scanned directories:.|^Scanned files:.|^Infected files: 0");
-     rule.format = singleLineCommentFormat;
-     highlightingRules.append(rule);
+     m_rule.pattern = QRegExp("LOCAL:|OLE2:|Phishing:|Heuristic:|Structured:|Local:|Limits:|.enabled|.disabled|.watching .*|^daily.cvd.*|^daily.cld.*|^bytecode.cvd.*|^main.cvd.*|^freshclam deamon.*|. OK|^Scanned directories:.|^Scanned files:.|^Infected files: 0");
+     m_rule.format = singleLineCommentFormat;
+     highlightingRules.append(m_rule);
 
      singleLineCommentFormat.setForeground(Qt::darkYellow);
      singleLineCommentFormat.setBackground(Qt::white);
      singleLineCommentFormat.setFontWeight(QFont::Normal);
-     rule.pattern = QRegExp(".Pid file removed.|. Started at.*|. Stopped at.*|.Socket file removed.");
-     rule.format = singleLineCommentFormat;
-     highlightingRules.append(rule);
+     m_rule.pattern = QRegExp(".Pid file removed.|. Started at.*|. Stopped at.*|.Socket file removed.");
+     m_rule.format = singleLineCommentFormat;
+     highlightingRules.append(m_rule);
 
      singleLineCommentFormat.setForeground(Qt::red);
      singleLineCommentFormat.setBackground(Qt::white);
      singleLineCommentFormat.setFontWeight(QFont::Normal);
-     rule.pattern = QRegExp("^ERROR: ClamCom:|.Empty file|^WARN.*|.FOUND *|.ERROR:.*|.WARNING:.*|^Can't connect to port.*|.Access denied|^Infected files:.|^Total errors:.*");
-     rule.format = singleLineCommentFormat;
-     highlightingRules.append(rule);
+     m_rule.pattern = QRegExp("^ERROR: ClamCom:|.Empty file|^WARN.*|.FOUND *|.ERROR:.*|.WARNING:.*|^Can't connect to port.*|.Access denied|^Infected files:.|^Total errors:.*");
+     m_rule.format = singleLineCommentFormat;
+     highlightingRules.append(m_rule);
 
      multiLineCommentFormat.setForeground(Qt::red);
      singleLineCommentFormat.setBackground(Qt::white);
@@ -73,31 +73,31 @@ highlighter::highlighter(QTextDocument * parent) : QSyntaxHighlighter(parent)
 void highlighter::highlightBlock(const QString &text)
  {
      foreach (const HighlightingRule &rule, highlightingRules) {
-         QRegExp expression(rule.pattern);
-         int index = expression.indexIn(text);
+         QRegExp m_expression(rule.pattern);
+         int index = m_expression.indexIn(text);
          while (index >= 0) {
-             int length = expression.matchedLength();
+             int length = m_expression.matchedLength();
              setFormat(index, length, rule.format);
-             index = expression.indexIn(text, index + length);
+             index = m_expression.indexIn(text, index + length);
          }
      }
-     
+
      setCurrentBlockState(0);
 
-     int startIndex = 0;
-     if (previousBlockState() != 1) startIndex = commentStartExpression.indexIn(text);
-     
-     while (startIndex >= 0) {
-         int endIndex = commentEndExpression.indexIn(text, startIndex);
-         int commentLength;
-         if (endIndex == -1) {
+     int m_startIndex = 0;
+     if (previousBlockState() != 1) m_startIndex = commentStartExpression.indexIn(text);
+
+     while (m_startIndex >= 0) {
+         int m_endIndex = commentEndExpression.indexIn(text, m_startIndex);
+         int m_commentLength;
+         if (m_endIndex == -1) {
              setCurrentBlockState(1);
-             commentLength = text.length() - startIndex;
+             m_commentLength = text.length() - m_startIndex;
          } else {
-             commentLength = endIndex - startIndex
+             m_commentLength = m_endIndex - m_startIndex
                              + commentEndExpression.matchedLength();
          }
-         startIndex = commentStartExpression.indexIn(text, startIndex + commentLength);
+         m_startIndex = commentStartExpression.indexIn(text, m_startIndex + m_commentLength);
     }
 }
 //

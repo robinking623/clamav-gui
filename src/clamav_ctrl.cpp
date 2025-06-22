@@ -9,15 +9,15 @@ clamav_ctrl::clamav_ctrl(QWidget *parent) : QWidget(parent), ui(new Ui::clamav_c
 }
 
 void clamav_ctrl::initWidget(){
-QScreen *screen = QGuiApplication::primaryScreen();
-QRect  screenGeometry = screen->geometry();
-    int height = screenGeometry.height();
-    int width = screenGeometry.width();
+QScreen *m_screen = QGuiApplication::primaryScreen();
+QRect  screenGeometry = m_screen->geometry();
+    int m_height = screenGeometry.height();
+    int m_width = screenGeometry.width();
 
     this->setStyleSheet("background:transparent;");
     this->setAttribute(Qt::WA_TranslucentBackground);
     this->setWindowFlags(Qt::FramelessWindowHint|Qt::Tool|Qt::WindowStaysOnTopHint);
-    this->move(width-this->width()-10,height-this->height()-10);
+    this->move(m_width-this->width()-10,m_height-this->height()-10);
     this->setAcceptDrops(true);
 }
 
@@ -31,22 +31,22 @@ void clamav_ctrl::dragEnterEvent(QDragEnterEvent * event){
 }
 
 void clamav_ctrl::dropEvent(QDropEvent * event){
-QStringList list;
-QList <QUrl> tempList;
-QString tempString;
+QStringList m_list;
+QList <QUrl> m_tempList;
+QString m_tempString;
 
     if (event && event->mimeData()){
         const QMimeData * mimeData;
         mimeData = event->mimeData();
         if (mimeData->hasUrls()){
-            tempList = mimeData->urls();
-            for (int i = 0; i < tempList.count(); i++){
-                tempString = tempList.at(i).toString();
-                if (tempString.indexOf("file://") == 0){
-                    list << tempString.mid(7);
+            m_tempList = mimeData->urls();
+            for (int i = 0; i < m_tempList.count(); i++){
+                m_tempString = m_tempList.at(i).toString();
+                if (m_tempString.indexOf("file://") == 0){
+                    m_list << m_tempString.mid(7);
                 }
             }
-            if (list.count() > 0) emit scanRequest(list);
+            if (m_list.count() > 0) emit scanRequest(m_list);
         }
     }
 }

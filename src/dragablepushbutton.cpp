@@ -12,21 +12,21 @@ dragablePushButton::~dragablePushButton(){
 }
 
 void dragablePushButton::mouseMoveEvent(QMouseEvent *event) {
-QUrl url("file://" + dragDropText);
-QList <QUrl> urls;
+QUrl m_url("file://" + dragDropText);
+QList <QUrl> m_urls;
     event = event;
 
-    urls << url;
-    QDrag *drag = new QDrag(this);
-    QMimeData *mimeData = new QMimeData;
+    m_urls << m_url;
+    QDrag *m_drag = new QDrag(this);
+    QMimeData *m_mimeData = new QMimeData;
 
-    mimeData->setText("file://" + dragDropText);
-    mimeData->setUrls(urls);
+    m_mimeData->setText("file://" + dragDropText);
+    m_mimeData->setUrls(m_urls);
 
-    drag->setMimeData(mimeData);
-    drag->setPixmap(QPixmap(":/icons/icons/media.png"));
+    m_drag->setMimeData(m_mimeData);
+    m_drag->setPixmap(QPixmap(":/icons/icons/media.png"));
 
     emit dragStarted();
 
-    drag->exec();
+    m_drag->exec();
 }

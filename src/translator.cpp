@@ -6,22 +6,22 @@ translator::translator(QString lang)
 }
 
 QString translator::beautifyString(QString value, int length) {
-    QString helper = value;
-    QString rc = "";
-    int counter = 0;
+    QString m_helper = value;
+    QString m_rc = "";
+    int m_counter = 0;
 
     // Word-Wrap of lines that are longer than [length] characters ...
-    for (int i = 0; i < helper.length(); i++) {
-        if ((counter > length) && (helper.mid(i,1) == ' ')) {
-            rc = rc + "\n";
-            counter = 0;
+    for (int i = 0; i < m_helper.length(); i++) {
+        if ((m_counter > length) && (m_helper.mid(i,1) == ' ')) {
+            m_rc = m_rc + "\n";
+            m_counter = 0;
         } else {
-            rc = rc + helper.mid(i,1);
+            m_rc = m_rc + m_helper.mid(i,1);
         }
-        counter++;
+        m_counter++;
     }
 
-    return rc;
+    return m_rc;
 }
 
 QString translator::translateit(QString original) {

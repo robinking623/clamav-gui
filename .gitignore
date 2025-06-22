@@ -1,3 +1,5 @@
 build
 result
 .vscode/c_cpp_properties.json
+
+*.user

@@ -18,11 +18,11 @@ scanTab::scanTab(QWidget *parent) : QWidget(parent),ui(new Ui::scanTab){
     ui->treeView->hideColumn(2);
     ui->treeView->hideColumn(3);
 
-    QStringList directories = setupFile->getSectionValue("Settings","Directories").split("\n");
+    QStringList m_directories = setupFile->getSectionValue("Settings","Directories").split("\n");
     ui->treeView->collapseAll();
     model->unCheckAll();
     model->setRootPath("/");
-    foreach(QString dir,directories){
+    foreach(QString dir,m_directories){
         if (dir != ""){
             model->setChecked(dir,true);
             QModelIndex index = model->index(dir);
@@ -58,63 +58,63 @@ void scanTab::checkMonochromeSettings()
 }
 
 void scanTab::slot_scanButtonClicked(){
-QList <QPersistentModelIndex> list = model->checkedIndexes.values();
-QStringList scanObjects;
+QList <QPersistentModelIndex> m_list = model->checkedIndexes.values();
+QStringList m_scanObjects;
 
-    for (int i = 0; i < list.count(); i++){
-        if (list[i].data(QFileSystemModel::FilePathRole).toString() != "") scanObjects << list[i].data(QFileSystemModel::FilePathRole).toString();
+    for (int i = 0; i < m_list.count(); i++){
+        if (m_list[i].data(QFileSystemModel::FilePathRole).toString() != "") m_scanObjects << m_list[i].data(QFileSystemModel::FilePathRole).toString();
     }
 
-    if (scanObjects.count() > 0) emit triggerScanRequest(scanObjects);
+    if (m_scanObjects.count() > 0) emit triggerScanRequest(m_scanObjects);
 }
 
 void scanTab::slot_basePathButtonClicked(){
-QModelIndex index = model->index("/");
+QModelIndex m_index = model->index("/");
 
-    ui->treeView->scrollTo(index);
-    ui->treeView->setCurrentIndex(index);
+    ui->treeView->scrollTo(m_index);
+    ui->treeView->setCurrentIndex(m_index);
 }
 
 void scanTab::slot_homePathButtonClicked(){
-QModelIndex index = model->index(QDir::homePath());
+QModelIndex m_index = model->index(QDir::homePath());
 
-    ui->treeView->scrollTo(index);
-    ui->treeView->setCurrentIndex(index);
+    ui->treeView->scrollTo(m_index);
+    ui->treeView->setCurrentIndex(m_index);
 }
 
 void scanTab::slot_updateDeviceList(){
-QDir dir("/run/media/" + username.trimmed());
-QDir dir2("/run/media");
-QDir dirUbuntu("/media/" + username.trimmed());
-QDir dirUbuntu2("/media");
+QDir m_dir("/run/media/" + username.trimmed());
+QDir m_dir2("/run/media");
+QDir m_dirUbuntu("/media/" + username.trimmed());
+QDir m_dirUbuntu2("/media");
 fileSystemWatcher = new QFileSystemWatcher(this);
 fileSystemWatcherUbuntu = new QFileSystemWatcher(this);
-QStringList filters;
-    filters << "*";
-QStringList dirs = dir.entryList(filters,QDir::AllDirs|QDir::NoDotAndDotDot);
-QStringList dirsUbuntu = dirUbuntu.entryList(filters,QDir::AllDirs|QDir::NoDotAndDotDot);
+QStringList m_filters;
+    m_filters << "*";
+QStringList m_dirs = m_dir.entryList(m_filters,QDir::AllDirs|QDir::NoDotAndDotDot);
+QStringList m_dirsUbuntu = m_dirUbuntu.entryList(m_filters,QDir::AllDirs|QDir::NoDotAndDotDot);
 devicelabel = new QLabel(tr("Devices"));
-QLayoutItem *item = NULL;
+QLayoutItem *m_item = NULL;
 
-    while ((item = ui->devicesFrame->layout()->takeAt(0)) != 0) {
-        delete item->widget();
+    while ((m_item = ui->devicesFrame->layout()->takeAt(0)) != 0) {
+        delete m_item->widget();
     }
 
-    if (dir.exists() == true){
+    if (m_dir.exists() == true){
         fileSystemWatcher->addPath("/run/media/" + username.trimmed());
         connect(fileSystemWatcher,SIGNAL(directoryChanged(QString)),this,SLOT(slot_updateDeviceList()));
     } else {
-        if (dir2.exists() == true) {
+        if (m_dir2.exists() == true) {
             fileSystemWatcher->addPath("/run/media");
             connect(fileSystemWatcher,SIGNAL(directoryChanged(QString)),this,SLOT(slot_updateDeviceList()));
         }
     }
 
-    if (dirUbuntu.exists() == true) {
+    if (m_dirUbuntu.exists() == true) {
         fileSystemWatcherUbuntu->addPath("/media/" + username.trimmed());
         connect(fileSystemWatcherUbuntu,SIGNAL(directoryChanged(QString)),this,SLOT(slot_updateDeviceList()));
     } else {
-        if (dirUbuntu2.exists() == true) {
+        if (m_dirUbuntu2.exists() == true) {
             fileSystemWatcherUbuntu->addPath("/media");
             connect(fileSystemWatcherUbuntu,SIGNAL(directoryChanged(QString)),this,SLOT(slot_updateDeviceList()));
         }
@@ -130,44 +130,44 @@ QLayoutItem *item = NULL;
     deviceGroup = new QButtonGroup(this);
     connect(deviceGroup,SIGNAL(idClicked(int)),this,SLOT(slot_deviceButtonClicked(int)));
 
-    if (dirs.count() > 0){
+    if (m_dirs.count() > 0){
         devices.clear();
         buttonID = 0;
-        foreach (QString entry,dirs){
+        foreach (QString entry,m_dirs){
             devices << (QString)("/run/media/" + username.trimmed() + "/" + entry);
-            dragablePushButton * button = new dragablePushButton(QIcon(":/icons/icons/media.png"),entry.mid(entry.lastIndexOf("/") + 1),this,(QString)("/var/run/media/" + username.trimmed() + "/" + entry));
-            connect(button,SIGNAL(dragStarted()),this,SLOT(slot_requestDropZoneVisible()));
-            button->setIconSize(QSize(28,28));
-            button->setStyleSheet("text-align:left");
-            button->setFlat(true);
-            deviceGroup->addButton(button,buttonID);
-            ui->devicesFrame->layout()->addWidget(button);
+            dragablePushButton * m_button = new dragablePushButton(QIcon(":/icons/icons/media.png"),entry.mid(entry.lastIndexOf("/") + 1),this,(QString)("/var/run/media/" + username.trimmed() + "/" + entry));
+            connect(m_button,SIGNAL(dragStarted()),this,SLOT(slot_requestDropZoneVisible()));
+            m_button->setIconSize(QSize(28,28));
+            m_button->setStyleSheet("text-align:left");
+            m_button->setFlat(true);
+            deviceGroup->addButton(m_button,buttonID);
+            ui->devicesFrame->layout()->addWidget(m_button);
             buttonID++;
         }
     }
 
-    if (dirsUbuntu.count() > 0){
+    if (m_dirsUbuntu.count() > 0){
         devices.clear();
         buttonID = 0;
-        foreach (QString entry,dirsUbuntu){
+        foreach (QString entry,m_dirsUbuntu){
             devices << (QString)("/media/" + username.trimmed() + "/" + entry);
-            dragablePushButton * button = new dragablePushButton(QIcon(":/icons/icons/media.png"),entry.mid(entry.lastIndexOf("/") + 1),this,(QString)("/media/" + username.trimmed() + "/" + entry));
-            connect(button,SIGNAL(dragStarted()),this,SLOT(slot_requestDropZoneVisible()));
-            button->setIconSize(QSize(28,28));
-            button->setStyleSheet("text-align:left");
-            button->setFlat(true);
-            deviceGroup->addButton(button,buttonID);
-            ui->devicesFrame->layout()->addWidget(button);
+            dragablePushButton * m_button = new dragablePushButton(QIcon(":/icons/icons/media.png"),entry.mid(entry.lastIndexOf("/") + 1),this,(QString)("/media/" + username.trimmed() + "/" + entry));
+            connect(m_button,SIGNAL(dragStarted()),this,SLOT(slot_requestDropZoneVisible()));
+            m_button->setIconSize(QSize(28,28));
+            m_button->setStyleSheet("text-align:left");
+            m_button->setFlat(true);
+            deviceGroup->addButton(m_button,buttonID);
+            ui->devicesFrame->layout()->addWidget(m_button);
             buttonID++;
         }
     }
 }
 
 void scanTab::slot_deviceButtonClicked(int buttonIndex){
-QModelIndex index = model->index(devices.at(buttonIndex));
+QModelIndex m_index = model->index(devices.at(buttonIndex));
 
-    ui->treeView->scrollTo(index);
-    ui->treeView->setCurrentIndex(index);
+    ui->treeView->scrollTo(m_index);
+    ui->treeView->setCurrentIndex(m_index);
 }
 
 void scanTab::slot_whoamiProcessFinished(){
@@ -190,17 +190,17 @@ bool scanTab::recursivChecked(){
 }
 
 void scanTab::setStatusMessage(QString message){
-QString currentFile;
-int start,end;
+QString m_currentFile;
+int m_start,m_end;
 
     while(message.indexOf("Scanning") != -1){
-        start = message.indexOf("Scanning");
-        end = message.indexOf("\n",start);
-        currentFile = message.mid(start,end - start + 1);
-        message.replace(currentFile,"");
-        currentFile = currentFile.mid(currentFile.lastIndexOf("/") + 1);
-        currentFile.replace("\n","");
-        ui->currentFileLabel->setText("Scanning : " + currentFile);
+        m_start = message.indexOf("Scanning");
+        m_end = message.indexOf("\n",m_start);
+        m_currentFile = message.mid(m_start,m_end - m_start + 1);
+        message.replace(m_currentFile,"");
+        m_currentFile = m_currentFile.mid(m_currentFile.lastIndexOf("/") + 1);
+        m_currentFile.replace("\n","");
+        ui->currentFileLabel->setText("Scanning : " + m_currentFile);
     }
     ui->logPlainTextEdit->insertPlainText(message);
     ui->logPlainTextEdit->ensureCursorVisible();
@@ -256,18 +256,18 @@ void scanTab::slot_requestDropZoneVisible(){
 }
 
 void scanTab::slot_dirtreeSelectionChanged(){
-QList <QPersistentModelIndex> list = model->checkedIndexes.values();
-QString directories;
+QList <QPersistentModelIndex> m_list = model->checkedIndexes.values();
+QString m_directories;
 
-    for (int i = 0; i < list.count(); i++){
-        if (i < list.count() - 1){
-            directories = directories + list[i].data(QFileSystemModel::FilePathRole).toString() + "\n";
+    for (int i = 0; i < m_list.count(); i++){
+        if (i < m_list.count() - 1){
+            m_directories = m_directories + m_list[i].data(QFileSystemModel::FilePathRole).toString() + "\n";
         } else {
-            directories = directories + list[i].data(QFileSystemModel::FilePathRole).toString();
+            m_directories = m_directories + m_list[i].data(QFileSystemModel::FilePathRole).toString();
         }
     }
 
-    setupFile->setSectionValue("Settings","Directories",directories);
+    setupFile->setSectionValue("Settings","Directories",m_directories);
 }
 
 void scanTab::slot_updateDBPath(QString path){

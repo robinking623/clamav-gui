@@ -27,68 +27,68 @@ scheduleScanObject::scheduleScanObject(QWidget *parent, QString name, QStringLis
     connect(scanProcess,SIGNAL(readyReadStandardOutput()),this,SLOT(slot_scanProcessHasStdOutput()));
     connect(scanProcess,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(slot_scanProcessFinished(int,QProcess::ExitStatus)));
 
-    QString message;
+    QString m_message;
 
     if (setupFile->getSectionValue("Clamd","Status") == "is running") {
         switch (setupFile->getSectionIntValue("Clamd","ClamdScanMultithreading")) {
             case 0 : useclamdscan = false;
-                     message = "clamscan ";
+                     m_message = "clamscan ";
                         break;
             case 1 : useclamdscan = true;
-                     message = "clamdscan ";
+                     m_message = "clamdscan ";
                         break;
             case 2 : if (directScan == true) {
                         useclamdscan = false;
-                        message = "clamscan ";
+                        m_message = "clamscan ";
                      } else {
                         useclamdscan = true;
-                        message = "clamdscan ";
+                        m_message = "clamdscan ";
                      }
                         break;
             case 3 : if (directScan == false) {
                         useclamdscan = false;
-                        message = "clamdscan ";
+                        m_message = "clamdscan ";
                      } else {
                         useclamdscan = true;
-                        message = "clamdscan ";
+                        m_message = "clamdscan ";
                      }
                         break;
             case 4 : if (QMessageBox::question(this,tr("Use ClamdScan"),tr("Perform scanning using clamdscan instead of clamscan?"),QMessageBox::Yes,QMessageBox::No) == QMessageBox::Yes) {
                         useclamdscan = true;
-                        message = "clamdscan ";
+                        m_message = "clamdscan ";
                      } else {
                         useclamdscan = false;
-                        message = "clamscan ";
+                        m_message = "clamscan ";
                      }
         }
     } else {
         useclamdscan = false;
-        message = "clamscan ";
+        m_message = "clamscan ";
     }
 
     if (useclamdscan == false) {
         for (int i = 0;i < parameters.count();i++){
-            message = message + " " + parameters.at(i);
+            m_message = m_message + " " + parameters.at(i);
         }
-        message = message + "\n";
+        m_message = m_message + "\n";
     } else {
-        message = message + "--multiscan --fdpass --config-file " + QDir::homePath() + "/.clamav-gui/clamd.conf";
+        m_message = m_message + "--multiscan --fdpass --config-file " + QDir::homePath() + "/.clamav-gui/clamd.conf";
         for (int i = 0;i < parameters.count();i++){
             QString para = parameters.at(i);
-            if (para.indexOf("-") != 0) message = message + " " + parameters.at(i);
+            if (para.indexOf("-") != 0) m_message = m_message + " " + parameters.at(i);
         }
-        message = message + "\n";
+        m_message = m_message + "\n";
     }
 
-    ui->logMessagePlainTextEdit->appendPlainText(message);
+    ui->logMessagePlainTextEdit->appendPlainText(m_message);
 
     if (useclamdscan == true) {
-        QStringList newParameters;
-        newParameters << "--multiscan" << "--fdpass" << "--config-file" << QDir::homePath() + "/.clamav-gui/clamd.conf";
+        QStringList m_newParameters;
+        m_newParameters << "--multiscan" << "--fdpass" << "--config-file" << QDir::homePath() + "/.clamav-gui/clamd.conf";
         foreach(const QString element,parameters) {
-            newParameters << element;
+            m_newParameters << element;
         }
-        scanProcess->start("clamdscan",newParameters);
+        scanProcess->start("clamdscan",m_newParameters);
     } else {
         scanProcess->start("clamscan",parameters);
     }

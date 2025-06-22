@@ -20,9 +20,9 @@ progressDialog::~progressDialog()
 }
 
 void progressDialog::setText(QString text){
-QString output = text.replace("\n","");
+QString m_output = text.replace("\n","");
 
-    ui->progressText->setText(output);
+    ui->progressText->setText(m_output);
 }
 
 void progressDialog::setProgressBarMaxValue(double value) {

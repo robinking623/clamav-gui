@@ -20,9 +20,9 @@ void myFrame::setVersionLabel(QString text)
 
 void myFrame::paintEvent(QPaintEvent *e)
 {
-    QPainter painter(this);
+    QPainter m_painter(this);
     QRectF r1(0.0, 0.0, 220.0, 650.0);
-    painter.drawImage(r1,QImage(":/icons/icons/logo.png"));
+    m_painter.drawImage(r1,QImage(":/icons/icons/logo.png"));
 
     QFrame::paintEvent(e);
 }
