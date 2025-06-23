@@ -40,9 +40,9 @@ public:
     ~logViewerObject();
 
 private:
-    Ui::logViewerObject *ui;
-    setupFileHandler    *setupfile;
-    QString logFileName;
+    Ui::logViewerObject *m_ui;
+    setupFileHandler    *m_setupfile;
+    QString m_logFileName;
     void loadLogFile(QString);
     void saveLog();
 

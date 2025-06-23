@@ -1,42 +1,36 @@
 #include "scanoption.h"
-#include "ui_scanoption.h"
 #define css "background-color:#404040;color:white"
 
-scanoption::scanoption(QWidget *parent, QString setupFileName, QString section, bool checked, QString label, QString comment) :
-    QWidget(parent),
-    ui(new Ui::scanoption)
+scanoption::scanoption(QWidget *parent, QString setupFileName, QString section, bool checked, QString label, QString comment) 
+: QWidget(parent)
 {
-    ui->setupUi(this);
-    setupFile = new setupFileHandler(setupFileName,this);
+    m_ui.setupUi(this);
+    m_setupFile = new setupFileHandler(setupFileName,this);
     setupFileHandler * baseSetup = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini",this);
-    languageset = baseSetup->getSectionValue("Setup","language");
-    trans = new translator(languageset);
+    QString languageset = baseSetup->getSectionValue("Setup","language");
+    translator trans(languageset);
 
-    setupFileSection = section;
-    option = label;
-    com = trans->translateit(comment);
-    ui->checkBox->setChecked(checked);
+    m_setupFileSection = section;
+    m_option = label;
+    m_com = trans.translateit(comment);
+    m_ui.checkBox->setChecked(checked);
 
     if (checked == true) {
         this->setStyleSheet(css);
-        setupFile->setSectionValue(setupFileSection,option,com);
+        m_setupFile->setSectionValue(m_setupFileSection,m_option,m_com);
     }
 
-    ui->checkBox->setText(trans->beautifyString(com));
-    ui->checkBox->setToolTip(option);
-}
-
-scanoption::~scanoption(){
-    delete ui;
+    m_ui.checkBox->setText(trans.beautifyString(m_com));
+    m_ui.checkBox->setToolTip(m_option);
 }
 
 
 void scanoption::slot_checkboxClicked(){
-    if (ui->checkBox->isChecked() == false) {
-        setupFile->removeKeyword(setupFileSection,option);
+    if (m_ui.checkBox->isChecked() == false) {
+        m_setupFile->removeKeyword(m_setupFileSection,m_option);
         this->setStyleSheet("");
     } else {
-        setupFile->setSectionValue(setupFileSection,option,com);
+        m_setupFile->setSectionValue(m_setupFileSection,m_option,m_com);
         this->setStyleSheet(css);
     }
 

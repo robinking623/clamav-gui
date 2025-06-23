@@ -20,7 +20,7 @@
 
 #ifndef CFileSystemModel_H
 #define CFileSystemModel_H
-//#include <QDirModel>
+
 #include <QFileSystemModel>
 #include <QModelIndex>
 #include <QSet>
@@ -28,16 +28,19 @@
 class CFileSystemModel : public QFileSystemModel
 {
 public:
-    CFileSystemModel();
-    QSet<QPersistentModelIndex> checkedIndexes;
+    CFileSystemModel() = default;
     Qt::ItemFlags flags(const QModelIndex &index) const;
     QVariant data(const QModelIndex &index, int role) const;
     bool setData(const QModelIndex &index, const QVariant &value, int role);
     void setChecked(const QModelIndex &index, bool state);
     void setChecked(QString path, bool state);
     void unCheckAll();
+    QSet<QPersistentModelIndex> checkedIndexes() const { return m_checkedIndexes; }
 
 private:
+
+    QSet<QPersistentModelIndex> m_checkedIndexes;
+
     bool recursiveCheck(const QModelIndex &index, const QVariant &value);
 };
 #endif // CFileSystemModel_H

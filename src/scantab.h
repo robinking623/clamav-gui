@@ -21,6 +21,7 @@
 #ifndef SCANTAB_H
 #define SCANTAB_H
 
+#include "ui_scantab.h"
 #include "dragablepushbutton.h"
 #include "cfilesystemmodel.h"
 #include "setupfilehandler.h"
@@ -51,25 +52,26 @@ public:
     void clearLogMessage();
     void setStatusBarMessage(QString,QString bgColor="#ffffff");
     int getVirusFoundComboBoxValue();
-    ~scanTab();
+    ~scanTab() = default;
 
 private:
-    Ui::scanTab         *ui;
-    CFileSystemModel    * model;
-    QButtonGroup        * deviceGroup;
-    QProcess            * whoamiProcess;
-    QFileSystemWatcher  * fileSystemWatcher;
-    QFileSystemWatcher  * fileSystemWatcherUbuntu;
-    setupFileHandler    * setupFile;
-    setupFileHandler    * profiles;
-    highlighter         * logHighLighter;
-    QStringList           devices;
-    QString               username;
-    QMovie              * movie;
-    QLabel              * busyLabel;
-    QLabel              * devicelabel;
-    int                   buttonID;
-    bool                  monochrome;
+    Ui::scanTab         m_ui;
+    CFileSystemModel    * m_model;
+    QButtonGroup        * m_deviceGroup;
+    QProcess            * m_whoamiProcess;
+    QFileSystemWatcher  * m_fileSystemWatcher;
+    QFileSystemWatcher  * m_fileSystemWatcherUbuntu;
+    setupFileHandler    * m_setupFile;
+    setupFileHandler    * m_profiles;
+    highlighter         * m_logHighLighter;
+    QStringList           m_devices;
+    QString               m_username;
+    QMovie              * m_movie;
+    QLabel              * m_busyLabel;
+    QLabel              * m_devicelabel;
+    int                   m_buttonID;
+    bool                  m_monochrome;
+
     void                  checkMonochromeSettings();
 
 private slots:

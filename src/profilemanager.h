@@ -18,9 +18,10 @@ public:
     ~ProfileManager();
 
 private:
-    Ui::ProfileManager  *ui;
-    setupFileHandler    *setupFile;
-    ProfileWizardDialog *profileWizard;
+    Ui::ProfileManager  *m_ui;
+    setupFileHandler    *m_setupFile;
+    ProfileWizardDialog *m_profileWizard;
+    
     void getProfileList();
     void readProfileSettings();
     void checkMonochromeSettings();

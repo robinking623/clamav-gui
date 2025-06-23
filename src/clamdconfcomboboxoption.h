@@ -1,10 +1,12 @@
 #ifndef CLAMDCONFCOMBOBOXOPTION_H
 #define CLAMDCONFCOMBOBOXOPTION_H
 
-#include <QWidget>
-#include <QMessageBox>
+#include "ui_clamdconfcomboboxoption.h"
 #include "setupfilehandler.h"
 #include "translator.h"
+
+#include <QWidget>
+#include <QMessageBox>
 
 namespace Ui {
 class clamdconfcomboboxoption;
@@ -16,14 +18,13 @@ class clamdconfcomboboxoption : public QWidget
 
 public:
     explicit clamdconfcomboboxoption(QWidget *parent = nullptr, QString keyword="", bool checked=false, QString label="", QString options="");
-    ~clamdconfcomboboxoption();
+    ~clamdconfcomboboxoption() = default;
 
 private:
-    Ui::clamdconfcomboboxoption *ui;
-    QString optionKeyword;
-    bool startup;
-    QString languageset;
-    setupFileHandler    * setupFile;
+    Ui::clamdconfcomboboxoption m_ui;
+    QString m_optionKeyword;
+    bool m_startup{ true};
+    setupFileHandler    * m_setupFile;
 
 private slots:
     void slot_checkBoxClicked();

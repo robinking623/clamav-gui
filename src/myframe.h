@@ -1,6 +1,8 @@
 #ifndef MYFRAME_H
 #define MYFRAME_H
 
+#include "ui_myframe.h"
+
 #include <QFrame>
 #include <QPainter>
 #include <QRectF>
@@ -15,11 +17,11 @@ class myFrame : public QFrame
 
 public:
     explicit myFrame(QWidget *parent = nullptr);
-    ~myFrame();
+    ~myFrame() = default;
     void setVersionLabel(QString text);
 
 private:
-    Ui::myFrame *ui;
+    Ui::myFrame m_ui;
     void paintEvent(QPaintEvent *e);
 };
 

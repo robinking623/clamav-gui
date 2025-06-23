@@ -2,26 +2,26 @@
 
 translator::translator(QString lang)
 {
-    languageset = lang;
+    m_languageset = lang;
 }
 
 QString translator::beautifyString(QString value, int length) {
-    QString m_helper = value;
-    QString m_rc = "";
-    int m_counter = 0;
+    QString helper = value;
+    QString rc = "";
+    int counter = 0;
 
     // Word-Wrap of lines that are longer than [length] characters ...
-    for (int i = 0; i < m_helper.length(); i++) {
-        if ((m_counter > length) && (m_helper.mid(i,1) == ' ')) {
-            m_rc = m_rc + "\n";
-            m_counter = 0;
+    for (int i = 0; i < helper.length(); i++) {
+        if ((counter > length) && (helper.mid(i,1) == ' ')) {
+            rc = rc + "\n";
+            counter = 0;
         } else {
-            m_rc = m_rc + m_helper.mid(i,1);
+            rc = rc + helper.mid(i,1);
         }
-        m_counter++;
+        counter++;
     }
 
-    return m_rc;
+    return rc;
 }
 
 QString translator::translateit(QString original) {
@@ -120,7 +120,7 @@ QString translator::translateit(QString original) {
             base = base + "Follow regular file symlinks. Default: no|";
             base = base + "This option specifies the time intervals (in seconds) in which clamd should perform a database check. Default: 600|";
             base = base + "Enable non-blocking (multi-threaded/concurrent) database reloads. This feature will temporarily load a second scanning engine while scanning continues using the first engine. Once loaded, the new engine  takes  over.  The old  engine  is removed as soon as all scans using the old engine have completed. This feature requires more RAM, so this option is provided in case users are willing to block scans during reload in exchange for lower RAM requirements. Default: yes|";
-            base = base + "Execute a command when virus is found.  Use the following environment variables to identify the file and virus names: - $CLAM_VIRUSEVENT_FILENAME - $CLAM_VIRUSEVENT_VIRUSNAME In the command string, '%v' will also  be  replaced  with  the  virus name.  Note: The '%f' filename format character has been disabled and will no longer be replaced with the file name, due to command injection security concerns.  Use the 'CLAM_VIRUSEVENT_FILENAME' environment variable instead.  For the same reason, you should NOT use the environment variables in the command directly, but should use it carefully from your executed script. Default: disabled|";
+            base = base + "Execute a command when virus is found.  Use the following environment variables to identify the file and virus names: - $CLAVIRUSEVENT_FILENAME - $CLAVIRUSEVENT_VIRUSNAME In the command string, '%v' will also  be  replaced  with  the  virus name.  Note: The '%f' filename format character has been disabled and will no longer be replaced with the file name, due to command injection security concerns.  Use the 'CLAVIRUSEVENT_FILENAME' environment variable instead.  For the same reason, you should NOT use the environment variables in the command directly, but should use it carefully from your executed script. Default: disabled|";
             base = base + "Stop daemon when libclamav reports out of memory condition. Default: no|";
             base = base + "Permit use of the ALLMATCHSCAN command. Default: yes|";
             base = base + "Don't fork into background. Default: no|";
@@ -299,7 +299,7 @@ QString translator::translateit(QString original) {
             base_de_DE = base_de_DE + "Regelmäßigen Dateisymlinks folgen. Standard: no|";
             base_de_DE = base_de_DE + "Diese Option gibt die Zeitintervalle (in Sekunden) an, in denen clamd eine Datenbankprüfung durchführen soll. Standard: 600|";
             base_de_DE = base_de_DE + "Aktiviere nicht-blockierende (multi-threaded/concurrent) Datenbank-Nachladungen. Mit dieser Funktion wird vorübergehend eine zweite Scan-Engine geladen, während die Überprüfung mit der ersten Engine fortgesetzt wird. Sobald sie geladen ist, übernimmt die neue Engine die Arbeit.  Die alte Engine wird entfernt, sobald alle Scans mit der alten Engine abgeschlossen sind. Diese Funktion benötigt mehr Arbeitsspeicher, daher wird diese Option angeboten, falls Benutzer bereit sind, Scans während des Neuladens zu blockieren und dafür weniger Arbeitsspeicher benötigen. Standard: ja|";
-            base_de_DE = base_de_DE + "Führt einen Befehl aus, wenn ein Virus gefunden wird.  Verwenden Sie die folgenden Umgebungsvariablen, um die Datei- und Virusnamen zu identifizieren: - $CLAM_VIRUSEVENT_FILENAME - $CLAM_VIRUSEVENT_VIRUSNAME In der Befehlszeichenfolge wird '%v' ebenfalls durch den Virusnamen ersetzt.  Hinweis: Das Formatierungszeichen \"%f\" für den Dateinamen wurde deaktiviert und wird aufgrund von Sicherheitsbedenken bezüglich der Befehlsinjektion nicht mehr durch den Dateinamen ersetzt.  Verwenden Sie stattdessen die Umgebungsvariable 'CLAM_VIRUSEVENT_FILENAME'.  Aus demselben Grund sollten Sie die Umgebungsvariablen NICHT direkt im Befehl verwenden, sondern sie vorsichtig in Ihrem ausgeführten Skript einsetzen. Standard: deaktiviert|";
+            base_de_DE = base_de_DE + "Führt einen Befehl aus, wenn ein Virus gefunden wird.  Verwenden Sie die folgenden Umgebungsvariablen, um die Datei- und Virusnamen zu identifizieren: - $CLAVIRUSEVENT_FILENAME - $CLAVIRUSEVENT_VIRUSNAME In der Befehlszeichenfolge wird '%v' ebenfalls durch den Virusnamen ersetzt.  Hinweis: Das Formatierungszeichen \"%f\" für den Dateinamen wurde deaktiviert und wird aufgrund von Sicherheitsbedenken bezüglich der Befehlsinjektion nicht mehr durch den Dateinamen ersetzt.  Verwenden Sie stattdessen die Umgebungsvariable 'CLAVIRUSEVENT_FILENAME'.  Aus demselben Grund sollten Sie die Umgebungsvariablen NICHT direkt im Befehl verwenden, sondern sie vorsichtig in Ihrem ausgeführten Skript einsetzen. Standard: deaktiviert|";
             base_de_DE = base_de_DE + "Stoppen Sie den Daemon, wenn libclamav einen Speichermangel meldet. Standard: nein|";
             base_de_DE = base_de_DE + "Erlaube die Verwendung des ALLMATCHSCAN-Befehls. Standard: yes|";
             base_de_DE = base_de_DE + "Nicht in den Hintergrund verzweigen. Standard: no|";
@@ -478,7 +478,7 @@ QString translator::translateit(QString original) {
             base_pt_PT = base_pt_PT + "Seguir links simbólicos de ficheiros regulares. Predefinição: não|";
             base_pt_PT = base_pt_PT + "Esta opção especifica os intervalos de tempo (em segundos) em que o clamd deve executar uma verificação da base de dados. Predefinição: 600|";
             base_pt_PT = base_pt_PT + "Ativar recarregamentos de base de dados não bloqueantes (multithread/simultâneos). Esta funcionalidade carregará temporariamente um segundo motor de scan enquanto o scan continua utilizando o primeiro motor. Uma vez carregado, o novo motor assume o controlo. O motor antigo é removido assim que todos os scans utilizando o motor antigo forem concluídos. Esta funcionalidade requer mais RAM, pelo que esta opção é fornecida no caso de os utilizadores estarem dispostos a fazer scans durante a recarga em troca de requisitos de RAM mais baixos. Padrão: sim|";
-            base_pt_PT = base_pt_PT + "Execute um comando quando o vírus for encontrado. Utilize as seguintes variáveis ​​de ambiente para identificar os nomes do ficheiro e do vírus: - $CLAM_VIRUSEVENT_FILENAME - $CLAM_VIRUSEVENT_VIRUSNAME Na sequência de comando, '%v' também será substituído pelo nome do vírus. Nota: o caractere de formato de nome de ficheiro '%f' foi desativado e já não será substituído pelo nome do devido a preocupações com a segurança da injeção de comandos. Utilize a variável de ambiente 'CLAM_VIRUSEVENT_FILENAME' em vez disso.|";
+            base_pt_PT = base_pt_PT + "Execute um comando quando o vírus for encontrado. Utilize as seguintes variáveis ​​de ambiente para identificar os nomes do ficheiro e do vírus: - $CLAVIRUSEVENT_FILENAME - $CLAVIRUSEVENT_VIRUSNAME Na sequência de comando, '%v' também será substituído pelo nome do vírus. Nota: o caractere de formato de nome de ficheiro '%f' foi desativado e já não será substituído pelo nome do devido a preocupações com a segurança da injeção de comandos. Utilize a variável de ambiente 'CLAVIRUSEVENT_FILENAME' em vez disso.|";
             base_pt_PT = base_pt_PT + "Parar daemon quando libclamav reporta condição de falta de memória. Padrão: não|";
             base_pt_PT = base_pt_PT + "Permitir utilização do comando ALLMATCHSCAN. Padrão: sim|";
             base_pt_PT = base_pt_PT + "Não bifurcar em segundo plano. Predefinição: não|";
@@ -657,7 +657,7 @@ QString translator::translateit(QString original) {
             base_it_IT = base_it_IT + "Segui i collegamenti simbolici dei file regolari. Predefinito: no|";
             base_it_IT = base_it_IT + "Questa opzione specifica gli intervalli di tempo (in secondi) in cui clamd deve eseguire un controllo del database. Predefinito: 600|";
             base_it_IT = base_it_IT + "Abilita i ricaricamenti del database non bloccanti (multi-thread/contemporanei). Questa funzionalità caricherà temporaneamente un secondo motore di scansione mentre la scansione continua utilizzando il primo motore. Una volta caricato, il nuovo motore prende il sopravvento. Il vecchio motore viene rimosso non appena tutte le scansioni che utilizzano il vecchio motore sono state completate. Questa funzionalità richiede più RAM, quindi questa opzione è fornita nel caso in cui gli utenti siano disposti a bloccare le scansioni durante il ricaricamento in cambio di requisiti di RAM inferiori. Predefinito: sì|";
-            base_it_IT = base_it_IT + "Esegui un comando quando viene trovato un virus. Utilizza le seguenti variabili di ambiente per identificare i nomi del file e del virus: - $CLAM_VIRUSEVENT_FILENAME - $CLAM_VIRUSEVENT_VIRUSNAME Nella stringa di comando, '%v' verrà anche sostituito con il nome del virus. Nota: il carattere di formato del nome file '%f' è stato disabilitato e non verrà più sostituito con il nome del file, a causa di problemi di sicurezza dell'iniezione di comandi. Utilizza invece la variabile di ambiente 'CLAM_VIRUSEVENT_FILENAME'. Per lo stesso motivo, NON dovresti usare le variabili di ambiente nel comando direttamente, ma dovresti usarle con attenzione dallo script eseguito. Predefinito: disabilitato|";
+            base_it_IT = base_it_IT + "Esegui un comando quando viene trovato un virus. Utilizza le seguenti variabili di ambiente per identificare i nomi del file e del virus: - $CLAVIRUSEVENT_FILENAME - $CLAVIRUSEVENT_VIRUSNAME Nella stringa di comando, '%v' verrà anche sostituito con il nome del virus. Nota: il carattere di formato del nome file '%f' è stato disabilitato e non verrà più sostituito con il nome del file, a causa di problemi di sicurezza dell'iniezione di comandi. Utilizza invece la variabile di ambiente 'CLAVIRUSEVENT_FILENAME'. Per lo stesso motivo, NON dovresti usare le variabili di ambiente nel comando direttamente, ma dovresti usarle con attenzione dallo script eseguito. Predefinito: disabilitato|";
             base_it_IT = base_it_IT + "Arresta il demone quando libclamav segnala una condizione di memoria insufficiente. Predefinito: no|";
             base_it_IT = base_it_IT + "Consenti l'uso del comando ALLMATCHSCAN. Predefinito: sì|";
             base_it_IT = base_it_IT + "Non eseguire il fork in background. Predefinito: no|";
@@ -836,7 +836,7 @@ QString translator::translateit(QString original) {
             base_da_DK = base_da_DK + "Følg almindelige fil-symlinks. Standard: nej|";
             base_da_DK = base_da_DK + "Denne indstilling specificerer tidsintervallerne (i sekunder), hvori clamd skal udføre en databasekontrol. Standard: 600|";
             base_da_DK = base_da_DK + "Aktiver ikke-blokerende (multi-threaded/samtidige) databasegenindlæsninger. Denne funktion indlæser midlertidigt en anden scanningsmotor, mens scanningen fortsætter med at bruge den første motor. Når den er indlæst, overtager den nye motor. Den gamle motor fjernes, så snart alle scanninger, der bruger den gamle motor, er fuldført. Denne funktion kræver, at brugerne genindlæser i tilfælde af RAM, så denne mulighed skal genindlæses under RAM. i bytte for lavere RAM-krav Standard: ja|";
-            base_da_DK = base_da_DK + "Udfør en kommando, når virus er fundet. Brug følgende miljøvariabler til at identificere fil- og virusnavne: - $CLAM_VIRUSEVENT_FILENAME - $CLAM_VIRUSEVENT_VIRUSNAME I kommandostrengen vil '%v' også blive erstattet med virusnavnet. Bemærk: \"Tegnet \"filnavnet\" vil ikke længere være blevet deaktiveret, og filnavnet \"%f\" vil ikke længere være deaktiveret. på grund af sikkerhedsproblemer med kommandoen. Brug miljøvariablen 'CLAM_VIRUSEVENT_FILENAME'. Af samme grund bør du IKKE bruge miljøvariablerne i kommandoen, men bruge den omhyggeligt fra dit udførte script.|";
+            base_da_DK = base_da_DK + "Udfør en kommando, når virus er fundet. Brug følgende miljøvariabler til at identificere fil- og virusnavne: - $CLAVIRUSEVENT_FILENAME - $CLAVIRUSEVENT_VIRUSNAME I kommandostrengen vil '%v' også blive erstattet med virusnavnet. Bemærk: \"Tegnet \"filnavnet\" vil ikke længere være blevet deaktiveret, og filnavnet \"%f\" vil ikke længere være deaktiveret. på grund af sikkerhedsproblemer med kommandoen. Brug miljøvariablen 'CLAVIRUSEVENT_FILENAME'. Af samme grund bør du IKKE bruge miljøvariablerne i kommandoen, men bruge den omhyggeligt fra dit udførte script.|";
             base_da_DK = base_da_DK + "Stop dæmon når libclamav rapporterer uden hukommelse. Standard: nej|";
             base_da_DK = base_da_DK + "Tillad brug af ALLMATCHSCAN-kommandoen. Standard: yes|";
             base_da_DK = base_da_DK + "Forkast ikke i baggrunden. Standard: nej|";
@@ -1015,7 +1015,7 @@ QString translator::translateit(QString original) {
             base_fr_FR = base_fr_FR + "Suivre les liens symboliques des fichiers habituels. Par défaut : non|";
             base_fr_FR = base_fr_FR + "Cette option spécifie les intervalles de temps (en secondes) dans lesquels clamd doit effectuer une vérification de la base de données. Par défaut : 600|";
             base_fr_FR = base_fr_FR + "Activer les rechargements de base de données non bloquants (multithread/concurrents). Cette fonctionnalité chargera temporairement un deuxième moteur d'analyse pendant que l'analyse continue à l'aide du premier moteur. Une fois chargé, le nouveau moteur prend le relais. L'ancien moteur est supprimé dès que toutes les analyses utilisant l'ancien moteur sont terminées. Cette fonctionnalité nécessite plus de RAM, cette option est donc fournie au cas où les utilisateurs seraient prêts à bloquer les analyses pendant le rechargement en échange de besoins en RAM inférieurs. Par défaut : oui | ";
-            base_fr_FR = base_fr_FR + "Exécutez une commande lorsqu'un virus est détecté. Utilisez les variables d'environnement suivantes pour identifier les noms de fichier et de virus : - $CLAM_VIRUSEVENT_FILENAME - $CLAM_VIRUSEVENT_VIRUSNAME Dans la chaîne de commande, '%v' sera également remplacé par le nom du virus. Remarque : le caractère de format de nom de fichier '%f' a été désactivé et ne sera plus remplacé par le nom de fichier, en raison de problèmes de sécurité liés à l'injection de commandes. Utilisez plutôt la variable d'environnement 'CLAM_VIRUSEVENT_FILENAME'. Pour la même raison, vous ne devez PAS utiliser les variables d'environnement directement dans la commande, mais les utiliser avec précaution à partir de votre script exécuté. Par défaut : désactivé|";
+            base_fr_FR = base_fr_FR + "Exécutez une commande lorsqu'un virus est détecté. Utilisez les variables d'environnement suivantes pour identifier les noms de fichier et de virus : - $CLAVIRUSEVENT_FILENAME - $CLAVIRUSEVENT_VIRUSNAME Dans la chaîne de commande, '%v' sera également remplacé par le nom du virus. Remarque : le caractère de format de nom de fichier '%f' a été désactivé et ne sera plus remplacé par le nom de fichier, en raison de problèmes de sécurité liés à l'injection de commandes. Utilisez plutôt la variable d'environnement 'CLAVIRUSEVENT_FILENAME'. Pour la même raison, vous ne devez PAS utiliser les variables d'environnement directement dans la commande, mais les utiliser avec précaution à partir de votre script exécuté. Par défaut : désactivé|";
             base_fr_FR = base_fr_FR + "Arrêtez le démon lorsque libclamav signale une condition de mémoire insuffisante. Par défaut : non|";
             base_fr_FR = base_fr_FR + "Autorisez l'utilisation de la commande ALLMATCHSCAN. Par défaut : oui|";
             base_fr_FR = base_fr_FR + "Ne pas passer en arrière-plan. Par défaut : no|";
@@ -1194,7 +1194,7 @@ QString translator::translateit(QString original) {
             base_es_ES = base_es_ES + "Seguir enlaces simbólicos de archivos regulares. Predeterminado: no|";
             base_es_ES = base_es_ES + "Esta opción especifica los intervalos de tiempo (en segundos) en los que clamd debe realizar una verificación de la base de datos. Predeterminado: 600|";
             base_es_ES = base_es_ES + "Habilitar recargas de base de datos sin bloqueo (multiproceso/concurrente). Esta función cargará temporalmente un segundo motor de escaneo mientras el escaneo continúa usando el primer motor. Una vez cargado, el nuevo motor toma el control. El motor anterior se elimina tan pronto como se completan todos los escaneos que usan el motor anterior. Esta función requiere más RAM, por lo que esta opción se proporciona en caso de que los usuarios estén dispuestos a bloquear los escaneos durante la recarga a cambio de requisitos de RAM más bajos. Predeterminado: sí|";
-            base_es_ES = base_es_ES + "Ejecutar un comando cuando se encuentre un virus. Utilice las siguientes variables de entorno para identificar los nombres de los archivos y los virus: - $CLAM_VIRUSEVENT_FILENAME - $CLAM_VIRUSEVENT_VIRUSNAME En la cadena de comandos, '%v' también se reemplazará con el nombre del virus. Nota: El carácter de formato de nombre de archivo '%f' se ha deshabilitado y ya no se reemplazará con el nombre del archivo, debido a problemas de seguridad de inyección de comandos. Utilice la variable de entorno 'CLAM_VIRUSEVENT_FILENAME' en su lugar. Por la misma razón, NO debe utilizar las variables de entorno en el comando directamente, sino que debe utilizarlas con cuidado desde el script ejecutado. Predeterminado: deshabilitado|";
+            base_es_ES = base_es_ES + "Ejecutar un comando cuando se encuentre un virus. Utilice las siguientes variables de entorno para identificar los nombres de los archivos y los virus: - $CLAVIRUSEVENT_FILENAME - $CLAVIRUSEVENT_VIRUSNAME En la cadena de comandos, '%v' también se reemplazará con el nombre del virus. Nota: El carácter de formato de nombre de archivo '%f' se ha deshabilitado y ya no se reemplazará con el nombre del archivo, debido a problemas de seguridad de inyección de comandos. Utilice la variable de entorno 'CLAVIRUSEVENT_FILENAME' en su lugar. Por la misma razón, NO debe utilizar las variables de entorno en el comando directamente, sino que debe utilizarlas con cuidado desde el script ejecutado. Predeterminado: deshabilitado|";
             base_es_ES = base_es_ES + "Detener el demonio cuando libclamav informa una condición de falta de memoria. Predeterminado: no|";
             base_es_ES = base_es_ES + "Permitir el uso del comando ALLMATCHSCAN. Predeterminado: sí|";
             base_es_ES = base_es_ES + "No bifurcar en segundo plano. Predeterminado: no|";
@@ -1373,7 +1373,7 @@ QString translator::translateit(QString original) {
             base_uk_UA = base_uk_UA + "Дотримуйтеся звичайних символічних посилань файлів. За замовчуванням: ні|";
             base_uk_UA = base_uk_UA + "Ця опція вказує часові інтервали (у секундах), протягом яких clamd має виконувати перевірку бази даних. Типове значення: 600|";
             base_uk_UA = base_uk_UA + "Увімкнути неблокуюче (багатопотокове/одночасне) перезавантаження бази даних. Ця функція тимчасово завантажуватиме другий механізм сканування, поки сканування продовжується за допомогою першого механізму. Після завантаження новий механізм бере на себе роботу. Старий механізм видаляється, щойно всі сканування за допомогою старого механізму завершаться. Ця функція вимагає більше оперативної пам’яті, тому ця опція надається, якщо користувачі бажають заблокувати сканування під час перезавантаження в обмін на зниження вимог до оперативної пам'яті Типове значення: так|";
-            base_uk_UA = base_uk_UA + "Виконайте команду, коли знайдено вірус. Використовуйте наступні змінні середовища для ідентифікації файлів і імен вірусів: - $CLAM_VIRUSEVENT_FILENAME - $CLAM_VIRUSEVENT_VIRUSNAME У командному рядку \"%v\" також буде замінено назвою вірусу. Примітка. Символ формату назви файлу \"%f\" вимкнено та більше не замінюватиметься на ім'я файлу через проблеми безпеки ін'єкцій. Замість цього використовуйте змінну середовища 'CLAM_VIRUSEVENT_FILENAME'. З тієї ж причини НЕ слід використовувати змінні середовища в команді безпосередньо, але слід використовувати її з виконуваного сценарію.|";
+            base_uk_UA = base_uk_UA + "Виконайте команду, коли знайдено вірус. Використовуйте наступні змінні середовища для ідентифікації файлів і імен вірусів: - $CLAVIRUSEVENT_FILENAME - $CLAVIRUSEVENT_VIRUSNAME У командному рядку \"%v\" також буде замінено назвою вірусу. Примітка. Символ формату назви файлу \"%f\" вимкнено та більше не замінюватиметься на ім'я файлу через проблеми безпеки ін'єкцій. Замість цього використовуйте змінну середовища 'CLAVIRUSEVENT_FILENAME'. З тієї ж причини НЕ слід використовувати змінні середовища в команді безпосередньо, але слід використовувати її з виконуваного сценарію.|";
             base_uk_UA = base_uk_UA + "Зупинити демон, коли libclamav повідомляє про стан пам'яті. За замовчуванням: ні|";
             base_uk_UA = base_uk_UA + "Дозволити використання команди ALLMATCHSCAN. За замовчуванням: так|";
             base_uk_UA = base_uk_UA + "Не переходити у фоновий режим. За замовчуванням: ні|";
@@ -1463,13 +1463,13 @@ QString translator::translateit(QString original) {
     QStringList translations;
     QString rc = original;
 
-    if (languageset == "[de_DE]") translations = base_de_DE.split("|");
-    if ((languageset == "[pt_PT]") || (languageset == "[pt_AO]") || (languageset == "[pt_BR]") || (languageset == "[pt_CV]") || (languageset == "[pt_MZ]") || (languageset == "[pt_MO]") || (languageset == "[pt_ST]") || (languageset == "[pt_TL]")) translations = base_pt_PT.split("|");
-    if (languageset == "[it_IT]") translations = base_it_IT.split("|");
-    if (languageset == "[da_DK]") translations = base_da_DK.split("|");
-    if (languageset == "[fr_FR]") translations = base_fr_FR.split("|");
-    if (languageset == "[es_ES]") translations = base_es_ES.split("|");
-    if (languageset == "[uk_UA]") translations = base_uk_UA.split("|");
+    if (m_languageset == "[de_DE]") translations = base_de_DE.split("|");
+    if ((m_languageset == "[pt_PT]") || (m_languageset == "[pt_AO]") || (m_languageset == "[pt_BR]") || (m_languageset == "[pt_CV]") || (m_languageset == "[pt_MZ]") || (m_languageset == "[pt_MO]") || (m_languageset == "[pt_ST]") || (m_languageset == "[pt_TL]")) translations = base_pt_PT.split("|");
+    if (m_languageset == "[it_IT]") translations = base_it_IT.split("|");
+    if (m_languageset == "[da_DK]") translations = base_da_DK.split("|");
+    if (m_languageset == "[fr_FR]") translations = base_fr_FR.split("|");
+    if (m_languageset == "[es_ES]") translations = base_es_ES.split("|");
+    if (m_languageset == "[uk_UA]") translations = base_uk_UA.split("|");
     if (translations.length() == 0) translations = base.split("|");
 
     QString helper;

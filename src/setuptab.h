@@ -8,6 +8,8 @@
 #include <QWidget>
 #include <QMovie>
 #include <QDir>
+
+#include "ui_setuptab.h"
 #include "setupfilehandler.h"
 #include "highlighter.h"
 
@@ -21,13 +23,13 @@ class setupTab : public QWidget
 
 public:
     explicit setupTab(QWidget *parent = 0);
-    ~setupTab();
+    ~setupTab() = default;
 
 private:
-    Ui::setupTab *ui;
-    setupFileHandler    * setupFile; // clamd && freshclam
-    bool                  supressMessage;
-    bool                  monochrome;
+    Ui::setupTab m_ui;
+    setupFileHandler    * m_setupFile; // clamd && freshclam
+    bool                  m_supressMessage;
+    bool                  m_monochrome;
     QString checkmonochrome(QString color);
 
 private slots:

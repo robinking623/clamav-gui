@@ -1,69 +1,62 @@
 #include "clamdconfstringoption.h"
-#include "ui_clamdconfstringoption.h"
 #define css_mono "background-color:#404040;color:white"
 
-clamdConfStringOption::clamdConfStringOption(QWidget *parent, QString keyword, bool checked, QString label, QString options) :
-    QWidget(parent),
-    ui(new Ui::clamdConfStringOption),
-    optionKeyword(keyword),
-    optionValue(options)
+clamdConfStringOption::clamdConfStringOption(QWidget* parent, QString keyword, bool checked, QString label, QString options)
+    : QWidget(parent), m_optionKeyword(keyword), m_optionValue(options)
 {
-    startup = true;
-    setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/clamd.conf",this);
-    setupFileHandler * m_baseSetup = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini",this);
+    m_startup = true;
+    m_setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/clamd.conf", this);
+    setupFileHandler* baseSetup = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini", this);
 
-    languageset = m_baseSetup->getSectionValue("Setup","language");
-    translator * m_trans = new translator(languageset);
+    QString languageset = baseSetup->getSectionValue("Setup", "language");
+    translator trans(languageset);
 
-    ui->setupUi(this);
+    m_ui.setupUi(this);
 
-    if (setupFile->singleLineExists(keyword) == true) {
-        ui->checkBox->setChecked(true);
-        ui->lineEdit->setText(setupFile->getSingleLineValue(keyword));
-    } else {
-        ui->checkBox->setChecked(checked);
-        ui->lineEdit->setText(options);
+    if (m_setupFile->singleLineExists(keyword) == true) {
+        m_ui.checkBox->setChecked(true);
+        m_ui.lineEdit->setText(m_setupFile->getSingleLineValue(keyword));
+    }
+    else {
+        m_ui.checkBox->setChecked(checked);
+        m_ui.lineEdit->setText(options);
     }
 
-    label = m_trans->translateit(label);
-    label = translator::beautifyString(label,120);
+    label = trans.translateit(label);
+    label = translator::beautifyString(label, 120);
 
-    ui->checkBox->setText(label);
+    m_ui.checkBox->setText(label);
 
-    startup = false;
+    m_startup = false;
     slot_checkBoxClicked();
-}
-
-clamdConfStringOption::~clamdConfStringOption()
-{
-    delete ui;
 }
 
 void clamdConfStringOption::slot_checkBoxClicked()
 {
-    if (startup == false) {
-        bool state = ui->checkBox->isChecked();
-        ui->lineEdit->setEnabled(state);
+    if (m_startup == false) {
+        bool state = m_ui.checkBox->isChecked();
+        m_ui.lineEdit->setEnabled(state);
         if (state == true) {
-            QString m_value = setupFile->getSingleLineValue(optionKeyword);
-            setupFile->removeSingleLine(optionKeyword,m_value);
-            setupFile->setSingleLineValue(optionKeyword,ui->lineEdit->text());
-        } else {
-            QString m_value = setupFile->getSingleLineValue(optionKeyword);
-            setupFile->removeSingleLine(optionKeyword,m_value);
+            QString value = m_setupFile->getSingleLineValue(m_optionKeyword);
+            m_setupFile->removeSingleLine(m_optionKeyword, value);
+            m_setupFile->setSingleLineValue(m_optionKeyword, m_ui.lineEdit->text());
+        }
+        else {
+            QString value = m_setupFile->getSingleLineValue(m_optionKeyword);
+            m_setupFile->removeSingleLine(m_optionKeyword, value);
         }
         emit settingChanged();
-        (state == true)?ui->frame->setStyleSheet(css_mono):ui->frame->setStyleSheet("");
+        (state == true) ? m_ui.frame->setStyleSheet(css_mono) : m_ui.frame->setStyleSheet("");
     }
 }
 
 void clamdConfStringOption::slot_lineEditChanged()
 {
-    if (startup == false) {
-        if (ui->checkBox->isChecked() == true){
-            QString m_value = setupFile->getSingleLineValue(optionKeyword);
-            setupFile->removeSingleLine(optionKeyword,m_value);
-            setupFile->setSingleLineValue(optionKeyword,ui->lineEdit->text());
+    if (m_startup == false) {
+        if (m_ui.checkBox->isChecked() == true) {
+            QString value = m_setupFile->getSingleLineValue(m_optionKeyword);
+            m_setupFile->removeSingleLine(m_optionKeyword, value);
+            m_setupFile->setSingleLineValue(m_optionKeyword, m_ui.lineEdit->text());
             emit settingChanged();
         }
     }

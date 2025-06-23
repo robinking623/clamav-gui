@@ -21,43 +21,44 @@
 #ifndef OPTIONSDIALOG_H
 #define OPTIONSDIALOG_H
 
-#include "includeexcludeoptions.h"
-#include "setupfilehandler.h"
-#include "logviewobject.h"
-#include "scanlimitstab.h"
-#include "scanoptionyn.h"
-#include "scanoption.h"
+#include "ui_optionsdialog.h"
+
+#include <QFileDialog>
 #include <QListWidgetItem>
 #include <QMessageBox>
-#include <QFileDialog>
 #include <QProcess>
-#include <QWidget>
 #include <QUrl>
+#include <QWidget>
+#include "includeexcludeoptions.h"
+#include "logviewobject.h"
+#include "scanlimitstab.h"
+#include "scanoption.h"
+#include "scanoptionyn.h"
+#include "setupfilehandler.h"
 
 namespace Ui {
 class optionsDialog;
 }
 
-class optionsDialog : public QWidget
-{
+class optionsDialog : public QWidget {
     Q_OBJECT
 
-public:
-    explicit optionsDialog(QWidget *parent = 0);
-    ~optionsDialog();
+   public:
+    explicit optionsDialog(QWidget* parent = 0);
+    ~optionsDialog() = default;
 
-private:
-    Ui::optionsDialog       *ui;
-    setupFileHandler        * setupFile;
-    setupFileHandler        * profiles;
-    scanLimitsTab           * scanLimits;
-    includeExcludeOptions   * incExcOptTab;
-    QProcess                * getClamscanParametersProcess;
-    QString                   getClamscanProcessOutput;
+   private:
+    Ui::optionsDialog m_ui;
+    setupFileHandler* m_setupFile;
+    setupFileHandler* m_profiles;
+    scanLimitsTab* m_scanLimits;
+    includeExcludeOptions* m_incExcOptTab;
+    QProcess* m_getClamscanParametersProcess;
+    QString m_getClamscanProcessOutput;
 
     void updateDirectories();
 
-private slots:
+   private slots:
     void slot_selectLVDButtonClicked();
     void slot_selectSRTFButtonClicked();
     void slot_selectMDButtonClicked();
@@ -71,17 +72,15 @@ private slots:
     void slot_getClamscanProcessFinished();
     void slot_updateClamdConf();
 
-signals:
+   signals:
     void databasePathChanged(QString path);
     void updateDatabase();
     void updateClamdConf();
     void systemStatusChanged();
 
-public:
+   public:
     QString getCopyDirectory();
     QString getMoveDirectory();
-
 };
 
-
-#endif // OPTIONSDIALOG_H
+#endif  // OPTIONSDIALOG_H

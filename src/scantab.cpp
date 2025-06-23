@@ -1,311 +1,339 @@
 #include "scantab.h"
-#include "ui_scantab.h"
 
-scanTab::scanTab(QWidget *parent) : QWidget(parent),ui(new Ui::scanTab){
-    ui->setupUi(this);
-    setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini",this);
-    logHighLighter = NULL;
-    monochrome = setupFile->getSectionBoolValue("Setup","DisableLogHighlighter");
-    if (monochrome == false) logHighLighter = new highlighter(ui->logPlainTextEdit->document());
-    devicelabel = ui->deviceLabel;
+scanTab::scanTab(QWidget* parent) : QWidget(parent)
+{
+    m_ui.setupUi(this);
+    m_setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini", this);
+    m_logHighLighter = NULL;
+    m_monochrome = m_setupFile->getSectionBoolValue("Setup", "DisableLogHighlighter");
+    if (m_monochrome == false)
+        m_logHighLighter = new highlighter(m_ui.logPlainTextEdit->document());
+    m_devicelabel = m_ui.deviceLabel;
     checkMonochromeSettings();
 
-    model = new CFileSystemModel;
-    model->setFilter(QDir::AllDirs|QDir::NoDotAndDotDot);
+    m_model = new CFileSystemModel;
+    m_model->setFilter(QDir::AllDirs | QDir::NoDotAndDotDot);
 
-    ui->treeView->setModel(model);
-    ui->treeView->hideColumn(1);
-    ui->treeView->hideColumn(2);
-    ui->treeView->hideColumn(3);
+    m_ui.treeView->setModel(m_model);
+    m_ui.treeView->hideColumn(1);
+    m_ui.treeView->hideColumn(2);
+    m_ui.treeView->hideColumn(3);
 
-    QStringList m_directories = setupFile->getSectionValue("Settings","Directories").split("\n");
-    ui->treeView->collapseAll();
-    model->unCheckAll();
-    model->setRootPath("/");
-    foreach(QString dir,m_directories){
-        if (dir != ""){
-            model->setChecked(dir,true);
-            QModelIndex index = model->index(dir);
-            ui->treeView->scrollTo(index);
-            ui->treeView->setCurrentIndex(index);
+    QStringList directories = m_setupFile->getSectionValue("Settings", "Directories").split("\n");
+    m_ui.treeView->collapseAll();
+    m_model->unCheckAll();
+    m_model->setRootPath("/");
+    foreach (QString dir, directories) {
+        if (dir != "") {
+            m_model->setChecked(dir, true);
+            QModelIndex index = m_model->index(dir);
+            m_ui.treeView->scrollTo(index);
+            m_ui.treeView->setCurrentIndex(index);
         }
     }
 
-    ui->recursivCheckBox->setChecked(setupFile->getSectionBoolValue("Settings","RecursivScan"));
-    ui->showHiddenDirsCheckBox->setChecked(setupFile->getSectionBoolValue("Settings","ShowHiddenDirs"));
+    m_ui.recursivCheckBox->setChecked(m_setupFile->getSectionBoolValue("Settings", "RecursivScan"));
+    m_ui.showHiddenDirsCheckBox->setChecked(m_setupFile->getSectionBoolValue("Settings", "ShowHiddenDirs"));
     slot_hiddenFoldersCheckBoxClicked();
-    ui->virusFoundComboBox->setCurrentIndex(setupFile->getSectionIntValue("Settings","VirusFoundComboBox"));
+    m_ui.virusFoundComboBox->setCurrentIndex(m_setupFile->getSectionIntValue("Settings", "VirusFoundComboBox"));
 
-    whoamiProcess = new QProcess(this);
-    connect(whoamiProcess,SIGNAL(finished(int)),this,SLOT(slot_whoamiProcessFinished()));
-    whoamiProcess->start("whoami",QStringList());
+    m_whoamiProcess = new QProcess(this);
+    connect(m_whoamiProcess, SIGNAL(finished(int)), this, SLOT(slot_whoamiProcessFinished()));
+    m_whoamiProcess->start("whoami", QStringList());
 }
 
-scanTab::~scanTab()
-{
-    delete ui;
-}
 
 void scanTab::checkMonochromeSettings()
 {
-    if (monochrome == false) {
-        devicelabel->setStyleSheet("background-color:#c0c0c0;color:black;padding:4px;border-radius:5px;");
-        ui->pathLabel->setStyleSheet("background-color:#c0c0c0;color:black;padding:4px;border-radius:5px;");
-    } else {
-        devicelabel->setStyleSheet("background-color:#404040;color:white;padding:4px;border-radius:5px;");
-        ui->pathLabel->setStyleSheet("background-color:#404040;color:white;padding:4px;border-radius:5px;");
+    if (m_monochrome == false) {
+        m_devicelabel->setStyleSheet("background-color:#c0c0c0;color:black;padding:4px;border-radius:5px;");
+        m_ui.pathLabel->setStyleSheet("background-color:#c0c0c0;color:black;padding:4px;border-radius:5px;");
+    }
+    else {
+        m_devicelabel->setStyleSheet("background-color:#404040;color:white;padding:4px;border-radius:5px;");
+        m_ui.pathLabel->setStyleSheet("background-color:#404040;color:white;padding:4px;border-radius:5px;");
     }
 }
 
-void scanTab::slot_scanButtonClicked(){
-QList <QPersistentModelIndex> m_list = model->checkedIndexes.values();
-QStringList m_scanObjects;
+void scanTab::slot_scanButtonClicked()
+{
+    QList<QPersistentModelIndex> list = m_model->checkedIndexes().values();
+    QStringList scanObjects;
 
-    for (int i = 0; i < m_list.count(); i++){
-        if (m_list[i].data(QFileSystemModel::FilePathRole).toString() != "") m_scanObjects << m_list[i].data(QFileSystemModel::FilePathRole).toString();
+    for (int i = 0; i < list.count(); i++) {
+        if (list[i].data(QFileSystemModel::FilePathRole).toString() != "")
+            scanObjects << list[i].data(QFileSystemModel::FilePathRole).toString();
     }
 
-    if (m_scanObjects.count() > 0) emit triggerScanRequest(m_scanObjects);
+    if (scanObjects.count() > 0)
+        emit triggerScanRequest(scanObjects);
 }
 
-void scanTab::slot_basePathButtonClicked(){
-QModelIndex m_index = model->index("/");
+void scanTab::slot_basePathButtonClicked()
+{
+    QModelIndex index = m_model->index("/");
 
-    ui->treeView->scrollTo(m_index);
-    ui->treeView->setCurrentIndex(m_index);
+    m_ui.treeView->scrollTo(index);
+    m_ui.treeView->setCurrentIndex(index);
 }
 
-void scanTab::slot_homePathButtonClicked(){
-QModelIndex m_index = model->index(QDir::homePath());
+void scanTab::slot_homePathButtonClicked()
+{
+    QModelIndex index = m_model->index(QDir::homePath());
 
-    ui->treeView->scrollTo(m_index);
-    ui->treeView->setCurrentIndex(m_index);
+    m_ui.treeView->scrollTo(index);
+    m_ui.treeView->setCurrentIndex(index);
 }
 
-void scanTab::slot_updateDeviceList(){
-QDir m_dir("/run/media/" + username.trimmed());
-QDir m_dir2("/run/media");
-QDir m_dirUbuntu("/media/" + username.trimmed());
-QDir m_dirUbuntu2("/media");
-fileSystemWatcher = new QFileSystemWatcher(this);
-fileSystemWatcherUbuntu = new QFileSystemWatcher(this);
-QStringList m_filters;
-    m_filters << "*";
-QStringList m_dirs = m_dir.entryList(m_filters,QDir::AllDirs|QDir::NoDotAndDotDot);
-QStringList m_dirsUbuntu = m_dirUbuntu.entryList(m_filters,QDir::AllDirs|QDir::NoDotAndDotDot);
-devicelabel = new QLabel(tr("Devices"));
-QLayoutItem *m_item = NULL;
+void scanTab::slot_updateDeviceList()
+{
+    QDir dir("/run/media/" + m_username.trimmed());
+    QDir dir2("/run/media");
+    QDir dirUbuntu("/media/" + m_username.trimmed());
+    QDir dirUbuntu2("/media");
+    m_fileSystemWatcher = new QFileSystemWatcher(this);
+    m_fileSystemWatcherUbuntu = new QFileSystemWatcher(this);
+    QStringList filters;
+    filters << "*";
+    QStringList dirs = dir.entryList(filters, QDir::AllDirs | QDir::NoDotAndDotDot);
+    QStringList dirsUbuntu = dirUbuntu.entryList(filters, QDir::AllDirs | QDir::NoDotAndDotDot);
+    m_devicelabel = new QLabel(tr("Devices"));
+    QLayoutItem* item = NULL;
 
-    while ((m_item = ui->devicesFrame->layout()->takeAt(0)) != 0) {
-        delete m_item->widget();
+    while ((item = m_ui.devicesFrame->layout()->takeAt(0)) != 0) {
+        delete item->widget();
     }
 
-    if (m_dir.exists() == true){
-        fileSystemWatcher->addPath("/run/media/" + username.trimmed());
-        connect(fileSystemWatcher,SIGNAL(directoryChanged(QString)),this,SLOT(slot_updateDeviceList()));
-    } else {
-        if (m_dir2.exists() == true) {
-            fileSystemWatcher->addPath("/run/media");
-            connect(fileSystemWatcher,SIGNAL(directoryChanged(QString)),this,SLOT(slot_updateDeviceList()));
+    if (dir.exists() == true) {
+        m_fileSystemWatcher->addPath("/run/media/" + m_username.trimmed());
+        connect(m_fileSystemWatcher, SIGNAL(directoryChanged(QString)), this, SLOT(slot_updateDeviceList()));
+    }
+    else {
+        if (dir2.exists() == true) {
+            m_fileSystemWatcher->addPath("/run/media");
+            connect(m_fileSystemWatcher, SIGNAL(directoryChanged(QString)), this, SLOT(slot_updateDeviceList()));
         }
     }
 
-    if (m_dirUbuntu.exists() == true) {
-        fileSystemWatcherUbuntu->addPath("/media/" + username.trimmed());
-        connect(fileSystemWatcherUbuntu,SIGNAL(directoryChanged(QString)),this,SLOT(slot_updateDeviceList()));
-    } else {
-        if (m_dirUbuntu2.exists() == true) {
-            fileSystemWatcherUbuntu->addPath("/media");
-            connect(fileSystemWatcherUbuntu,SIGNAL(directoryChanged(QString)),this,SLOT(slot_updateDeviceList()));
+    if (dirUbuntu.exists() == true) {
+        m_fileSystemWatcherUbuntu->addPath("/media/" + m_username.trimmed());
+        connect(m_fileSystemWatcherUbuntu, SIGNAL(directoryChanged(QString)), this, SLOT(slot_updateDeviceList()));
+    }
+    else {
+        if (dirUbuntu2.exists() == true) {
+            m_fileSystemWatcherUbuntu->addPath("/media");
+            connect(m_fileSystemWatcherUbuntu, SIGNAL(directoryChanged(QString)), this, SLOT(slot_updateDeviceList()));
         }
     }
 
-    if (setupFile->getSectionBoolValue("Setup","DisableLogHighlighter") == true) {
-        devicelabel->setStyleSheet("background-color:#404040;color:white;padding:3px;");
-    } else {
-        devicelabel->setStyleSheet("background-color:#c0c0c0;color:black;padding:3px;");
+    if (m_setupFile->getSectionBoolValue("Setup", "DisableLogHighlighter") == true) {
+        m_devicelabel->setStyleSheet("background-color:#404040;color:white;padding:3px;");
     }
-    ui->devicesFrame->layout()->addWidget(devicelabel);
+    else {
+        m_devicelabel->setStyleSheet("background-color:#c0c0c0;color:black;padding:3px;");
+    }
+    m_ui.devicesFrame->layout()->addWidget(m_devicelabel);
 
-    deviceGroup = new QButtonGroup(this);
-    connect(deviceGroup,SIGNAL(idClicked(int)),this,SLOT(slot_deviceButtonClicked(int)));
+    m_deviceGroup = new QButtonGroup(this);
+    connect(m_deviceGroup, SIGNAL(idClicked(int)), this, SLOT(slot_deviceButtonClicked(int)));
 
-    if (m_dirs.count() > 0){
-        devices.clear();
-        buttonID = 0;
-        foreach (QString entry,m_dirs){
-            devices << (QString)("/run/media/" + username.trimmed() + "/" + entry);
-            dragablePushButton * m_button = new dragablePushButton(QIcon(":/icons/icons/media.png"),entry.mid(entry.lastIndexOf("/") + 1),this,(QString)("/var/run/media/" + username.trimmed() + "/" + entry));
-            connect(m_button,SIGNAL(dragStarted()),this,SLOT(slot_requestDropZoneVisible()));
-            m_button->setIconSize(QSize(28,28));
-            m_button->setStyleSheet("text-align:left");
-            m_button->setFlat(true);
-            deviceGroup->addButton(m_button,buttonID);
-            ui->devicesFrame->layout()->addWidget(m_button);
-            buttonID++;
+    if (dirs.count() > 0) {
+        m_devices.clear();
+        m_buttonID = 0;
+        foreach (QString entry, dirs) {
+            m_devices << (QString)("/run/media/" + m_username.trimmed() + "/" + entry);
+            dragablePushButton* button = new dragablePushButton(QIcon(":/icons/icons/media.png"), entry.mid(entry.lastIndexOf("/") + 1), this,
+                                                                (QString)("/var/run/media/" + m_username.trimmed() + "/" + entry));
+            connect(button, SIGNAL(dragStarted()), this, SLOT(slot_requestDropZoneVisible()));
+            button->setIconSize(QSize(28, 28));
+            button->setStyleSheet("text-align:left");
+            button->setFlat(true);
+            m_deviceGroup->addButton(button, m_buttonID);
+            m_ui.devicesFrame->layout()->addWidget(button);
+            m_buttonID++;
         }
     }
 
-    if (m_dirsUbuntu.count() > 0){
-        devices.clear();
-        buttonID = 0;
-        foreach (QString entry,m_dirsUbuntu){
-            devices << (QString)("/media/" + username.trimmed() + "/" + entry);
-            dragablePushButton * m_button = new dragablePushButton(QIcon(":/icons/icons/media.png"),entry.mid(entry.lastIndexOf("/") + 1),this,(QString)("/media/" + username.trimmed() + "/" + entry));
-            connect(m_button,SIGNAL(dragStarted()),this,SLOT(slot_requestDropZoneVisible()));
-            m_button->setIconSize(QSize(28,28));
-            m_button->setStyleSheet("text-align:left");
-            m_button->setFlat(true);
-            deviceGroup->addButton(m_button,buttonID);
-            ui->devicesFrame->layout()->addWidget(m_button);
-            buttonID++;
+    if (dirsUbuntu.count() > 0) {
+        m_devices.clear();
+        m_buttonID = 0;
+        foreach (QString entry, dirsUbuntu) {
+            m_devices << (QString)("/media/" + m_username.trimmed() + "/" + entry);
+            dragablePushButton* button = new dragablePushButton(QIcon(":/icons/icons/media.png"), entry.mid(entry.lastIndexOf("/") + 1), this,
+                                                                (QString)("/media/" + m_username.trimmed() + "/" + entry));
+            connect(button, SIGNAL(dragStarted()), this, SLOT(slot_requestDropZoneVisible()));
+            button->setIconSize(QSize(28, 28));
+            button->setStyleSheet("text-align:left");
+            button->setFlat(true);
+            m_deviceGroup->addButton(button, m_buttonID);
+            m_ui.devicesFrame->layout()->addWidget(button);
+            m_buttonID++;
         }
     }
 }
 
-void scanTab::slot_deviceButtonClicked(int buttonIndex){
-QModelIndex m_index = model->index(devices.at(buttonIndex));
+void scanTab::slot_deviceButtonClicked(int buttonIndex)
+{
+    QModelIndex index = m_model->index(m_devices.at(buttonIndex));
 
-    ui->treeView->scrollTo(m_index);
-    ui->treeView->setCurrentIndex(m_index);
+    m_ui.treeView->scrollTo(index);
+    m_ui.treeView->setCurrentIndex(index);
 }
 
-void scanTab::slot_whoamiProcessFinished(){
+void scanTab::slot_whoamiProcessFinished()
+{
 
-    username = whoamiProcess->readAllStandardOutput();
+    m_username = m_whoamiProcess->readAllStandardOutput();
 
     slot_updateDeviceList();
 }
 
-void scanTab::slot_recursivScanCheckBoxClicked(){
-    setupFile->setSectionValue("Settings","RecursivScan",ui->recursivCheckBox->isChecked());
+void scanTab::slot_recursivScanCheckBoxClicked()
+{
+    m_setupFile->setSectionValue("Settings", "RecursivScan", m_ui.recursivCheckBox->isChecked());
 }
 
-void scanTab::slot_virusFoundComboBoxChanged(){
-    setupFile->setSectionValue("Settings","VirusFoundComboBox",ui->virusFoundComboBox->currentIndex());
+void scanTab::slot_virusFoundComboBoxChanged()
+{
+    m_setupFile->setSectionValue("Settings", "VirusFoundComboBox", m_ui.virusFoundComboBox->currentIndex());
 }
 
-bool scanTab::recursivChecked(){
-    return ui->recursivCheckBox->isChecked();
+bool scanTab::recursivChecked()
+{
+    return m_ui.recursivCheckBox->isChecked();
 }
 
-void scanTab::setStatusMessage(QString message){
-QString m_currentFile;
-int m_start,m_end;
+void scanTab::setStatusMessage(QString message)
+{
+    QString currentFile;
+    int start, end;
 
-    while(message.indexOf("Scanning") != -1){
-        m_start = message.indexOf("Scanning");
-        m_end = message.indexOf("\n",m_start);
-        m_currentFile = message.mid(m_start,m_end - m_start + 1);
-        message.replace(m_currentFile,"");
-        m_currentFile = m_currentFile.mid(m_currentFile.lastIndexOf("/") + 1);
-        m_currentFile.replace("\n","");
-        ui->currentFileLabel->setText("Scanning : " + m_currentFile);
+    while (message.indexOf("Scanning") != -1) {
+        start = message.indexOf("Scanning");
+        end = message.indexOf("\n", start);
+        currentFile = message.mid(start, end - start + 1);
+        message.replace(currentFile, "");
+        currentFile = currentFile.mid(currentFile.lastIndexOf("/") + 1);
+        currentFile.replace("\n", "");
+        m_ui.currentFileLabel->setText("Scanning : " + currentFile);
     }
-    ui->logPlainTextEdit->insertPlainText(message);
-    ui->logPlainTextEdit->ensureCursorVisible();
+    m_ui.logPlainTextEdit->insertPlainText(message);
+    m_ui.logPlainTextEdit->ensureCursorVisible();
 }
 
-void scanTab::clearLogMessage(){
-    ui->logPlainTextEdit->setPlainText("");
+void scanTab::clearLogMessage()
+{
+    m_ui.logPlainTextEdit->setPlainText("");
 }
 
-void scanTab::slot_abortScan(){
-    ui->currentFileLabel->setText(tr("Scanning aborted ......"));
+void scanTab::slot_abortScan()
+{
+    m_ui.currentFileLabel->setText(tr("Scanning aborted ......"));
     emit abortScan();
 }
 
-void scanTab::slot_enableForm(bool mode){
+void scanTab::slot_enableForm(bool mode)
+{
 
-    if (mode == false){
-        busyLabel = new QLabel(this);
-        busyLabel->setStyleSheet("background:transparent");
-        busyLabel->setGeometry((this->width() - 80) / 2,(this->height() - 80) / 2,80,80);
-        movie = new QMovie(":/icons/icons/gifs/spinning_segments_large.gif");
-        busyLabel->setMovie(movie);
-        busyLabel->show();
-        movie->start();
-    } else {
-        if (movie != 0){
-            movie->stop();
-            delete movie;
-            delete busyLabel;
+    if (mode == false) {
+        m_busyLabel = new QLabel(this);
+        m_busyLabel->setStyleSheet("background:transparent");
+        m_busyLabel->setGeometry((this->width() - 80) / 2, (this->height() - 80) / 2, 80, 80);
+        m_movie = new QMovie(":/icons/icons/gifs/spinning_segments_large.gif");
+        m_busyLabel->setMovie(m_movie);
+        m_busyLabel->show();
+        m_movie->start();
+    }
+    else {
+        if (m_movie != 0) {
+            m_movie->stop();
+            delete m_movie;
+            delete m_busyLabel;
         }
     }
 
-    ui->deviceFrame->setEnabled(mode);
-    ui->startScanButton->setEnabled(mode);
-    ui->stopScanButton->setEnabled(!mode);
-    ui->recursivCheckBox->setEnabled(mode);
-    ui->showHiddenDirsCheckBox->setEnabled(mode);
-    ui->virusFoundComboBox->setEnabled(mode);
-    ui->treeView->setEnabled(mode);
+    m_ui.deviceFrame->setEnabled(mode);
+    m_ui.startScanButton->setEnabled(mode);
+    m_ui.stopScanButton->setEnabled(!mode);
+    m_ui.recursivCheckBox->setEnabled(mode);
+    m_ui.showHiddenDirsCheckBox->setEnabled(mode);
+    m_ui.virusFoundComboBox->setEnabled(mode);
+    m_ui.treeView->setEnabled(mode);
 }
 
-void scanTab::setStatusBarMessage(QString message, QString bgColor){
-    ui->currentFileLabel->setText(message);
-    ui->currentFileLabel->setStyleSheet("background-color:"+bgColor);
+void scanTab::setStatusBarMessage(QString message, QString bgColor)
+{
+    m_ui.currentFileLabel->setText(message);
+    m_ui.currentFileLabel->setStyleSheet("background-color:" + bgColor);
 }
 
-int scanTab::getVirusFoundComboBoxValue(){
-    return ui->virusFoundComboBox->currentIndex();
+int scanTab::getVirusFoundComboBoxValue()
+{
+    return m_ui.virusFoundComboBox->currentIndex();
 }
 
-void scanTab::slot_requestDropZoneVisible(){
+void scanTab::slot_requestDropZoneVisible()
+{
     emit requestDropZoneVisible();
 }
 
-void scanTab::slot_dirtreeSelectionChanged(){
-QList <QPersistentModelIndex> m_list = model->checkedIndexes.values();
-QString m_directories;
+void scanTab::slot_dirtreeSelectionChanged()
+{
+    QList<QPersistentModelIndex> list = m_model->checkedIndexes().values();
+    QString directories;
 
-    for (int i = 0; i < m_list.count(); i++){
-        if (i < m_list.count() - 1){
-            m_directories = m_directories + m_list[i].data(QFileSystemModel::FilePathRole).toString() + "\n";
-        } else {
-            m_directories = m_directories + m_list[i].data(QFileSystemModel::FilePathRole).toString();
+    for (int i = 0; i < list.count(); i++) {
+        if (i < list.count() - 1) {
+            directories = directories + list[i].data(QFileSystemModel::FilePathRole).toString() + "\n";
+        }
+        else {
+            directories = directories + list[i].data(QFileSystemModel::FilePathRole).toString();
         }
     }
 
-    setupFile->setSectionValue("Settings","Directories",m_directories);
+    m_setupFile->setSectionValue("Settings", "Directories", directories);
 }
 
-void scanTab::slot_updateDBPath(QString path){
-    setupFile->setSectionValue("Directories", "LoadSupportedDBFiles", "checked|" + path);
+void scanTab::slot_updateDBPath(QString path)
+{
+    m_setupFile->setSectionValue("Directories", "LoadSupportedDBFiles", "checked|" + path);
 }
 
 void scanTab::slot_disableScanButton()
 {
-    ui->startScanButton->setEnabled(false);
+    m_ui.startScanButton->setEnabled(false);
 }
 
 void scanTab::slot_hiddenFoldersCheckBoxClicked()
 {
-    if (ui->showHiddenDirsCheckBox->isChecked() == true) {
-        model->setFilter(QDir::AllDirs|QDir::NoDotAndDotDot|QDir::Hidden);
-    } else {
-        model->setFilter(QDir::AllDirs|QDir::NoDotAndDotDot);
+    if (m_ui.showHiddenDirsCheckBox->isChecked() == true) {
+        m_model->setFilter(QDir::AllDirs | QDir::NoDotAndDotDot | QDir::Hidden);
     }
-    setupFile->setSectionValue("Settings","ShowHiddenDirs",ui->showHiddenDirsCheckBox->isChecked());
+    else {
+        m_model->setFilter(QDir::AllDirs | QDir::NoDotAndDotDot);
+    }
+    m_setupFile->setSectionValue("Settings", "ShowHiddenDirs", m_ui.showHiddenDirsCheckBox->isChecked());
 }
 
 void scanTab::slot_add_remove_highlighter(bool state)
 {
-    monochrome = state;
-    setupFile->setSectionValue("Setup","DisableLogHighlighter",state);
+    m_monochrome = state;
+    m_setupFile->setSectionValue("Setup", "DisableLogHighlighter", state);
 
     if (state == true) {
-      if (logHighLighter != NULL) {
-        delete logHighLighter;
-        logHighLighter = NULL;
-      }
-    } else {
-         if (logHighLighter == NULL) {
-             logHighLighter = new highlighter(ui->logPlainTextEdit->document());
-         } else {
-             delete logHighLighter;
-             logHighLighter = new highlighter(ui->logPlainTextEdit->document());
-         }
+        if (m_logHighLighter != NULL) {
+            delete m_logHighLighter;
+            m_logHighLighter = NULL;
+        }
+    }
+    else {
+        if (m_logHighLighter == NULL) {
+            m_logHighLighter = new highlighter(m_ui.logPlainTextEdit->document());
+        }
+        else {
+            delete m_logHighLighter;
+            m_logHighLighter = new highlighter(m_ui.logPlainTextEdit->document());
+        }
     }
     checkMonochromeSettings();
 }

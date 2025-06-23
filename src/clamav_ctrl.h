@@ -21,6 +21,8 @@
 #ifndef CLAMAV_CTRL_H
 #define CLAMAV_CTRL_H
 
+#include "ui_clamav_ctrl.h"
+
 #include <QSystemTrayIcon>
 #include <QDragEnterEvent>
 #include <QMessageBox>
@@ -30,6 +32,7 @@
 #include <QMenu>
 #include <QUrl>
 #include <QDir>
+
 
 namespace Ui {
 class clamav_ctrl;
@@ -41,10 +44,10 @@ class clamav_ctrl : public QWidget
 
 public:
     explicit clamav_ctrl(QWidget *parent = 0);
-    ~clamav_ctrl();
+    ~clamav_ctrl() = default;
 
 private:
-    Ui::clamav_ctrl *ui;
+    Ui::clamav_ctrl m_ui;
     void initWidget();
     void dragEnterEvent(QDragEnterEvent * event);
     void dropEvent(QDropEvent * event);

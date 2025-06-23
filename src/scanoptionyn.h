@@ -2,6 +2,7 @@
 #define SCANOPTIONYN_H
 
 #include <QWidget>
+#include "ui_scanoptionyn.h"
 #include "setupfilehandler.h"
 #include "translator.h"
 
@@ -15,16 +16,14 @@ class scanoptionyn : public QWidget
 
 public:
     explicit scanoptionyn(QWidget *parent = nullptr, QString setupFileName = "", QString section = "", bool checked = false, QString label = "", QString comment = "");
-    ~scanoptionyn();
+    ~scanoptionyn() = default;
 
 private:
-    Ui::scanoptionyn *ui;
-    setupFileHandler * setupFile;
-    translator       * trans;
-    QString setupFileSection;
-    QString option;
-    QString com;
-    QString languageset;
+    Ui::scanoptionyn m_ui;
+    setupFileHandler * m_setupFile;
+    QString m_setupFileSection;
+    QString m_option;
+    QString m_com;
 
 private slots:
     void slot_checkboxClicked();

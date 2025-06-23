@@ -21,6 +21,11 @@
 #ifndef FRESHCLAMSETTER_H
 #define FRESHCLAMSETTER_H
 
+#include "ui_freshclamsetter.h"
+#include "setupfilehandler.h"
+#include "highlighter.h"
+#include "progressdialog.h"
+
 #include <QWidget>
 #include <QMovie>
 #include <QFileDialog>
@@ -31,9 +36,7 @@
 #include <QDir>
 #include <QFile>
 #include <QTextStream>
-#include "setupfilehandler.h"
-#include "highlighter.h"
-#include "progressdialog.h"
+
 
 namespace Ui {
 class freshclamsetter;
@@ -45,35 +48,35 @@ class freshclamsetter : public QWidget
 
 public:
     explicit freshclamsetter(QWidget *parent = 0);
-    ~freshclamsetter();
+    ~freshclamsetter() = default;
 
 private:
-    Ui::freshclamsetter * ui;
-    setupFileHandler    * setupFile;
-    setupFileHandler    * freshclamConf;
-    QProcess            * getDBUserProcess;
-    QProcess            * freshclamLocationProcess;
-    QProcess            * clamscanLocationProcess;
-    QProcess            * updater;
-    QProcess            * startDeamonProcess;
-    QProcess            * ps_process;
-    QTimer              * startDelayTimer;
-    QTimer              * processWatcher;
-    progressDialog      * busyLabel;
-    QFileSystemWatcher  * pidFileWatcher;
-    QFileSystemWatcher  * logFileWatcher;
-    QFileSystemWatcher  * updateLogFileWatcher;
-    highlighter         * updateLogHighLighter;
-    highlighter         * freshclamLogHighLighter;
-    QString               freshclamlocationProcessOutput;
-    QString               clamscanlocationProcessOutput;
-    QString               pidFile;
-    QString               logFile;
-    QString               sudoGUI;
-    bool                  lockFreshclamConf;
-    bool                  startup;
-    bool                  monochrome;
-    int                   freshclamStartupCounter;
+    Ui::freshclamsetter m_ui;
+    setupFileHandler    * m_setupFile;
+    setupFileHandler    * m_freshclamConf;
+    QProcess            * m_getDBUserProcess;
+    QProcess            * m_freshclamLocationProcess;
+    QProcess            * m_clamscanLocationProcess;
+    QProcess            * m_updater;
+    QProcess            * m_startDeamonProcess;
+    QProcess            * m_ps_process;
+    QTimer              * m_startDelayTimer;
+    QTimer              * m_processWatcher;
+    progressDialog      * m_busyLabel;
+    QFileSystemWatcher  * m_pidFileWatcher;
+    QFileSystemWatcher  * m_logFileWatcher;
+    QFileSystemWatcher  * m_updateLogFileWatcher;
+    highlighter         * m_updateLogHighLighter;
+    highlighter         * m_freshclamLogHighLighter;
+    QString               m_freshclamlocationProcessOutput;
+    QString               m_clamscanlocationProcessOutput;
+    QString               m_pidFile;
+    QString               m_logFile;
+    QString               m_sudoGUI;
+    bool                  m_lockFreshclamConf;
+    bool                  m_startup;
+    bool                  m_monochrome;
+    int                   m_freshclamStartupCounter;
     void setForm(bool);
     void setUpdaterInfo();
     void checkDaemonRunning();

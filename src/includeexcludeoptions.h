@@ -37,10 +37,10 @@ public:
     ~includeExcludeOptions();
 
 private:
-    Ui::includeExcludeOptions *ui;
-    setupFileHandler    * setupFile;
-    setupFileHandler    * profiles;
-    bool readSettingsInProgress;
+    Ui::includeExcludeOptions *m_ui;
+    setupFileHandler    * m_setupFile;
+    setupFileHandler    * m_profiles;
+    bool m_readSettingsInProgress;
     void readSettings();
 
 private slots:

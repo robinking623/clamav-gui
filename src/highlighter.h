@@ -26,32 +26,31 @@
 #include <QRegExp>
 #endif
 //
-class highlighter : public QSyntaxHighlighter
-{
-Q_OBJECT
+class highlighter : public QSyntaxHighlighter {
+    Q_OBJECT
 public:
-	highlighter(QTextDocument *parent = 0);
- protected:
-     void highlightBlock(const QString &text);
+    highlighter(QTextDocument* parent = 0);
+
+protected:
+    void highlightBlock(const QString& text);
 
 private:
-     struct HighlightingRule
-     {
-         QRegExp pattern;
-         QTextCharFormat format;
-     };
+    struct HighlightingRule {
+        QRegExp pattern;
+        QTextCharFormat format;
+    };
 
-     QVector<HighlightingRule> highlightingRules;
+    QVector<HighlightingRule> m_highlightingRules;
 
-     QRegExp commentStartExpression;
-     QRegExp commentEndExpression;
+    QRegExp m_commentStartExpression;
+    QRegExp m_commentEndExpression;
 
-     QTextCharFormat keywordFormat;
-     QTextCharFormat classFormat;
-     QTextCharFormat quotationFormat;
-     QTextCharFormat functionFormat;
-     QTextCharFormat multiLineCommentFormat;
-     QTextCharFormat singleLineCommentFormat;
-     QTextCharFormat xmlFormat;
+    QTextCharFormat m_keywordFormat;
+    QTextCharFormat m_classFormat;
+    QTextCharFormat m_quotationFormat;
+    QTextCharFormat m_functionFormat;
+    QTextCharFormat m_multiLineCommentFormat;
+    QTextCharFormat m_singleLineCommentFormat;
+    QTextCharFormat m_xmlFormat;
 };
 #endif

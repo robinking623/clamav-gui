@@ -1,85 +1,78 @@
 #include "clamdconfspinboxoption.h"
-#include "ui_clamdconfspinboxoption.h"
 #define css_mono "background-color:#404040;color:white"
 
-clamdconfspinboxoption::clamdconfspinboxoption(QWidget *parent, QString keyword, bool checked, QString label, QString options) :
-    QWidget(parent),
-    ui(new Ui::clamdconfspinboxoption),
-    optionKeyword(keyword)
+clamdconfspinboxoption::clamdconfspinboxoption(QWidget* parent, QString keyword, bool checked, QString label, QString options)
+    : QWidget(parent), m_optionKeyword(keyword)
 {
-    startup = true;
+    m_setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/clamd.conf", this);
+    setupFileHandler* baseSetup = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini", this);
 
-    setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/clamd.conf",this);
-    setupFileHandler * m_baseSetup = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini",this);
+    QString languageset = baseSetup->getSectionValue("Setup", "language");
+    translator trans(languageset);
 
-    languageset = m_baseSetup->getSectionValue("Setup","language");
-    translator * m_trans = new translator(languageset);
+    QString helper;  //was ist helper? key oder value?
 
-    QString m_helper;
-
-    ui->setupUi(this);
-    ui->checkBox->setChecked(checked);
+    m_ui.setupUi(this);
+    m_ui.checkBox->setChecked(checked);
 
     QStringList values = options.split(",");
-    int m_spinvalue;
-    int m_spinmin;
-    int m_spinmax;
-    m_helper = values.at(0);
-    m_spinmin = m_helper.toInt();
-    m_helper = values.at(1);
-    m_spinmax = m_helper.toInt();
-    m_helper = values.at(2);
-    m_spinvalue = m_helper.toInt();
+    int spinvalue;
+    int spinmin;
+    int spinmax;
+    helper = values.at(0);
+    spinmin = helper.toInt();
+    helper = values.at(1);
+    spinmax = helper.toInt();
+    helper = values.at(2);
+    spinvalue = helper.toInt();
 
-    if (m_spinvalue > 1048576) {
-        m_spinmin = m_spinmin / 1048576;
-        m_spinmax = m_spinmax / 1048576;
-        m_spinvalue = m_spinvalue / 1048576;
+    if (spinvalue > 1048576) {
+        spinmin = spinmin / 1048576;
+        spinmax = spinmax / 1048576;
+        spinvalue = spinvalue / 1048576;
     }
-    ui->spinBox->setMinimum(m_spinmin);
-    ui->spinBox->setMaximum(m_spinmax);
-    connect(ui->checkBox,SIGNAL(clicked(bool)),this,SLOT(slot_checkboxClicked()));
+    m_ui.spinBox->setMinimum(spinmin);
+    m_ui.spinBox->setMaximum(spinmax);
+    connect(m_ui.checkBox, SIGNAL(clicked(bool)), this, SLOT(slot_checkboxClicked()));
 
-    if (setupFile->singleLineExists(optionKeyword) == true) {
-        ui->checkBox->setChecked(true);
-        QString m_valueHelper = setupFile->getSingleLineValue(optionKeyword);
-        if (m_valueHelper.indexOf("M") != -1) {
-            ui->label->setText("MB");
-            m_valueHelper = m_valueHelper.replace("M","");
+    if (m_setupFile->singleLineExists(m_optionKeyword) == true) {
+        m_ui.checkBox->setChecked(true);
+        QString valueHelper = m_setupFile->getSingleLineValue(m_optionKeyword);
+        if (valueHelper.indexOf("M") != -1) {
+            m_ui.label->setText("MB");
+            valueHelper = valueHelper.replace("M", "");
         }
-        ui->spinBox->setValue(m_valueHelper.toInt());
-    } else {
-        ui->spinBox->setValue(m_spinvalue);
+        m_ui.spinBox->setValue(valueHelper.toInt());
+    }
+    else {
+        m_ui.spinBox->setValue(spinvalue);
     }
 
-    label = m_trans->translateit(label);
-    ui->checkBox->setText(translator::beautifyString(label,120));
-    startup = false;
+    label = trans.translateit(label);
+    m_ui.checkBox->setText(translator::beautifyString(label, 120));
+    m_startup = false;
 
     slot_checkboxClicked();
 }
 
-clamdconfspinboxoption::~clamdconfspinboxoption()
-{
-    delete ui;
-}
-
 void clamdconfspinboxoption::slot_checkboxClicked()
 {
-    if (startup == false) {
-        bool m_state = ui->checkBox->isChecked();
-        ui->spinBox->setEnabled(m_state);
-        ui->label->setEnabled(m_state);
-        (m_state == true)?ui->frame->setStyleSheet(css_mono):ui->frame->setStyleSheet("");
-        if (m_state == true) {
-            if (ui->label->text() == "MB") {
-                setupFile->setSingleLineValue(optionKeyword,QString::number(ui->spinBox->value()) + "M");
-            } else {
-                setupFile->setSingleLineValue(optionKeyword,QString::number(ui->spinBox->value()));
+    if (m_startup == false) {
+        bool state = m_ui.checkBox->isChecked();
+        m_ui.spinBox->setEnabled(state);
+        m_ui.label->setEnabled(state);
+        (state == true) ? m_ui.frame->setStyleSheet(css_mono) : m_ui.frame->setStyleSheet("");
+        if (state == true) {
+            if (m_ui.label->text() == "MB") {
+                m_setupFile->setSingleLineValue(m_optionKeyword, QString::number(m_ui.spinBox->value()) + "M");
             }
-        } else {
-            QString m_value = setupFile->getSingleLineValue(optionKeyword);
-            setupFile->removeSingleLine(optionKeyword,m_value);
+            else {
+                m_setupFile->setSingleLineValue(m_optionKeyword, QString::number(m_ui.spinBox->value()));
+            }
+        }
+        else {
+            QString value = m_setupFile->getSingleLineValue(m_optionKeyword);
+            m_setupFile->removeSingleLine(m_optionKeyword, value);
         }
         emit settingChanged();
     }
@@ -87,15 +80,16 @@ void clamdconfspinboxoption::slot_checkboxClicked()
 
 void clamdconfspinboxoption::slot_spinboxChanged()
 {
-    if (startup == false) {
-        bool m_state = ui->checkBox->isChecked();
-        if (m_state == true) {
-            QString m_value = setupFile->getSingleLineValue(optionKeyword);
-            setupFile->removeSingleLine(optionKeyword,m_value);
-            if (ui->label->text() == "MB") {
-                setupFile->setSingleLineValue(optionKeyword,QString::number(ui->spinBox->value()) + "M");
-            } else {
-                setupFile->setSingleLineValue(optionKeyword,QString::number(ui->spinBox->value()));
+    if (m_startup == false) {
+        bool state = m_ui.checkBox->isChecked();
+        if (state == true) {
+            QString value = m_setupFile->getSingleLineValue(m_optionKeyword);
+            m_setupFile->removeSingleLine(m_optionKeyword, value);
+            if (m_ui.label->text() == "MB") {
+                m_setupFile->setSingleLineValue(m_optionKeyword, QString::number(m_ui.spinBox->value()) + "M");
+            }
+            else {
+                m_setupFile->setSingleLineValue(m_optionKeyword, QString::number(m_ui.spinBox->value()));
             }
             emit settingChanged();
         }

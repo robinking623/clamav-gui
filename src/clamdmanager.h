@@ -1,20 +1,23 @@
 #ifndef CLAMDMANAGER_H
 #define CLAMDMANAGER_H
 
-#include <QFileSystemWatcher>
-#include <QFileDialog>
-#include <QProcess>
-#include <QWidget>
-#include <QTimer>
-#include <QMovie>
-#include "clamdconfstringoption.h"
-#include "clamdconfspinboxoption.h"
 #include "clamdconfcomboboxoption.h"
-#include "setupfilehandler.h"
+#include "clamdconfspinboxoption.h"
+#include "clamdconfstringoption.h"
 #include "highlighter.h"
+#include "setupfilehandler.h"
 #include "translator.h"
+#include "ui_clamdmanager.h"
 
-namespace Ui {
+#include <QFileDialog>
+#include <QFileSystemWatcher>
+#include <QMovie>
+#include <QProcess>
+#include <QTimer>
+#include <QWidget>
+
+namespace Ui
+{
 class clamdManager;
 }
 
@@ -23,47 +26,51 @@ class clamdManager : public QWidget
     Q_OBJECT
 
 public:
-    explicit clamdManager(QWidget *parent = 0);
-    ~clamdManager();
-    setupFileHandler    * setupFile; // clamd && freshclam
-    setupFileHandler    * clamdConf; // clamd
-    setupFileHandler    * freshclamConf;
-    QProcess            * clamdLocationProcess; // clamd
-    QProcess            * clamonaccLocationProcess; // clamd
-    QProcess            * startClamdProcess; // clamd
-    QProcess            * findclamonaccProcess; // clamd
-    QProcess            * restartClamonaccProcess; // clamd
-    QProcess            * killProcess;
-    QString               clamdLocation; // clamd
-    QString               clamonaccLocation; // clamd
-    QString               clamonaccPid; // clamd
-    QString               lastFound; // clamd
-    QString               sudoGUI;
-    QTimer              * startDelayTimer;
-    QTimer              * processWatcher;
-    highlighter         * logHighlighter; // clamd
-    QFileSystemWatcher  * clamdLogWatcher; // clamd
-    QFileSystemWatcher  * clamdPidWatcher; // clamd
-    int                   dirsUnderMonitoring;
-    bool                  clamdRestartInProgress; // clamd
-    bool                  monochrome;
-    QString               trimLocationOutput(QString);
-    bool                  startup;
-    bool                  waitForFreshclam;
-    bool                  initprocessrunning;
-    int                   clamdStartupCounter;
-    void initClamdSettings(); // clamd
-    void restartClamonacc(); // clamd
+    explicit clamdManager(QWidget* parent = 0);
+    ~clamdManager() = default;
+
+private:
+    Ui::clamdManager m_ui;
+    setupFileHandler* m_setupFile;  // clamd && freshclam
+    setupFileHandler* m_clamdConf;  // clamd
+    setupFileHandler* m_freshclamConf;
+    QProcess* m_clamdLocationProcess;      // clamd
+    QProcess* m_clamonaccLocationProcess;  // clamd
+    QProcess* m_startClamdProcess;         // clamd
+    QProcess* m_findclamonaccProcess;      // clamd
+    QProcess* m_restartClamonaccProcess;   // clamd
+    QProcess* m_killProcess;
+    QString m_clamdLocation;      // clamd
+    QString m_clamonaccLocation;  // clamd
+    QString m_clamonaccPid;       // clamd
+    QString m_lastFound;          // clamd
+    QString m_sudoGUI;
+    QTimer* m_startDelayTimer;
+    QTimer* m_processWatcher;
+    highlighter* m_logHighlighter;          // clamd
+    QFileSystemWatcher* m_clamdLogWatcher;  // clamd
+    QFileSystemWatcher* m_clamdPidWatcher;  // clamd
+    int m_dirsUnderMonitoring;
+    bool m_clamdRestartInProgress;  // clamd
+    bool m_monochrome;
+    bool m_startup;
+    bool m_waitForFreshclam;
+    bool m_initprocessrunning;
+    int m_clamdStartupCounter;
+
+    QString trimLocationOutput(QString);
+    void initClamdSettings();  // clamd
+    void restartClamonacc();   // clamd
     void initClamdConfElements();
-    bool checkClamdRunning(); // clamd
+    bool checkClamdRunning();  // clamd
     QString selectColor(QString color);
 
 private slots:
-    void slot_updateClamdConf(); // ab hier --> clamd
+    void slot_updateClamdConf();  // ab hier --> clamd
     void slot_logFileContentChanged();
     void slot_clamdStartStopButtonClicked();
     void slot_pidWatcherTriggered();
-    void slot_startClamdProcessFinished(int exitCode,QProcess::ExitStatus exitStatus);
+    void slot_startClamdProcessFinished(int exitCode, QProcess::ExitStatus exitStatus);
     void slot_killClamdProcessFinished();
     void slot_findclamonaccProcessFinished(int rc);
     void slot_monitoringAddButtonClicked();
@@ -79,12 +86,9 @@ private slots:
     void slot_processWatcherExpired();
     void slot_add_remove_highlighter(bool);
 signals:
-    void setBallonMessage(int, QString,QString); // clamd
+    void setBallonMessage(int, QString, QString);  // clamd
     void setActiveTab();
     void systemStatusChanged();
-
-private:
-    Ui::clamdManager *ui;
 };
 
-#endif // CLAMDMANAGER_H
+#endif  // CLAMDMANAGER_H

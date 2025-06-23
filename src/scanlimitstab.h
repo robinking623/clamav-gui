@@ -23,6 +23,7 @@
 
 #include <QWidget>
 #include <QProcess>
+#include "ui_scanlimitstab.h"
 #include "setupfilehandler.h"
 
 namespace Ui {
@@ -35,12 +36,12 @@ class scanLimitsTab : public QWidget
 
 public:
     explicit scanLimitsTab(QWidget *parent = 0);
-    ~scanLimitsTab();
+    ~scanLimitsTab()=default;
 
 private:
-    Ui::scanLimitsTab   *ui;
-    setupFileHandler    *setupFile;
-    setupFileHandler    *profiles;
+    Ui::scanLimitsTab   m_ui;
+    setupFileHandler    *m_setupFile;
+    setupFileHandler    *m_profiles;
     void updateLimits();
     bool update;
 
