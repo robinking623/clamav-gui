@@ -1,34 +1,32 @@
 #include "progressdialog.h"
-#include "ui_progressdialog.h"
 
-progressDialog::progressDialog(QWidget *parent) : QWidget(parent), ui(new Ui::progressDialog)
+progressDialog::progressDialog(QWidget* parent) 
+: QWidget(parent)
 {
-    ui->setupUi(this);
-    progressBar = new QRoundProgressBar(this);
-    progressBar->setGeometry((this->width() - 80) / 2,20,100,100);
-    progressBar->setMaximum(100);
-    progressBar->setMinimum(0);
-    progressBar->setValue(0);
-    progressBar->setBarStyle(QRoundProgressBar::StyleDonut);
-    progressBar->setFormat("");
-    progressBar->show();
+    m_ui.setupUi(this);
+    m_progressBar = new QRoundProgressBar(this);
+    m_progressBar->setGeometry((this->width() - 80) / 2, 20, 100, 100);
+    m_progressBar->setMaximum(100);
+    m_progressBar->setMinimum(0);
+    m_progressBar->setValue(0);
+    m_progressBar->setBarStyle(QRoundProgressBar::StyleDonut);
+    m_progressBar->setFormat("");
+    m_progressBar->show();
 }
 
-progressDialog::~progressDialog()
+void progressDialog::setText(QString text)
 {
-    delete ui;
+    QString output = text.replace("\n", "");
+
+    m_ui.progressText->setText(output);
 }
 
-void progressDialog::setText(QString text){
-QString m_output = text.replace("\n","");
-
-    ui->progressText->setText(m_output);
+void progressDialog::setProgressBarMaxValue(double value)
+{
+    m_progressBar->setMaximum(value);
 }
 
-void progressDialog::setProgressBarMaxValue(double value) {
-    progressBar->setMaximum(value);
-}
-
-void progressDialog::setProgressBarValue(double value) {
-    progressBar->setValue(value);
+void progressDialog::setProgressBarValue(double value)
+{
+    m_progressBar->setValue(value);
 }

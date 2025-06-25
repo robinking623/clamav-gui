@@ -3,3 +3,5 @@ result
 .vscode/c_cpp_properties.json
 
 *.user
+.vscode/settings.json
+Testing

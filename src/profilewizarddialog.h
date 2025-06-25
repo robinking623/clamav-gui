@@ -31,21 +31,21 @@ public:
     ~ProfileWizardDialog();
 
 private:
-    QString                  profileName;
-    Ui::ProfileWizardDialog *ui;
-    CFileSystemModel        * model;
-    QProcess                * whoamiProcess;
-    QProcess                *getClamscanParametersProcess;
-    QString                  getClamscanProcessOutput;
-    QFileSystemWatcher      * fileSystemWatcher;
-    QButtonGroup            * deviceGroup;
-    QString                   setupFileFilename;
-    setupFileHandler        * setupFile;
-    int                      buttonID;
-    bool                     newProfile;
-    bool                     monochrome;
-    QString                  username;
-    QStringList              devices;
+    QString                  m_profileName;
+    Ui::ProfileWizardDialog * m_ui;
+    CFileSystemModel        * m_model;
+    QProcess                * m_whoamiProcess;
+    QProcess                *m_getClamscanParametersProcess;
+    QString                  m_getClamscanProcessOutput;
+    QFileSystemWatcher      * m_fileSystemWatcher;
+    QButtonGroup            * m_deviceGroup;
+    QString                   m_setupFileFilename;
+    setupFileHandler        * m_setupFile;
+    int                      m_buttonID;
+    bool                     m_newProfile;
+    bool                     m_monochrome;
+    QString                  m_username;
+    QStringList              m_devices;
     void readSettings();
     void closeEvent(QCloseEvent *);
 

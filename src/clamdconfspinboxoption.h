@@ -1,9 +1,12 @@
 #ifndef CLAMDCONFSPINBOXOPTION_H
 #define CLAMDCONFSPINBOXOPTION_H
 
-#include <QWidget>
+#include "ui_clamdconfspinboxoption.h"
+
 #include "translator.h"
 #include "setupfilehandler.h"
+
+#include <QWidget>
 
 namespace Ui {
 class clamdconfspinboxoption;
@@ -15,15 +18,14 @@ class clamdconfspinboxoption : public QWidget
 
 public:
     explicit clamdconfspinboxoption(QWidget *parent = nullptr, QString keyword = "", bool checked = false, QString label = "", QString options = "0,99,1,1");
-    ~clamdconfspinboxoption();
+    ~clamdconfspinboxoption() = default;
 
 
 private:
-    Ui::clamdconfspinboxoption *ui;
-    QString optionKeyword;
-    bool startup;
-    QString languageset;
-    setupFileHandler    * setupFile;
+    Ui::clamdconfspinboxoption m_ui;
+    QString m_optionKeyword;
+    bool m_startup {true};
+    setupFileHandler    * m_setupFile;
 
 private slots:
     void slot_checkboxClicked();

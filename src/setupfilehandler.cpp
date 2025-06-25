@@ -26,8 +26,7 @@
  * Return Value : None                                              *
  * Description  : Standard Costructor                               *
  ********************************************************************/
-setupFileHandler::setupFileHandler(QObject *parent) : QObject(parent) {
-}
+setupFileHandler::setupFileHandler(QObject* parent) : QObject(parent) {}
 
 /********************************************************************
  * setupFileHandler                                                 *
@@ -35,7 +34,8 @@ setupFileHandler::setupFileHandler(QObject *parent) : QObject(parent) {
  * Return Value : None                                              *
  * Description  : overloaded standard costructor                    *
  ********************************************************************/
-setupFileHandler::setupFileHandler(QString filename, QObject *parent) : QObject(parent) {
+setupFileHandler::setupFileHandler(QString filename, QObject* parent) : QObject(parent)
+{
     setSetupFileName(filename);
 }
 
@@ -45,20 +45,21 @@ setupFileHandler::setupFileHandler(QString filename, QObject *parent) : QObject(
  * Return Value : None                                              *
  * Description  : Function to set the filename for the setup file   *
  ********************************************************************/
-void setupFileHandler::setSetupFileName(QString filename){
-QFile m_file(filename);
+void setupFileHandler::setSetupFileName(QString filename)
+{
+    QFile file(filename);
 
-    setupFileName = filename;
+    m_setupFileName = filename;
 
-    if (!m_file.exists()){
-        QString m_path = filename.left(filename.lastIndexOf("/"));
-        QDir * m_tempDir = new QDir(m_path);
-        m_tempDir->mkpath(m_path);
-        if (m_file.open(QIODevice::WriteOnly|QIODevice::Text)){
-            QTextStream m_stream(&m_file);
-            Qt::endl(m_stream);
-            m_file.close();
-            m_file.flush();
+    if (!file.exists()) {
+        QString path = filename.left(filename.lastIndexOf("/"));
+        QDir* tempDir = new QDir(path);
+        tempDir->mkpath(path);
+        if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+            QTextStream stream(&file);
+            Qt::endl(stream);
+            file.close();
+            file.flush();
         }
     }
 }
@@ -69,8 +70,9 @@ QFile m_file(filename);
  * Return Value : QString (Filename of the setup file)              *
  * Description  : Returns the name of the setup file                *
  ********************************************************************/
-QString setupFileHandler::getSetupFileName(){
-    return setupFileName;
+QString setupFileHandler::getSetupFileName()
+{
+    return m_setupFileName;
 }
 
 /********************************************************************
@@ -83,11 +85,14 @@ QString setupFileHandler::getSetupFileName(){
  *                created. If the keyword exists the overwrite bool *
  *                controls wether the value is changed or not.      *
  ********************************************************************/
-void setupFileHandler::setSectionValue(QString section, QString keyword, const char *value, bool overwrite){
-    if (keywordExists(section,keyword)){
-        if (overwrite) setSectionValue(section,keyword,(QString)value);
-    } else {
-        setSectionValue(section,keyword,(QString)value);
+void setupFileHandler::setSectionValue(QString section, QString keyword, const char* value, bool overwrite)
+{
+    if (keywordExists(section, keyword)) {
+        if (overwrite)
+            setSectionValue(section, keyword, (QString)value);
+    }
+    else {
+        setSectionValue(section, keyword, (QString)value);
     }
 }
 
@@ -100,46 +105,50 @@ void setupFileHandler::setSectionValue(QString section, QString keyword, const c
  *                created. If the keyword does not exist it is      *
  *                created.                                          *
  ********************************************************************/
-void setupFileHandler::setSectionValue(QString section, QString keyword, QString value, bool overwrite){
-bool m_doit = false;
+void setupFileHandler::setSectionValue(QString section, QString keyword, QString value, bool overwrite)
+{
+    bool doit = false;
 
-    if (keywordExists(section,keyword)){
-        m_doit = overwrite;
-    } else {
-        m_doit = true;
+    if (keywordExists(section, keyword)) {
+        doit = overwrite;
+    }
+    else {
+        doit = true;
     }
 
-    if (m_doit) {
+    if (doit) {
         readSetupFile();
-        QString m_tempSection = getSection(section).trimmed();
+        QString tempSection = getSection(section).trimmed();
 
-            // Check for multiline content and replace \n by <!nl>
-            value.replace("\n","<!nl>");
+        // Check for multiline content and replace \n by <!nl>
+        value.replace("\n", "<!nl>");
 
-            if (m_tempSection == "") {
-                setupFileContent = setupFileContent + "\n[" + section + "]\n" + keyword + "=" + value + "\n";
-            } else {
-                QString m_sectionReminder = m_tempSection;
-                QStringList m_list = m_tempSection.split("\n");
-                QString m_rc;
-                QString m_line;
-                bool m_found = false;
+        if (tempSection == "") {
+            m_setupFileContent = m_setupFileContent + "\n[" + section + "]\n" + keyword + "=" + value + "\n";
+        }
+        else {
+            QString sectionReminder = tempSection;
+            QStringList list = tempSection.split("\n");
+            QString rc;
+            QString line;
+            bool found = false;
 
-                for (int i = 0; i < m_list.count(); i++){
-                    m_line = m_list.at(i);
-                    if (m_line.indexOf(keyword+"=") == 0){
-                       m_line = m_line.left(m_line.indexOf("=")) + "=" + value;
-                       m_found = true;
-                    }
-                    if (m_line != "") m_rc = m_rc + m_line + "\n";
+            for (int i = 0; i < list.count(); i++) {
+                line = list.at(i);
+                if (line.indexOf(keyword + "=") == 0) {
+                    line = line.left(line.indexOf("=")) + "=" + value;
+                    found = true;
                 }
-                if (!m_found){
-                    m_rc = m_rc + keyword + "=" + value + "\n";
-                }
-
-                setupFileContent.replace(m_sectionReminder,m_rc.trimmed());
+                if (line != "")
+                    rc = rc + line + "\n";
             }
-            writeSetupFile();
+            if (!found) {
+                rc = rc + keyword + "=" + value + "\n";
+            }
+
+            m_setupFileContent.replace(sectionReminder, rc.trimmed());
+        }
+        writeSetupFile();
     }
 }
 
@@ -149,11 +158,12 @@ bool m_doit = false;
  * Return Value : None                                              *
  * Description  : overloaded function.                              *
  ********************************************************************/
-void setupFileHandler::setSectionValue(QString section, QString keyword, bool tempValue, bool overwrite){
-QString m_value;
-    tempValue?m_value="true":m_value="false";
+void setupFileHandler::setSectionValue(QString section, QString keyword, bool tempValue, bool overwrite)
+{
+    QString value;
+    tempValue ? value = "true" : value = "false";
 
-    setSectionValue(section,keyword,m_value, overwrite);
+    setSectionValue(section, keyword, value, overwrite);
 }
 
 /********************************************************************
@@ -162,11 +172,12 @@ QString m_value;
  * Return Value : None                                              *
  * Description  : overloaded function.                              *
  ********************************************************************/
-void setupFileHandler::setSectionValue(QString section, QString keyword, qint64 tempValue, bool overwrite){
-QString m_value;
-    m_value = QString::number(tempValue);
+void setupFileHandler::setSectionValue(QString section, QString keyword, qint64 tempValue, bool overwrite)
+{
+    QString value;
+    value = QString::number(tempValue);
 
-    setSectionValue(section,keyword,m_value,overwrite);
+    setSectionValue(section, keyword, value, overwrite);
 }
 
 /********************************************************************
@@ -175,11 +186,12 @@ QString m_value;
  * Return Value : None                                              *
  * Description  : overloaded function.                              *
  ********************************************************************/
-void setupFileHandler::setSectionValue(QString section, QString keyword, int tempValue, bool overwrite){
-QString m_value;
-    m_value = QString::number(tempValue);
+void setupFileHandler::setSectionValue(QString section, QString keyword, int tempValue, bool overwrite)
+{
+    QString value;
+    value = QString::number(tempValue);
 
-    setSectionValue(section,keyword,m_value, overwrite);
+    setSectionValue(section, keyword, value, overwrite);
 }
 
 /********************************************************************
@@ -188,11 +200,12 @@ QString m_value;
  * Return Value : None                                              *
  * Description  : overloaded function.                              *
  ********************************************************************/
-void setupFileHandler::setSectionValue(QString section, QString keyword, double tempValue, bool overwrite){
-QString m_value;
-    m_value = QString::number(tempValue);
+void setupFileHandler::setSectionValue(QString section, QString keyword, double tempValue, bool overwrite)
+{
+    QString value;
+    value = QString::number(tempValue);
 
-    setSectionValue(section,keyword,m_value, overwrite);
+    setSectionValue(section, keyword, value, overwrite);
 }
 
 /********************************************************************
@@ -202,25 +215,26 @@ QString m_value;
  * Description  : Returns the value for the given section and the   *
  *                the given keyword                                 *
  ********************************************************************/
-QString setupFileHandler::getSectionValue(QString section, QString keyword){
-readSetupFile();
-QString m_tempSection = getSection(section).trimmed();
-QString m_rc = "";
+QString setupFileHandler::getSectionValue(QString section, QString keyword)
+{
+    readSetupFile();
+    QString tempSection = getSection(section).trimmed();
+    QString rc = "";
 
-    if (m_tempSection != "") {
-        QStringList m_list = m_tempSection.split("\n");
-        QString m_line;
+    if (tempSection != "") {
+        QStringList list = tempSection.split("\n");
+        QString line;
 
-        for (int i = 0; i < m_list.count(); i++){
-            m_line = m_list.at(i);
-            if (m_line.indexOf(keyword+"=") == 0){
-               m_rc = m_line.mid(m_line.indexOf("=") + 1);
+        for (int i = 0; i < list.count(); i++) {
+            line = list.at(i);
+            if (line.indexOf(keyword + "=") == 0) {
+                rc = line.mid(line.indexOf("=") + 1);
             }
         }
     }
     // replace encoded \n (<!nl>) by newline (\n)
-    m_rc.replace("<!nl>","\n");
-    return m_rc;
+    rc.replace("<!nl>", "\n");
+    return rc;
 }
 
 /********************************************************************
@@ -230,26 +244,27 @@ QString m_rc = "";
  * Description  : Returns the value for the given section and the   *
  *                the given keyword                                 *
  ********************************************************************/
-bool setupFileHandler::getSectionBoolValue(QString section, QString keyword){
-readSetupFile();
-QString m_tempSection = getSection(section).trimmed();
-QString m_rc = "";
-bool m_boolrc;
+bool setupFileHandler::getSectionBoolValue(QString section, QString keyword)
+{
+    readSetupFile();
+    QString tempSection = getSection(section).trimmed();
+    QString rc = "";
+    bool boolrc;
 
-    if (m_tempSection != "") {
-        QStringList m_list = m_tempSection.split("\n");
-        QString m_line;
+    if (tempSection != "") {
+        QStringList list = tempSection.split("\n");
+        QString line;
 
-        for (int i = 0; i < m_list.count(); i++){
-            m_line = m_list.at(i);
-            if (m_line.indexOf(keyword+"=") == 0){
-               m_rc = m_line.mid(m_line.indexOf("=") + 1);
+        for (int i = 0; i < list.count(); i++) {
+            line = list.at(i);
+            if (line.indexOf(keyword + "=") == 0) {
+                rc = line.mid(line.indexOf("=") + 1);
             }
         }
     }
 
-    m_rc == "true"?m_boolrc=true:m_boolrc=false;
-    return m_boolrc;
+    rc == "true" ? boolrc = true : boolrc = false;
+    return boolrc;
 }
 
 /********************************************************************
@@ -259,26 +274,27 @@ bool m_boolrc;
  * Description  : Returns the value for the given section and the   *
  *                the given keyword                                 *
  ********************************************************************/
-qint64 setupFileHandler::getSectionIntValue(QString section, QString keyword){
-readSetupFile();
-QString m_tempSection = getSection(section).trimmed();
-QString m_rc = "";
-qint64 m_intrc = 0;
+qint64 setupFileHandler::getSectionIntValue(QString section, QString keyword)
+{
+    readSetupFile();
+    QString tempSection = getSection(section).trimmed();
+    QString rc = "";
+    qint64 intrc = 0;
 
-    if (m_tempSection != "") {
-        QStringList m_list = m_tempSection.split("\n");
-        QString m_line;
+    if (tempSection != "") {
+        QStringList list = tempSection.split("\n");
+        QString line;
 
-        for (int i = 0; i < m_list.count(); i++){
-            m_line = m_list.at(i);
-            if (m_line.indexOf(keyword+"=") == 0){
-               m_rc = m_line.mid(m_line.indexOf("=") + 1);
+        for (int i = 0; i < list.count(); i++) {
+            line = list.at(i);
+            if (line.indexOf(keyword + "=") == 0) {
+                rc = line.mid(line.indexOf("=") + 1);
             }
         }
     }
 
-    m_intrc = m_rc.toULongLong();
-    return m_intrc;
+    intrc = rc.toULongLong();
+    return intrc;
 }
 
 /********************************************************************
@@ -288,26 +304,27 @@ qint64 m_intrc = 0;
  * Description  : Returns the value for the given section and the   *
  *                the given keyword                                 *
  ********************************************************************/
-double setupFileHandler::getSectionDoubleValue(QString section, QString keyword){
-readSetupFile();
-QString m_tempSection = getSection(section).trimmed();
-QString m_rc = "";
-double m_doublerc = 0;
+double setupFileHandler::getSectionDoubleValue(QString section, QString keyword)
+{
+    readSetupFile();
+    QString tempSection = getSection(section).trimmed();
+    QString rc = "";
+    double doublerc = 0;
 
-    if (m_tempSection != "") {
-        QStringList m_list = m_tempSection.split("\n");
-        QString m_line;
+    if (tempSection != "") {
+        QStringList list = tempSection.split("\n");
+        QString line;
 
-        for (int i = 0; i < m_list.count(); i++){
-            m_line = m_list.at(i);
-            if (m_line.indexOf(keyword+"=") == 0){
-               m_rc = m_line.mid(m_line.indexOf("=") + 1);
+        for (int i = 0; i < list.count(); i++) {
+            line = list.at(i);
+            if (line.indexOf(keyword + "=") == 0) {
+                rc = line.mid(line.indexOf("=") + 1);
             }
         }
     }
 
-    m_doublerc = m_rc.toDouble();
-    return m_doublerc;
+    doublerc = rc.toDouble();
+    return doublerc;
 }
 
 /********************************************************************
@@ -316,24 +333,26 @@ double m_doublerc = 0;
  * Return Value : QString                                           *
  * Description  : Returns the complete section for the given ID     *
  ********************************************************************/
-QString setupFileHandler::getSection(QString sectionID){
-QStringList m_list = setupFileContent.split("\n");
-QString m_rc;
-QString m_line;
-bool m_sectionFlag = false;
+QString setupFileHandler::getSection(QString sectionID)
+{
+    QStringList list = m_setupFileContent.split("\n");
+    QString rc;
+    QString line;
+    bool sectionFlag = false;
 
-    for (int i = 0; i < m_list.count(); i++){
-        m_line = m_list.at(i);
-        if ((m_line.left(1) == "[") && (m_line.indexOf("["+sectionID+"]") == -1)) m_sectionFlag = false;
-        if (m_line.indexOf("["+sectionID+"]") == 0){
-            m_sectionFlag = true;
+    for (int i = 0; i < list.count(); i++) {
+        line = list.at(i);
+        if ((line.left(1) == "[") && (line.indexOf("[" + sectionID + "]") == -1))
+            sectionFlag = false;
+        if (line.indexOf("[" + sectionID + "]") == 0) {
+            sectionFlag = true;
         }
-        if (m_sectionFlag == true){
-            m_rc = m_rc + m_line + "\n";
+        if (sectionFlag == true) {
+            rc = rc + line + "\n";
         }
     }
-    m_rc = m_rc;
-    return m_rc;
+    rc = rc;
+    return rc;
 }
 
 /********************************************************************
@@ -342,13 +361,15 @@ bool m_sectionFlag = false;
  * Return Value : None                                              *
  * Description  : Read the complete setup file into a global var    *
  ********************************************************************/
-void setupFileHandler::readSetupFile(){
-QFile m_file(setupFileName);
-    if (m_file.open(QIODevice::ReadOnly|QIODevice::Text)){
-        QTextStream m_stream(&m_file);
-        setupFileContent = m_stream.readAll().toLocal8Bit().constData();
-        if (setupFileContent.right(1) != "\n") setupFileContent = setupFileContent + "\n";
-        m_file.close();
+void setupFileHandler::readSetupFile()
+{
+    QFile file(m_setupFileName);
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QTextStream stream(&file);
+        m_setupFileContent = stream.readAll().toLocal8Bit().constData();
+        if (m_setupFileContent.right(1) != "\n")
+            m_setupFileContent = m_setupFileContent + "\n";
+        file.close();
     }
 }
 
@@ -358,21 +379,23 @@ QFile m_file(setupFileName);
  * Return Value : None                                              *
  * Description  : Write the setup data to file                      *
  ********************************************************************/
-void setupFileHandler::writeSetupFile(){
-QFile m_file(setupFileName);
+void setupFileHandler::writeSetupFile()
+{
+    QFile file(m_setupFileName);
 
-    QFileDevice::Permissions m_p = m_file.permissions();
+    QFileDevice::Permissions p = file.permissions();
 
-    m_file.remove();
-    if (m_file.open(QIODevice::WriteOnly|QIODevice::Text)){
-        QTextStream m_stream(&m_file);
-        if (setupFileContent.indexOf("\n\n") != -1) setupFileContent.replace("\n\n\n","\n\n");
-        m_stream << setupFileContent.trimmed();
-        Qt::endl(m_stream);
+    file.remove();
+    if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QTextStream stream(&file);
+        if (m_setupFileContent.indexOf("\n\n") != -1)
+            m_setupFileContent.replace("\n\n\n", "\n\n");
+        stream << m_setupFileContent.trimmed();
+        Qt::endl(stream);
         do {
-        } while (!m_file.flush());
-        m_file.close();
-        m_file.setPermissions(m_p);
+        } while (!file.flush());
+        file.close();
+        file.setPermissions(p);
     }
 }
 
@@ -383,10 +406,11 @@ QFile m_file(setupFileName);
  * Description  : Removes the complete section with all keywords for*
  *                the given section                                 *
  ********************************************************************/
-void setupFileHandler::removeSection(QString section){
-readSetupFile();
-QString m_tempSection = getSection(section).trimmed();
-    setupFileContent.replace(m_tempSection,"");
+void setupFileHandler::removeSection(QString section)
+{
+    readSetupFile();
+    QString tempSection = getSection(section).trimmed();
+    m_setupFileContent.replace(tempSection, "");
 
     writeSetupFile();
 }
@@ -397,23 +421,24 @@ QString m_tempSection = getSection(section).trimmed();
  * Return Value : None                                              *
  * Description  : Removes the given keyword from the given section  *
  ********************************************************************/
-void setupFileHandler::removeKeyword(QString section, QString keyword){
-readSetupFile();
-QString m_tempSection = getSection(section).trimmed();
+void setupFileHandler::removeKeyword(QString section, QString keyword)
+{
+    readSetupFile();
+    QString tempSection = getSection(section).trimmed();
 
-    if (m_tempSection != "") {
-        QString m_sectionReminder = m_tempSection;
-        QStringList m_list = m_tempSection.split("\n");
-        QString m_rc;
-        QString m_line;
+    if (tempSection != "") {
+        QString sectionReminder = tempSection;
+        QStringList list = tempSection.split("\n");
+        QString rc;
+        QString line;
 
-        for (int i = 0; i < m_list.count(); i++){
-            m_line = m_list.at(i);
-            if (m_line.indexOf(keyword+"=") != 0){
-                m_rc = m_rc + m_line + "\n";
+        for (int i = 0; i < list.count(); i++) {
+            line = list.at(i);
+            if (line.indexOf(keyword + "=") != 0) {
+                rc = rc + line + "\n";
             }
         }
-        setupFileContent.replace(m_sectionReminder,m_rc.trimmed());
+        m_setupFileContent.replace(sectionReminder, rc.trimmed());
     }
     writeSetupFile();
 }
@@ -426,7 +451,7 @@ QString m_tempSection = getSection(section).trimmed();
  ********************************************************************/
 void setupFileHandler::clearSetupFile()
 {
-    setupFileContent = "";
+    m_setupFileContent = "";
     writeSetupFile();
 }
 
@@ -436,22 +461,23 @@ void setupFileHandler::clearSetupFile()
  * Return Value : QStringList                                       *
  * Description  : Returns the names of the sections                 *
  ********************************************************************/
-QStringList setupFileHandler::getSectionNames(){
-QStringList m_sections;
-QString m_line;
-int m_index;
+QStringList setupFileHandler::getSectionNames()
+{
+    QStringList sections;
+    QString line;
+    int index;
 
     readSetupFile();
     do {
-        m_index = setupFileContent.indexOf("\n");
-        m_line = setupFileContent.mid(0,m_index);
-        if ((m_line.at(0) == '[') && (m_line.right(1) == "]")){
-            m_line = m_line.mid(1,m_line.length()-2);
-            m_sections << m_line;
+        index = m_setupFileContent.indexOf("\n");
+        line = m_setupFileContent.mid(0, index);
+        if ((line.at(0) == '[') && (line.right(1) == "]")) {
+            line = line.mid(1, line.length() - 2);
+            sections << line;
         }
-        setupFileContent = setupFileContent.mid(m_index+1);
-    } while (setupFileContent != "");
-    return m_sections;
+        m_setupFileContent = m_setupFileContent.mid(index + 1);
+    } while (m_setupFileContent != "");
+    return sections;
 }
 
 /********************************************************************
@@ -460,22 +486,24 @@ int m_index;
  * Return Value : QStringList                                       *
  * Description  : Returns the filtered names of the sections        *
  ********************************************************************/
-QStringList setupFileHandler::getSectionNames(QStringList excludeList){
-QStringList m_sections;
-QString m_line;
-int m_index;
+QStringList setupFileHandler::getSectionNames(QStringList excludeList)
+{
+    QStringList sections;
+    QString line;
+    int index;
 
     readSetupFile();
     do {
-        m_index = setupFileContent.indexOf("\n");
-        m_line = setupFileContent.mid(0,m_index);
-        if ((m_line.at(0) == '[') && (m_line.right(1) == "]")){
-            m_line = m_line.mid(1,m_line.length()-2);
-            if (excludeList.indexOf(m_line) == -1) m_sections << m_line;
+        index = m_setupFileContent.indexOf("\n");
+        line = m_setupFileContent.mid(0, index);
+        if ((line.at(0) == '[') && (line.right(1) == "]")) {
+            line = line.mid(1, line.length() - 2);
+            if (excludeList.indexOf(line) == -1)
+                sections << line;
         }
-        setupFileContent = setupFileContent.mid(m_index+1);
-    } while (setupFileContent != "");
-    return m_sections;
+        m_setupFileContent = m_setupFileContent.mid(index + 1);
+    } while (m_setupFileContent != "");
+    return sections;
 }
 
 /********************************************************************
@@ -484,23 +512,25 @@ int m_index;
  * Return Value : QStringList                                       *
  * Description  : Returns the filtered names of the sections        *
  ********************************************************************/
-QStringList setupFileHandler::getSectionNames(QString excludeString){
-QStringList m_sections;
-QStringList m_excludeList = excludeString.split(",");
-QString m_line;
-int m_index;
+QStringList setupFileHandler::getSectionNames(QString excludeString)
+{
+    QStringList sections;
+    QStringList excludeList = excludeString.split(",");
+    QString line;
+    int index;
 
     readSetupFile();
     do {
-        m_index = setupFileContent.indexOf("\n");
-        m_line = setupFileContent.mid(0,m_index);
-        if ((m_line.at(0) == '[') && (m_line.right(1) == "]")){
-            m_line = m_line.mid(1,m_line.length()-2);
-            if (m_excludeList.indexOf(m_line) == -1) m_sections << m_line;
+        index = m_setupFileContent.indexOf("\n");
+        line = m_setupFileContent.mid(0, index);
+        if ((line.at(0) == '[') && (line.right(1) == "]")) {
+            line = line.mid(1, line.length() - 2);
+            if (excludeList.indexOf(line) == -1)
+                sections << line;
         }
-        setupFileContent = setupFileContent.mid(m_index+1);
-    } while (setupFileContent != "");
-    return m_sections;
+        m_setupFileContent = m_setupFileContent.mid(index + 1);
+    } while (m_setupFileContent != "");
+    return sections;
 }
 
 /********************************************************************
@@ -509,24 +539,24 @@ int m_index;
  * Return Value : QStringList                                       *
  * Description  : Removes the given keyword from the given section  *
  ********************************************************************/
-QStringList setupFileHandler::getKeywords(QString section){
-readSetupFile();
-QString m_tempSection = getSection(section).trimmed();
-QStringList m_rc;
+QStringList setupFileHandler::getKeywords(QString section)
+{
+    readSetupFile();
+    QString tempSection = getSection(section).trimmed();
+    QStringList rc;
 
+    if (tempSection != "") {
+        QStringList list = tempSection.split("\n");
+        QString line;
 
-    if (m_tempSection != "") {
-        QStringList m_list = m_tempSection.split("\n");
-        QString m_line;
-
-        for (int i = 1; i < m_list.count(); i++){
-            m_line = m_list.at(i);
-            if (m_line.indexOf("=") != -1){
-                m_rc << m_line.left(m_line.indexOf("="));
+        for (int i = 1; i < list.count(); i++) {
+            line = list.at(i);
+            if (line.indexOf("=") != -1) {
+                rc << line.left(line.indexOf("="));
             }
         }
     }
-    return m_rc;
+    return rc;
 }
 
 /********************************************************************
@@ -535,21 +565,21 @@ QStringList m_rc;
  * Return Value : QString                                           *
  * Description  : Returns the value for the given keyword           *
  ********************************************************************/
-QString setupFileHandler::getFreeFloaterValue(QString keyword){
-readSetupFile();
-QString m_keywordValue;
-int m_from,m_to;
+QString setupFileHandler::getFreeFloaterValue(QString keyword)
+{
+    readSetupFile();
+    QString keywordValue;
+    int from, to;
 
-    setupFileContent = setupFileContent.left(setupFileContent.indexOf("[")-2);
-    m_from = setupFileContent.indexOf(keyword);
-    m_from = setupFileContent.indexOf("=",m_from) + 1;
-    m_to = setupFileContent.indexOf("\n",m_from);
-    m_to = m_to - m_from;
-    m_keywordValue = setupFileContent.mid(m_from,m_to);
+    m_setupFileContent = m_setupFileContent.left(m_setupFileContent.indexOf("[") - 2);
+    from = m_setupFileContent.indexOf(keyword);
+    from = m_setupFileContent.indexOf("=", from) + 1;
+    to = m_setupFileContent.indexOf("\n", from);
+    to = to - from;
+    keywordValue = m_setupFileContent.mid(from, to);
 
-    return m_keywordValue;
+    return keywordValue;
 }
-
 
 /********************************************************************
  * getSingleLineValue                                               *
@@ -557,22 +587,22 @@ int m_from,m_to;
  * Return Value : QString                                           *
  * Description  : Returns the value for the given sing line keyword *
  ********************************************************************/
-QString setupFileHandler::getSingleLineValue(QString keyword){
+QString setupFileHandler::getSingleLineValue(QString keyword)
+{
     readSetupFile();
-    QString m_KeywordValue = "";
-    QStringList m_lines = setupFileContent.split("\n");
-    QString m_line = "";
+    QString KeywordValue = "";
+    QStringList lines = m_setupFileContent.split("\n");
+    QString line = "";
 
-    for (int x = 0; x < m_lines.length(); x++) {
-        m_line = m_lines[x];
-        if (m_line.indexOf(keyword + " ") == 0) {
-            m_KeywordValue = m_line.mid(m_line.indexOf(" ") + 1);
+    for (int x = 0; x < lines.length(); x++) {
+        line = lines[x];
+        if (line.indexOf(keyword + " ") == 0) {
+            KeywordValue = line.mid(line.indexOf(" ") + 1);
         }
     }
 
-    return m_KeywordValue;
+    return KeywordValue;
 }
-
 
 /********************************************************************
  * singleLineExists                                                 *
@@ -580,20 +610,21 @@ QString setupFileHandler::getSingleLineValue(QString keyword){
  * Return Value : bool                                              *
  * Description  : Checks if the given single line value exists      *
  ********************************************************************/
-bool setupFileHandler::singleLineExists(QString keyword){
+bool setupFileHandler::singleLineExists(QString keyword)
+{
     readSetupFile();
-    bool m_rc = false;
-    QStringList m_lines = setupFileContent.split("\n");
-    QString m_line = "";
+    bool rc = false;
+    QStringList lines = m_setupFileContent.split("\n");
+    QString line = "";
 
-    for (int x = 0; x < m_lines.length(); x++) {
-        m_line = m_lines[x];
-        if (m_line.indexOf(keyword + " ") == 0) m_rc = true;
+    for (int x = 0; x < lines.length(); x++) {
+        line = lines[x];
+        if (line.indexOf(keyword + " ") == 0)
+            rc = true;
     }
 
-    return m_rc;
+    return rc;
 }
-
 
 /********************************************************************
  * removeSingleLine                                                 *
@@ -601,23 +632,26 @@ bool setupFileHandler::singleLineExists(QString keyword){
  * Return Value :                                                   *
  * Description  : Removes the single Line Value from the file       *
  ********************************************************************/
-void setupFileHandler::removeSingleLine(QString keyword, QString value){
+void setupFileHandler::removeSingleLine(QString keyword, QString value)
+{
     readSetupFile();
-    QStringList m_lines = setupFileContent.split("\n");
-    QString m_line = "";
-    QString m_newContent = "";
+    QStringList lines = m_setupFileContent.split("\n");
+    QString line = "";
+    QString newContent = "";
 
-    for (int x = 0; x < m_lines.length(); x++) {
-        m_line = m_lines[x];
-        if (m_line.indexOf(keyword + " " + value) != 0) {
-            if (m_newContent == "") m_newContent = m_line; else m_newContent = m_newContent + "\n" + m_line;
+    for (int x = 0; x < lines.length(); x++) {
+        line = lines[x];
+        if (line.indexOf(keyword + " " + value) != 0) {
+            if (newContent == "")
+                newContent = line;
+            else
+                newContent = newContent + "\n" + line;
         }
     }
 
-    setupFileContent = m_newContent;
+    m_setupFileContent = newContent;
     writeSetupFile();
 }
-
 
 /********************************************************************
  * setSingleLineValue                                               *
@@ -625,24 +659,26 @@ void setupFileHandler::removeSingleLine(QString keyword, QString value){
  * Return Value :                                                   *
  * Description  : set a new value for the single line value         *
  ********************************************************************/
-void setupFileHandler::setSingleLineValue(QString keyword, QString value){
+void setupFileHandler::setSingleLineValue(QString keyword, QString value)
+{
     readSetupFile();
-    QString m_prev;
-    QString m_rest;
-    int m_start, m_stop;
+    QString prev;
+    QString rest;
+    int start, stop;
 
-    if (value.right(0) != "\n") value = value + "\n";
+    if (value.right(0) != "\n")
+        value = value + "\n";
 
-    m_start = setupFileContent.indexOf(keyword + " ");
+    start = m_setupFileContent.indexOf(keyword + " ");
 
-
-    if (m_start > -1) {
-        m_stop = setupFileContent.indexOf("\n",m_start);
-        m_prev = setupFileContent.mid(0,m_start);
-        m_rest = setupFileContent.mid(m_stop + 1);
-        setupFileContent = m_prev + keyword + " " + value + m_rest;
-    } else {
-        setupFileContent = setupFileContent + keyword + " " + value;
+    if (start > -1) {
+        stop = m_setupFileContent.indexOf("\n", start);
+        prev = m_setupFileContent.mid(0, start);
+        rest = m_setupFileContent.mid(stop + 1);
+        m_setupFileContent = prev + keyword + " " + value + rest;
+    }
+    else {
+        m_setupFileContent = m_setupFileContent + keyword + " " + value;
     }
     writeSetupFile();
 }
@@ -656,10 +692,10 @@ void setupFileHandler::setSingleLineValue(QString keyword, QString value){
 void setupFileHandler::addSingleLineValue(QString keyword, QString value)
 {
     readSetupFile();
-    if (setupFileContent.indexOf(keyword + " " + value) == -1) setupFileContent = setupFileContent + keyword + " " + value;
+    if (m_setupFileContent.indexOf(keyword + " " + value) == -1)
+        m_setupFileContent = m_setupFileContent + keyword + " " + value;
     writeSetupFile();
 }
-
 
 /********************************************************************
  * setFreeFloaterValue                                              *
@@ -670,45 +706,49 @@ void setupFileHandler::addSingleLineValue(QString keyword, QString value)
  *                keyword exists the overwrite bool controls wether *
  *                the value is changed or not                       *
  ********************************************************************/
-void setupFileHandler::setFreeFloaterValue(QString keyword, QString value, bool overwrite){
-bool m_doit = false;
+void setupFileHandler::setFreeFloaterValue(QString keyword, QString value, bool overwrite)
+{
+    bool doit = false;
 
-    if (freeFloaterExists(keyword)){
-        m_doit = overwrite;
-    } else {
-        m_doit = true;
+    if (freeFloaterExists(keyword)) {
+        doit = overwrite;
+    }
+    else {
+        doit = true;
     }
 
-    if (m_doit) {
+    if (doit) {
         readSetupFile();
-        QString m_tempSection = setupFileContent.left(setupFileContent.indexOf("[")).trimmed();
-        QString m_newFreeFloaterSection;
+        QString tempSection = m_setupFileContent.left(m_setupFileContent.indexOf("[")).trimmed();
+        QString newFreeFloaterSection;
 
-            if (m_tempSection == "") {
-                setupFileContent = m_newFreeFloaterSection + "\n" + keyword + "=" + value + "\n";
-            } else {
-                QString m_sectionReminder = m_tempSection;
-                QStringList m_list = m_tempSection.split("\n");
-                QString m_rc;
-                QString m_line;
-                bool m_found = false;
+        if (tempSection == "") {
+            m_setupFileContent = newFreeFloaterSection + "\n" + keyword + "=" + value + "\n";
+        }
+        else {
+            QString sectionReminder = tempSection;
+            QStringList list = tempSection.split("\n");
+            QString rc;
+            QString line;
+            bool found = false;
 
-                for (int i = 0; i < m_list.count(); i++){
-                    m_line = m_list.at(i);
-                    if (m_line.indexOf(keyword+"=") == 0){
-                       m_line = m_line.left(m_line.indexOf("=")) + "=" + value;
-                       m_found = true;
-                    }
-                    if (m_line != "") m_rc = m_rc + m_line + "\n";
+            for (int i = 0; i < list.count(); i++) {
+                line = list.at(i);
+                if (line.indexOf(keyword + "=") == 0) {
+                    line = line.left(line.indexOf("=")) + "=" + value;
+                    found = true;
                 }
-                if (!m_found){
-                    m_rc = m_rc + keyword + "=" + value + "\n";
-                }
-
-                setupFileContent.replace(m_sectionReminder,m_rc.trimmed());
+                if (line != "")
+                    rc = rc + line + "\n";
+            }
+            if (!found) {
+                rc = rc + keyword + "=" + value + "\n";
             }
 
-            writeSetupFile();
+            m_setupFileContent.replace(sectionReminder, rc.trimmed());
+        }
+
+        writeSetupFile();
     }
 }
 
@@ -719,15 +759,17 @@ bool m_doit = false;
  * Description  : Returns true if the given section exists otherwise*
  *                returns false                                     *
  ********************************************************************/
-bool setupFileHandler::sectionExists(QString section){
-readSetupFile();
-QString m_sectionContent = getSection(section).trimmed();
-bool rc;
+bool setupFileHandler::sectionExists(QString section)
+{
+    readSetupFile();
+    QString sectionContent = getSection(section).trimmed();
+    bool rc;
 
-    if (m_sectionContent != "") {
-        rc=true;
-    } else {
-        rc=false;
+    if (sectionContent != "") {
+        rc = true;
+    }
+    else {
+        rc = false;
     }
 
     return rc;
@@ -740,22 +782,25 @@ bool rc;
  * Description  : Returns true if the given keyword exists otherwise*
  *                returns false                                     *
  ********************************************************************/
-bool setupFileHandler::keywordExists(QString section, QString keyword){
-readSetupFile();
-QString m_sectionContent = getSection(section);
-bool m_rc = true;
+bool setupFileHandler::keywordExists(QString section, QString keyword)
+{
+    readSetupFile();
+    QString sectionContent = getSection(section);
+    bool rc = true;
 
-    if (m_sectionContent == "") m_rc = false;
+    if (sectionContent == "")
+        rc = false;
 
-    if (m_rc) {
-        m_rc = false;
-        QStringList m_lines=m_sectionContent.split("\n");
-        foreach(QString line, m_lines){
-            if (line.indexOf(keyword+"=") == 0) m_rc = true;
+    if (rc) {
+        rc = false;
+        QStringList lines = sectionContent.split("\n");
+        foreach (QString line, lines) {
+            if (line.indexOf(keyword + "=") == 0)
+                rc = true;
         }
     }
 
-    return m_rc;
+    return rc;
 }
 
 /********************************************************************
@@ -765,15 +810,17 @@ bool m_rc = true;
  * Description  : Returns true if the given keyword exists otherwise*
  *                returns false                                     *
  ********************************************************************/
-bool setupFileHandler::freeFloaterExists(QString keyword){
-readSetupFile();
-bool m_rc = false;
+bool setupFileHandler::freeFloaterExists(QString keyword)
+{
+    readSetupFile();
+    bool rc = false;
 
-    setupFileContent = setupFileContent.left(setupFileContent.indexOf("[")-2);
-    QStringList m_lines=setupFileContent.split("\n");
-    foreach(QString line,m_lines){
-        if (line.indexOf(keyword) == 0) m_rc = true;
+    m_setupFileContent = m_setupFileContent.left(m_setupFileContent.indexOf("[") - 2);
+    QStringList lines = m_setupFileContent.split("\n");
+    foreach (QString line, lines) {
+        if (line.indexOf(keyword) == 0)
+            rc = true;
     }
 
-    return m_rc;
+    return rc;
 }

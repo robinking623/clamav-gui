@@ -16,26 +16,24 @@
  *
  */
 
-
 #include "qroundprogressbar.h"
 
 #include <QtGui/QPainter>
 
-
-QRoundProgressBar::QRoundProgressBar(QWidget *parent) :
-    QWidget(parent),
-    m_min(0), m_max(100),
-    m_value(25),
-    m_nullPosition(PositionTop),
-    m_barStyle(StyleDonut),
-    m_outlinePenWidth(1),
-    m_dataPenWidth(1),
-    m_rebuildBrush(false),
-    m_format("%p"),
-    m_decimals(1),
-    m_updateFlags(UF_PERCENT)
-{
-}
+QRoundProgressBar::QRoundProgressBar(QWidget* parent)
+    : QWidget(parent),
+      m_min(0),
+      m_max(100),
+      m_value(25),
+      m_nullPosition(PositionTop),
+      m_barStyle(StyleDonut),
+      m_outlinePenWidth(1),
+      m_dataPenWidth(1),
+      m_rebuildBrush(false),
+      m_format("%p"),
+      m_decimals(1),
+      m_updateFlags(UF_PERCENT)
+{}
 
 void QRoundProgressBar::setRange(double min, double max)
 {
@@ -67,8 +65,7 @@ void QRoundProgressBar::setMaximum(double max)
 
 void QRoundProgressBar::setValue(double val)
 {
-    if (m_value != val)
-    {
+    if (m_value != val) {
         if (val < m_min)
             m_value = m_min;
         else if (val > m_max)
@@ -87,8 +84,7 @@ void QRoundProgressBar::setValue(int val)
 
 void QRoundProgressBar::setNullPosition(double position)
 {
-    if (position != m_nullPosition)
-    {
+    if (position != m_nullPosition) {
         m_nullPosition = position;
 
         m_rebuildBrush = true;
@@ -99,8 +95,7 @@ void QRoundProgressBar::setNullPosition(double position)
 
 void QRoundProgressBar::setBarStyle(QRoundProgressBar::BarStyle style)
 {
-    if (style != m_barStyle)
-    {
+    if (style != m_barStyle) {
         m_barStyle = style;
 
         m_rebuildBrush = true;
@@ -111,8 +106,7 @@ void QRoundProgressBar::setBarStyle(QRoundProgressBar::BarStyle style)
 
 void QRoundProgressBar::setOutlinePenWidth(double penWidth)
 {
-    if (penWidth != m_outlinePenWidth)
-    {
+    if (penWidth != m_outlinePenWidth) {
         m_outlinePenWidth = penWidth;
 
         update();
@@ -121,18 +115,16 @@ void QRoundProgressBar::setOutlinePenWidth(double penWidth)
 
 void QRoundProgressBar::setDataPenWidth(double penWidth)
 {
-    if (penWidth != m_dataPenWidth)
-    {
+    if (penWidth != m_dataPenWidth) {
         m_dataPenWidth = penWidth;
 
         update();
     }
 }
 
-void QRoundProgressBar::setDataColors(const QGradientStops &stopPoints)
+void QRoundProgressBar::setDataColors(const QGradientStops& stopPoints)
 {
-    if (stopPoints != m_gradientData)
-    {
+    if (stopPoints != m_gradientData) {
         m_gradientData = stopPoints;
         m_rebuildBrush = true;
 
@@ -140,10 +132,9 @@ void QRoundProgressBar::setDataColors(const QGradientStops &stopPoints)
     }
 }
 
-void QRoundProgressBar::setFormat(const QString &format)
+void QRoundProgressBar::setFormat(const QString& format)
 {
-    if (format != m_format)
-    {
+    if (format != m_format) {
         m_format = format;
 
         valueFormatChanged();
@@ -159,8 +150,7 @@ void QRoundProgressBar::resetFormat()
 
 void QRoundProgressBar::setDecimals(int count)
 {
-    if (count >= 0 && count != m_decimals)
-    {
+    if (count >= 0 && count != m_decimals) {
         m_decimals = count;
 
         valueFormatChanged();
@@ -170,7 +160,7 @@ void QRoundProgressBar::setDecimals(int count)
 void QRoundProgressBar::paintEvent(QPaintEvent* /*event*/)
 {
     double outerRadius = qMin(width(), height());
-    QRectF baseRect(1, 1, outerRadius-2, outerRadius-2);
+    QRectF baseRect(1, 1, outerRadius - 2, outerRadius - 2);
 
     QImage buffer(outerRadius, outerRadius, QImage::Format_ARGB32_Premultiplied);
 
@@ -204,52 +194,49 @@ void QRoundProgressBar::paintEvent(QPaintEvent* /*event*/)
 
     QPainter painter(this);
     painter.fillRect(baseRect, palette().window());
-    painter.drawImage(0,0, buffer);
+    painter.drawImage(0, 0, buffer);
 }
 
-void QRoundProgressBar::drawBackground(QPainter &p, const QRectF &baseRect)
+void QRoundProgressBar::drawBackground(QPainter& p, const QRectF& baseRect)
 {
     p.fillRect(baseRect, palette().window());
-    p.fillRect(baseRect,QColor("#c0c0c0"));
+    p.fillRect(baseRect, QColor("#c0c0c0"));
 }
 
-void QRoundProgressBar::drawBase(QPainter &p, const QRectF &baseRect)
+void QRoundProgressBar::drawBase(QPainter& p, const QRectF& baseRect)
 {
-    switch (m_barStyle)
-    {
-    case StyleDonut:
-        p.setPen(QPen(palette().shadow().color(), m_outlinePenWidth));
-        p.setBrush(palette().base());
-        p.drawEllipse(baseRect);
-        break;
+    switch (m_barStyle) {
+        case StyleDonut:
+            p.setPen(QPen(palette().shadow().color(), m_outlinePenWidth));
+            p.setBrush(palette().base());
+            p.drawEllipse(baseRect);
+            break;
 
-    case StylePie:
-    case StyleExpand:
-        p.setPen(QPen(palette().base().color(), m_outlinePenWidth));
-        p.setBrush(palette().base());
-        p.drawEllipse(baseRect);
-        break;
+        case StylePie:
+        case StyleExpand:
+            p.setPen(QPen(palette().base().color(), m_outlinePenWidth));
+            p.setBrush(palette().base());
+            p.drawEllipse(baseRect);
+            break;
 
-    case StyleLine:
-        p.setPen(QPen(palette().base().color(), m_outlinePenWidth));
-        p.setBrush(Qt::NoBrush);
-        p.drawEllipse(baseRect.adjusted(m_outlinePenWidth/2, m_outlinePenWidth/2, -m_outlinePenWidth/2, -m_outlinePenWidth/2));
-        break;
+        case StyleLine:
+            p.setPen(QPen(palette().base().color(), m_outlinePenWidth));
+            p.setBrush(Qt::NoBrush);
+            p.drawEllipse(baseRect.adjusted(m_outlinePenWidth / 2, m_outlinePenWidth / 2, -m_outlinePenWidth / 2, -m_outlinePenWidth / 2));
+            break;
 
-    default:;
+        default:;
     }
-
 }
 
-void QRoundProgressBar::drawValue(QPainter &p, const QRectF &baseRect, double value, double delta)
+void QRoundProgressBar::drawValue(QPainter& p, const QRectF& baseRect, double value, double delta)
 {
     // nothing to draw
     if (value == m_min)
         return;
 
     // for Expand style
-    if (m_barStyle == StyleExpand)
-    {
+    if (m_barStyle == StyleExpand) {
         p.setBrush(palette().highlight());
         p.setPen(QPen(palette().shadow().color(), m_dataPenWidth));
 
@@ -259,43 +246,33 @@ void QRoundProgressBar::drawValue(QPainter &p, const QRectF &baseRect, double va
         return;
     }
 
-
     // for Line style
-    if (m_barStyle == StyleLine)
-    {
+    if (m_barStyle == StyleLine) {
         p.setPen(QPen(palette().highlight().color(), m_dataPenWidth));
         p.setBrush(Qt::NoBrush);
 
-        if (value == m_max)
-        {
-            p.drawEllipse(
-                baseRect.adjusted(m_outlinePenWidth/2, m_outlinePenWidth/2, -m_outlinePenWidth/2, -m_outlinePenWidth/2));
+        if (value == m_max) {
+            p.drawEllipse(baseRect.adjusted(m_outlinePenWidth / 2, m_outlinePenWidth / 2, -m_outlinePenWidth / 2, -m_outlinePenWidth / 2));
         }
-        else
-        {
+        else {
             double arcLength = 360.0 / delta;
 
-            p.drawArc(
-                baseRect.adjusted(m_outlinePenWidth/2, m_outlinePenWidth/2, -m_outlinePenWidth/2, -m_outlinePenWidth/2),
-                m_nullPosition * 16,
-                -arcLength * 16);
+            p.drawArc(baseRect.adjusted(m_outlinePenWidth / 2, m_outlinePenWidth / 2, -m_outlinePenWidth / 2, -m_outlinePenWidth / 2),
+                      m_nullPosition * 16, -arcLength * 16);
         }
 
         return;
     }
-
 
     // for Pie and Donut styles
     QPainterPath dataPath;
     dataPath.setFillRule(Qt::WindingFill);
 
     // pie segment outer
-    if (value == m_max)
-    {
+    if (value == m_max) {
         dataPath.addEllipse(baseRect);
     }
-    else
-    {
+    else {
         double arcLength = 360.0 / delta;
 
         dataPath.moveTo(baseRect.center());
@@ -308,14 +285,13 @@ void QRoundProgressBar::drawValue(QPainter &p, const QRectF &baseRect, double va
     p.drawPath(dataPath);
 }
 
-void QRoundProgressBar::calculateInnerRect(const QRectF &/*baseRect*/, double outerRadius, QRectF &innerRect, double &innerRadius)
+void QRoundProgressBar::calculateInnerRect(const QRectF& /*baseRect*/, double outerRadius, QRectF& innerRect, double& innerRadius)
 {
     // for Line and Expand styles
-    if (m_barStyle == StyleLine || m_barStyle == StyleExpand)
-    {
+    if (m_barStyle == StyleLine || m_barStyle == StyleExpand) {
         innerRadius = outerRadius - m_outlinePenWidth;
     }
-    else    // for Pie and Donut styles
+    else  // for Pie and Donut styles
     {
         innerRadius = outerRadius * 0.75;
     }
@@ -324,22 +300,21 @@ void QRoundProgressBar::calculateInnerRect(const QRectF &/*baseRect*/, double ou
     innerRect = QRectF(delta, delta, innerRadius, innerRadius);
 }
 
-void QRoundProgressBar::drawInnerBackground(QPainter &p, const QRectF &innerRect)
+void QRoundProgressBar::drawInnerBackground(QPainter& p, const QRectF& innerRect)
 {
-    if (m_barStyle == StyleDonut)
-    {
+    if (m_barStyle == StyleDonut) {
         p.setBrush(palette().alternateBase());
         p.drawEllipse(innerRect);
     }
 }
 
-void QRoundProgressBar::drawText(QPainter &p, const QRectF &innerRect, double innerRadius, double value)
+void QRoundProgressBar::drawText(QPainter& p, const QRectF& innerRect, double innerRadius, double value)
 {
     if (m_format.isEmpty()) {
         m_format = "%p";
         m_updateFlags = UF_PERCENT;
     }
-//        return;
+    //        return;
 
     // !!! to revise
     QFont f(font());
@@ -364,8 +339,7 @@ QString QRoundProgressBar::valueToText(double value) const
     if (m_updateFlags & UF_VALUE)
         textToDraw.replace("%v", QString::number(value, 'f', m_decimals));
 
-    if (m_updateFlags & UF_PERCENT)
-    {
+    if (m_updateFlags & UF_PERCENT) {
         double procent = (value - m_min) / (m_max - m_min) * 100.0;
         textToDraw.replace("%p", QString::number(procent, 'f', m_decimals) + "%");
     }
@@ -407,9 +381,8 @@ void QRoundProgressBar::rebuildDataBrushIfNeeded()
 
     QPalette p(palette());
 
-    if (m_barStyle == StyleExpand)
-    {
-        QRadialGradient dataBrush(0.5,0.5, 0.5, 0.5,0.5);
+    if (m_barStyle == StyleExpand) {
+        QRadialGradient dataBrush(0.5, 0.5, 0.5, 0.5, 0.5);
         dataBrush.setCoordinateMode(QGradient::StretchToDeviceMode);
 
         // set colors
@@ -418,9 +391,8 @@ void QRoundProgressBar::rebuildDataBrushIfNeeded()
 
         p.setBrush(QPalette::Highlight, dataBrush);
     }
-    else
-    {
-        QConicalGradient dataBrush(QPointF(0.5,0.5), m_nullPosition);
+    else {
+        QConicalGradient dataBrush(QPointF(0.5, 0.5), m_nullPosition);
         dataBrush.setCoordinateMode(QGradient::StretchToDeviceMode);
 
         // invert colors
@@ -432,6 +404,3 @@ void QRoundProgressBar::rebuildDataBrushIfNeeded()
 
     setPalette(p);
 }
-
-
-

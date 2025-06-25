@@ -1,28 +1,20 @@
 #include "myframe.h"
-#include "ui_myframe.h"
 
-myFrame::myFrame(QWidget *parent) :
-    QFrame(parent),
-    ui(new Ui::myFrame)
+myFrame::myFrame(QWidget* parent) : QFrame(parent)
 {
-    ui->setupUi(this);
-}
-
-myFrame::~myFrame()
-{
-    delete ui;
+    m_ui.setupUi(this);
 }
 
 void myFrame::setVersionLabel(QString text)
 {
-    ui->versionLabel->setText(text);
+    m_ui.versionLabel->setText(text);
 }
 
-void myFrame::paintEvent(QPaintEvent *e)
+void myFrame::paintEvent(QPaintEvent* e)
 {
-    QPainter m_painter(this);
+    QPainter painter(this);
     QRectF r1(0.0, 0.0, 220.0, 650.0);
-    m_painter.drawImage(r1,QImage(":/icons/icons/logo.png"));
+    painter.drawImage(r1, QImage(":/icons/icons/logo.png"));
 
     QFrame::paintEvent(e);
 }

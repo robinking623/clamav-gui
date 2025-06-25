@@ -21,13 +21,15 @@
 #ifndef LOGVIEWOBJECT_H
 #define LOGVIEWOBJECT_H
 
+#include "ui_logviewobject.h"
+#include "partiallogobject.h"
+#include "setupfilehandler.h"
+
 #include <QPlainTextEdit>
 #include <QMessageBox>
 #include <QTextStream>
 #include <QDialog>
 #include <QFile>
-#include "partiallogobject.h"
-#include "setupfilehandler.h"
 
 namespace Ui {
 class logViewObject;
@@ -39,15 +41,16 @@ class logViewObject : public QDialog
 
 public:
     explicit logViewObject(QWidget *parent = 0, QString filename = "");
-    ~logViewObject();
+    ~logViewObject() = default;
     void keyPressEvent(QKeyEvent*);
     void closeEvent(QCloseEvent*);
 
 private:
-    Ui::logViewObject *ui;
-    QString logFileName;
-    bool contentChanged;
-    int searchPosition;
+    Ui::logViewObject m_ui;
+    QString m_logFileName;
+    bool m_contentChanged {false};
+    int m_searchPosition {0};
+    
     void loadLogFile(QString);
 
 private slots:

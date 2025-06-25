@@ -66,8 +66,9 @@ public:
     bool singleLineExists(QString keyword);
 
 private:
-    QString setupFileName;
-    QString setupFileContent;
+    QString m_setupFileName;
+    QString m_setupFileContent;
+    
     QString getSection(QString sectionID);
     void readSetupFile();
     void writeSetupFile();

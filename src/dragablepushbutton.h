@@ -21,6 +21,8 @@
 #ifndef DRAGABLEPUSHBUTTON_H
 #define DRAGABLEPUSHBUTTON_H
 
+#include "ui_dragablepushbutton.h"
+
 #include <QPushButton>
 #include <QMimeData>
 #include <QUrl>
@@ -37,12 +39,12 @@ class dragablePushButton : public QPushButton
 public:
     explicit dragablePushButton(QWidget *parent = 0);
     dragablePushButton(QIcon, QString, QWidget *, QString);
-    ~dragablePushButton();
+    ~dragablePushButton() = default;
     void mouseMoveEvent(QMouseEvent *);
 
 private:
-    Ui::dragablePushButton *ui;
-    QString dragDropText;
+    Ui::dragablePushButton m_ui;
+    QString m_dragDropText;
 
 signals:
     void dragStarted();

@@ -21,6 +21,20 @@
 #ifndef CLAMAV_GUI_H
 #define CLAMAV_GUI_H
 
+#include "setupfilehandler.h"
+#include "optionsdialog.h"
+#include "clamav_ctrl.h"
+#include "ui_clamav_gui.h"
+#include "freshclamsetter.h"
+#include "scantab.h"
+#include "setuptab.h"
+#include "scheduler.h"
+#include "infodialog.h"
+#include "schedulescanobject.h"
+#include "logviewerobject.h"
+#include "profilemanager.h"
+#include "clamdmanager.h"
+
 #include <QSystemTrayIcon>
 #include <QTextStream>
 #include <QStringList>
@@ -35,18 +49,7 @@
 #include <QMenu>
 #include <QList>
 #include <QDir>
-#include "setupfilehandler.h"
-#include "optionsdialog.h"
-#include "clamav_ctrl.h"
-#include "freshclamsetter.h"
-#include "scantab.h"
-#include "setuptab.h"
-#include "scheduler.h"
-#include "infodialog.h"
-#include "schedulescanobject.h"
-#include "logviewerobject.h"
-#include "profilemanager.h"
-#include "clamdmanager.h"
+
 
 namespace Ui {
 class clamav_gui;
@@ -61,35 +64,35 @@ public:
     void closeEvent(QCloseEvent *);
     void changeEvent(QEvent *event);
 
-    ~clamav_gui();
+    ~clamav_gui() = default;
 
 private:
-    Ui::clamav_gui          *ui;
-    QSystemTrayIcon         * trayIcon;
-    QMenu                   * trayIconMenu;
-    QAction                 * actionQuit;
-    QAction                 * actionShowHideDropZone;
-    QAction                 * actionShowHideMainWindow;
-    setupFileHandler        * setupFile;
-    QProcess                * scanProcess;
-    QProcess                * sudoGUIProcess;
-    QString                   guisudoapp;
-    scanTab                 * scannerTab;
-    setupTab                * setUpTab;
-    QTimer                  * mainWindowTimer;
-    QTimer                  * logoTimer;
-    QTimer                  * showLogoTimer;
-    optionsDialog           * optionTab;
-    scanLimitsTab           * scanLimitTab;
-    freshclamsetter         * freshclamTab;
-    clamdManager            * clamdTab;
-    ProfileManager          * profileManagerTab;
-    scheduler               * schedulerTab;
-    infoDialog              * infoTab;
-    logViewerObject         * logTab;
-    clamav_ctrl             * dropZone;
-    QLabel                  * startLogoLabel;
-    bool                      error;
+    Ui::clamav_gui          m_ui;
+    QSystemTrayIcon         * m_trayIcon;
+    QMenu                   * m_trayIconMenu;
+    QAction                 * m_actionQuit;
+    QAction                 * m_actionShowHideDropZone;
+    QAction                 * m_actionShowHideMainWindow;
+    setupFileHandler        * m_setupFile;
+    QProcess                * m_scanProcess;
+    QProcess                * m_sudoGUIProcess;
+    QString                   m_guisudoapp;
+    scanTab                 * m_scannerTab;
+    setupTab                * m_setUpTab;
+    QTimer                  * m_mainWindowTimer;
+    QTimer                  * m_logoTimer;
+    QTimer                  * m_showLogoTimer;
+    optionsDialog           * m_optionTab;
+    scanLimitsTab           * m_scanLimitTab;
+    freshclamsetter         * m_freshclamTab;
+    clamdManager            * m_clamdTab;
+    ProfileManager          * m_profileManagerTab;
+    scheduler               * m_schedulerTab;
+    infoDialog              * m_infoTab;
+    logViewerObject         * m_logTab;
+    clamav_ctrl             * m_dropZone;
+    QLabel                  * m_startLogoLabel;
+    bool                     m_error;
     void createTrayIcon();
     void createDropZone();
 

@@ -21,6 +21,11 @@
 #ifndef SCHEDULESCANOBJECT_H
 #define SCHEDULESCANOBJECT_H
 
+#include "ui_schedulescanobject.h"
+#include "highlighter.h"
+#include "qroundprogressbar.h"
+#include "setupfilehandler.h"
+
 #include <QMessageBox>
 #include <QLinearGradient>
 #include <QCloseEvent>
@@ -28,9 +33,6 @@
 #include <QDialog>
 #include <QTimer>
 #include <QMovie>
-#include "highlighter.h"
-#include "qroundprogressbar.h"
-#include "setupfilehandler.h"
 
 namespace Ui {
 class scheduleScanObject;
@@ -42,24 +44,25 @@ class scheduleScanObject : public QDialog
 
 public:
     explicit scheduleScanObject(QWidget *parent = 0,QString name = "", QStringList parameters = QStringList());
-    ~scheduleScanObject();
+    ~scheduleScanObject() = default;
     void closeEvent(QCloseEvent*);
     void keyPressEvent(QKeyEvent*);
     void accept();
-    highlighter             * logHighLighter;
+
 
 private:
-    Ui::scheduleScanObject *ui;
-    QProcess                * scanProcess;
-    QTimer                  * closeWindowTimer;
-    QMovie                  * movie;
-    QLabel                  * busyLabel;
-    QRoundProgressBar       * countDown;
-    setupFileHandler        * setupFile;
-    int                       closeWindowCounter;
-    int                       errorStart;
-    int                       infectedStart;
-    bool                      directScan;
+    Ui::scheduleScanObject m_ui;
+    highlighter             * m_logHighLighter;
+    QProcess                * m_scanProcess;
+    QTimer                  * m_closeWindowTimer;
+    QMovie                  * m_movie;
+    QLabel                  * m_busyLabel;
+    QRoundProgressBar       * m_countDown;
+    setupFileHandler        * m_setupFile;
+    int                       m_closeWindowCounter;
+    int                       m_errorStart;
+    int                       m_infectedStart;
+    bool                      m_directScan;
 
     QString scanJob;
 

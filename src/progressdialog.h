@@ -24,6 +24,7 @@
 #include <QWidget>
 #include <QDebug>
 #include "qroundprogressbar.h"
+#include "ui_progressdialog.h"
 
 namespace Ui {
 class progressDialog;
@@ -35,17 +36,19 @@ class progressDialog : public QWidget
 
 public:
     explicit progressDialog(QWidget *parent = 0);
-    ~progressDialog();
-    QMovie  * movie;
-    void setText(QString);
-    QRoundProgressBar * progressBar;
+    ~progressDialog() = default;
 
-private:
-    Ui::progressDialog *ui;
+    void setText(QString);
 
 public:
     void setProgressBarMaxValue(double value);
     void setProgressBarValue(double);
+
+private:
+    Ui::progressDialog m_ui;
+    QMovie  * m_movie;
+    QRoundProgressBar * m_progressBar;
+
 };
 
 #endif // PROGRESSDIALOG_H

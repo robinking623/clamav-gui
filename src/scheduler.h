@@ -29,6 +29,7 @@
 #include <QWidget>
 #include <QTimer>
 #include <QDir>
+#include "ui_scheduler.h"
 #include "setupfilehandler.h"
 #include "logviewobject.h"
 
@@ -42,15 +43,16 @@ class scheduler : public QWidget
 
 public:
     explicit scheduler(QWidget *parent = 0);
-    ~scheduler();
+    ~scheduler() = default;
 
 private:
-    Ui::scheduler *ui;
-    setupFileHandler    *setupFile;
-    QButtonGroup        *removeButtonGroup;
-    QButtonGroup        *scanNowButtonGroup;
-    QButtonGroup        *logButtonGroup;
-    QTimer              *checkTimer;
+    Ui::scheduler m_ui;
+    setupFileHandler    *m_setupFile;
+    QButtonGroup        *m_removeButtonGroup;
+    QButtonGroup        *m_scanNowButtonGroup;
+    QButtonGroup        *m_logButtonGroup;
+    QTimer              *m_checkTimer;
+    
     void updateScheduleList();
     void startScanJob(QString);
 

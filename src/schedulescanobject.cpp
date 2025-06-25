@@ -1,324 +1,360 @@
 #include "schedulescanobject.h"
-#include "ui_schedulescanobject.h"
 
-scheduleScanObject::scheduleScanObject(QWidget *parent, QString name, QStringList parameters) : QDialog(parent), ui(new Ui::scheduleScanObject),scanJob(name)
+scheduleScanObject::scheduleScanObject(QWidget* parent, QString name, QStringList parameters) : QDialog(parent), scanJob(name)
 {
     bool useclamdscan = false;
 
-    setWindowFlags(((this->windowFlags() | Qt::CustomizeWindowHint) & ~Qt::WindowCloseButtonHint & ~Qt::WindowContextHelpButtonHint) );
-    ui->setupUi(this);
+    setWindowFlags(((this->windowFlags() | Qt::CustomizeWindowHint) & ~Qt::WindowCloseButtonHint & ~Qt::WindowContextHelpButtonHint));
+    m_ui.setupUi(this);
 
-    if (name=="Direct Scan") {
-        directScan = true;
-        ui->headerLabel->setText("Direct Scan");
-    } else {
-        directScan = false;
+    if (name == "Direct Scan") {
+        m_directScan = true;
+        m_ui.headerLabel->setText("Direct Scan");
+    }
+    else {
+        m_directScan = false;
     }
 
-    setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini",this);
+    m_setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini", this);
 
-    logHighLighter = new highlighter(ui->logMessagePlainTextEdit->document());
+    m_logHighLighter = new highlighter(m_ui.logMessagePlainTextEdit->document());
 
-    ui->scanJobHeader->setText(tr("Scan-Job: ") + name);
+    m_ui.scanJobHeader->setText(tr("Scan-Job: ") + name);
     this->setWindowTitle(tr("Scheduled Scan-Job: ") + name);
 
-    scanProcess = new QProcess(this);
-    connect(scanProcess,SIGNAL(readyReadStandardError()),this,SLOT(slot_scanProcessHasErrOutput()));
-    connect(scanProcess,SIGNAL(readyReadStandardOutput()),this,SLOT(slot_scanProcessHasStdOutput()));
-    connect(scanProcess,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(slot_scanProcessFinished(int,QProcess::ExitStatus)));
+    m_scanProcess = new QProcess(this);
+    connect(m_scanProcess, SIGNAL(readyReadStandardError()), this, SLOT(slot_scanProcessHasErrOutput()));
+    connect(m_scanProcess, SIGNAL(readyReadStandardOutput()), this, SLOT(slot_scanProcessHasStdOutput()));
+    connect(m_scanProcess, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(slot_scanProcessFinished(int, QProcess::ExitStatus)));
 
-    QString m_message;
+    QString message;
 
-    if (setupFile->getSectionValue("Clamd","Status") == "is running") {
-        switch (setupFile->getSectionIntValue("Clamd","ClamdScanMultithreading")) {
-            case 0 : useclamdscan = false;
-                     m_message = "clamscan ";
-                        break;
-            case 1 : useclamdscan = true;
-                     m_message = "clamdscan ";
-                        break;
-            case 2 : if (directScan == true) {
-                        useclamdscan = false;
-                        m_message = "clamscan ";
-                     } else {
-                        useclamdscan = true;
-                        m_message = "clamdscan ";
-                     }
-                        break;
-            case 3 : if (directScan == false) {
-                        useclamdscan = false;
-                        m_message = "clamdscan ";
-                     } else {
-                        useclamdscan = true;
-                        m_message = "clamdscan ";
-                     }
-                        break;
-            case 4 : if (QMessageBox::question(this,tr("Use ClamdScan"),tr("Perform scanning using clamdscan instead of clamscan?"),QMessageBox::Yes,QMessageBox::No) == QMessageBox::Yes) {
-                        useclamdscan = true;
-                        m_message = "clamdscan ";
-                     } else {
-                        useclamdscan = false;
-                        m_message = "clamscan ";
-                     }
+    if (m_setupFile->getSectionValue("Clamd", "Status") == "is running") {
+        switch (m_setupFile->getSectionIntValue("Clamd", "ClamdScanMultithreading")) {
+            case 0:
+                useclamdscan = false;
+                message = "clamscan ";
+                break;
+            case 1:
+                useclamdscan = true;
+                message = "clamdscan ";
+                break;
+            case 2:
+                if (m_directScan == true) {
+                    useclamdscan = false;
+                    message = "clamscan ";
+                }
+                else {
+                    useclamdscan = true;
+                    message = "clamdscan ";
+                }
+                break;
+            case 3:
+                if (m_directScan == false) {
+                    useclamdscan = false;
+                    message = "clamdscan ";
+                }
+                else {
+                    useclamdscan = true;
+                    message = "clamdscan ";
+                }
+                break;
+            case 4:
+                if (QMessageBox::question(this, tr("Use ClamdScan"), tr("Perform scanning using clamdscan instead of clamscan?"), QMessageBox::Yes,
+                                          QMessageBox::No) == QMessageBox::Yes) {
+                    useclamdscan = true;
+                    message = "clamdscan ";
+                }
+                else {
+                    useclamdscan = false;
+                    message = "clamscan ";
+                }
         }
-    } else {
+    }
+    else {
         useclamdscan = false;
-        m_message = "clamscan ";
+        message = "clamscan ";
     }
 
     if (useclamdscan == false) {
-        for (int i = 0;i < parameters.count();i++){
-            m_message = m_message + " " + parameters.at(i);
+        for (int i = 0; i < parameters.count(); i++) {
+            message = message + " " + parameters.at(i);
         }
-        m_message = m_message + "\n";
-    } else {
-        m_message = m_message + "--multiscan --fdpass --config-file " + QDir::homePath() + "/.clamav-gui/clamd.conf";
-        for (int i = 0;i < parameters.count();i++){
+        message = message + "\n";
+    }
+    else {
+        message = message + "--multiscan --fdpass --config-file " + QDir::homePath() + "/.clamav-gui/clamd.conf";
+        for (int i = 0; i < parameters.count(); i++) {
             QString para = parameters.at(i);
-            if (para.indexOf("-") != 0) m_message = m_message + " " + parameters.at(i);
+            if (para.indexOf("-") != 0)
+                message = message + " " + parameters.at(i);
         }
-        m_message = m_message + "\n";
+        message = message + "\n";
     }
 
-    ui->logMessagePlainTextEdit->appendPlainText(m_message);
+    m_ui.logMessagePlainTextEdit->appendPlainText(message);
 
     if (useclamdscan == true) {
-        QStringList m_newParameters;
-        m_newParameters << "--multiscan" << "--fdpass" << "--config-file" << QDir::homePath() + "/.clamav-gui/clamd.conf";
-        foreach(const QString element,parameters) {
-            m_newParameters << element;
+        QStringList newParameters;
+        newParameters << "--multiscan" << "--fdpass" << "--config-file" << QDir::homePath() + "/.clamav-gui/clamd.conf";
+        foreach (const QString element, parameters) {
+            newParameters << element;
         }
-        scanProcess->start("clamdscan",m_newParameters);
-    } else {
-        scanProcess->start("clamscan",parameters);
+        m_scanProcess->start("clamdscan", newParameters);
+    }
+    else {
+        m_scanProcess->start("clamscan", parameters);
     }
 
-    ui->currentFileLabel->setText(tr("Scanning started ......."));
+    m_ui.currentFileLabel->setText(tr("Scanning started ......."));
 
-    busyLabel = new QLabel(this);
-    busyLabel->setStyleSheet("background:transparent");
-    busyLabel->setGeometry((this->width() - 80) / 2,(this->height() - 80) / 2,80,80);
-    movie = new QMovie(":/icons/icons/gifs/spinning_segments_large.gif");
-    busyLabel->setMovie(movie);
-    busyLabel->show();
-    movie->start();
+    m_busyLabel = new QLabel(this);
+    m_busyLabel->setStyleSheet("background:transparent");
+    m_busyLabel->setGeometry((this->width() - 80) / 2, (this->height() - 80) / 2, 80, 80);
+    m_movie = new QMovie(":/icons/icons/gifs/spinning_segments_large.gif");
+    m_busyLabel->setMovie(m_movie);
+    m_busyLabel->show();
+    m_movie->start();
 
-    closeWindowTimer = new QTimer(this);
-    closeWindowTimer->setSingleShot(true);
-    connect(closeWindowTimer,SIGNAL(timeout()),this,SLOT(slot_closeWindowTimerTimeout()));
+    m_closeWindowTimer = new QTimer(this);
+    m_closeWindowTimer->setSingleShot(true);
+    connect(m_closeWindowTimer, SIGNAL(timeout()), this, SLOT(slot_closeWindowTimerTimeout()));
 
-    closeWindowCounter = 100;
-    errorStart = 0;
-    infectedStart = 0;
+    m_closeWindowCounter = 100;
+    m_errorStart = 0;
+    m_infectedStart = 0;
 }
 
-void scheduleScanObject::accept(){
-    if (directScan == false) emit closeRequest(this); else this->done(0);
+void scheduleScanObject::accept()
+{
+    if (m_directScan == false)
+        emit closeRequest(this);
+    else
+        this->done(0);
 }
 
-void scheduleScanObject::closeEvent(QCloseEvent *event){
+void scheduleScanObject::closeEvent(QCloseEvent* event)
+{
     this->accept();
     event->ignore();
 }
 
-void scheduleScanObject::keyPressEvent(QKeyEvent * event){
-    if (event->key() == Qt::Key_Escape) event->ignore(); else event->accept();
-}
-
-scheduleScanObject::~scheduleScanObject()
+void scheduleScanObject::keyPressEvent(QKeyEvent* event)
 {
-    delete ui;
+    if (event->key() == Qt::Key_Escape)
+        event->ignore();
+    else
+        event->accept();
 }
 
-void scheduleScanObject::slot_closeButtonClicked(){
+void scheduleScanObject::slot_closeButtonClicked()
+{
     this->accept();
 }
 
-void scheduleScanObject::slot_stopButtonClicked(){
-    if (scanProcess->state() == QProcess::Running) scanProcess->kill();
-    ui->closeButton->setEnabled(true);
-    movie->stop();
+void scheduleScanObject::slot_stopButtonClicked()
+{
+    if (m_scanProcess->state() == QProcess::Running) {
+        m_scanProcess->kill();
+    }
+    m_ui.closeButton->setEnabled(true);
+    m_movie->stop();
 }
 
-void scheduleScanObject::slot_scanProcessHasStdOutput(){
-QString message = scanProcess->readAllStandardOutput();
-QString currentFile;
-int start,end;
+void scheduleScanObject::slot_scanProcessHasStdOutput()
+{
+    QString message = m_scanProcess->readAllStandardOutput();
+    QString currentFile;
+    int start, end;
 
-    while(message.indexOf("Scanning") != -1){
+    while (message.indexOf("Scanning") != -1) {
         start = message.indexOf("Scanning");
-        end = message.indexOf("\n",start);
-        currentFile = message.mid(start,end - start + 1);
-        message.replace(currentFile,"");
+        end = message.indexOf("\n", start);
+        currentFile = message.mid(start, end - start + 1);
+        message.replace(currentFile, "");
         currentFile = currentFile.mid(currentFile.lastIndexOf("/") + 1);
-        currentFile.replace("\n","");
-        ui->currentFileLabel->setText(tr("Scanning : ") + currentFile);
+        currentFile.replace("\n", "");
+        m_ui.currentFileLabel->setText(tr("Scanning : ") + currentFile);
     }
 
-    ui->logMessagePlainTextEdit->insertPlainText(message);
-    ui->logMessagePlainTextEdit->ensureCursorVisible();
+    m_ui.logMessagePlainTextEdit->insertPlainText(message);
+    m_ui.logMessagePlainTextEdit->ensureCursorVisible();
 }
 
-void scheduleScanObject::slot_scanProcessHasErrOutput(){
-QString message = scanProcess->readAllStandardOutput();
-QString currentFile;
-int start,end;
+void scheduleScanObject::slot_scanProcessHasErrOutput()
+{
+    QString message = m_scanProcess->readAllStandardOutput();
+    QString currentFile;
+    int start, end;
 
-    while(message.indexOf("Scanning") != -1){
+    while (message.indexOf("Scanning") != -1) {
         start = message.indexOf("Scanning");
-        end = message.indexOf("\n",start);
-        currentFile = message.mid(start,end - start + 1);
-        message.replace(currentFile,"");
+        end = message.indexOf("\n", start);
+        currentFile = message.mid(start, end - start + 1);
+        message.replace(currentFile, "");
         currentFile = currentFile.mid(currentFile.lastIndexOf("/") + 1);
-        currentFile.replace("\n","");
-        ui->currentFileLabel->setText(tr("Scanning : ") + currentFile);
+        currentFile.replace("\n", "");
+        m_ui.currentFileLabel->setText(tr("Scanning : ") + currentFile);
     }
 
-    ui->logMessagePlainTextEdit->insertPlainText(message);
-    ui->logMessagePlainTextEdit->ensureCursorVisible();
+    m_ui.logMessagePlainTextEdit->insertPlainText(message);
+    m_ui.logMessagePlainTextEdit->ensureCursorVisible();
 }
 
-void scheduleScanObject::slot_scanProcessFinished(int exitCode,QProcess::ExitStatus status){
-exitCode = exitCode;
-status = status;
-QString temp;
-int pos,end;
+void scheduleScanObject::slot_scanProcessFinished(int exitCode, QProcess::ExitStatus status)
+{
+    exitCode = exitCode;
+    status = status;
+    QString temp;
+    int pos, end;
 
-    if (movie != 0){
-        movie->stop();
-        delete movie;
-        delete busyLabel;
+    if (m_movie != 0) {
+        m_movie->stop();
+        delete m_movie;
+        delete m_busyLabel;
     }
 
     if (status == QProcess::CrashExit) {
-        ui->currentFileLabel->setText(tr("Scan Process aborted ....."));
-        ui->currentFileLabel->setStyleSheet("background-color:red");
-        emit sendStatusReport(1,tr("Scan-Job: ") + scanJob,tr("Scan Process aborted ....."));
-    } else {
-        if (exitCode == 0) {
-            ui->currentFileLabel->setText(tr("Scan-Process finished ...... no Virus found!"));
-            ui->currentFileLabel->setStyleSheet("background-color:green");
-            emit sendStatusReport(0,"Scan-Job: " + scanJob,tr("Scan-Process finished ...... no Virus found!"));
-            closeWindowTimer->start(1000);
-            countDown = new QRoundProgressBar(this);
-            countDown->setGeometry((this->width() - 80) / 2,(this->height() - 80) / 2,80,80);
-            countDown->setMaximum(100);
-            countDown->setMinimum(0);
-            countDown->setValue(100);
-            countDown->setBarStyle(QRoundProgressBar::StyleDonut);
-            countDown->setFormat("");
-            countDown->show();
-        } else
-            if (exitCode == 1) {
-                ui->currentFileLabel->setText(tr("Scan-Process finished ...... a Virus was found!"));
-                ui->currentFileLabel->setStyleSheet("background-color:red");
-                emit sendStatusReport(2,"Scan-Job: " + scanJob,tr("Scan Process finished ..... a Virus was found!"));
-            } else {
-                ui->currentFileLabel->setText(tr("Scan-Process finished ...... an Error occurred!"));
-                ui->currentFileLabel->setStyleSheet("background-color:red");
-                emit sendStatusReport(1,"Scan-Job: " + scanJob,tr("Scan Process finished ..... an Error occurred!"));
-            }
+        m_ui.currentFileLabel->setText(tr("Scan Process aborted ....."));
+        m_ui.currentFileLabel->setStyleSheet("background-color:red");
+        emit sendStatusReport(1, tr("Scan-Job: ") + scanJob, tr("Scan Process aborted ....."));
+    }
+    else if (exitCode == 0) {
+        m_ui.currentFileLabel->setText(tr("Scan-Process finished ...... no Virus found!"));
+        m_ui.currentFileLabel->setStyleSheet("background-color:green");
+        emit sendStatusReport(0, "Scan-Job: " + scanJob, tr("Scan-Process finished ...... no Virus found!"));
+        m_closeWindowTimer->start(1000);
+        m_countDown = new QRoundProgressBar(this);
+        m_countDown->setGeometry((this->width() - 80) / 2, (this->height() - 80) / 2, 80, 80);
+        m_countDown->setMaximum(100);
+        m_countDown->setMinimum(0);
+        m_countDown->setValue(100);
+        m_countDown->setBarStyle(QRoundProgressBar::StyleDonut);
+        m_countDown->setFormat("");
+        m_countDown->show();
+    }
+    else if (exitCode == 1) {
+        m_ui.currentFileLabel->setText(tr("Scan-Process finished ...... a Virus was found!"));
+        m_ui.currentFileLabel->setStyleSheet("background-color:red");
+        emit sendStatusReport(2, "Scan-Job: " + scanJob, tr("Scan Process finished ..... a Virus was found!"));
+    }
+    else {
+        m_ui.currentFileLabel->setText(tr("Scan-Process finished ...... an Error occurred!"));
+        m_ui.currentFileLabel->setStyleSheet("background-color:red");
+        emit sendStatusReport(1, "Scan-Job: " + scanJob, tr("Scan Process finished ..... an Error occurred!"));
     }
 
-    ui->closeButton->setEnabled(true);
-    ui->stopButton->setEnabled(false);
+    m_ui.closeButton->setEnabled(true);
+    m_ui.stopButton->setEnabled(false);
 
-    if (status != QProcess::CrashExit){
-        temp = ui->logMessagePlainTextEdit->toPlainText();
+    if (status != QProcess::CrashExit) {
+        temp = m_ui.logMessagePlainTextEdit->toPlainText();
 
         pos = temp.indexOf("Engine version:");
-        if (pos != -1){
-            end = temp.indexOf("\n",pos);
-            ui->engineVersionLabel->setText(tr("Engine Version: ") + temp.mid(pos + 15,end - pos - 15));
-        } else {
-            ui->engineVersionLabel->setText(tr("Engine Version: n/a"));
+        if (pos != -1) {
+            end = temp.indexOf("\n", pos);
+            m_ui.engineVersionLabel->setText(tr("Engine Version: ") + temp.mid(pos + 15, end - pos - 15));
+        }
+        else {
+            m_ui.engineVersionLabel->setText(tr("Engine Version: n/a"));
         }
 
         pos = temp.indexOf("Infected files:");
-        if (pos != -1){
-            end = temp.indexOf("\n",pos);
-            ui->infectedFilesLabel->setText(tr("Infected files: ") + temp.mid(pos + 15,end - pos - 15));
-        } else {
-            ui->infectedFilesLabel->setText(tr("Infected files: n/a"));
+        if (pos != -1) {
+            end = temp.indexOf("\n", pos);
+            m_ui.infectedFilesLabel->setText(tr("Infected files: ") + temp.mid(pos + 15, end - pos - 15));
+        }
+        else {
+            m_ui.infectedFilesLabel->setText(tr("Infected files: n/a"));
         }
 
         pos = temp.indexOf("Scanned directories:");
-        if (pos != -1){
-            end = temp.indexOf("\n",pos);
-            ui->scannedDirectoriesLabel->setText(tr("Scanned Directories: ") + temp.mid(pos + 20,end - pos - 20));
-        } else {
-            ui->scannedDirectoriesLabel->setText(tr("Scanned Directories: n/a"));
+        if (pos != -1) {
+            end = temp.indexOf("\n", pos);
+            m_ui.scannedDirectoriesLabel->setText(tr("Scanned Directories: ") + temp.mid(pos + 20, end - pos - 20));
+        }
+        else {
+            m_ui.scannedDirectoriesLabel->setText(tr("Scanned Directories: n/a"));
         }
 
         pos = temp.indexOf("Scanned files:");
-        if (pos != -1){
-            end = temp.indexOf("\n",pos);
-            ui->scannedFilesLabel->setText(tr("Scanned Files: ") + temp.mid(pos + 14,end - pos - 14));
-        } else {
-            ui->scannedFilesLabel->setText(tr("Scanned Files: n/a"));
+        if (pos != -1) {
+            end = temp.indexOf("\n", pos);
+            m_ui.scannedFilesLabel->setText(tr("Scanned Files: ") + temp.mid(pos + 14, end - pos - 14));
+        }
+        else {
+            m_ui.scannedFilesLabel->setText(tr("Scanned Files: n/a"));
         }
 
         pos = temp.indexOf("Total errors::");
-        if (pos != -1){
-            end = temp.indexOf("\n",pos);
-            ui->errorsLabel->setText(tr("Total Errors: ") + temp.mid(pos + 13,end - pos - 13));
-        } else {
-            ui->errorsLabel->setText(tr("Total Errors: 0"));
+        if (pos != -1) {
+            end = temp.indexOf("\n", pos);
+            m_ui.errorsLabel->setText(tr("Total Errors: ") + temp.mid(pos + 13, end - pos - 13));
+        }
+        else {
+            m_ui.errorsLabel->setText(tr("Total Errors: 0"));
         }
     }
 
     emit scanProcessFinished();
 }
 
-void scheduleScanObject::slot_closeWindowTimerTimeout(){
-    closeWindowCounter--;
+void scheduleScanObject::slot_closeWindowTimerTimeout()
+{
+    m_closeWindowCounter--;
 
-    if (closeWindowCounter == 0){
+    if (m_closeWindowCounter == 0) {
         this->accept();
-    } else {
-        countDown->setValue(closeWindowCounter);
-        closeWindowTimer->start(100);
+    }
+    else {
+        m_countDown->setValue(m_closeWindowCounter);
+        m_closeWindowTimer->start(100);
     }
 }
 
-void scheduleScanObject::slot_totalErrorButtonClicked(){
-QTextCursor cursor = ui->logMessagePlainTextEdit->textCursor();
-QStringList searchStrings;
-QString searchString;
-int pos = -1;
-int index = 0;
+void scheduleScanObject::slot_totalErrorButtonClicked()
+{
+    QTextCursor cursor = m_ui.logMessagePlainTextEdit->textCursor();
+    QStringList searchStrings;
+    QString searchString;
+    int pos = -1;
+    int index = 0;
 
     searchStrings << "Access denied" << "Empty file";
 
-    while ((pos == -1) & (index < searchStrings.count())){
+    while ((pos == -1) & (index < searchStrings.count())) {
         searchString = searchStrings.at(index);
-        index ++;
-        pos = ui->logMessagePlainTextEdit->toPlainText().indexOf(searchString,errorStart);
+        index++;
+        pos = m_ui.logMessagePlainTextEdit->toPlainText().indexOf(searchString, m_errorStart);
     }
 
-    if (pos > -1){
-        errorStart = pos + searchString.length();
+    if (pos >= 0) {
+        m_errorStart = pos + searchString.length();
         cursor.movePosition(QTextCursor::Start);
-        cursor.movePosition(QTextCursor::Right,QTextCursor::MoveAnchor,pos);
-        cursor.movePosition(QTextCursor::Right,QTextCursor::KeepAnchor,searchString.length());
-        ui->logMessagePlainTextEdit->setTextCursor(cursor);
-        ui->logMessagePlainTextEdit->ensureCursorVisible();
-        if (ui->logMessagePlainTextEdit->toPlainText().indexOf(searchString,errorStart) == -1) errorStart = 0;
+        cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, pos);
+        cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, searchString.length());
+        m_ui.logMessagePlainTextEdit->setTextCursor(cursor);
+        m_ui.logMessagePlainTextEdit->ensureCursorVisible();
+        if (m_ui.logMessagePlainTextEdit->toPlainText().indexOf(searchString, m_errorStart) == -1)
+            m_errorStart = 0;
     }
 }
 
-void scheduleScanObject::slot_infectedFilesButtonClicked(){
-QTextCursor cursor = ui->logMessagePlainTextEdit->textCursor();
-QString searchString = "FOUND";
-int pos = ui->logMessagePlainTextEdit->toPlainText().toUpper().indexOf(searchString,infectedStart);
+void scheduleScanObject::slot_infectedFilesButtonClicked()
+{
+    QTextCursor cursor = m_ui.logMessagePlainTextEdit->textCursor();
+    QString searchString = "FOUND";
+    int pos = m_ui.logMessagePlainTextEdit->toPlainText().toUpper().indexOf(searchString, m_infectedStart);
 
-    if (pos > -1){
-        infectedStart = pos + searchString.length();
+    if (pos >= 0) {
+        m_infectedStart = pos + searchString.length();
         cursor.movePosition(QTextCursor::Start);
-        cursor.movePosition(QTextCursor::Right,QTextCursor::MoveAnchor,pos);
-        cursor.movePosition(QTextCursor::Right,QTextCursor::KeepAnchor,searchString.length());
-        ui->logMessagePlainTextEdit->setTextCursor(cursor);
-        ui->logMessagePlainTextEdit->ensureCursorVisible();
-        if (ui->logMessagePlainTextEdit->toPlainText().toUpper().indexOf(searchString,infectedStart) == -1) infectedStart = 0;
+        cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, pos);
+        cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, searchString.length());
+        m_ui.logMessagePlainTextEdit->setTextCursor(cursor);
+        m_ui.logMessagePlainTextEdit->ensureCursorVisible();
+        if (m_ui.logMessagePlainTextEdit->toPlainText().toUpper().indexOf(searchString, m_infectedStart) == -1) {
+            m_infectedStart = 0;
+        }
     }
 }

@@ -21,6 +21,7 @@
 #ifndef INFODIALOG_H
 #define INFODIALOG_H
 
+#include "ui_infodialog.h"
 #include <QWidget>
 
 namespace Ui {
@@ -33,10 +34,10 @@ class infoDialog : public QWidget
 
 public:
     explicit infoDialog(QWidget *parent = 0);
-    ~infoDialog();
+    ~infoDialog() = default;
 
 private:
-    Ui::infoDialog *ui;
+    Ui::infoDialog m_ui;
 };
 
 #endif // INFODIALOG_H

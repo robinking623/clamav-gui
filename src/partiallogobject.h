@@ -21,6 +21,8 @@
 #ifndef PARTIALLOGOBJECT_H
 #define PARTIALLOGOBJECT_H
 
+#include "ui_partiallogobject.h"
+
 #include <QMessageBox>
 #include <QWidget>
 #include "highlighter.h"
@@ -29,21 +31,21 @@ namespace Ui {
 class partialLogObject;
 }
 
-class partialLogObject : public QWidget
-{
+class partialLogObject : public QWidget {
     Q_OBJECT
 
 public:
-    explicit partialLogObject(QWidget *parent = 0, QString logText = "", bool higlighterDisabled = false);
-    ~partialLogObject();
+    explicit partialLogObject(QWidget* parent = 0, QString logText = "", bool higlighterDisabled = false);
+    ~partialLogObject() = default;
     QString getLogText();
 
 private:
-    Ui::partialLogObject *ui;
-    highlighter          *logHighlighter;
-    int                  start;
-    int                  errorStart;
-    long                 infectedStart;
+    Ui::partialLogObject m_ui;
+    highlighter* m_logHighlighter;
+    int m_start{0};
+    int m_errorStart{0};
+    long m_infectedStart{0};
+
     void setLogText(QString);
 
 private slots:
@@ -55,4 +57,4 @@ private slots:
     void slot_add_remove_highlighter(bool state);
 };
 
-#endif // PARTIALLOGOBJECT_H
+#endif  // PARTIALLOGOBJECT_H
