@@ -15,7 +15,13 @@ class clamdConfStringOption : public QWidget {
     Q_OBJECT
 
    public:
-    explicit clamdConfStringOption(QWidget* parent = nullptr, QString keyword = "", bool checked = false, QString label = "", QString options = "", QString language = "[en_GB]");
+    explicit clamdConfStringOption(QWidget* parent = nullptr, 
+                                   QString keyword = "", 
+                                   bool checked = false, 
+                                   QString label = "", 
+                                   QString options = "", 
+                                   QString language = "[en_GB]",
+                                   setupFileHandler * setupFile = nullptr);
     ~clamdConfStringOption() = default;
 
    private:

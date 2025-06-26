@@ -1,12 +1,11 @@
 #include "clamdconfcomboboxoption.h"
 #define css_mono "background-color:#404040;color:white"
 
-clamdconfcomboboxoption::clamdconfcomboboxoption(QWidget* parent, QString keyword, bool checked, QString label, QString options, QString language)
-    : QWidget(parent), m_optionKeyword(keyword)
+clamdconfcomboboxoption::clamdconfcomboboxoption(QWidget* parent, QString keyword, bool checked, QString label, QString options, QString language,
+                                                 setupFileHandler* setupFile)
+    : QWidget(parent), m_optionKeyword(keyword), m_setupFile(setupFile)
 {
-    m_setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/clamd.conf", this);
-
-    translator* trans = new translator(language);
+    translator trans(language);
 
     m_ui.setupUi(this);
     m_ui.checkBox->setChecked(checked);
@@ -29,7 +28,7 @@ clamdconfcomboboxoption::clamdconfcomboboxoption(QWidget* parent, QString keywor
         m_ui.comboBox->setVisible(false);
     }
 
-    label = trans->translateit(label);
+    label = trans.translateit(label);
     m_ui.checkBox->setText(translator::beautifyString(label, 120));
 
     m_startup = false;

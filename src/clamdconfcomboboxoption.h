@@ -17,7 +17,13 @@ class clamdconfcomboboxoption : public QWidget
     Q_OBJECT
 
 public:
-    explicit clamdconfcomboboxoption(QWidget *parent = nullptr, QString keyword="", bool checked=false, QString label="", QString options="", QString language="[en_GB]");
+    explicit clamdconfcomboboxoption(QWidget *parent = nullptr, 
+                                     QString keyword="", 
+                                     bool checked=false, 
+                                     QString label="", 
+                                     QString options="", 
+                                     QString language="[en_GB]", 
+                                     setupFileHandler * setupFile = nullptr);
     ~clamdconfcomboboxoption() = default;
 
 private:
