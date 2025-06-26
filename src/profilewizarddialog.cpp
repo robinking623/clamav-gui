@@ -488,8 +488,8 @@ void ProfileWizardDialog::readSettings()
     QString language = setupFileHandler::getSectionValue(QDir::homePath() + "/.clamav-gui/settings.ini","Setup","language");
     scanoption* option;
     scanoptionyn* optionyn;
-    QString newFileFilename = QDir::homePath() + "/.clamav-gui/profiles/" + m_profileName + ".ini";
-    setupFileHandler* tempconfig = new setupFileHandler(newFileFilename, this);
+    QString newProfilename = QDir::homePath() + "/.clamav-gui/profiles/" + m_profileName + ".ini";
+    setupFileHandler* tempconfig = new setupFileHandler(newProfilename, this);
     if (language == "") language = "[en_GB]";
 
     if (m_ui->optionLayout->count() == 0) {
@@ -508,17 +508,17 @@ void ProfileWizardDialog::readSettings()
                     QString yes_no = optionText.mid(optionText.indexOf("<equal>") + 7);
                     bool optionfound = false;
                     if (m_setupFile->keywordExists("SelectedOptions", keyword + "<equal>yes") == true) {
-                        optionyn = new scanoptionyn(nullptr, newFileFilename, "SelectedOptions", true, keyword + "<equal>yes",
+                        optionyn = new scanoptionyn(this, newProfilename, "SelectedOptions", true, keyword + "<equal>yes",
                                                     m_setupFile->getSectionValue("AvailableOptions", optionText),language);
                         optionfound = true;
                     }
                     if ((m_setupFile->keywordExists("SelectedOptions", keyword + "<equal>no") == true) && (optionfound == false)) {
-                        optionyn = new scanoptionyn(nullptr, newFileFilename, "SelectedOptions", true, keyword + "<equal>no",
+                        optionyn = new scanoptionyn(this, newProfilename, "SelectedOptions", true, keyword + "<equal>no",
                                                     m_setupFile->getSectionValue("AvailableOptions", optionText),language);
                         optionfound = true;
                     }
                     if (optionfound == false) {
-                        optionyn = new scanoptionyn(nullptr, newFileFilename, "SelectedOptions", false, keyword + "<equal>" + yes_no,
+                        optionyn = new scanoptionyn(this, newProfilename, "SelectedOptions", false, keyword + "<equal>" + yes_no,
                                                     m_setupFile->getSectionValue("AvailableOptions", optionText),language);
                     }
                     m_ui->optionLayout->addWidget(optionyn);
@@ -526,11 +526,11 @@ void ProfileWizardDialog::readSettings()
                 else {
                     // --Switches without yes/no
                     if (m_setupFile->keywordExists("SelectedOptions", optionText) == true) {
-                        option = new scanoption(nullptr, newFileFilename, "SelectedOptions", true, optionText,
+                        option = new scanoption(this, newProfilename, "SelectedOptions", true, optionText,
                                                 m_setupFile->getSectionValue("AvailableOptions", optionText),language);
                     }
                     else {
-                        option = new scanoption(nullptr, newFileFilename, "SelectedOptions", false, optionText,
+                        option = new scanoption(this, newProfilename, "SelectedOptions", false, optionText,
                                                 m_setupFile->getSectionValue("AvailableOptions", optionText),language);
                     }
                     m_ui->optionLayout->addWidget(option);

@@ -20,6 +20,7 @@ clamdManager::clamdManager(QWidget* parent, setupFileHandler* setupFile) : QWidg
     m_processWatcher->start(30000);
 
     initClamdSettings();
+    initClamdConfElements();
 }
 
 QString clamdManager::trimLocationOutput(QString value)
@@ -44,8 +45,9 @@ void clamdManager::initClamdSettings()
     m_sudoGUI = m_setupFile->getSectionValue("Settings", "SudoGUI");
 
     QFile clamdConfFile(QDir::homePath() + "/.clamav-gui/clamd.conf");
+    m_clamdConf = new setupFileHandler(QDir::homePath() + "/.clamav-gui/clamd.conf", this);
+
     if (clamdConfFile.exists() == false) {
-        m_clamdConf = new setupFileHandler(QDir::homePath() + "/.clamav-gui/clamd.conf", this);
         QString value = m_setupFile->getSectionValue("Directories", "LoadSupportedDBFiles");
         if (value.indexOf("checked|") == 0)
             m_clamdConf->addSingleLineValue("DatabaseDirectory", value.mid(value.indexOf("|") + 1));
@@ -69,9 +71,6 @@ void clamdManager::initClamdSettings()
         m_clamdConf->setSingleLineValue("OnAccessRetryAttempts", "0");
         m_clamdConf->setSingleLineValue("OnAccessExcludeUname", "root");
         m_clamdConf->setSingleLineValue("OnAccessExcludeUID", "0");
-    }
-    else {
-        m_clamdConf = new setupFileHandler(QDir::homePath() + "/.clamav-gui/clamd.conf", this);
     }
 
     QStringList parameters;
@@ -124,7 +123,6 @@ void clamdManager::initClamdSettings()
     m_clamonaccLocationProcess->start("whereis", parameters);
 
     m_initprocessrunning = false;
-    initClamdConfElements();
 }
 
 void clamdManager::slot_updateClamdConf()
@@ -1094,25 +1092,25 @@ void clamdManager::initClamdConfElements()
 
         if ((group == "STRING") || (group == "CATEGORY") || (group == "COMMAND") || (group == "REGEX")) {
             if (optionValues.indexOf(",") == -1) {
-                stringOption = new clamdConfStringOption(this, keyword, checked, label, optionValues, language);
+                stringOption = new clamdConfStringOption(this, keyword, checked, label, optionValues, language, m_clamdConf);
                 connect(stringOption, SIGNAL(settingChanged()), this, SLOT(slot_clamdSettingsChanged()));
                 container != "2" ? m_ui.layout1->addWidget(stringOption) : m_ui.layout2->addWidget(stringOption);
             }
             else {
-                comboboxOption = new clamdconfcomboboxoption(this, keyword, checked, label, optionValues, language);
+                comboboxOption = new clamdconfcomboboxoption(this, keyword, checked, label, optionValues, language, m_clamdConf);
                 connect(comboboxOption, SIGNAL(settingChanged()), this, SLOT(slot_clamdSettingsChanged()));
                 container != "2" ? m_ui.layout1->addWidget(comboboxOption) : m_ui.layout2->addWidget(comboboxOption);
             }
         }
 
         if ((group == "NUMBER") || (group == "SIZE")) {
-            spinboxOption = new clamdconfspinboxoption(this, keyword, checked, label, optionValues, language);
+            spinboxOption = new clamdconfspinboxoption(this, keyword, checked, label, optionValues, language, m_clamdConf);
             connect(spinboxOption, SIGNAL(settingChanged()), this, SLOT(slot_clamdSettingsChanged()));
             container != "2" ? m_ui.layout1->addWidget(spinboxOption) : m_ui.layout2->addWidget(spinboxOption);
         }
 
         if (group == "BOOL") {
-            comboboxOption = new clamdconfcomboboxoption(this, keyword, checked, label, optionValues, language);
+            comboboxOption = new clamdconfcomboboxoption(this, keyword, checked, label, optionValues, language, m_clamdConf);
             connect(comboboxOption, SIGNAL(settingChanged()), this, SLOT(slot_clamdSettingsChanged()));
             container != "2" ? m_ui.layout1->addWidget(comboboxOption) : m_ui.layout2->addWidget(comboboxOption);
         }

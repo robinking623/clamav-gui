@@ -103,8 +103,8 @@ clamav_gui::clamav_gui(QWidget* parent) : QWidget(parent)
     }
     //______________________________________________________________________________________________________________________________________
 
+    m_setupFile = new setupFileHandler(settingsPath, this);
     if (createDefaultSettings) {
-        m_setupFile = new setupFileHandler(settingsPath, this);
         if ((QFileInfo::exists("/var/lib/clamav")) && (QFile::exists("/var/lib/clamav/freshclam.dat"))) {
             m_setupFile->setSectionValue("Directories", "LoadSupportedDBFiles", "m_checked|/var/lib/clamav");
         }
@@ -121,9 +121,6 @@ clamav_gui::clamav_gui(QWidget* parent) : QWidget(parent)
             m_setupFile->setSectionValue("Directories", "CopyInfectedFiles", "not m_checked|" + QDir::homePath() + "/.clamav-gui/quarantine");
         if (m_setupFile->keywordExists("Setup", "language") == false)
             m_setupFile->setSectionValue("Setup", "language", 2);
-    }
-    else {
-        m_setupFile = new setupFileHandler(settingsPath, this);
     }
 
     m_scanProcess = new QProcess(this);
@@ -335,7 +332,7 @@ void clamav_gui::createDropZone()
     if (m_setupFile->getSectionBoolValue("Settings", "ShowHideMainWindow") == true)
         this->hide();
 
-    m_dropZone = new clamav_ctrl();
+    m_dropZone = new clamav_ctrl(this);
     connect(m_dropZone, SIGNAL(scanRequest(QStringList)), this, SLOT(slot_scanRequest(QStringList)));
     m_dropZone->show();
 
@@ -667,7 +664,7 @@ void clamav_gui::slot_showDropZone()
 void clamav_gui::slot_receiveScanJob(QString name, QStringList m_parameters)
 {
     // we create a scanObject but when did they are destroyed?
-    scheduleScanObject* scanObject = new scheduleScanObject(0, name, m_parameters);
+    scheduleScanObject* scanObject = new scheduleScanObject(this, name, m_parameters);
 
     scanObject->setWindowTitle(name);
     scanObject->setWindowIcon(QIcon(":/icons/icons/media.png"));
@@ -719,7 +716,7 @@ void clamav_gui::slot_showLogoTimerTimeout()
     QScreen* m_screen = QGuiApplication::primaryScreen();
     QRect m_screenGeometry = m_screen->geometry();
 
-    m_startLogoLabel = new QLabel(0);
+    m_startLogoLabel = new QLabel(this);
     m_startLogoLabel->setStyleSheet("background:transparent");
     m_startLogoLabel->setAttribute(Qt::WA_TranslucentBackground);
     m_startLogoLabel->setWindowFlags(Qt::FramelessWindowHint);
