@@ -15,7 +15,7 @@ class scanoption : public QWidget
     Q_OBJECT
 
 public:
-    explicit scanoption(QWidget *parent = nullptr, QString setupFileName = "", QString section = "", bool checked = false, QString label = "", QString comment = "");
+    explicit scanoption(QWidget *parent = nullptr, QString setupFileName = "", QString section = "", bool checked = false, QString label = "", QString comment = "", QString language = "[en_GB]");
     ~scanoption() = default;
 
 private:

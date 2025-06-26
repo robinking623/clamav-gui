@@ -1,11 +1,11 @@
 #include "scheduler.h"
 
-scheduler::scheduler(QWidget* parent) 
-: QWidget(parent)
+scheduler::scheduler(QWidget* parent, setupFileHandler* setupFile)
+: QWidget(parent), m_setupFile(setupFile)
 {
     QStringList header;
 
-    m_setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini", this);
+    //m_setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini", this); --> uses the setupFileHandler provided by the clamav_gui class
     m_ui.setupUi(this);
     header << tr("ID") << tr("Interval") << tr("Profile") << tr("Last Scan") << tr("Next Scan") << tr("Remove") << tr("Scan Now") << tr("Log-File");
     m_ui.scanJobTableWidget->setHorizontalHeaderLabels(header);

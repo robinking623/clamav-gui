@@ -1,9 +1,9 @@
 #include "profilemanager.h"
 #include "ui_profilemanager.h"
 
-ProfileManager::ProfileManager(QWidget* parent) : QWidget(parent), m_ui(new Ui::ProfileManager)
+ProfileManager::ProfileManager(QWidget* parent, setupFileHandler* setupFile) : QWidget(parent), m_setupFile(setupFile), m_ui(new Ui::ProfileManager)
 {
-    m_setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini", this);
+    // m_setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini", this); --> uses the setupFileHandler provided by the clamav_gui class
     m_ui->setupUi(this);
     getProfileList();
     slot_readProfileSettings();

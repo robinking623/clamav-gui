@@ -4,7 +4,7 @@
 #define css_green "background-color:green;color:yellow"
 #define css_mono "background-color:#404040;color:white"
 
-setupTab::setupTab(QWidget* parent) : QWidget(parent)
+setupTab::setupTab(QWidget* parent, setupFileHandler* setupFile) : QWidget(parent), m_setupFile(setupFile)
 {
     m_ui.setupUi(this);
 
@@ -14,7 +14,7 @@ setupTab::setupTab(QWidget* parent) : QWidget(parent)
 
     m_supressMessage = true;  // verhindert, dass bei der Initialisierung der Sprachauswahl die Warnmeldung kommt.
 
-    m_setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini", this);
+    //m_setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini", this); --> uses the setupFileHandler provided by the clamav_gui class
     m_monochrome = false;
     if (m_setupFile->keywordExists("Setup", "DisableLogHighlighter") == true)
         m_monochrome = m_setupFile->getSectionBoolValue("Setup", "DisableLogHighlighter");

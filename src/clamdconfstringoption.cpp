@@ -1,15 +1,13 @@
 #include "clamdconfstringoption.h"
 #define css_mono "background-color:#404040;color:white"
 
-clamdConfStringOption::clamdConfStringOption(QWidget* parent, QString keyword, bool checked, QString label, QString options)
+clamdConfStringOption::clamdConfStringOption(QWidget* parent, QString keyword, bool checked, QString label, QString options, QString language)
     : QWidget(parent), m_optionKeyword(keyword), m_optionValue(options)
 {
     m_startup = true;
     m_setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/clamd.conf", this);
-    setupFileHandler* baseSetup = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini", this);
 
-    QString languageset = baseSetup->getSectionValue("Setup", "language");
-    translator trans(languageset);
+    translator* trans = new translator(language);
 
     m_ui.setupUi(this);
 
@@ -22,7 +20,7 @@ clamdConfStringOption::clamdConfStringOption(QWidget* parent, QString keyword, b
         m_ui.lineEdit->setText(options);
     }
 
-    label = trans.translateit(label);
+    label = trans->translateit(label);
     label = translator::beautifyString(label, 120);
 
     m_ui.checkBox->setText(label);

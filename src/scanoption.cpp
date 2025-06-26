@@ -1,14 +1,17 @@
 #include "scanoption.h"
 #define css "background-color:#404040;color:white"
 
-scanoption::scanoption(QWidget *parent, QString setupFileName, QString section, bool checked, QString label, QString comment) 
+scanoption::scanoption(QWidget *parent, QString setupFileName, QString section, bool checked, QString label, QString comment, QString language)
 : QWidget(parent)
 {
     m_ui.setupUi(this);
     m_setupFile = new setupFileHandler(setupFileName,this);
-    setupFileHandler * baseSetup = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini",this);
+
+    /*setupFileHandler * baseSetup = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini",this);
     QString languageset = baseSetup->getSectionValue("Setup","language");
-    translator trans(languageset);
+    delete baseSetup;*/ // obsolete due to a static "getSectionValue" Method in setupFileHandler
+
+    translator trans(language);
 
     m_setupFileSection = section;
     m_option = label;

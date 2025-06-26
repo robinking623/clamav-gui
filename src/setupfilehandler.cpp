@@ -824,3 +824,101 @@ bool setupFileHandler::freeFloaterExists(QString keyword)
 
     return rc;
 }
+
+QString setupFileHandler::getSectionValue(QString setupFilename, QString sectionID, QString keyword) {
+bool sectionFlag = false;
+QString content;
+QString section;
+QString line;
+QString rc = "";
+
+    QFile file(setupFilename);
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QTextStream stream(&file);
+        content = stream.readAll().toLocal8Bit().constData();
+        if (content.right(1) != "\n")
+            content = content + "\n";
+        file.close();
+    }
+
+    QStringList list = content.split("\n");
+
+    for (int i = 0; i < list.count(); i++) {
+        line = list.at(i);
+        if ((line.left(1) == "[") && (line.indexOf("[" + sectionID + "]") == -1))
+            sectionFlag = false;
+        if (line.indexOf("[" + sectionID + "]") == 0) {
+            sectionFlag = true;
+        }
+        if (sectionFlag == true) {
+            section = section + line + "\n";
+        }
+    }
+
+    section = section.trimmed();
+
+    if (section != "") {
+        QStringList list = section.split("\n");
+        QString line;
+
+        for (int i = 0; i < list.count(); i++) {
+            line = list.at(i);
+            if (line.indexOf(keyword + "=") == 0) {
+                rc = line.mid(line.indexOf("=") + 1);
+            }
+        }
+    }
+    // replace encoded \n (<!nl>) by newline (\n)
+    rc.replace("<!nl>", "\n");
+    return rc;
+}
+
+bool setupFileHandler::getSectionBoolValue(QString setupFilename, QString sectionID, QString keyword) {
+bool sectionFlag = false;
+QString content;
+QString section;
+QString line;
+QString rc = "";
+bool boolrc = false;
+
+    QFile file(setupFilename);
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QTextStream stream(&file);
+        content = stream.readAll().toLocal8Bit().constData();
+        if (content.right(1) != "\n")
+            content = content + "\n";
+        file.close();
+    }
+
+    QStringList list = content.split("\n");
+
+    for (int i = 0; i < list.count(); i++) {
+        line = list.at(i);
+        if ((line.left(1) == "[") && (line.indexOf("[" + sectionID + "]") == -1))
+            sectionFlag = false;
+        if (line.indexOf("[" + sectionID + "]") == 0) {
+            sectionFlag = true;
+        }
+        if (sectionFlag == true) {
+            section = section + line + "\n";
+        }
+    }
+
+    section = section.trimmed();
+
+    if (section != "") {
+        QStringList list = section.split("\n");
+        QString line;
+
+        for (int i = 0; i < list.count(); i++) {
+            line = list.at(i);
+            if (line.indexOf(keyword + "=") == 0) {
+                rc = line.mid(line.indexOf("=") + 1);
+            }
+        }
+    }
+
+    rc == "true" ? boolrc = true : boolrc = false;
+    return boolrc;
+
+}

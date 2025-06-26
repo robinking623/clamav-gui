@@ -44,13 +44,13 @@ class optionsDialog : public QWidget {
     Q_OBJECT
 
    public:
-    explicit optionsDialog(QWidget* parent = 0);
+    explicit optionsDialog(QWidget* parent = 0, setupFileHandler* setupFile = 0);
     ~optionsDialog() = default;
 
    private:
     Ui::optionsDialog m_ui;
     setupFileHandler* m_setupFile;
-    setupFileHandler* m_profiles;
+    //setupFileHandler    * m_profiles;   --> obsolete, not used!
     scanLimitsTab* m_scanLimits;
     includeExcludeOptions* m_incExcOptTab;
     QProcess* m_getClamscanParametersProcess;

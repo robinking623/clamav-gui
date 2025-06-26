@@ -47,7 +47,7 @@ class freshclamsetter : public QWidget
     Q_OBJECT
 
 public:
-    explicit freshclamsetter(QWidget *parent = 0);
+    explicit freshclamsetter(QWidget *parent = 0, setupFileHandler *setupFile = 0);
     ~freshclamsetter() = default;
 
 private:

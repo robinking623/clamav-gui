@@ -33,7 +33,7 @@ class includeExcludeOptions : public QWidget
     Q_OBJECT
 
 public:
-    explicit includeExcludeOptions(QWidget *parent = 0);
+    explicit includeExcludeOptions(QWidget *parent = 0, setupFileHandler *setupFile = 0);
     ~includeExcludeOptions();
 
 private:

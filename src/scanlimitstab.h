@@ -35,7 +35,7 @@ class scanLimitsTab : public QWidget
     Q_OBJECT
 
 public:
-    explicit scanLimitsTab(QWidget *parent = 0);
+    explicit scanLimitsTab(QWidget *parent = 0, setupFileHandler * setupFile = 0);
     ~scanLimitsTab()=default;
 
 private:

@@ -28,8 +28,8 @@ void logViewObject::loadLogFile(QString filename)
     QString buffer;
     QStringList logs;
     QString tabHeader;
-    setupFileHandler* sf = new setupFileHandler(QDir::homePath() + "/.clamav-gm_ui/settings.ini", this);
-    bool css = sf->getSectionBoolValue("Setup", "DisableLogHighlighter");
+    //setupFileHandler* sf = new setupFileHandler(QDir::homePath() + "/.clamav-gm_ui/settings.ini", this);
+    bool css = setupFileHandler::getSectionBoolValue(QDir::homePath() + "/.clamav-gm_ui/settings.ini","Setup", "DisableLogHighlighter");
 
     while (m_ui.logTab->count() > 0) {
         m_ui.logTab->removeTab(0);

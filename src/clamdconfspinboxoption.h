@@ -17,7 +17,7 @@ class clamdconfspinboxoption : public QWidget
     Q_OBJECT
 
 public:
-    explicit clamdconfspinboxoption(QWidget *parent = nullptr, QString keyword = "", bool checked = false, QString label = "", QString options = "0,99,1,1");
+    explicit clamdconfspinboxoption(QWidget *parent = nullptr, QString keyword = "", bool checked = false, QString label = "", QString options = "0,99,1,1", QString language="[en_GB]");
     ~clamdconfspinboxoption() = default;
 
 

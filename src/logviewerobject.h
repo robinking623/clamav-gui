@@ -36,7 +36,7 @@ class logViewerObject : public QWidget
     Q_OBJECT
 
 public:
-    explicit logViewerObject(QWidget *parent = 0);
+    explicit logViewerObject(QWidget *parent = 0, setupFileHandler *setupFile = 0);
     ~logViewerObject();
 
 private:

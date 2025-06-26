@@ -1,9 +1,9 @@
 #include "logviewerobject.h"
 #include "ui_logviewerobject.h"
 
-logViewerObject::logViewerObject(QWidget* parent) : QWidget(parent), m_ui(new Ui::logViewerObject)
+logViewerObject::logViewerObject(QWidget* parent, setupFileHandler* setupFile) : QWidget(parent), m_setupfile(setupFile), m_ui(new Ui::logViewerObject)
 {
-    m_setupfile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini", this);
+    //m_setupfile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini", this); --> uses the setupFileHandler provided by the clamav_gui class
     m_ui->setupUi(this);
     slot_profilesChanged();
 }
@@ -46,8 +46,7 @@ void logViewerObject::slot_profilesChanged()
 void logViewerObject::loadLogFile(QString profile)
 {
     setupFileHandler* sf = new setupFileHandler(QDir::homePath() + "/.clamav-gui/profiles/" + profile + ".ini", this);
-    setupFileHandler* sf2 = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini", this);
-    bool css = sf2->getSectionBoolValue("Setup", "DisableLogHighlighter");
+    bool css = m_setupfile->getSectionBoolValue("Setup", "DisableLogHighlighter");
     QString buffer;
     QStringList logs;
     QString tabHeader;

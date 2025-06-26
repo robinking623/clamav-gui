@@ -62,6 +62,7 @@ clamav_gui::clamav_gui(QWidget* parent) : QWidget(parent)
         serviceFile->setSectionValue("Desktop Action scan", "Name[uk]", "Сканування за допомогою ClamAV-GUI");
         serviceFile->setSectionValue("Desktop Action scan", "Icon", "clamav-gui");
         serviceFile->setSectionValue("Desktop Action scan", "Exec", "clamav-gui --scan %F");
+        delete serviceFile;
     }
     //*****************************************************************************
 
@@ -145,33 +146,33 @@ clamav_gui::clamav_gui(QWidget* parent) : QWidget(parent)
 
     m_ui.tabWidget->removeTab(0);
 
-    m_scannerTab = new scanTab(this);
+    m_scannerTab = new scanTab(this, m_setupFile);
     connect(m_scannerTab, SIGNAL(requestDropZoneVisible()), this, SLOT(slot_showDropZone()));
     connect(m_scannerTab, SIGNAL(triggerScanRequest(QStringList)), this, SLOT(slot_scanRequest(QStringList)));
     connect(m_scannerTab, SIGNAL(abortScan()), this, SLOT(slot_abortScan()));
     connect(this, SIGNAL(setScannerForm(bool)), m_scannerTab, SLOT(slot_enableForm(bool)));
     m_ui.tabWidget->addTab(m_scannerTab, QIcon(":/icons/icons/Clam.png"), tr("Scan"));
 
-    m_optionTab = new optionsDialog(this);
+    m_optionTab = new optionsDialog(this, m_setupFile);
     m_ui.tabWidget->addTab(m_optionTab, QIcon(":/icons/icons/options.png"), tr("Options"));
 
-    m_profileManagerTab = new ProfileManager(this);
+    m_profileManagerTab = new ProfileManager(this, m_setupFile);
     m_ui.tabWidget->addTab(m_profileManagerTab, QIcon(":/icons/icons/profilemanager.png"), tr("Profile Manager"));
 
-    m_schedulerTab = new scheduler(this);
+    m_schedulerTab = new scheduler(this, m_setupFile);
     m_ui.tabWidget->addTab(m_schedulerTab, QIcon(":/icons/icons/scheduler.png"), tr("Scheduler"));
 
-    m_logTab = new logViewerObject(this);
+    m_logTab = new logViewerObject(this, m_setupFile);
     m_ui.tabWidget->addTab(m_logTab, QIcon(":/icons/icons/includeexclude.png"), tr("Logs"));
 
-    m_freshclamTab = new freshclamsetter(this);
+    m_freshclamTab = new freshclamsetter(this, m_setupFile);
     connect(m_freshclamTab, SIGNAL(quitApplication()), this, SLOT(slot_quitApplication()));
     m_ui.tabWidget->addTab(m_freshclamTab, QIcon(":/icons/icons/freshclam.png"), tr("FreshClam"));
 
-    m_clamdTab = new clamdManager(this);
+    m_clamdTab = new clamdManager(this, m_setupFile);
     m_ui.tabWidget->addTab(m_clamdTab, QIcon(":/icons/icons/onaccess.png"), tr("Clamd"));
 
-    m_setUpTab = new setupTab(this);
+    m_setUpTab = new setupTab(this, m_setupFile);
     m_ui.tabWidget->addTab(m_setUpTab, QIcon(":/icons/icons/setup.png"), tr("Setup"));
 
     m_infoTab = new infoDialog(this);

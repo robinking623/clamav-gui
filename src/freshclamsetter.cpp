@@ -3,7 +3,7 @@
 #define css_red "background-color:red;color:yellow"
 #define css_mono "background-color:#404040;color:white"
 
-freshclamsetter::freshclamsetter(QWidget* parent) : QWidget(parent)
+freshclamsetter::freshclamsetter(QWidget* parent, setupFileHandler* setupFile) : QWidget(parent), m_setupFile(setupFile)
 {
     QDir tempDir;
 
@@ -12,8 +12,6 @@ freshclamsetter::freshclamsetter(QWidget* parent) : QWidget(parent)
     m_startup = true;
 
     m_lockFreshclamConf = true;
-
-    m_setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini", this);
     m_updateLogFileWatcher = NULL;
     m_updateLogHighLighter = NULL;
     m_monochrome = true;
@@ -739,7 +737,7 @@ void freshclamsetter::initFreshclamSettings()
     QFile tempFile;
 
     m_lockFreshclamConf = true;
-    m_setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini", this);
+    //m_setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini", this);
     if (m_setupFile->keywordExists("FreshClam", "runasroot") == true)
         m_ui.runasrootCheckBox->setChecked(m_setupFile->getSectionBoolValue("FreshClam", "runasroot"));
     else {

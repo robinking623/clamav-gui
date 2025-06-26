@@ -42,7 +42,7 @@ class scheduler : public QWidget
     Q_OBJECT
 
 public:
-    explicit scheduler(QWidget *parent = 0);
+    explicit scheduler(QWidget *parent = 0, setupFileHandler *setupFile = 0);
     ~scheduler() = default;
 
 private:

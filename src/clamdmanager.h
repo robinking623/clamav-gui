@@ -26,7 +26,7 @@ class clamdManager : public QWidget
     Q_OBJECT
 
 public:
-    explicit clamdManager(QWidget* parent = 0);
+    explicit clamdManager(QWidget* parent = 0, setupFileHandler* setupFile = 0);
     ~clamdManager() = default;
 
 private:

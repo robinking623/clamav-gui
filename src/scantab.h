@@ -46,7 +46,7 @@ class scanTab : public QWidget
     Q_OBJECT
 
 public:
-    explicit scanTab(QWidget *parent = 0);
+    explicit scanTab(QWidget *parent = 0, setupFileHandler *setupfile = 0);
     bool recursivChecked();
     void setStatusMessage(QString);
     void clearLogMessage();
@@ -62,7 +62,7 @@ private:
     QFileSystemWatcher  * m_fileSystemWatcher;
     QFileSystemWatcher  * m_fileSystemWatcherUbuntu;
     setupFileHandler    * m_setupFile;
-    setupFileHandler    * m_profiles;
+    //setupFileHandler    * m_profiles;   --> obsolete, not used!
     highlighter         * m_logHighLighter;
     QStringList           m_devices;
     QString               m_username;

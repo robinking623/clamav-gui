@@ -22,7 +22,7 @@ class setupTab : public QWidget
     Q_OBJECT
 
 public:
-    explicit setupTab(QWidget *parent = 0);
+    explicit setupTab(QWidget *parent = 0, setupFileHandler *setupFile = 0);
     ~setupTab() = default;
 
 private:

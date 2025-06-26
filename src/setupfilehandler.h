@@ -51,7 +51,9 @@ public:
     QStringList getKeywords(QString section);
     QString getSetupFileName();
     QString getSectionValue(QString section, QString keyword);
+    static QString getSectionValue(QString setupFilename, QString sectionID, QString keyword);
     bool getSectionBoolValue(QString section, QString keyword);
+    static bool getSectionBoolValue(QString filename, QString section, QString keyword);
     qint64 getSectionIntValue(QString section, QString keyword);
     double getSectionDoubleValue(QString section, QString keyword);
     QString getFreeFloaterValue(QString keyword);

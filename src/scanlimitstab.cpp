@@ -1,10 +1,10 @@
 #include "scanlimitstab.h"
 #define css "background-color:#404040;color:white"
 
-scanLimitsTab::scanLimitsTab(QWidget* parent) : QWidget(parent)
+scanLimitsTab::scanLimitsTab(QWidget* parent, setupFileHandler* setupFile) : QWidget(parent), m_setupFile(setupFile)
 {
     m_ui.setupUi(this);
-    m_setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini", this);
+    //m_setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini", this);
     if (m_setupFile->sectionExists("ScanLimitations") == true)
         updateLimits();
     else

@@ -1,9 +1,9 @@
 #include "scantab.h"
 
-scanTab::scanTab(QWidget* parent) : QWidget(parent)
+scanTab::scanTab(QWidget* parent, setupFileHandler* setupFile) : QWidget(parent), m_setupFile(setupFile)
 {
     m_ui.setupUi(this);
-    m_setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini", this);
+    //m_setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini", this); --> uses the setupFileHandler provided by the clamav_gui class
     m_logHighLighter = NULL;
     m_monochrome = m_setupFile->getSectionBoolValue("Setup", "DisableLogHighlighter");
     if (m_monochrome == false)

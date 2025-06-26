@@ -1,16 +1,16 @@
 #include "optionsdialog.h"
 #define css "background-color:#404040;color:white"
 
-optionsDialog::optionsDialog(QWidget* parent) : QWidget(parent)
+optionsDialog::optionsDialog(QWidget* parent, setupFileHandler* setupFile) : QWidget(parent), m_setupFile(setupFile)
 {
     m_ui.setupUi(this);
-    m_setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini", this);
+    //m_setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini", this); --> uses the setupFileHandler provided by the clamav_gui class
     updateDirectories();
     m_ui.tabWidget->setTabText(0, tr("Options"));
     m_ui.tabWidget->setTabText(1, tr("Directories"));
-    m_scanLimits = new scanLimitsTab(this);
+    m_scanLimits = new scanLimitsTab(this, m_setupFile);
     m_ui.tabWidget->addTab(m_scanLimits, QIcon(":/icons/icons/scanlimits.png"), tr("Scan Limitations"));
-    m_incExcOptTab = new includeExcludeOptions(this);
+    m_incExcOptTab = new includeExcludeOptions(this,m_setupFile);
 
     connect(m_incExcOptTab, SIGNAL(updateClamdConf()), this, SLOT(slot_updateClamdConf()));
     connect(m_scanLimits, SIGNAL(updateClamdConf()), this, SLOT(slot_updateClamdConf()));
@@ -165,6 +165,7 @@ void optionsDialog::slot_getClamscanProcessFinished()
     scanoptionyn* optionyn;
     QString label;
     QString yes_no;
+    QString language;
     bool flipflop = false;
 
     for (int x = 0; x < parameters.length(); x++) {
@@ -190,9 +191,11 @@ void optionsDialog::slot_getClamscanProcessFinished()
             }
         }
 
+        language = setupFileHandler::getSectionValue(QDir::homePath() + "/.clamav-gui/settings.ini","Setup","language");
+        if (language == "") language = "[en_GB]";
         if (m_setupFile->keywordExists("SelectedOptions", label.replace("=", "<equal>")) == true) {
             if (label.indexOf("<equal>") == -1) {
-                option = new scanoption(nullptr, QDir::homePath() + "/.clamav-gui/settings.ini", "SelectedOptions", true, label, comments[x]);
+                option = new scanoption(this, QDir::homePath() + "/.clamav-gui/settings.ini", "SelectedOptions", true, label, comments[x], language);
                 connect(option, SIGNAL(valuechanged()), this, SLOT(slot_updateClamdConf()));
                 if (flipflop == false) {
                     m_ui.optionLayout->addWidget(option);
@@ -204,7 +207,7 @@ void optionsDialog::slot_getClamscanProcessFinished()
                 }
             }
             else {
-                optionyn = new scanoptionyn(nullptr, QDir::homePath() + "/.clamav-gui/settings.ini", "SelectedOptions", true, label, comments[x]);
+                optionyn = new scanoptionyn(this, QDir::homePath() + "/.clamav-gui/settings.ini", "SelectedOptions", true, label, comments[x], language);
                 connect(optionyn, SIGNAL(valuechanged()), this, SLOT(slot_updateClamdConf()));
                 if (flipflop == false) {
                     m_ui.optionLayout->addWidget(optionyn);
@@ -218,7 +221,7 @@ void optionsDialog::slot_getClamscanProcessFinished()
         }
         else {
             if (label.indexOf("<equal>") == -1) {
-                option = new scanoption(nullptr, QDir::homePath() + "/.clamav-gui/settings.ini", "SelectedOptions", false, label, comments[x]);
+                option = new scanoption(this, QDir::homePath() + "/.clamav-gui/settings.ini", "SelectedOptions", false, label, comments[x], language);
                 connect(option, SIGNAL(valuechanged()), this, SLOT(slot_updateClamdConf()));
                 if (flipflop == false) {
                     m_ui.optionLayout->addWidget(option);
@@ -230,7 +233,7 @@ void optionsDialog::slot_getClamscanProcessFinished()
                 }
             }
             else {
-                optionyn = new scanoptionyn(nullptr, QDir::homePath() + "/.clamav-gui/settings.ini", "SelectedOptions", false, label, comments[x]);
+                optionyn = new scanoptionyn(this, QDir::homePath() + "/.clamav-gui/settings.ini", "SelectedOptions", false, label, comments[x], language);
                 connect(optionyn, SIGNAL(valuechanged()), this, SLOT(slot_updateClamdConf()));
                 if (flipflop == false) {
                     m_ui.optionLayout->addWidget(optionyn);

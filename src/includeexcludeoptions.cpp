@@ -2,10 +2,10 @@
 #include "ui_includeexcludeoptions.h"
 #define css "background-color:#404040;color:white"
 
-includeExcludeOptions::includeExcludeOptions(QWidget* parent) : QWidget(parent), m_ui(new Ui::includeExcludeOptions)
+includeExcludeOptions::includeExcludeOptions(QWidget* parent, setupFileHandler* setupFile) : QWidget(parent), m_setupFile(setupFile), m_ui(new Ui::includeExcludeOptions)
 {
     m_ui->setupUi(this);
-    m_setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini", this);
+
     if (m_setupFile->sectionExists("REGEXP_and_IncludeExclude") == true) {
         m_readSettingsInProgress = true;
         readSettings();
