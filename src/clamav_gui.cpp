@@ -106,19 +106,19 @@ clamav_gui::clamav_gui(QWidget* parent) : QWidget(parent)
     m_setupFile = new setupFileHandler(settingsPath, this);
     if (createDefaultSettings) {
         if ((QFileInfo::exists("/var/lib/clamav")) && (QFile::exists("/var/lib/clamav/freshclam.dat"))) {
-            m_setupFile->setSectionValue("Directories", "LoadSupportedDBFiles", "m_checked|/var/lib/clamav");
+            m_setupFile->setSectionValue("Directories", "LoadSupportedDBFiles", "checked|/var/lib/clamav");
         }
         else {
-            m_setupFile->setSectionValue("Directories", "LoadSupportedDBFiles", "m_checked|" + QDir::homePath() + "/.clamav-gui/signatures");
+            m_setupFile->setSectionValue("Directories", "LoadSupportedDBFiles", "checked|" + QDir::homePath() + "/.clamav-gui/signatures");
         }
         if (m_setupFile->keywordExists("Directories", "TmpFile") == false)
-            m_setupFile->setSectionValue("Directories", "TmpFile", "m_checked|/tmp");
+            m_setupFile->setSectionValue("Directories", "TmpFile", "checked|/tmp");
         if (m_setupFile->keywordExists("Directories", "ScanReportToFile") == false)
-            m_setupFile->setSectionValue("Directories", "ScanReportToFile", "m_checked|" + QDir::homePath() + "/.clamav-gui/logs/report-scan.log");
+            m_setupFile->setSectionValue("Directories", "ScanReportToFile", "checked|" + QDir::homePath() + "/.clamav-gui/logs/report-scan.log");
         if (m_setupFile->keywordExists("Directories", "MoveInfectedFiles") == false)
-            m_setupFile->setSectionValue("Directories", "MoveInfectedFiles", "not m_checked|" + QDir::homePath() + "/.clamav-gui/quarantine");
+            m_setupFile->setSectionValue("Directories", "MoveInfectedFiles", "not checked|" + QDir::homePath() + "/.clamav-gui/quarantine");
         if (m_setupFile->keywordExists("Directories", "CopyInfectedFiles") == false)
-            m_setupFile->setSectionValue("Directories", "CopyInfectedFiles", "not m_checked|" + QDir::homePath() + "/.clamav-gui/quarantine");
+            m_setupFile->setSectionValue("Directories", "CopyInfectedFiles", "not checked|" + QDir::homePath() + "/.clamav-gui/quarantine");
         if (m_setupFile->keywordExists("Setup", "language") == false)
             m_setupFile->setSectionValue("Setup", "language", 2);
     }
@@ -448,9 +448,10 @@ void clamav_gui::slot_scanRequest(QStringList scanObjects)
             checked = value.left(value.indexOf("|"));
             value = value.mid(value.indexOf("|") + 1);
 
-            if ((checked == "m_checked") && (value != "")) {
-                if (option == "LoadSupportedDBFiles")
+            if ((checked == "checked") && (value != "")) {
+                if (option == "LoadSupportedDBFiles") {
                     parameters << "--database=" + value;
+                }
                 if (option == "ScanReportToFile") {
                     parameters << "--log=" + value;
                     if (value != "") {
@@ -495,7 +496,7 @@ void clamav_gui::slot_scanRequest(QStringList scanObjects)
             value = m_setupFile->getSectionValue("ScanLimitations", option);
             checked = value.left(value.indexOf("|"));
             value = value.mid(value.indexOf("|") + 1);
-            if (checked == "m_checked") {
+            if (checked == "checked") {
                 for (int i = 0; i < SLKeywords.length(); i++) {
                     if (option == SLKeywords.at(i)) {
                         parameters << SLSwitches.at(i) + value;
@@ -508,25 +509,25 @@ void clamav_gui::slot_scanRequest(QStringList scanObjects)
         value = m_setupFile->getSectionValue("REGEXP_and_IncludeExclude", "DontScanFileNamesMatchingRegExp");
         checked = value.left(value.indexOf("|"));
         value = value.mid(value.indexOf("|") + 1);
-        if (checked == "m_checked")
+        if (checked == "checked")
             parameters << "--exclude=" + value;
 
         value = m_setupFile->getSectionValue("REGEXP_and_IncludeExclude", "DontScanDirectoriesMatchingRegExp");
         checked = value.left(value.indexOf("|"));
         value = value.mid(value.indexOf("|") + 1);
-        if (checked == "m_checked")
+        if (checked == "checked")
             parameters << "--exclude-dir=" + value;
 
         value = m_setupFile->getSectionValue("REGEXP_and_IncludeExclude", "OnlyScanFileNamesMatchingRegExp");
         checked = value.left(value.indexOf("|"));
         value = value.mid(value.indexOf("|") + 1);
-        if (checked == "m_checked")
+        if (checked == "checked")
             parameters << "--include=" + value;
 
         value = m_setupFile->getSectionValue("REGEXP_and_IncludeExclude", "OnlyScanDirectoriesMatchingRegExp");
         checked = value.left(value.indexOf("|"));
         value = value.mid(value.indexOf("|") + 1);
-        if (checked == "m_checked")
+        if (checked == "checked")
             parameters << "--include-dir=" + value;
 
         if (m_setupFile->getSectionBoolValue("REGEXP_and_IncludeExclude", "EnablePUAOptions") == true) {
@@ -551,7 +552,7 @@ void clamav_gui::slot_scanRequest(QStringList scanObjects)
         QString path = temp;
         path = m_setupFile->getSectionValue("Directories", "LoadSupportedDBFiles");
         path = path.mid(path.indexOf("|") + 1);
-        if (path.indexOf("not m_checked") != -1)
+        if (path.indexOf("not checked") != -1)
             temp = temp + "-d " + path;
         for (int i = 0; i < parameters.count(); i++) {
             temp = temp + " " + parameters.at(i);

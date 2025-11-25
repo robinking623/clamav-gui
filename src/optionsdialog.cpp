@@ -51,7 +51,7 @@ void optionsDialog::slot_getClamscanProcessFinished()
     excludeList +=
         "--max-htmlnotags|--max-scriptnormalize|--max-ziptypercg|--max-partitions|--max-iconspe|--max-rechwp3|--pcre-match-limit|--pcre-recmatch-"
         "limit|--pcre-max-filesize|";
-    excludeList += "--fail-if-cvd-older-than=days";
+    excludeList += "--fail-if-cvd-older-than=days|--hash-alg|--file-type-hint|--hash-hint|--cvdcertsdir";
     m_getClamscanProcessOutput = m_getClamscanProcessOutput + m_getClamscanParametersProcess->readAll();
 
     QString value;
@@ -59,9 +59,30 @@ void optionsDialog::slot_getClamscanProcessFinished()
     QString keyword;
     QString parameter;
     int commentStart = 0;
-    QStringList lines = m_getClamscanProcessOutput.split("\n");
+    QStringList linehelper = m_getClamscanProcessOutput.split("\n");
+    QStringList lines;
     QStringList comments;
     QString comment;
+
+    QString line2 = "";
+    bool skip = false;
+    for (int x = 0; x < linehelper.size(); x++) {
+        if (linehelper[x] == "Environment Variables:") {
+            skip = true;
+        }
+        if (skip == false) {
+            if (linehelper[x].indexOf("--") != -1) {
+                if (line2 != "") {
+                    lines << line2;
+                    line2 = "";
+                }
+                line2 = linehelper[x];
+            } else {
+                line2 = line2 + " " + linehelper[x];
+            }
+        }
+    }
+    if (line2 != "") lines << line2;
 
     m_setupFile->removeSection("AvailableOptions");
     m_setupFile->removeSection("OtherKeywords");
@@ -72,6 +93,9 @@ void optionsDialog::slot_getClamscanProcessFinished()
         line = line.trimmed();
         if (line.indexOf("Clam AntiVirus:") != -1) {
             QString version = line.mid(line.indexOf("Clam AntiVirus:") + 15);
+            int endpos = 9;
+            while (version.mid(endpos,1) != " ") endpos++;
+            version = version.mid(0,endpos);
             if ((version.indexOf("Scanner 1.4.1") != -1) || (version.indexOf("Scanner 1.0.7") != -1)) {
                 QFile ca_certFile("/etc/pki/tls/certs/ca-bundle.crt");
                 QString message =
@@ -273,6 +297,9 @@ void optionsDialog::slot_selectLVDButtonClicked()
                 if (QMessageBox::warning(this, tr("Virus definitions missing!"),
                                          tr("No virus definitions found in the database folder. Should the virus definitions be downloaded?"),
                                          QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes) {
+                    m_setupFile->setSectionValue("Directories","LoadSupportedDBFiles","checked|" + QDir::homePath() + "/.clamav-gui/signatures");
+                    m_ui.loadVirusDatabaseCheckBox->setChecked(true);
+                    m_ui.loadVirusDatabaseLineEdit->setText(QDir::homePath() + "/.clamav-gui/signatures");
                     emit updateDatabase();
                 }
             }
