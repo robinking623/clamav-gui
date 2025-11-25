@@ -1,3 +1,9 @@
+* Thu Nov 25 2025 - Version 1.1.7
+- Fixed a bug in the options tab, regarding the directory information saved in the setup file (settings.ini).
+
+* Fri Nov 21 2025 - Version 1.1.6
+- Updated the option - translation to the changed "clamscan --help" output and fixed a bug in the translation module.
+
 * Mon Jun 9 2025 - Version 1.1.5
 - Fixed a problem with setupfilehandler that caused a memory leak under certain circumstances.
 
