@@ -39,10 +39,10 @@ QString translator::translateit(QString original) {
             base = base + "Generate JSON description of scanned file(s). JSON will be printed and also-|";
             base = base + "Only load official signatures.|";
             base = base + "Scan subdirectories recursively.|";
-            base = base + "Continue scanning within file after finding a match|";
+            base = base + "Continue scanning within file after finding a match.|";
             base = base + "Scan files and directories on other filesystems.|";
             base = base + "Remove infected files. Be careful!|";
-            base = base + "Load unsigned bytecode.|";
+            base = base + "Load unsigned bytecode. **Caution**: You should NEVER run bytecode signatures from untrusted sources. Doing so may result in arbitrary code execution.|";
             base = base + "Detect Possibly Unwanted Applications.|";
             base = base + "Detect structured data (SSN, Credit Card).|";
             base = base + "Scan mail files.|";
@@ -202,7 +202,13 @@ QString translator::translateit(QString original) {
             base = base + "Number of times the OnAccess client will retry a failed scan due to connection problems (or other issues). Default: 0|";
             base = base + "When  using  prevention,  if this option is turned on, any errors that occur during  scanning will result in the event attempt being denied. This could potentially lead to unwanted system behaviour with certain configurations, so the client defaults this to off and prefers allowing access events in case of scan or connection error. Default: no|";
             base = base + "Toggles extra scanning and notifications when a file or directory is created or moved. Requires the  DDD system to kick-off extra scans. Default: no|";
-            base = base + "Disable authenticode certificate chain verification in PE files. Default: no";
+            base = base + "Disable authenticode certificate chain verification in PE files. Default: no|";
+            base = base + "Store html URIs in metadata. URIs will be written to the metadata.json file in an array called 'URIs'.|";
+            base = base + "Store pdf URIs in metadata. URIs will be written to the metadata.json file in an array called 'URIs'.|";
+            base = base + "Store md5 and sha1 in addition to sha2-256 in metadata.|";
+            base = base + "Print the file hash after each file scanned.|";
+            base = base + "Print the file type after each file scanned.|";
+            base = base + "Enforce FIPS-like limits on using hash algorithms for cryptographic purposes. Will disable MD5 & SHA1. FP sigs and will require '.sign' files to verify CVD authenticity.";
 
 // translations de_DE
     QString base_de_DE = "Sei mitteilsam|";
@@ -221,7 +227,7 @@ QString translator::translateit(QString original) {
             base_de_DE = base_de_DE + "Fahre mit dem Scannen in der Datei fort wenn ein Treffer erziehlt wurde|";
             base_de_DE = base_de_DE + "Scanne Dateien und Verzeichnisse auf anderen Dateisystemen|";
             base_de_DE = base_de_DE + "Infizierte Dateien entfernen. Seien Sie vorsichtig!|";
-            base_de_DE = base_de_DE + "Lade unsegnierten Bytecode|";
+            base_de_DE = base_de_DE + "Laden Sie unsignierten Bytecode. **Achtung**: Sie sollten NIEMALS Bytecode-Signaturen von nicht vertrauenswürdigen Quellen ausführen. Dies kann zur Ausführung willkürlichen Codes führen.|";
             base_de_DE = base_de_DE + "Erkenne vermutlich ungewollte Anwendungen|";
             base_de_DE = base_de_DE + "Erkenne strukturierte Daten (SSN, Credit Card)|";
             base_de_DE = base_de_DE + "Scanne Mail Dateien|";
@@ -381,7 +387,13 @@ QString translator::translateit(QString original) {
             base_de_DE = base_de_DE + "Anzahl der Wiederholungsversuche des OnAccess-Clients bei einem fehlgeschlagenen Scan aufgrund von Verbindungsproblemen (oder anderen Problemen). Standard: 0|";
             base_de_DE = base_de_DE + "Wenn diese Option bei Verwendung der Prävention aktiviert ist, führen alle während des Scannens auftretenden Fehler dazu, dass der Ereignisversuch abgelehnt wird. Dies könnte bei bestimmten Konfigurationen möglicherweise zu unerwünschtem Systemverhalten führen, daher deaktiviert der Client diese Option standardmäßig und lässt im Falle eines Scan- oder Verbindungsfehlers lieber Zugriffsereignisse zu. Standard: nein|";
             base_de_DE = base_de_DE + "Schaltet zusätzliche Scans und Benachrichtigungen um, wenn eine Datei oder ein Verzeichnis erstellt oder verschoben wird. Erfordert, dass das DDD-System zusätzliche Scans startet. Standard: nein|";
-            base_de_DE = base_de_DE + "Deaktiviert die Überprüfung der Authenticode-Zertifikatkette in PE-Dateien. Standard: nein";
+            base_de_DE = base_de_DE + "Deaktiviert die Überprüfung der Authenticode-Zertifikatkette in PE-Dateien. Standard: nein|";
+            base_de_DE = base_de_DE + "Speichern Sie HTML-URIs in Metadaten. URIs werden in die Datei metadata.json in einem Array namens „URIs“ geschrieben.|";
+            base_de_DE = base_de_DE + "Speichern Sie PDF-URIs in Metadaten. URIs werden in einem Array namens „URIs“ in die Datei metadata.json geschrieben.|";
+            base_de_DE = base_de_DE + "Speichern Sie MD5 und SHA1 zusätzlich zu SHA2-256 in Metadaten.|";
+            base_de_DE = base_de_DE + "Ausgabe des Datei-Hash nach jeder gescannten Datei.|";
+            base_de_DE = base_de_DE + "Ausgabe des Datei-Typ nach jeder gescannten Datei.|";
+            base_de_DE = base_de_DE + "Setzen Sie FIPS-ähnliche Beschränkungen für die Verwendung von Hash-Algorithmen für kryptografische Zwecke durch. Deaktiviert MD5 und SHA1. PHP signiert und benötigt „.sign“-Dateien, um die CVD-Authentizität zu überprüfen.";
 
 // translations pt_PT and all countries with portugese language
     QString base_pt_PT = "Ser detalhista|";
@@ -400,7 +412,7 @@ QString translator::translateit(QString original) {
             base_pt_PT = base_pt_PT + "Continuar a procurar no ficheiro depois de encontrar uma correspondência|";
             base_pt_PT = base_pt_PT + "Analisar ficheiros e diretórios noutros sistemas de ficheiros|";
             base_pt_PT = base_pt_PT + "Remover ficheiros infectados. Cuidado!|";
-            base_pt_PT = base_pt_PT + "Carregar bytecode sem assinatura|";
+            base_pt_PT = base_pt_PT + "Carregar bytecode não assinado. **Caution**: You should NEVER run bytecode signatures from untrusted sources. Fazer isso pode resultar na execução arbitrária de código.|";
             base_pt_PT = base_pt_PT + "Detetar aplicações possivelmente indesejadas|";
             base_pt_PT = base_pt_PT + "Detetar dados estruturados (SSN, cartão de crédito)|";
             base_pt_PT = base_pt_PT + "Digitalizar ficheiros de correio|";
@@ -560,7 +572,13 @@ QString translator::translateit(QString original) {
             base_pt_PT = base_pt_PT + "Número de vezes que o cliente OnAccess tentará novamente uma verificação com falha devido a problemas de ligação (ou outros problemas). Predefinição: 0|";
             base_pt_PT = base_pt_PT + "Ao utilizar a prevenção, se esta opção estiver ativada, quaisquer erros que ocorram durante o scan resultarão na negação da tentativa de evento. Isto pode levar a um comportamento indesejado do sistema com determinadas definições, pelo que o cliente define isto como desativado por defeito e prefere permitir eventos de acesso em caso de scan ou erro de ligação. Padrão: não|";
             base_pt_PT = base_pt_PT + "Alterna scans extra e notificações quando um ficheiro ou diretório é criado ou movido. Requer que o sistema DDD inicie scans extra. Predefinição: não|";
-            base_pt_PT = base_pt_PT + "Desativar verificação da cadeia de certificados authenticode em ficheiros PE. Padrão: não";
+            base_pt_PT = base_pt_PT + "Desativar verificação da cadeia de certificados authenticode em ficheiros PE. Padrão: não|";
+            base_pt_PT = base_pt_PT + "Armazene URIs HTML em metadados. Os URIs serão gravados no arquivo metadata.json em uma matriz chamada 'URIs'|";
+            base_pt_PT = base_pt_PT + "Armazene URIs de PDF em metadados. Os URIs serão gravados no arquivo metadata.json em uma matriz chamada 'URIs'.|";
+            base_pt_PT = base_pt_PT + "Armazene md5 e sha1 além de sha2-256 nos metadados.|";
+            base_pt_PT = base_pt_PT + "Imprima o hash do arquivo após cada arquivo digitalizado.|";
+            base_pt_PT = base_pt_PT + "Imprima o tipo do arquivo após cada arquivo digitalizado.|";
+            base_pt_PT = base_pt_PT + "Aplique limites semelhantes aos do FIPS no uso de algoritmos de hash para fins criptográficos. Desativará MD5 e SHA1. O PHP assina e exigirá arquivos '.sign' para verificar a autenticidade do CVD.";
 
 //  translation it_IT
     QString base_it_IT = "Essere prolissi|";
@@ -579,7 +597,7 @@ QString translator::translateit(QString original) {
             base_it_IT = base_it_IT + "Continuare la scansione all'interno del file dopo aver trovato una corrispondenza|";
             base_it_IT = base_it_IT + "Scansione di file e directory su altri filesystem|";
             base_it_IT = base_it_IT + "Rimuovere i file infetti. Attenzione!|";
-            base_it_IT = base_it_IT + "Caricare il bytecode senza segno|";
+            base_it_IT = base_it_IT + "Carica bytecode senza segno. **Attenzione**: non dovresti MAI eseguire firme bytecode da fonti non attendibili. Ciò potrebbe comportare l'esecuzione di codice arbitrario.|";
             base_it_IT = base_it_IT + "Rilevare le applicazioni potenzialmente indesiderate|";
             base_it_IT = base_it_IT + "Rilevare dati strutturati (SSN, carta di credito)|";
             base_it_IT = base_it_IT + "Scansione di file di posta elettronica|";
@@ -740,6 +758,12 @@ QString translator::translateit(QString original) {
             base_it_IT = base_it_IT + "Quando si usa la prevenzione, se questa opzione è attivata, tutti gli errori che si verificano durante la scansione comporteranno il rifiuto del tentativo di evento. Ciò potrebbe potenzialmente portare a un comportamento indesiderato del sistema con determinate configurazioni, quindi il client imposta questa opzione su off e preferisce consentire gli eventi di accesso in caso di errore di scansione o connessione. Predefinito: no|";
             base_it_IT = base_it_IT + "Attiva/disattiva la scansione extra e le notifiche quando un file o una directory vengono creati o spostati. Richiede al sistema DDD di avviare scansioni extra. Predefinito: no|";
             base_it_IT = base_it_IT + "Disattiva la verifica della catena di certificati Authenticode nei file PE. Predefinito: no|";
+            base_it_IT = base_it_IT + "Memorizza gli URI html nei metadati. Gli URI verranno scritti nel file metadata.json in un array chiamato 'URI'|";
+            base_it_IT = base_it_IT + "Memorizza gli URI pdf nei metadati. Gli URI verranno scritti nel file metadata.json in un array denominato 'URI'|.";
+            base_it_IT = base_it_IT + "Memorizza md5 e sha1 oltre a sha2-256 nei metadati.|";
+            base_it_IT = base_it_IT + "Stampa l'hash del file dopo ogni file scansionato.|";
+            base_it_IT = base_it_IT + "Stampa il tipo di file dopo ogni file scansionato.|";
+            base_it_IT = base_it_IT + "Applicare limiti simili a FIPS sull'utilizzo di algoritmi hash per scopi crittografici. Disabiliterà MD5 e SHA1. PHP firma e richiederà file '.sign' per verificare l'autenticità CVD.";
 
 // translations da_DK
     QString base_da_DK = "Sei mitteilsam|";
@@ -758,7 +782,7 @@ QString translator::translateit(QString original) {
             base_da_DK = base_da_DK + "Fortsæt med at scanne i filen, hvis der opnås et hit|";
             base_da_DK = base_da_DK + "Scan filer og mapper på andre filsystemer|";
             base_da_DK = base_da_DK + "Fjern inficerede filer. Vær forsigtig!|";
-            base_da_DK = base_da_DK + "Indlæs usegmenteret bytekode|";
+            base_da_DK = base_da_DK + "Indlæs usigneret bytekode. **Forsigtig**: Du bør ALDRIG køre bytekode-signaturer fra upålidelige kilder. Hvis du gør det, kan det resultere i udførelse af vilkårlig kode.|";
             base_da_DK = base_da_DK + "Genkender formentlig uønskede programmer|";
             base_da_DK = base_da_DK + "Genkender strukturerede data (SSN, kreditkort)|";
             base_da_DK = base_da_DK + "Scanning af mailfiler|";
@@ -919,6 +943,12 @@ QString translator::translateit(QString original) {
             base_da_DK = base_da_DK + "Når du bruger forebyggelse, hvis denne mulighed er slået til, vil eventuelle fejl, der opstår under scanning, resultere i, at hændelsesforsøget afvises. Dette kan potentielt føre til uønsket systemadfærd med visse konfigurationer, så klienten sætter dette som standard til fra og foretrækker at tillade adgangsbegivenheder i tilfælde af scannings- eller forbindelsesfejl. Standard: nej|";
             base_da_DK = base_da_DK + "Skifter ekstra scanning og meddelelser, når en fil eller mappe oprettes eller flyttes. Kræver DDD-systemet for at starte ekstra scanninger. Standard: nej|";
             base_da_DK = base_da_DK + "Deaktiver verifikation af autentikode-certifikatkæde i PE-filer. Standard: nej|";
+            base_da_DK = base_da_DK + "Gem html-URI'er i metadata. URI'er vil blive skrevet til filen metadata.json i et array kaldet 'URI'er'.|";
+            base_da_DK = base_da_DK + "Gem pdf-URI'er i metadata. URI'er vil blive skrevet til filen metadata.json i et array kaldet 'URI'er'.|";
+            base_da_DK = base_da_DK + "Gem md5 og sha1 ud over sha2-256 i metadata.|";
+            base_da_DK = base_da_DK + "Udskriv filhashen efter hver scannet fil.|";
+            base_da_DK = base_da_DK + "Udskriv filtypen efter hver scannet fil.|";
+            base_da_DK = base_da_DK + "Håndhæv FIPS-lignende grænser for brug af hash-algoritmer til kryptografiske formål. Deaktiverer MD5 og SHA1. PHP underskriver og vil kræve '.sign'-filer for at bekræfte CVD-ægtheden.";
 
 // translations fr_FR
     QString base_fr_FR = "Sois communicatif|";
@@ -937,7 +967,7 @@ QString translator::translateit(QString original) {
             base_fr_FR = base_fr_FR + "Poursuivre l'analyse du fichier lorsqu'une réponse positive est obtenue.|";
             base_fr_FR = base_fr_FR + "Analyse des fichiers et des répertoires sur d'autres systèmes de fichiers|";
             base_fr_FR = base_fr_FR + "Supprimer les fichiers infectés. Soyez prudent !|";
-            base_fr_FR = base_fr_FR + "Charger un code d'octet non signé|";
+            base_fr_FR = base_fr_FR + "Chargez le bytecode non signé. **Attention** : Vous ne devez JAMAIS exécuter de signatures de bytecode provenant de sources non fiables. Cela pourrait entraîner l’exécution de code arbitraire.|";
             base_fr_FR = base_fr_FR + "Détecte les applications probablement indésirables|";
             base_fr_FR = base_fr_FR + "Reconnaître les données structurées (SSN, carte de crédit)|";
             base_fr_FR = base_fr_FR + "Scanner les fichiers de messagerie|";
@@ -1098,6 +1128,12 @@ QString translator::translateit(QString original) {
             base_fr_FR = base_fr_FR + "Lors de l'utilisation de la prévention, si cette option est activée, toute erreur qui se produit pendant l'analyse entraînera le refus de la tentative d'événement. Cela pourrait potentiellement conduire à un comportement indésirable du système avec certaines configurations, donc le client désactive cette option par défaut et préfère autoriser les événements d'accès en cas d'erreur d'analyse ou de connexion. Par défaut : non|";
             base_fr_FR = base_fr_FR + "Active l'analyse supplémentaire et les notifications lorsqu'un fichier ou un répertoire est créé ou déplacé. Nécessite que le système DDD lance des analyses supplémentaires. Par défaut : non|";
             base_fr_FR = base_fr_FR + "Désactiver la vérification de la chaîne de certificats authenticode dans les fichiers PE. Par défaut : no|";
+            base_fr_FR = base_fr_FR + "Stockez les URI HTML dans les métadonnées. Les URI seront écrits dans le fichier metadata.json dans un tableau appelé « URI »|";
+            base_fr_FR = base_fr_FR + "Stockez les URI PDF dans les métadonnées. Les URI seront écrits dans le fichier metadata.json dans un tableau appelé « URI ».|";
+            base_fr_FR = base_fr_FR + "Stockez md5 et sha1 en plus de sha2-256 dans les métadonnées.|";
+            base_fr_FR = base_fr_FR + "Imprimez le hachage du fichier après chaque fichier analysé.|";
+            base_fr_FR = base_fr_FR + "Imprimez le type de fichier après chaque fichier numérisé.|";
+            base_fr_FR = base_fr_FR + "Appliquez des limites de type FIPS sur l'utilisation d'algorithmes de hachage à des fins cryptographiques. Désactivera MD5 et SHA1. PHP signe et nécessitera des fichiers « .sign » pour vérifier l'authenticité du CVD.";
 
 // translations es_ES
     QString base_es_ES = "Sea comunicativo|";
@@ -1116,7 +1152,7 @@ QString translator::translateit(QString original) {
             base_es_ES = base_es_ES + "Continuar la búsqueda en el fichero si se obtiene una respuesta positiva|";
             base_es_ES = base_es_ES + "Escanear archivos y directorios en otros sistemas de archivos|";
             base_es_ES = base_es_ES + "Elimine los archivos infectados. ¡Cuidado!|";
-            base_es_ES = base_es_ES + "Cargar bytecode no segmentado|";
+            base_es_ES = base_es_ES + "Cargar código de bytes sin firmar. **Precaución**: NUNCA debe ejecutar firmas de código de bytes de fuentes que no sean de confianza. Hacerlo puede resultar en la ejecución de código arbitrario.|";
             base_es_ES = base_es_ES + "Reconocer aplicaciones presuntamente no deseadas|";
             base_es_ES = base_es_ES + "Reconocer datos estructurados (SSN, tarjeta de crédito)|";
             base_es_ES = base_es_ES + "Escanear archivos de correo|";
@@ -1277,6 +1313,12 @@ QString translator::translateit(QString original) {
             base_es_ES = base_es_ES + "Al usar la prevención, si esta opción está activada, cualquier error que ocurra durante el escaneo provocará que se deniegue el intento de evento. Esto podría generar un comportamiento no deseado del sistema con ciertas configuraciones, por lo que el cliente desactiva esta opción de manera predeterminada y prefiere permitir eventos de acceso en caso de error de escaneo o conexión. Predeterminado: no|";
             base_es_ES = base_es_ES + "Activa escaneos adicionales y notificaciones cuando se crea o mueve un archivo o directorio. Requiere que el sistema DDD inicie escaneos adicionales. Predeterminado: no|";
             base_es_ES = base_es_ES + "Desactivar la verificación de la cadena de certificados authenticode en archivos PE. Predeterminado: no|";
+            base_es_ES = base_es_ES + "Almacene URI HTML en metadatos. Los URI se escribirán en el archivo metadata.json en una matriz llamada 'URI'|";
+            base_es_ES = base_es_ES + "Almacene URI de PDF en metadatos. Los URI se escribirán en el archivo metadata.json en una matriz denominada 'URI'.|";
+            base_es_ES = base_es_ES + "Almacene md5 y sha1 además de sha2-256 en metadatos.|";
+            base_es_ES = base_es_ES + "Imprima el hash del archivo después de cada archivo escaneado.|";
+            base_es_ES = base_es_ES + "Imprima el tipo de archivo después de cada archivo escaneado.|";
+            base_es_ES = base_es_ES + "Haga cumplir límites similares a FIPS en el uso de algoritmos hash con fines criptográficos. Deshabilitará MD5 y SHA1. PHP firma y requerirá archivos '.sign' para verificar la autenticidad del CVD.";
 
 // translation uk_UA
     QString base_uk_UA = "Будьте багатослівні|";
@@ -1295,7 +1337,7 @@ QString translator::translateit(QString original) {
             base_uk_UA = base_uk_UA + "Після знаходження збігу продовжити сканування у файлі|";
             base_uk_UA = base_uk_UA + "Сканування файлів і каталогів в інших файлових системах|";
             base_uk_UA = base_uk_UA + "Видаліть заражені файли. Обережно!|";
-            base_uk_UA = base_uk_UA + "Завантажити беззнаковий байт-код|";
+            base_uk_UA = base_uk_UA + "Завантажити непідписаний байт-код. **Увага**: НІКОЛИ не слід запускати підписи байт-коду з ненадійних джерел. Це може призвести до виконання довільного коду.|";
             base_uk_UA = base_uk_UA + "Виявлення можливих небажаних програм|";
             base_uk_UA = base_uk_UA + "Виявлення структурованих даних (SSN, кредитна картка)|";
             base_uk_UA = base_uk_UA + "Сканувати поштові файли|";
@@ -1456,6 +1498,12 @@ QString translator::translateit(QString original) {
             base_uk_UA = base_uk_UA + "Під час використання запобігання, якщо цей параметр увімкнено, будь-які помилки, що виникають під час сканування, призведуть до відхилення спроби події. Це потенційно може призвести до небажаної поведінки системи з певними конфігураціями, тому клієнт за замовчуванням вимкнено та надає перевагу дозволу подій доступу у разі сканування або помилки з’єднання. За замовчуванням: ні|";
             base_uk_UA = base_uk_UA + "Вимикає додаткове сканування та сповіщення, коли файл або каталог створюється або переміщується. Потрібна система DDD для запуску додаткових сканувань. За замовчуванням: ні|";
             base_uk_UA = base_uk_UA + "Вимкнути перевірку ланцюжка сертифікатів автентикоду в PE-файлах. За замовчуванням: ні|";
+            base_uk_UA = base_uk_UA + "Зберігайте URI html у метаданих. Ідентифікатори URI будуть записані у файл metadata.json у масиві під назвою «URI».|";
+            base_uk_UA = base_uk_UA + "Зберігайте URI PDF-файлів у метаданих. Ідентифікатори URI будуть записані у файл metadata.json у масиві під назвою «URI».|";
+            base_uk_UA = base_uk_UA + "Зберігайте md5 і sha1 на додаток до sha2-256 у метаданих.|";
+            base_uk_UA = base_uk_UA + "Друкуйте хеш файлу після кожного сканованого файлу.|";
+            base_uk_UA = base_uk_UA + "Друкуйте тип файлу після кожного сканованого файлу.|";
+            base_uk_UA = base_uk_UA + "Забезпечте обмеження, подібні до FIPS, на використання алгоритмів хешування для криптографічних цілей. Вимкне MD5 і SHA1. PHP підписує та вимагатиме файлів '.sign' для перевірки автентичності CVD.";
 
 // End of DATA-Block
 
@@ -1478,7 +1526,7 @@ QString translator::translateit(QString original) {
     if (pos != -1) {
         rc = "";
         helper = translations.at(pos);
-    } else helper = original;
+    } else helper = "<<< " + original + ">>>";
 
     rc = helper;
 
