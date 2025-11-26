@@ -1,3 +1,6 @@
+* Wed Nov 26 2025 - Version 1.1.8
+- Fixed a minor bug in the setup wizzard and a wrong signalname in the logview class (switching to monochrome mode.)
+
 * Thu Nov 25 2025 - Version 1.1.7
 - Fixed a bug in the options tab, regarding the directory information saved in the setup file (settings.ini).
 
