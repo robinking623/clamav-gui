@@ -42,7 +42,7 @@ void logViewObject::loadLogFile(QString filename)
 
         for (int i = 1; i < logs.count(); i++) {
             partialLogObject* log = new partialLogObject(this, logs[i], css);
-            connect(this, SIGNAL(logHighlightingChanged(bool)), log, SLOT(slot_add_remove_highlighter(bool)));
+            connect(this, SIGNAL(logHighlighterChanged(bool)), log, SLOT(slot_add_remove_highlighter(bool)));
             tabHeader = logs[i].mid(1, logs[i].indexOf("\n") - 1);
             m_ui.logTab->addTab(log, QIcon(":/icons/icons/information.png"), tabHeader);
         }
