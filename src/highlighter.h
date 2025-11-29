@@ -23,7 +23,8 @@
 //
 #include <QSyntaxHighlighter>
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-#include <QRegExp>
+#define QT_VERSION_6
+#include <QRegularExpression>
 #endif
 //
 class highlighter : public QSyntaxHighlighter {
@@ -36,14 +37,22 @@ protected:
 
 private:
     struct HighlightingRule {
+#ifdef QT_VERSION_6
+        QRegularExpression pattern;
+#else
         QRegExp pattern;
+#endif
         QTextCharFormat format;
     };
 
     QVector<HighlightingRule> m_highlightingRules;
-
+#ifdef QT_VERSION_6
+    QRegularExpression m_commentStartExpression;
+    QRegularExpression m_commentEndExpression;
+#else
     QRegExp m_commentStartExpression;
     QRegExp m_commentEndExpression;
+#endif
 
     QTextCharFormat m_keywordFormat;
     QTextCharFormat m_classFormat;
