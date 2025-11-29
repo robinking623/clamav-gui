@@ -590,10 +590,13 @@ void freshclamsetter::slot_clearDeamonLogButtonClicked()
     m_ui.deamonLogText->setPlainText("");
     m_updateLogFileWatcher->removePath(QDir::homePath() + "/.clamav-gui/freshclam.log");
     file.remove();
-    file.open(QIODevice::ReadWrite);
-    QTextStream stream(&file);
-    stream << "";
-    file.close();
+   
+    if (file.open(QIODevice::ReadWrite))
+    {
+        QTextStream stream(&file);
+        stream << "";
+        file.close();
+    }
     file.setPermissions(QFileDevice::ReadOwner | QFileDevice::WriteOwner | QFileDevice::ReadUser | QFileDevice::WriteUser | QFileDevice::ReadGroup |
                         QFileDevice::WriteGroup | QFileDevice::ReadOther | QFileDevice::WriteOther);
     m_updateLogFileWatcher->addPath(QDir::homePath() + "/.clamav-gui/freshclam.log");
