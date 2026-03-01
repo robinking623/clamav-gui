@@ -113,8 +113,7 @@ TRANSLATIONS += translations/clamav-gui-de_DE.ts \
     translations/clamav-gui-pt_PT.ts \
     translations/clamav-gui-it_IT.ts \
     translations/clamav-gui-uk_UA.ts \
-    translations/clamav-gui-zh_CN.ts \
-    translations/countryfullnames.txt
+    translations/clamav-gui-zh_CN.ts
 
 INSTALLS += target \
     icon16 \
@@ -169,7 +168,7 @@ servicemenufile.path = /$(DESTDIR)/usr/share/kio/servicemenus
 servicemenufile.files = extra/ClamAV-GUI-ServiceMenu.desktop
 
 translation.path = /$(DESTDIR)/usr/share/clamav-gui
-translation.files = translations/clamav-gui-de_DE.qm translations/clamav-gui-en_GB.qm translations/clamav-gui-da_DK.qm translations/clamav-gui-es_ES.qm translations/clamav-gui-fr_FR.qm translations/clamav-gui-pt_PT.qm translations/clamav-gui-it_IT.qm translations/clamav-gui-uk_UA.qm translations/countryfullnames.txt
+translation.files = translations/clamav-gui-de_DE.qm translations/clamav-gui-en_GB.qm translations/clamav-gui-da_DK.qm translations/clamav-gui-es_ES.qm translations/clamav-gui-fr_FR.qm translations/clamav-gui-pt_PT.qm translations/clamav-gui-it_IT.qm translations/clamav-gui-uk_UA.qm
 
 langicons.path = /$(DESTDIR)/usr/share/clamav-gui/languageicons
 langicons.files = icons/da_DK.png de_DE.png en_AU.png en_GB.png en_IE.png en_NZ.png en_US.png es_ES.png fr_FR.png it_IT.png pt_AO.png pt_BR.png pt_CV.png pt_MO.png pt_MZ.png pt_PT.png pt_ST.png pt_TL.png uk_UA.png zh_CN.png
@@ -200,8 +199,5 @@ manpages_pt.files = man/pt/clamav-gui.1.gz
 
 documents.path = /$(DESTDIR)/usr/share/doc/ClamAV-GUI
 documents.files = README CHANGES
-
-DISTFILES += \
-    translations/countryfullnames.txt
 
 
