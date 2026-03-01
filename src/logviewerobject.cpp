@@ -33,6 +33,12 @@ void logViewerObject::slot_profilesChanged()
     }
 
     m_ui->profileComboBox->clear();
+
+    QString SRTFvalue = m_setupfile->getSectionValue("Directories","ScanReportToFile");
+    if (SRTFvalue.indexOf("checked|") == 0) {
+        m_ui->profileComboBox->addItem("Direct Scan");
+    }
+
     m_ui->profileComboBox->addItems(profilesWithLog);
     if (m_ui->profileComboBox->findText(actualProfileName) != -1) {
         m_ui->profileComboBox->setCurrentIndex(m_ui->profileComboBox->findText(actualProfileName));
@@ -61,7 +67,12 @@ void logViewerObject::loadLogFile(QString profile)
         }
     }
 
-    values = sf->getSectionValue("Directories", "ScanReportToFile").split("|");
+    if (profile == "Direct Scan") {
+        values = m_setupfile->getSectionValue("Directories", "ScanReportToFile").split("|");
+    } else
+    {
+        values = sf->getSectionValue("Directories", "ScanReportToFile").split("|");
+    }
     if (values.count() == 2) {
         QFile file(values[1]);
         m_logFileName = values[1];
