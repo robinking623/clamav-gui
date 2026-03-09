@@ -687,5 +687,181 @@
         <source>Toggles extra scanning and notifications when a file or directory is created or moved. Requires the DDD system to kick-off extra scans. Default: no</source>
         <translation>Slår ekstra scanning og notifikationer til/fra, når en fil eller mappe oprettes eller flyttes. Kræver, at DDD-systemet starter ekstra scanninger. Standard: nej</translation>
     </message>
+    <message>
+        <source>Enable libclamav&apos;s debug messages</source>
+        <translation>Aktiver libclamavs fejlfindingsbeskeder.</translation>
+    </message>
+    <message>
+        <source>Be verbose</source>
+        <translation>Vær ordrig.</translation>
+    </message>
+     <message>
+        <source>Only print infected files</source>
+        <translation>Udskriv kun inficerede filer.</translation>
+    </message>
+    <message>
+        <source>Sound bell on virus detection</source>
+        <translation>Lydklokke ved virusdetektion.</translation>
+    </message>
+    <message>
+        <source>Create temporary files for nested file scans that would otherwise be in-memory only</source>
+        <translation>Opret midlertidige filer til indbyggede filscanninger, der ellers kun ville være i hukommelsen.</translation>
+    </message>
+    <message>
+        <source>Continue scanning within file after finding a match</source>
+        <translation>Fortsæt scanningen i filen, efter du har fundet et match.</translation>
+    </message>
+    <message>
+        <source>Show filenames inside scanned archives</source>
+        <translation>Vis filnavne i scannede arkiver.</translation>
+    </message>
+    <message>
+        <source>Only output error messages</source>
+        <translation>Udskriv kun fejlmeddelelser.</translation>
+    </message>
+    <message>
+        <source>Disable summary at end of scanning</source>
+        <translation>Deaktiver oversigt ved afslutning af scanning.</translation>
+    </message>
+    <message>
+        <source>Skip printing OK files</source>
+        <translation>Spring udskrivning af OK-filer over.</translation>
+    </message>
+    <message>
+        <source>Do not remove temporary files</source>
+        <translation>Fjern ikke midlertidige filer.</translation>
+    </message>
+    <message>
+        <source>Scan subdirectories recursively</source>
+        <translation>Scan undermapper rekursivt.</translation>
+    </message>
+    <message>
+        <source>Detect Possibly Unwanted Applications</source>
+        <translation>Find muligvis uønskede programmer.</translation>
+    </message>
+    <message>
+        <source>Scan files and directories on other filesystems</source>
+        <translation>Scan filer og mapper på andre filsystemer.</translation>
+    </message>
+    <message>
+        <source>Scan mail files</source>
+        <translation>Scan mailfiler.</translation>
+    </message>
+    <message>
+        <source>Detect structured data (SSN, Credit Card)</source>
+        <translation>Registrer strukturerede data (crp-nummer, kreditkort).</translation>
+    </message>
+    <message>
+        <source>Enable URL signature-based phishing detection</source>
+        <translation>Aktivér phishing-detektion baseret på URL-signatur.</translation>
+    </message>
+    <message>
+        <source>Stop scanning as soon as a heuristic match is found</source>
+        <translation>Stop scanningen, så snart der findes et heuristisk match.</translation>
+    </message>
+    <message>
+        <source>Enable email signature-based phishing detection</source>
+        <translation>Aktivér phishing-detektion baseret på e-mailsignaturer.</translation>
+    </message>
+    <message>
+        <source>Heuristic alerts</source>
+        <translation>Heuristiske alarmer.</translation>
+    </message>
+    <message>
+        <source>Normalize html, script, and text files. Use normalize=no for yara compatibility</source>
+        <translation>Normaliser html-, script- og tekstfiler. Brug normalize=no for Yara-kompatibilitet.</translation>
+    </message>
+    <message>
+        <source>Scan PE files</source>
+        <translation>Scan PE-filer.</translation>
+    </message>
+    <message>
+        <source>Scan ELF files</source>
+        <translation>Scan ELF-filer.</translation>
+    </message>
+    <message>
+        <source>Scan OLE2 containers</source>
+        <translation>Scan OLE2-containere.</translation>
+    </message>
+    <message>
+        <source>Scan PDF files</source>
+        <translation>Scan PDF-filer.</translation>
+    </message>
+    <message>
+        <source>Scan SWF files</source>
+        <translation>Scan SWF-filer.</translation>
+    </message>
+    <message>
+        <source>Scan HTML files</source>
+        <translation>Scan HTML-filer.</translation>
+    </message>
+    <message>
+        <source>Scan xml-based document files</source>
+        <translation>Scan xml-baserede dokumentfiler.</translation>
+    </message>
+    <message>
+        <source>Scan HWP3 files</source>
+        <translation>Scan HWP3-filer.</translation>
+    </message>
+    <message>
+        <source>Scan archive files (supported by libclamav)</source>
+        <translation>Scan arkivfiler (understøttet af libclamav).</translation>
+    </message>
+    <message>
+        <source>Alert on broken executable files (PE &amp; ELF)</source>
+        <translation>Advarsel om ødelagte eksekverbare filer (PE &amp; ELF).</translation>
+    </message>
+    <message>
+        <source>Scan OneNote files</source>
+        <translation>Scan OneNote-filer.</translation>
+    </message>
+    <message>
+        <source>Scan image (graphics) files</source>
+        <translation>Scan billedfiler (grafikfiler).</translation>
+    </message>
+    <message>
+        <source>Detect files by calculating image (graphics) fuzzy hashes</source>
+        <translation>Find filer ved at beregne fuzzy hashes for billeder (grafik).</translation>
+    </message>
+    <message>
+        <source>Alert on encrypted archives and documents</source>
+        <translation>Advarsel om krypterede arkiver og dokumenter.</translation>
+    </message>
+    <message>
+        <source>Alert on encrypted documents</source>
+        <translation>Advarsel om krypterede dokumenter.</translation>
+    </message>
+    <message>
+        <source>Alert on OLE2 files containing VBA macros</source>
+        <translation>Advarsel om OLE2-filer, der indeholder VBA-makroer.</translation>
+    </message>
+    <message>
+        <source>Alert on encrypted archives</source>
+        <translation>Advarsel om krypterede arkiver og dokumenter.</translation>
+    </message>
+    <message>
+        <source>Alert on files that exceed max file size, max scan size, or max recursion limit</source>
+        <translation>Advarsel om filer, der overstiger den maksimale filstørrelse, den maksimale scanningsstørrelse eller den maksimale rekursionsgrænse.</translation>
+    </message>
+    <message>
+        <source>Alert on emails containing cloaked URLs</source>
+        <translation>Advarsel om e-mails, der indeholder skjulte URL&apos;er.</translation>
+    </message>
+    <message>
+        <source>Disable authenticode certificate chain verification in PE files</source>
+        <translation>Deaktiver verifikation af authenticode-certifikatkæde i PE-filer.</translation>
+    </message>
+    <message>
+        <source>Alert on broken graphics files (JPEG, TIFF, PNG, GIF)</source>
+        <translation>Advarsel om ødelagte grafikfiler (JPEG, TIFF, PNG, GIF).</translation>
+    </message>
+    <message>
+        <source>Alert on emails containing SSL mismatches in URLs</source>
+        <translation>Advarsel om e-mails, der indeholder SSL-uoverensstemmelser i URL&apos;er.</translation>
+    </message>
+    <message>
+        <source>Alert on raw DMG image files containing partition intersections</source>
+        <translation>Advarsel om rå DMG-billedfiler, der indeholder partitionsskæringer.</translation>
+    </message>
 </context>
 </TS>

@@ -168,10 +168,6 @@
         <translation></translation>
     </message>
     <message>
-        <source>Alert on broken executable files (PE &amp; ELF).</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Alert on broken graphics files (JPEG, TIFF, PNG, GIF).</source>
         <translation></translation>
     </message>
@@ -181,10 +177,6 @@
     </message>
     <message>
         <source>Alert on encrypted archives.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Alert on encrypted documents.</source>
         <translation></translation>
     </message>
     <message>
@@ -685,6 +677,182 @@
     </message>
     <message>
         <source>Toggles extra scanning and notifications when a file or directory is created or moved. Requires the DDD system to kick-off extra scans. Default: no</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Enable libclamav&apos;s debug messages</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Be verbose</source>
+        <translation></translation>
+    </message>
+     <message>
+        <source>Only print infected files</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Sound bell on virus detection</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Create temporary files for nested file scans that would otherwise be in-memory only</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Continue scanning within file after finding a match</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Show filenames inside scanned archives</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Only output error messages</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Disable summary at end of scanning</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Skip printing OK files</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Do not remove temporary files</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Scan subdirectories recursively</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Detect Possibly Unwanted Applications</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Scan files and directories on other filesystems</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Scan mail files</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Detect structured data (SSN, Credit Card)</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Enable URL signature-based phishing detection</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Stop scanning as soon as a heuristic match is found</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Enable email signature-based phishing detection</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Heuristic alerts</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Normalize html, script, and text files. Use normalize=no for yara compatibility</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Scan PE files</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Scan ELF files</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Scan OLE2 containers</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Scan PDF files</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Scan SWF files</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Scan HTML files</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Scan xml-based document files</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Scan HWP3 files</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Scan archive files (supported by libclamav)</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Alert on broken executable files (PE &amp; ELF).</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Scan OneNote files</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Scan image (graphics) files</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Detect files by calculating image (graphics) fuzzy hashes</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Alert on encrypted archives and documents</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Alert on encrypted documents.</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Alert on OLE2 files containing VBA macros</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Alert on encrypted archives</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Alert on files that exceed max file size, max scan size, or max recursion limit</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Alert on emails containing cloaked URLs</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Disable authenticode certificate chain verification in PE files</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Alert on broken graphics files (JPEG, TIFF, PNG, GIF)</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Alert on emails containing SSL mismatches in URLs</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Alert on raw DMG image files containing partition intersections</source>
         <translation></translation>
     </message>
 </context>

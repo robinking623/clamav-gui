@@ -168,10 +168,6 @@
         <translation>Виявляйте файли шляхом обчислення нечітких хешів зображень (графіки).</translation>
     </message>
     <message>
-        <source>Alert on broken executable files (PE &amp; ELF).</source>
-        <translation>Сповіщення про пошкоджені виконувані файли (PE та ELF).</translation>
-    </message>
-    <message>
         <source>Alert on broken graphics files (JPEG, TIFF, PNG, GIF).</source>
         <translation>Сповіщення про пошкоджені графічні файли (JPEG, TIFF, PNG, GIF).</translation>
     </message>
@@ -182,10 +178,6 @@
     <message>
         <source>Alert on encrypted archives.</source>
         <translation>Сповіщення про зашифровані архіви.</translation>
-    </message>
-    <message>
-        <source>Alert on encrypted documents.</source>
-        <translation>Сповіщення про зашифровані документи.</translation>
     </message>
     <message>
         <source>Alert on OLE2 files containing VBA macros.</source>
@@ -686,6 +678,182 @@
     <message>
         <source>Toggles extra scanning and notifications when a file or directory is created or moved. Requires the DDD system to kick-off extra scans. Default: no</source>
         <translation>Перемикає додаткове сканування та сповіщення під час створення або переміщення файлу чи каталогу. Потрібна система DDD для запуску додаткових сканувань. За замовчуванням: немає</translation>
+    </message>
+    <message>
+        <source>Enable libclamav&apos;s debug messages</source>
+        <translation>Увімкнути повідомлення про налагодження libclamav.</translation>
+    </message>
+    <message>
+        <source>Be verbose</source>
+        <translation>Будьте багатослівними.</translation>
+    </message>
+     <message>
+        <source>Only print infected files</source>
+        <translation>Друкуйте лише інфіковані файли.</translation>
+    </message>
+    <message>
+        <source>Sound bell on virus detection</source>
+        <translation>Звуковий дзвінок при виявленні вірусу.</translation>
+    </message>
+    <message>
+        <source>Create temporary files for nested file scans that would otherwise be in-memory only</source>
+        <translation>Створіть тимчасові файли для сканування вкладених файлів, які інакше були б лише в пам’яті.</translation>
+    </message>
+    <message>
+        <source>Continue scanning within file after finding a match</source>
+        <translation>Продовжуйте сканувати файл після того, як знайдете збіг.</translation>
+    </message>
+    <message>
+        <source>Show filenames inside scanned archives</source>
+        <translation>Показувати назви файлів у сканованих архівах.</translation>
+    </message>
+    <message>
+        <source>Only output error messages</source>
+        <translation>Виводити лише повідомлення про помилки.</translation>
+    </message>
+    <message>
+        <source>Disable summary at end of scanning</source>
+        <translation>Вимкнути зведення в кінці сканування.</translation>
+    </message>
+    <message>
+        <source>Skip printing OK files</source>
+        <translation>Пропустити друк файлів OK.</translation>
+    </message>
+    <message>
+        <source>Do not remove temporary files</source>
+        <translation>Не видаляйте тимчасові файли.</translation>
+    </message>
+    <message>
+        <source>Scan subdirectories recursively</source>
+        <translation>Сканувати підкаталоги рекурсивно.</translation>
+    </message>
+    <message>
+        <source>Detect Possibly Unwanted Applications</source>
+        <translation>Виявлення можливо небажаних програм.</translation>
+    </message>
+    <message>
+        <source>Scan files and directories on other filesystems</source>
+        <translation>Сканувати файли та каталоги в інших файлових системах.</translation>
+    </message>
+    <message>
+        <source>Scan mail files</source>
+        <translation>Сканувати поштові файли.</translation>
+    </message>
+    <message>
+        <source>Detect structured data (SSN, Credit Card)</source>
+        <translation>Виявлення структурованих даних (SSN, кредитна картка).</translation>
+    </message>
+    <message>
+        <source>Enable URL signature-based phishing detection</source>
+        <translation>Увімкнути виявлення фішингу на основі підпису URL-адреси.</translation>
+    </message>
+    <message>
+        <source>Stop scanning as soon as a heuristic match is found</source>
+        <translation>Припиніть сканування, як тільки буде знайдено евристичний збіг.</translation>
+    </message>
+    <message>
+        <source>Enable email signature-based phishing detection</source>
+        <translation>Увімкнути виявлення фішингу електронної пошти на основі підпису.</translation>
+    </message>
+    <message>
+        <source>Heuristic alerts</source>
+        <translation>Евристичні сповіщення.</translation>
+    </message>
+    <message>
+        <source>Normalize html, script, and text files. Use normalize=no for yara compatibility</source>
+        <translation>Нормалізація html, сценаріїв і текстових файлів. Використовуйте normalize=no для сумісності з yara.</translation>
+    </message>
+    <message>
+        <source>Scan PE files</source>
+        <translation>Сканувати файли PE.</translation>
+    </message>
+    <message>
+        <source>Scan ELF files</source>
+        <translation>Сканування файлів ELF.</translation>
+    </message>
+    <message>
+        <source>Scan OLE2 containers</source>
+        <translation>Сканування контейнерів OLE2.</translation>
+    </message>
+    <message>
+        <source>Scan PDF files</source>
+        <translation>Сканувати файли PDF.</translation>
+    </message>
+    <message>
+        <source>Scan SWF files</source>
+        <translation>Сканувати файли SWF.</translation>
+    </message>
+    <message>
+        <source>Scan HTML files</source>
+        <translation>Сканувати файли HTML.</translation>
+    </message>
+    <message>
+        <source>Scan xml-based document files</source>
+        <translation>Сканувати файли документів на основі xml.</translation>
+    </message>
+    <message>
+        <source>Scan HWP3 files</source>
+        <translation>Сканувати файли HWP3.</translation>
+    </message>
+    <message>
+        <source>Scan archive files (supported by libclamav)</source>
+        <translation>Сканувати архівні файли (підтримується libclamav).</translation>
+    </message>
+    <message>
+        <source>Alert on broken executable files (PE &amp; ELF).</source>
+        <translation>Сповіщення про пошкоджені виконувані файли (PE та ELF).</translation>
+    </message>
+    <message>
+        <source>Scan OneNote files</source>
+        <translation>Сканування файлів OneNote.</translation>
+    </message>
+    <message>
+        <source>Scan image (graphics) files</source>
+        <translation>Сканувати файли зображень (графіки).</translation>
+    </message>
+    <message>
+        <source>Detect files by calculating image (graphics) fuzzy hashes</source>
+        <translation>Виявляйте файли шляхом обчислення нечітких хешів зображень (графіки).</translation>
+    </message>
+    <message>
+        <source>Alert on encrypted archives and documents</source>
+        <translation>Сповіщення про зашифровані архіви та документи.</translation>
+    </message>
+    <message>
+        <source>Alert on encrypted documents.</source>
+        <translation>Сповіщення про зашифровані документи.</translation>
+    </message>
+    <message>
+        <source>Alert on OLE2 files containing VBA macros</source>
+        <translation>Сповіщення про файли OLE2, що містять макроси VBA.</translation>
+    </message>
+    <message>
+        <source>Alert on encrypted archives</source>
+        <translation>Сповіщення про зашифровані архіви та документи.</translation>
+    </message>
+    <message>
+        <source>Alert on files that exceed max file size, max scan size, or max recursion limit</source>
+        <translation>Сповіщення про файли, які перевищують максимальний розмір файлу, максимальний розмір сканування або максимальний ліміт рекурсії.</translation>
+    </message>
+    <message>
+        <source>Alert on emails containing cloaked URLs</source>
+        <translation>Сповіщення про електронні листи, що містять приховані URL-адреси.</translation>
+    </message>
+    <message>
+        <source>Disable authenticode certificate chain verification in PE files</source>
+        <translation>Вимкнути перевірку ланцюжка сертифікатів автентикоду в PE-файлах.</translation>
+    </message>
+    <message>
+        <source>Alert on broken graphics files (JPEG, TIFF, PNG, GIF)</source>
+        <translation>Сповіщення про пошкоджені графічні файли (JPEG, TIFF, PNG, GIF).</translation>
+    </message>
+    <message>
+        <source>Alert on emails containing SSL mismatches in URLs</source>
+        <translation>Сповіщення про електронні листи, які містять невідповідності SSL в URL-адресах.</translation>
+    </message>
+    <message>
+        <source>Alert on raw DMG image files containing partition intersections</source>
+        <translation>Сповіщення про необроблені файли зображень DMG, які містять перетини розділів.</translation>
     </message>
 </context>
 </TS>

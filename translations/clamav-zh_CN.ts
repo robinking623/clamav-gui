@@ -168,10 +168,6 @@
         <translation>通过计算图像模糊哈希来检测文件。</translation>
     </message>
     <message>
-        <source>Alert on broken executable files (PE &amp; ELF).</source>
-        <translation>对损坏的可执行文件（PE 和 ELF）发出警报。</translation>
-    </message>
-    <message>
         <source>Alert on broken graphics files (JPEG, TIFF, PNG, GIF).</source>
         <translation>对损坏的图像文件（JPEG、TIFF、PNG、GIF）发出警报。</translation>
     </message>
@@ -182,10 +178,6 @@
     <message>
         <source>Alert on encrypted archives.</source>
         <translation>对加密的存档发出警报。</translation>
-    </message>
-    <message>
-        <source>Alert on encrypted documents.</source>
-        <translation>对加密的文档发出警报。</translation>
     </message>
     <message>
         <source>Alert on OLE2 files containing VBA macros.</source>
@@ -686,6 +678,182 @@
     <message>
         <source>Toggles extra scanning and notifications when a file or directory is created or moved. Requires the DDD system to kick-off extra scans. Default: no</source>
         <translation>在创建或移动文件或目录时切换额外扫描和通知。需要 DDD 系统来启动额外扫描。默认值：no</translation>
+    </message>
+    <message>
+        <source>Enable libclamav&apos;s debug messages</source>
+        <translation>启用 libclamav 的调试信息。</translation>
+    </message>
+    <message>
+        <source>Be verbose</source>
+        <translation>显示详细信息。</translation>
+    </message>
+     <message>
+        <source>Only print infected files</source>
+        <translation>仅打印被感染的文件。</translation>
+    </message>
+    <message>
+        <source>Sound bell on virus detection</source>
+        <translation>检测到病毒时响铃。</translation>
+    </message>
+    <message>
+        <source>Create temporary files for nested file scans that would otherwise be in-memory only</source>
+        <translation>为原本仅在内存中的嵌套文件扫描创建临时文件。</translation>
+    </message>
+    <message>
+        <source>Continue scanning within file after finding a match</source>
+        <translation>在找到匹配后继续扫描文件内部。</translation>
+    </message>
+    <message>
+        <source>Show filenames inside scanned archives</source>
+        <translation>显示扫描的存档内的文件名。</translation>
+    </message>
+    <message>
+        <source>Only output error messages</source>
+        <translation>仅输出错误信息。</translation>
+    </message>
+    <message>
+        <source>Disable summary at end of scanning</source>
+        <translation>在扫描结束时禁用摘要。</translation>
+    </message>
+    <message>
+        <source>Skip printing OK files</source>
+        <translation>跳过打印正常的文件。</translation>
+    </message>
+    <message>
+        <source>Do not remove temporary files</source>
+        <translation>不要移除临时文件。</translation>
+    </message>
+    <message>
+        <source>Scan subdirectories recursively</source>
+        <translation>递归扫描子目录。</translation>
+    </message>
+    <message>
+        <source>Detect Possibly Unwanted Applications</source>
+        <translation>检测可能不需要的应用程序。</translation>
+    </message>
+    <message>
+        <source>Scan files and directories on other filesystems</source>
+        <translation>扫描其他文件系统上的文件和目录。</translation>
+    </message>
+    <message>
+        <source>Scan mail files</source>
+        <translation>扫描邮件文件。</translation>
+    </message>
+    <message>
+        <source>Detect structured data (SSN, Credit Card)</source>
+        <translation>检测结构化数据（SSN，信用卡）。</translation>
+    </message>
+    <message>
+        <source>Enable URL signature-based phishing detection</source>
+        <translation>启用基于 URL 签名的网络钓鱼检测。</translation>
+    </message>
+    <message>
+        <source>Stop scanning as soon as a heuristic match is found</source>
+        <translation>一旦找到启发式匹配就停止扫描。</translation>
+    </message>
+    <message>
+        <source>Enable email signature-based phishing detection</source>
+        <translation>启用基于电子邮件签名的网络钓鱼检测。</translation>
+    </message>
+    <message>
+        <source>Heuristic alerts</source>
+        <translation>启发式警报。</translation>
+    </message>
+    <message>
+        <source>Normalize html, script, and text files. Use normalize=no for yara compatibility</source>
+        <translation>规范化 html、脚本和文本文件。使用 normalize=no 以兼容 yara。</translation>
+    </message>
+    <message>
+        <source>Scan PE files</source>
+        <translation>扫描 PE 文件。</translation>
+    </message>
+    <message>
+        <source>Scan ELF files</source>
+        <translation>扫描 ELF 文件。</translation>
+    </message>
+    <message>
+        <source>Scan OLE2 containers</source>
+        <translation>扫描 OLE2 容器。</translation>
+    </message>
+    <message>
+        <source>Scan PDF files</source>
+        <translation>扫描 PDF 文件。</translation>
+    </message>
+    <message>
+        <source>Scan SWF files</source>
+        <translation>扫描 SWF 文件。</translation>
+    </message>
+    <message>
+        <source>Scan HTML files</source>
+        <translation>扫描 HTML 文件。</translation>
+    </message>
+    <message>
+        <source>Scan xml-based document files</source>
+        <translation>扫描基于 XML 的文档文件。</translation>
+    </message>
+    <message>
+        <source>Scan HWP3 files</source>
+        <translation>扫描 HWP3 文件。</translation>
+    </message>
+    <message>
+        <source>Scan archive files (supported by libclamav)</source>
+        <translation>扫描存档文件（libclamav 支持的）。</translation>
+    </message>
+    <message>
+        <source>Alert on broken executable files (PE &amp; ELF).</source>
+        <translation>对损坏的可执行文件（PE 和 ELF）发出警报。</translation>
+    </message>
+    <message>
+        <source>Scan OneNote files</source>
+        <translation>扫描 OneNote 文件。</translation>
+    </message>
+    <message>
+        <source>Scan image (graphics) files</source>
+        <translation>扫描图像文件。</translation>
+    </message>
+    <message>
+        <source>Detect files by calculating image (graphics) fuzzy hashes</source>
+        <translation>通过计算图像模糊哈希来检测文件。</translation>
+    </message>
+    <message>
+        <source>Alert on encrypted archives and documents</source>
+        <translation>对加密的存档和文档发出警报。</translation>
+    </message>
+    <message>
+        <source>Alert on encrypted documents.</source>
+        <translation>对加密的文档发出警报。</translation>
+    </message>
+    <message>
+        <source>Alert on OLE2 files containing VBA macros</source>
+        <translation>对包含 VBA 宏的 OLE2 文件发出警报。</translation>
+    </message>
+    <message>
+        <source>Alert on encrypted archives</source>
+        <translation>对加密的存档和文档发出警报。</translation>
+    </message>
+    <message>
+        <source>Alert on files that exceed max file size, max scan size, or max recursion limit</source>
+        <translation>对超出最大文件大小、最大扫描大小或最大递归限制的文件发出警报。</translation>
+    </message>
+    <message>
+        <source>Alert on emails containing cloaked URLs</source>
+        <translation>对包含伪装 URL 的电子邮件发出警报。</translation>
+    </message>
+    <message>
+        <source>Disable authenticode certificate chain verification in PE files</source>
+        <translation>在 PE 文件中禁用 authenticode 证书链验证。</translation>
+    </message>
+    <message>
+        <source>Alert on broken graphics files (JPEG, TIFF, PNG, GIF)</source>
+        <translation>对损坏的图像文件（JPEG、TIFF、PNG、GIF）发出警报。</translation>
+    </message>
+    <message>
+        <source>Alert on emails containing SSL mismatches in URLs</source>
+        <translation>对包含 URL 中 SSL 不匹配的电子邮件发出警报。</translation>
+    </message>
+    <message>
+        <source>Alert on raw DMG image files containing partition intersections</source>
+        <translation>对包含分区交集的原始 DMG 镜像文件发出警报。</translation>
     </message>
 </context>
 </TS>

@@ -168,10 +168,6 @@
         <translation>Rileva i file calcolando gli hash fuzzy dell&apos;immagine (grafica).</translation>
     </message>
     <message>
-        <source>Alert on broken executable files (PE &amp; ELF).</source>
-        <translation>Avviso su file eseguibili danneggiati (PE e ELF).</translation>
-    </message>
-    <message>
         <source>Alert on broken graphics files (JPEG, TIFF, PNG, GIF).</source>
         <translation>Avviso su file grafici danneggiati (JPEG, TIFF, PNG, GIF).</translation>
     </message>
@@ -182,10 +178,6 @@
     <message>
         <source>Alert on encrypted archives.</source>
         <translation>Avviso sugli archivi crittografati.</translation>
-    </message>
-    <message>
-        <source>Alert on encrypted documents.</source>
-        <translation>Avviso sui documenti crittografati.</translation>
     </message>
     <message>
         <source>Alert on OLE2 files containing VBA macros.</source>
@@ -686,6 +678,182 @@
     <message>
         <source>Toggles extra scanning and notifications when a file or directory is created or moved. Requires the DDD system to kick-off extra scans. Default: no</source>
         <translation>Attiva/disattiva scansioni e notifiche aggiuntive quando un file o una directory vengono creati o spostati. Richiede il sistema DDD per avviare scansioni aggiuntive. Impostazione predefinita: no</translation>
+    </message>
+    <message>
+        <source>Enable libclamav&apos;s debug messages</source>
+        <translation>Abilita i messaggi di debug di libclamav.</translation>
+    </message>
+    <message>
+        <source>Be verbose</source>
+        <translation>Sii prolisso.</translation>
+    </message>
+     <message>
+        <source>Only print infected files</source>
+        <translation>Stampa solo i file infetti.</translation>
+    </message>
+    <message>
+        <source>Sound bell on virus detection</source>
+        <translation>Suono campanello al rilevamento virus.</translation>
+    </message>
+    <message>
+        <source>Create temporary files for nested file scans that would otherwise be in-memory only</source>
+        <translation>Crea file temporanei per le scansioni di file nidificati che altrimenti sarebbero solo in memoria.</translation>
+    </message>
+    <message>
+        <source>Continue scanning within file after finding a match</source>
+        <translation>Continua la scansione all&apos;interno del file dopo aver trovato una corrispondenza.</translation>
+    </message>
+    <message>
+        <source>Show filenames inside scanned archives</source>
+        <translation>Mostra i nomi dei file all&apos;interno degli archivi scansionati.</translation>
+    </message>
+    <message>
+        <source>Only output error messages</source>
+        <translation>Emette solo messaggi di errore.</translation>
+    </message>
+    <message>
+        <source>Disable summary at end of scanning</source>
+        <translation>Disattiva il riepilogo al termine della scansione.</translation>
+    </message>
+    <message>
+        <source>Skip printing OK files</source>
+        <translation>Saltare la stampa dei file OK.</translation>
+    </message>
+    <message>
+        <source>Do not remove temporary files</source>
+        <translation>Non rimuovere i file temporanei.</translation>
+    </message>
+    <message>
+        <source>Scan subdirectories recursively</source>
+        <translation>Scansiona le sottodirectory in modo ricorsivo.</translation>
+    </message>
+    <message>
+        <source>Detect Possibly Unwanted Applications</source>
+        <translation>Rileva applicazioni possibilmente indesiderate.</translation>
+    </message>
+    <message>
+        <source>Scan files and directories on other filesystems</source>
+        <translation>Scansiona file e directory su altri file system.</translation>
+    </message>
+    <message>
+        <source>Scan mail files</source>
+        <translation>Scansione file di posta.</translation>
+    </message>
+    <message>
+        <source>Detect structured data (SSN, Credit Card)</source>
+        <translation>Rileva dati strutturati (SSN, Carta di Credito).</translation>
+    </message>
+    <message>
+        <source>Enable URL signature-based phishing detection</source>
+        <translation>Abilita il rilevamento del phishing basato sulla firma URL.</translation>
+    </message>
+    <message>
+        <source>Stop scanning as soon as a heuristic match is found</source>
+        <translation>Interrompe la scansione non appena viene trovata una corrispondenza euristica.</translation>
+    </message>
+    <message>
+        <source>Enable email signature-based phishing detection</source>
+        <translation>Abilita il rilevamento del phishing basato sulla firma e-mail.</translation>
+    </message>
+    <message>
+        <source>Heuristic alerts</source>
+        <translation>Avvisi euristici.</translation>
+    </message>
+    <message>
+        <source>Normalize html, script, and text files. Use normalize=no for yara compatibility</source>
+        <translation>Normalizza file HTML, script e di testo. Usa normalize=no per la compatibilità con Yara.</translation>
+    </message>
+    <message>
+        <source>Scan PE files</source>
+        <translation>Scansiona file PE.</translation>
+    </message>
+    <message>
+        <source>Scan ELF files</source>
+        <translation>Scansiona file ELF.</translation>
+    </message>
+    <message>
+        <source>Scan OLE2 containers</source>
+        <translation>Esegui la scansione dei contenitori OLE2.</translation>
+    </message>
+    <message>
+        <source>Scan PDF files</source>
+        <translation>Scansiona file PDF.</translation>
+    </message>
+    <message>
+        <source>Scan SWF files</source>
+        <translation>Scansiona file SWF.</translation>
+    </message>
+    <message>
+        <source>Scan HTML files</source>
+        <translation>Scansiona file HTML.</translation>
+    </message>
+    <message>
+        <source>Scan xml-based document files</source>
+        <translation>Scansiona file di documenti basati su XML.</translation>
+    </message>
+    <message>
+        <source>Scan HWP3 files</source>
+        <translation>Scansiona file HWP3.</translation>
+    </message>
+    <message>
+        <source>Scan archive files (supported by libclamav)</source>
+        <translation>Scansiona i file di archivio (supportato da libclamav).</translation>
+    </message>
+    <message>
+        <source>Alert on broken executable files (PE &amp; ELF).</source>
+        <translation>Avviso su file eseguibili danneggiati (PE e ELF).</translation>
+    </message>
+    <message>
+        <source>Scan OneNote files</source>
+        <translation>Scansiona file OneNote.</translation>
+    </message>
+    <message>
+        <source>Scan image (graphics) files</source>
+        <translation>Scansione di file di immagini (grafici).</translation>
+    </message>
+    <message>
+        <source>Detect files by calculating image (graphics) fuzzy hashes</source>
+        <translation>Rileva i file calcolando gli hash fuzzy dell&apos;immagine (grafica).</translation>
+    </message>
+    <message>
+        <source>Alert on encrypted archives and documents</source>
+        <translation>Alert su archivi e documenti criptati.</translation>
+    </message>
+    <message>
+        <source>Alert on encrypted documents.</source>
+        <translation>Avviso sui documenti crittografati.</translation>
+    </message>
+    <message>
+        <source>Alert on OLE2 files containing VBA macros</source>
+        <translation>Avviso su file OLE2 contenenti macro VBA.</translation>
+    </message>
+    <message>
+        <source>Alert on encrypted archives</source>
+        <translation>Alert su archivi e documenti criptati.</translation>
+    </message>
+    <message>
+        <source>Alert on files that exceed max file size, max scan size, or max recursion limit</source>
+        <translation>Avviso sui file che superano la dimensione massima del file, la dimensione massima della scansione o il limite massimo di ricorsione.</translation>
+    </message>
+    <message>
+        <source>Alert on emails containing cloaked URLs</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Disable authenticode certificate chain verification in PE files</source>
+        <translation>Disabilita la verifica della catena di certificati Authenticode nei file PE.</translation>
+    </message>
+    <message>
+        <source>Alert on broken graphics files (JPEG, TIFF, PNG, GIF)</source>
+        <translation>Avviso su file grafici danneggiati (JPEG, TIFF, PNG, GIF).</translation>
+    </message>
+    <message>
+        <source>Alert on emails containing SSL mismatches in URLs</source>
+        <translation>Avviso sulle e-mail contenenti mancate corrispondenze SSL negli URL.</translation>
+    </message>
+    <message>
+        <source>Alert on raw DMG image files containing partition intersections</source>
+        <translation>Avviso sui file immagine DMG grezzi contenenti intersezioni di partizioni.</translation>
     </message>
 </context>
 </TS>
