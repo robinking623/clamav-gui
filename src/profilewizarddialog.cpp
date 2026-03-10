@@ -515,17 +515,17 @@ void ProfileWizardDialog::readSettings()
                     bool optionfound = false;
                     if (m_setupFile->keywordExists("SelectedOptions", keyword + "<equal>yes") == true) {
                         optionyn = new scanoptionyn(this, newProfilename, "SelectedOptions", true, keyword + "<equal>yes",
-                                                    m_setupFile->getSectionValue("AvailableOptions", optionText),language);
+                                                    m_setupFile->getSectionValue("AvailableOptions", optionText));
                         optionfound = true;
                     }
                     if ((m_setupFile->keywordExists("SelectedOptions", keyword + "<equal>no") == true) && (optionfound == false)) {
                         optionyn = new scanoptionyn(this, newProfilename, "SelectedOptions", true, keyword + "<equal>no",
-                                                    m_setupFile->getSectionValue("AvailableOptions", optionText),language);
+                                                    m_setupFile->getSectionValue("AvailableOptions", optionText));
                         optionfound = true;
                     }
                     if (optionfound == false) {
                         optionyn = new scanoptionyn(this, newProfilename, "SelectedOptions", false, keyword + "<equal>" + yes_no,
-                                                    m_setupFile->getSectionValue("AvailableOptions", optionText),language);
+                                                    m_setupFile->getSectionValue("AvailableOptions", optionText));
                     }
                     m_ui->optionLayout->addWidget(optionyn);
                 }
@@ -533,11 +533,11 @@ void ProfileWizardDialog::readSettings()
                     // --Switches without yes/no
                     if (m_setupFile->keywordExists("SelectedOptions", optionText) == true) {
                         option = new scanoption(this, newProfilename, "SelectedOptions", true, optionText,
-                                                m_setupFile->getSectionValue("AvailableOptions", optionText),language);
+                                                m_setupFile->getSectionValue("AvailableOptions", optionText));
                     }
                     else {
                         option = new scanoption(this, newProfilename, "SelectedOptions", false, optionText,
-                                                m_setupFile->getSectionValue("AvailableOptions", optionText),language);
+                                                m_setupFile->getSectionValue("AvailableOptions", optionText));
                     }
                     m_ui->optionLayout->addWidget(option);
                 }
