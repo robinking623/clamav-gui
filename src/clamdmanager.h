@@ -4,6 +4,7 @@
 #include "clamdconfcomboboxoption.h"
 #include "clamdconfspinboxoption.h"
 #include "clamdconfstringoption.h"
+#include "clamdconfmultioption.h"
 #include "highlighter.h"
 #include "setupfilehandler.h"
 #include "translator.h"

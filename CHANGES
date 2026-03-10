@@ -1,3 +1,6 @@
+* Tue Mar 10 2026 - Version 1.2.6
+- Added multiline options in clamd.conf (Options that can be used more the ones).
+
 * Sat Mar 7 2026 - Version 1.2.5
 - Remodeling of the clamd tab. The man pages for clamd.conf are parsed to automaticaly create the options for clamd and clamonaccess. This required also the modification of
 - the translation model and all translation files.

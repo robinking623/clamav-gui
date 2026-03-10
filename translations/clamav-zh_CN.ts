@@ -687,7 +687,7 @@
         <source>Be verbose</source>
         <translation>显示详细信息。</translation>
     </message>
-     <message>
+    <message>
         <source>Only print infected files</source>
         <translation>仅打印被感染的文件。</translation>
     </message>
@@ -854,6 +854,38 @@
     <message>
         <source>Alert on raw DMG image files containing partition intersections</source>
         <translation>对包含分区交集的原始 DMG 镜像文件发出警报。</translation>
+    </message>
+    <message>
+        <source>Sets the group ownership on the unix socket. Default: the primary group of the user running clamd</source>
+        <translation>设置 Unix 套接字的组所有权。默认值：运行 clamd 的用户所属的主组。</translation>
+    </message>
+    <message>
+        <source>Enables the SHUTDOWN command. Setting this to no prevents a client to stop clamd via the protocol. When disabled, clamd responds to this command with COMMAND UN‐ AVAILABLE. Default: yes</source>
+        <translation>启用 SHUTDOWN 命令。将其设置为 no 将阻止客户端通过协议停止 clamd 服务。禁用后，clamd 会以 COMMAND UN-AVAILABLE 响应此命令。默认值：是</translation>
+    </message>
+    <message>
+        <source>Enables the RELOAD command. Setting this to no prevents a client to reload the database. When disabled, clamd responds to this command with COMMAND UN‐ AVAILABLE. Default: yes</source>
+        <translation>启用 RELOAD 命令。将其设置为 no 将阻止客户端重新加载数据库。禁用时，clamd 对此命令的响应为 COMMAND UN-AVAILABLE。默认值：是</translation>
+    </message>
+    <message>
+        <source>Enables the VERSION command. Setting this to no prevents a client from querying version information. When disabled, clamd responds to this command with COMMAND UN‐ AVAILABLE. Default: yes</source>
+        <translation>启用 VERSION 命令。将其设置为 no 将阻止客户端查询版本信息。禁用时，clamd 对此命令的响应为 COMMAND UN-AVAILABLE。默认值：是</translation>
+    </message>
+    <message>
+        <source>Enables the STATS command. Setting this to no prevents a client from querying statistics. When disabled, clamd responds to this command with COMMAND UN‐ AVAILABLE. Default: yes</source>
+        <translation>启用 STATS 命令。将其设置为 no 将阻止客户端查询统计信息。禁用时，clamd 会以 COMMAND UN-AVAILABLE 响应此命令。默认值：是</translation>
+    </message>
+    <message>
+        <source>Exclude a specific PUA category. This directive can be used mul‐ tiple times. See https://docs.clamav.net/faq/faq-pua.html for the complete list of PUA categories. Default: disabled</source>
+        <translation>排除特定类别的潜在有害程序 (PUA)。此指令可多次使用。有关完整的 PUA 类别列表，请参阅 https://docs.clamav.net/faq/faq-pua.html。默认值：禁用</translation>
+    </message>
+    <message>
+        <source>With this option you can exclude specific UIDs. Processes with these UIDs will be able to access all files without triggering scans or permission denied events. This option can be used multiple times (one per line). Note: using a value of 0 on any line will disable this option en‐ tirely. To exclude the root UID (0) please enable the OnAccessEx‐ cludeRootUID option. Also note that if clamd cannot check the uid of the process that generated an on-access scan event (e.g., because OnAccessPreven‐ tion was not enabled, and the process already exited), clamd will perform a scan. Thus, setting OnAccessExcludeUID is not guaran‐ teed to prevent every access by the specified uid from triggering a scan (unless OnAccessPrevention is enabled). Default: disabled</source>
+        <translation>使用此选项可以排除特定的 UID。具有这些 UID 的进程将能够访问所有文件，而不会触发扫描或权限拒绝事件。此选项可以多次使用（每行一个）。注意：在任何一行中使用值 0 将完全禁用此选项。要排除根 UID (0)，请启用 OnAccessExcludeRootUID 选项。另请注意，如果 clamd 无法检查生成访问扫描事件的进程的 UID（例如，因为未启用 OnAccessPrevention，并且该进程已退出），clamd 将执行扫描。因此，设置 OnAccessExcludeUID 并不能保证阻止指定 UID 的每次访问都触发扫描（除非启用了 OnAccessPrevention）。默认值：禁用</translation>
+    </message>
+    <message>
+        <source>This option allows exclusions via user names when using the on- access scanning client. It can be used multiple times, and has the same potential race condition limitations of the OnAccessEx‐ cludeUID option. Default: disabled</source>
+        <translation>此选项允许在使用实时扫描客户端时通过用户名排除特定用户。它可以多次使用，并且与 OnAccessExcludeUID 选项一样，存在相同的潜在竞争条件限制。默认值：禁用</translation>
     </message>
 </context>
 </TS>
