@@ -8,7 +8,6 @@ clamdconfmultioption::clamdconfmultioption(QWidget* parent, QString keyword, boo
     m_ui->setupUi(this);
     if ((m_label.indexOf("directories") != -1) && (m_label.indexOf("REGEX") == -1)) m_fileselector = true; else m_fileselector = false;
     m_label = QCoreApplication::translate("ClamAV", m_label.toUtf8().constData());
-    qDebug() << m_label;
     m_label = translator::beautifyString(m_label,120);
     m_ui->checkBox->setToolTip(m_keyword);
     if (m_values.length() > 0) {
