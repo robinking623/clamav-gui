@@ -1,3 +1,6 @@
+* Sat Mar 14 2026 - Version 1.2.7
+- Code optimization and cleanup
+
 * Tue Mar 10 2026 - Version 1.2.6
 - Added multiline options in clamd.conf (Options that can be used more the ones).
 

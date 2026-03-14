@@ -5,7 +5,7 @@ optionsDialog::optionsDialog(QWidget* parent, setupFileHandler* setupFile) : QWi
 {
     m_ui.setupUi(this);
     //m_setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini", this); --> uses the setupFileHandler provided by the clamav_gui class
-    updateDirectories();
+    //updateDirectories();
     m_ui.tabWidget->setTabText(0, tr("Options"));
     m_ui.tabWidget->setTabText(1, tr("Directories"));
     m_scanLimits = new scanLimitsTab(this, m_setupFile);
@@ -304,14 +304,14 @@ void optionsDialog::slot_selectLVDButtonClicked()
     if (file.exists()) {
         return;
     }
-    if (QMessageBox::warning(this, tr("Virus definitions missing!"),
+    /*if (QMessageBox::warning(this, tr("Virus definitions missing!"),
                                 tr("No virus definitions found in the database folder. Should the virus definitions be downloaded?"),
                                 QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes) {
         m_setupFile->setSectionValue("Directories","LoadSupportedDBFiles","checked|" + QDir::homePath() + "/.clamav-gui/signatures");
         m_ui.loadVirusDatabaseCheckBox->setChecked(true);
         m_ui.loadVirusDatabaseLineEdit->setText(QDir::homePath() + "/.clamav-gui/signatures");
         emit updateDatabase();
-    }
+    }*/
 }
 
 void optionsDialog::slot_selectCDButtonClicked()

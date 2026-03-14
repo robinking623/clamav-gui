@@ -2,7 +2,7 @@
 
 infoDialog::infoDialog(QWidget* parent) : QWidget(parent)
 {
-    QString version = "1.2.6 (QT5/QT6)";
+    QString version = "1.2.7 (QT5/QT6)";
 
     QString infoText = "<html>";
     infoText += "  <head/>";
@@ -185,45 +185,6 @@ infoDialog::infoDialog(QWidget* parent) : QWidget(parent)
     infoText += "          <td>";
     infoText += "            <p>";
     infoText += "              <span style=' font-size:14px;'>translated by DeepL</span>";
-    infoText += "            </p>";
-    infoText += "          </td>";
-    infoText += "        </tr>";
-    infoText += "        <tr>";
-    infoText += "          <td>";
-    infoText += "            <p>";
-    infoText += "              <img src='/usr/share/clamav-gui/languageicons/zh_CN.png'/>";
-    infoText += "              <span style=' font-size:14px;'> Chinese:</span>";
-    infoText += "            </p>";
-    infoText += "          </td>";
-    infoText += "          <td>";
-    infoText += "            <p>";
-    infoText += "              <span style=' font-size:14px;'/>";
-    infoText += "            </p>";
-    infoText += "          </td>";
-    infoText += "          <td>";
-    infoText += "            <p>";
-    infoText += "              <span style=' font-size:14px;'>Robin King (Chi Zhang)</span>";
-    infoText += "            </p>";
-    infoText += "          </td>";
-    infoText += "          <td>";
-    infoText += "            <p>";
-    infoText += "              <span style=' font-size:14px;'/>";
-    infoText += "            </p>";
-    infoText += "          </td>";
-    infoText += "          <td>";
-    infoText += "            <p>";
-    infoText += "              &nbsp;";
-    infoText += "              <span style=' font-size:14px;'>&nbsp;</span>";
-    infoText += "            </p>";
-    infoText += "          </td>";
-    infoText += "          <td>";
-    infoText += "            <p>";
-    infoText += "              <span style=' font-size:14px;'/>";
-    infoText += "            </p>";
-    infoText += "          </td>";
-    infoText += "          <td>";
-    infoText += "            <p>";
-    infoText += "              <span style=' font-size:14px;'>&nbsp;</span>";
     infoText += "            </p>";
     infoText += "          </td>";
     infoText += "        </tr>";

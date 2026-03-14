@@ -19,17 +19,8 @@ clamdManager::clamdManager(QWidget* parent, setupFileHandler* setupFile) : QWidg
     connect(m_processWatcher, SIGNAL(timeout()), this, SLOT(slot_processWatcherExpired()));
     m_processWatcher->start(30000);
 
-    initClamdSettings();
-    m_getclamdconfparameters = new QProcess(this);
-    QFile m_getmaninfo(QDir::homePath() + "/.clamav-gui/getmaninfo.sh");
-    if (m_getmaninfo.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        QTextStream stream(&m_getmaninfo);
-        stream << "#!/bin/bash\nman clamd.conf > " + QDir::homePath() + "/.clamav-gui/clamd.conf.man";
-        m_getmaninfo.close();
-        m_getmaninfo.setPermissions(QFileDevice::ExeOwner|QFileDevice::ExeGroup|QFileDevice::ExeOther|QFileDevice::ReadUser|QFileDevice::ReadGroup|QFileDevice::ReadOther);
-    }
-    connect(m_getclamdconfparameters,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(slot_clamdConfElements()));
-    m_getclamdconfparameters->start(QDir::homePath() + "/.clamav-gui/getmaninfo.sh");
+    //initClamdSettings();
+
 }
 
 QString clamdManager::trimLocationOutput(QString value)
@@ -44,7 +35,7 @@ QString clamdManager::trimLocationOutput(QString value)
     return rc;
 }
 
-void clamdManager::initClamdSettings()
+void clamdManager::slot_initClamdSettings()
 {
     m_initprocessrunning = true;
     QStringList keywords;
@@ -55,7 +46,7 @@ void clamdManager::initClamdSettings()
 
     QFile clamdConfFile(QDir::homePath() + "/.clamav-gui/clamd.conf");
 
-    if (clamdConfFile.exists() == false) {
+    /*if (clamdConfFile.exists() == false) {
         m_clamdConf = new setupFileHandler(QDir::homePath() + "/.clamav-gui/clamd.conf", this);
         QString value = m_setupFile->getSectionValue("Directories", "LoadSupportedDBFiles");
         if (value.indexOf("checked|") == 0)
@@ -80,9 +71,9 @@ void clamdManager::initClamdSettings()
         m_clamdConf->setSingleLineValue("OnAccessRetryAttempts", "0");
         m_clamdConf->setSingleLineValue("OnAccessExcludeUname", "root");
         m_clamdConf->setSingleLineValue("OnAccessExcludeUID", "0");
-    } else {
+    } else {*/
         m_clamdConf = new setupFileHandler(QDir::homePath() + "/.clamav-gui/clamd.conf", this);
-    }
+    //}
 
     QStringList parameters;
     QStringList monitorings = m_setupFile->getKeywords("Clamonacc");
@@ -134,6 +125,14 @@ void clamdManager::initClamdSettings()
     m_clamonaccLocationProcess->start("whereis", parameters);
 
     m_initprocessrunning = false;
+
+    getClamdConfElements();
+}
+
+void clamdManager::slot_dbPathChanged(QString dbPath)
+{
+    m_clamdConf->setSingleLineValue("DatabaseDirectory", dbPath);
+    slot_clamdSettingsChanged();
 }
 
 void clamdManager::slot_updateClamdConf()
@@ -806,7 +805,7 @@ QString clamdManager::selectColor(QString color)
     return rc;
 }
 
-void clamdManager::slot_clamdConfElements()
+void clamdManager::getClamdConfElements()
 {
     QString possibleValues;
     QString keyword;
@@ -814,12 +813,9 @@ void clamdManager::slot_clamdConfElements()
     QStringList splitter;
     QString valuetype;
     QString skipvalues = "|Example|OnAccessIncludePath|LogFile|PidFile|LocalSocketMode|";
-    //QString savelabel = "|EnableShutdownCommand|LocalSocketGroup|ExcludePUA|OnAccessExcludeUID|OnAccessExcludeUname|EnableReloadCommand|EnableVersionCommand|EnableStatsCommand|";
     int poscounter = 0;
     bool skip = false;
     QStringList clamdConfElement;
-
-    delete m_getclamdconfparameters;
 
     if (m_setupFile->getSectionBoolValue("Setup", "DisableLogHighlighter") == false) {
         m_logHighlighter = new highlighter(m_ui.clamdLogPlainTextEdit->document());
