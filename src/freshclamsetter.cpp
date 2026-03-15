@@ -873,7 +873,7 @@ void freshclamsetter::slot_initFreshclamSettings()
     m_freshclamlocationProcessOutput = "";
 
     QFile file(m_ui.databaseDirectoryPathLabel->text() + "/freshclam.dat");
-    if (file.exists() == false) {
+    if ((file.exists() == false) && (m_setupFile->getSectionBoolValue("Setup","FirstRun") == false)){
         if (QMessageBox::warning(this, tr("Virus definitions missing!"),
                                  m_ui.databaseDirectoryPathLabel->text() + "\n" +
                                      tr("No virus definitions found in the database folder. Should the virus definitions be downloaded?"),

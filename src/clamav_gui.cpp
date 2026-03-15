@@ -15,6 +15,8 @@ clamav_gui::clamav_gui(QWidget* parent) : QWidget(parent)
         (!QFile::exists(QDir::homePath() + "/.clamav-gui/clamd.conf.man"))) {
         firstrun = true;
         initDialog = new firstRunWindow(this);
+        connect(initDialog,SIGNAL(rejected()),qApp,SLOT(quit()));
+        initDialog->setModal(true);
         initDialog->open();
 
         QScreen* m_screen = QGuiApplication::primaryScreen();
@@ -26,7 +28,7 @@ clamav_gui::clamav_gui(QWidget* parent) : QWidget(parent)
     m_guisudoapp = "pkexec";
 
     m_setupFile = new setupFileHandler(settingsPath, this);
-
+    if (!firstrun) m_setupFile->setSectionValue("Setup","FirstRun",false);
     m_scanProcess = new QProcess(this);
     connect(m_scanProcess, SIGNAL(readyReadStandardError()), this, SLOT(slot_scanProcessHasErrOutput()));
     connect(m_scanProcess, SIGNAL(readyReadStandardOutput()), this, SLOT(slot_scanProcessHasStdOutput()));

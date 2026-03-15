@@ -3,6 +3,7 @@
 
 #include <QProcess>
 #include <QDialog>
+#include <QTimer>
 #include <QDir>
 #include "setupfilehandler.h"
 
@@ -21,14 +22,15 @@ public:
     ~firstRunWindow();
 
 private:
-    Ui::firstRunWindow *ui;
-    QStringList           initCommands;
-    QStringList           initParameters;
-    QStringList           processParameters;
-    QProcess            * initProcess;
-    int                   initIndex;
-    bool                  processInit;
-    setupFileHandler    * setupFile;
+    Ui::firstRunWindow *m_ui;
+    QStringList           m_initCommands;
+    QStringList           m_initParameters;
+    QStringList           m_processParameters;
+    QProcess            * m_initProcess;
+    QTimer              * m_delayTimer;
+    int                   m_initIndex;
+    bool                  m_processInit;
+    setupFileHandler    * m_setupFile;
     setupFileHandler    * m_clamdConf;
     setupFileHandler    * m_freshclamConf;
     void createBaseDirStructur();
@@ -36,11 +38,18 @@ private:
     void createInitialSettings();
     void createClamdConfFile();
     void createFreshclamConfFile();
+    void findTranslation();
 
 private slots:
     void slot_initProcessFinished();
     void slot_sddComboBoxChanged();
+    void slot_languageChanged();
     void slot_done();
+    void slot_findRequiredApplications();
+    void slot_monochromeModeChanged();
+    void slot_startupModeChanged();
+    void slot_clamdscanChanged();
+
 
 signals:
     void doneit();
