@@ -302,10 +302,10 @@ void clamdManager::slot_clamdStartStopButtonClicked()
         if (stopclamdFile.open(QIODevice::Text | QIODevice::ReadWrite)) {
             QTextStream stream(&stopclamdFile);
             if (m_clamonaccPid != "n/a") {
-                stream << "#!/bin/bash\n/bin/kill -sigterm " + pid + " && kill -9 " + m_clamonaccPid;
+                stream << "#!/bin/bash\n/bin/kill -s SIGTERM " + pid + " && kill -9 " + m_clamonaccPid;
             }
             else {
-                stream << "#!/bin/bash\n/bin/kill -sigterm " + pid;
+                stream << "#!/bin/bash\n/bin/kill -s SIGTERM " + pid;
             }
             stopclamdFile.close();
             stopclamdFile.setPermissions(QFileDevice::ReadOwner | QFileDevice::WriteOwner | QFileDevice::ExeOwner | QFileDevice::ReadGroup |
@@ -595,7 +595,7 @@ void clamdManager::slot_restartClamdButtonClicked()
     m_setupFile->setSectionValue("Clamd", "ClamdPid", pid);
 
     QString clamonaccOptions;
-    clamonaccOptions = " --copy=" + QDir::homePath() + "/.clamav-gui/quarantine";
+    //clamonaccOptions = " --copy=" + QDir::homePath() + "/.clamav-gui/quarantine";
 
     m_clamdRestartInProgress = true;
 
@@ -614,13 +614,13 @@ void clamdManager::slot_restartClamdButtonClicked()
         QTextStream stream(&startclamdFile);
         if (m_dirsUnderMonitoring > 0) {
             stream << "#!/bin/bash\n"
-                   << "kill -sigterm " + pid + " && kill -9 " + m_clamonaccPid + " && sleep 20 && " + m_clamdLocation + " -c " + QDir::homePath() +
+                   << "kill -s SIGTERM " + pid + " && kill -9 " + m_clamonaccPid + " && sleep 20 && " + m_clamdLocation + " -c " + QDir::homePath() +
                           "/.clamav-gui/clamd.conf && " + m_clamonaccLocation + " -c " + QDir::homePath() + "/.clamav-gui/clamd.conf -l " +
-                          QDir::homePath() + "/.clamav-gui/clamd.log" + clamonaccOptions;
+                          QDir::homePath() + "/.clamav-gui/clamd.log " + clamonaccOptions;
         }
         else {
             stream << "#!/bin/bash\n"
-                   << "kill -sigterm " + pid + " && sleep 20 && " + m_clamdLocation + " -c " + QDir::homePath() + "/.clamav-gui/clamd.conf";
+                   << "kill -s SIGTERM " + pid + " && sleep 20 && " + m_clamdLocation + " -c " + QDir::homePath() + "/.clamav-gui/clamd.conf";
         }
         startclamdFile.close();
         startclamdFile.setPermissions(QFileDevice::ReadOwner | QFileDevice::WriteOwner | QFileDevice::ExeOwner | QFileDevice::ReadGroup |

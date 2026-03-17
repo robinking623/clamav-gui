@@ -48,8 +48,8 @@
         <translation>Opret midlertidige filer til indbyggede filscanninger, der ellers kun ville være i hukommelsen.</translation>
     </message>
     <message>
-        <source>Generate JSON metadata for the scanned file(s). For testing &amp; development use ONLY.</source>
-        <translation>Generer JSON-metadata for den/de scannede fil(er). KUN til brug for test og udvikling.</translation>
+        <source>Generate JSON metadata for the scanned file(s). For testing &amp; development use ONLY. JSON will be printed if --debug is enabled. A JSON file will dropped to the temp directory if --leave-temps is enabled.</source>
+        <translation>Generer JSON-metadata for den eller de scannede filer. Udelukkende til test- og udviklingsbrug. JSON-data vises, hvis --debug er aktiveret. En JSON-fil gemmes i midlertidige mappe, hvis --leave-temps er aktiveret.</translation>
     </message>
     <message>
         <source>Store html URIs in metadata. URIs will be written to the metadata.json file in an array called &apos;URIs&apos;.</source>
@@ -220,8 +220,8 @@
         <translation>Deaktiver caching og cachekontroller for hashsummer af scannede filer.</translation>
     </message>
     <message>
-        <source>Print the file hash after each file scanned.</source>
-        <translation>Udskriv filens hashtag efter hver scannet fil.</translation>
+        <source>Print the file hash after each file scanned. The type of hash printed will match the '--hash-alg'.</source>
+        <translation>Udskriv filens hash efter hver scannet fil. Den udskrevne hash-type vil svare til ›--hash-alg‹.</translation>
     </message>
     <message>
         <source>Print the file type after each file scanned.</source>

@@ -48,8 +48,8 @@
         <translation>Créez des fichiers temporaires pour les analyses de fichiers imbriqués qui autrement seraient uniquement en mémoire.</translation>
     </message>
     <message>
-        <source>Generate JSON metadata for the scanned file(s). For testing &amp; development use ONLY.</source>
-        <translation>Générez des métadonnées JSON pour le(s) fichier(s) analysé(s). Pour test et développement UNIQUEMENT.</translation>
+        <source>Generate JSON metadata for the scanned file(s). For testing &amp; development use ONLY. JSON will be printed if --debug is enabled. A JSON file will dropped to the temp directory if --leave-temps is enabled.</source>
+        <translation>Générer des métadonnées JSON pour le ou les fichiers analysés. À utiliser UNIQUEMENT à des fins de test et de développement. Le fichier JSON sera affiché si l'option --debug est activée. Un fichier JSON sera enregistré dans le répertoire temporaire si l'option --leave-temps est activée.</translation>
     </message>
     <message>
         <source>Store html URIs in metadata. URIs will be written to the metadata.json file in an array called &apos;URIs&apos;.</source>
@@ -212,8 +212,8 @@
         <translation>Désactivez la mise en cache et les vérifications du cache pour les sommes de hachage des fichiers analysés.</translation>
     </message>
     <message>
-        <source>Print the file hash after each file scanned.</source>
-        <translation>Imprimez le hachage du fichier après chaque fichier analysé.</translation>
+        <source>Print the file hash after each file scanned. The type of hash printed will match the '--hash-alg'.</source>
+        <translation>Afficher le hachage du fichier après chaque fichier analysé. Le type de hachage affiché correspondra à l'option « --hash-alg ».</translation>
     </message>
     <message>
         <source>Print the file type after each file scanned.</source>

@@ -48,8 +48,8 @@
         <translation>为原本仅在内存中的嵌套文件扫描创建临时文件。</translation>
     </message>
     <message>
-        <source>Generate JSON metadata for the scanned file(s). For testing &amp; development use ONLY.</source>
-        <translation>为扫描的文件生成 JSON 元数据。仅用于测试和开发。</translation>
+        <source>Generate JSON metadata for the scanned file(s). For testing &amp; development use ONLY. JSON will be printed if --debug is enabled. A JSON file will dropped to the temp directory if --leave-temps is enabled.</source>
+        <translation>为扫描的文件生成 JSON 元数据。仅限测试和开发使用。如果启用了 --debug 选项，将输出 JSON 内容。如果启用了 --leave-temps 选项，JSON 文件将保存在临时目录中。</translation>
     </message>
     <message>
         <source>Store html URIs in metadata. URIs will be written to the metadata.json file in an array called &apos;URIs&apos;.</source>
@@ -212,8 +212,8 @@
         <translation>禁用对扫描文件哈希值的缓存和缓存检查。</translation>
     </message>
     <message>
-        <source>Print the file hash after each file scanned.</source>
-        <translation>在每个文件扫描后打印文件哈希。</translation>
+        <source>Print the file hash after each file scanned. The type of hash printed will match the '--hash-alg'.</source>
+        <translation>扫描每个文件后打印该文件的哈希值。打印的哈希类型将与 ‘--hash-alg’ 选项一致。</translation>
     </message>
     <message>
         <source>Print the file type after each file scanned.</source>

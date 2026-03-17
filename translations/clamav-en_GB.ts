@@ -48,7 +48,7 @@
         <translation></translation>
     </message>
     <message>
-        <source>Generate JSON metadata for the scanned file(s). For testing &amp; development use ONLY.</source>
+        <source>Generate JSON metadata for the scanned file(s). For testing &amp; development use ONLY. JSON will be printed if --debug is enabled. A JSON file will dropped to the temp directory if --leave-temps is enabled.</source>
         <translation></translation>
     </message>
     <message>
@@ -212,7 +212,7 @@
         <translation></translation>
     </message>
     <message>
-        <source>Print the file hash after each file scanned.</source>
+        <source>Print the file hash after each file scanned. The type of hash printed will match the '--hash-alg'.</source>
         <translation></translation>
     </message>
     <message>

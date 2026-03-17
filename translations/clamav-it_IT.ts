@@ -48,8 +48,8 @@
         <translation>Crea file temporanei per le scansioni di file nidificati che altrimenti sarebbero solo in memoria.</translation>
     </message>
     <message>
-        <source>Generate JSON metadata for the scanned file(s). For testing &amp; development use ONLY.</source>
-        <translation>Genera metadati JSON per i file scansionati. SOLO per test e sviluppo.</translation>
+        <source>Generate JSON metadata for the scanned file(s). For testing &amp; development use ONLY. JSON will be printed if --debug is enabled. A JSON file will dropped to the temp directory if --leave-temps is enabled.</source>
+        <translation>Genera metadati JSON per i file acquisiti. Da utilizzare ESCLUSIVAMENTE per scopi di test e sviluppo. Il file JSON verrà stampato se l'opzione --debug è abilitata. Se l'opzione --leave-temps è abilitata, il file JSON verrà salvato nella directory temporanea.</translation>
     </message>
     <message>
         <source>Store html URIs in metadata. URIs will be written to the metadata.json file in an array called &apos;URIs&apos;.</source>
@@ -212,8 +212,8 @@
         <translation>Disabilita la memorizzazione nella cache e i controlli della cache per le somme hash dei file scansionati.</translation>
     </message>
     <message>
-        <source>Print the file hash after each file scanned.</source>
-        <translation>Stampa l&apos;hash del file dopo ogni file scansionato.</translation>
+        <source>Print the file hash after each file scanned. The type of hash printed will match the '--hash-alg'.</source>
+        <translation>Stampa l'hash del file dopo ogni file analizzato. Il tipo di hash stampato corrisponderà all'opzione «--hash-alg».</translation>
     </message>
     <message>
         <source>Print the file type after each file scanned.</source>

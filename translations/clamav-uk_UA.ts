@@ -48,8 +48,8 @@
         <translation>Створіть тимчасові файли для сканування вкладених файлів, які інакше були б лише в пам’яті.</translation>
     </message>
     <message>
-        <source>Generate JSON metadata for the scanned file(s). For testing &amp; development use ONLY.</source>
-        <translation>Створіть метадані JSON для відсканованих файлів. Використовуйте ЛИШЕ для тестування та розробки.</translation>
+        <source>Generate JSON metadata for the scanned file(s). For testing &amp; development use ONLY. JSON will be printed if --debug is enabled. A JSON file will dropped to the temp directory if --leave-temps is enabled.</source>
+        <translation>Створити метадані у форматі JSON для відсканованих файлів. Використовувати ВИКЛЮЧНО для тестування та розробки. Якщо ввімкнено параметр --debug, метадані у форматі JSON будуть виведені на екран. Якщо ввімкнено параметр --leave-temps, файл JSON буде збережено у тимчасовому каталозі.</translation>
     </message>
     <message>
         <source>Store html URIs in metadata. URIs will be written to the metadata.json file in an array called &apos;URIs&apos;.</source>
@@ -212,8 +212,8 @@
         <translation>Вимкніть кешування та перевірку кешу на хеш-суми сканованих файлів.</translation>
     </message>
     <message>
-        <source>Print the file hash after each file scanned.</source>
-        <translation>Друкуйте хеш файлу після кожного сканованого файлу.</translation>
+        <source>Print the file hash after each file scanned. The type of hash printed will match the '--hash-alg'.</source>
+        <translation>Виводити хеш-код файлу після сканування кожного файлу. Тип виведеного хеш-коду відповідатиме параметру «--hash-alg».</translation>
     </message>
     <message>
         <source>Print the file type after each file scanned.</source>

@@ -44,8 +44,8 @@
         <translation>Temporäre Dateien nicht entfernen</translation>
     </message>
     <message>
-        <source>Generate JSON metadata for the scanned file(s). For testing &amp; development use ONLY.</source>
-        <translation>Erstelle JSON Beschreibung von gescannten Dateien. Nur für Tests und Entwicklung.</translation>
+        <source>Generate JSON metadata for the scanned file(s). For testing &amp; development use ONLY. JSON will be printed if --debug is enabled. A JSON file will dropped to the temp directory if --leave-temps is enabled.</source>
+        <translation>Erstelle JSON-Metadaten für die gescannten Dateien. NUR für Test- und Entwicklungszwecke. Die JSON-Daten werden ausgegeben, wenn --debug aktiviert ist. Eine JSON-Datei wird im temporären Verzeichnis abgelegt, wenn --leave-temps aktiviert ist.</translation>
     </message>
     <message>
         <source>Only load official signatures.</source>
@@ -194,10 +194,6 @@
     <message>
         <source>Create temporary files for nested file scans that would otherwise be in-memory only.</source>
         <translation>Erstellen von temporären Dateien für verschachtelte Dateiscans, die sonst nur im Arbeitsspeicher gespeichert würden</translation>
-    </message>
-    <message>
-        <source>Generate JSON metadata for the scanned file(s). For testing &amp; development use ONLY</source>
-        <translation>Generieren Sie JSON-Metadaten für die gescannte(n) Datei(en). NUR für Test- und Entwicklungszwecke</translation>
     </message>
     <message>
         <source>Return with a nonzero error code if virus database outdated.</source>
@@ -740,8 +736,8 @@
         <translation>Speichern Sie MD5 und SHA1 zusätzlich zu SHA2-256 in Metadaten</translation>
     </message>
     <message>
-        <source>Print the file hash after each file scanned.</source>
-        <translation>Ausgabe des Datei-Hash nach jeder gescannten Datei</translation>
+        <source>Print the file hash after each file scanned. The type of hash printed will match the '--hash-alg'.</source>
+        <translation>Ausgabe des Datei-Hash nach jeder gescannten Datei. Der ausgegebenen Hash-Typ entspricht '--hash-alg'.</translation>
     </message>
     <message>
         <source>Print the file type after each file scanned.</source>

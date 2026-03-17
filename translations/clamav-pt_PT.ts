@@ -48,8 +48,8 @@
         <translation>Crie ficheiros temporários para varrimentos de ficheiros aninhados que, de outra forma, seriam realizados apenas na memória.</translation>
     </message>
     <message>
-        <source>Generate JSON metadata for the scanned file(s). For testing &amp; development use ONLY.</source>
-        <translation>Gera metadados JSON para os ficheiros digitalizados. Apenas para uso em testes e desenvolvimento.</translation>
+        <source>Generate JSON metadata for the scanned file(s). For testing &amp; development use ONLY. JSON will be printed if --debug is enabled. A JSON file will dropped to the temp directory if --leave-temps is enabled.</source>
+        <translation>Gerar metadados JSON para o(s) ficheiro(s) digitalizado(s). APENAS para fins de teste e desenvolvimento. O JSON será apresentado se a opção --debug estiver ativada. Será criado um ficheiro JSON no diretório temporário se a opção --leave-temps estiver ativada.</translation>
     </message>
     <message>
         <source>Store html URIs in metadata. URIs will be written to the metadata.json file in an array called &apos;URIs&apos;.</source>
@@ -212,8 +212,8 @@
         <translation>Desative o armazenamento em cache e as verificações de cache para somas de hash de ficheiros verificados.</translation>
     </message>
     <message>
-        <source>Print the file hash after each file scanned.</source>
-        <translation>Imprima o hash do ficheiro após cada ficheiro analisado.</translation>
+        <source>Print the file hash after each file scanned. The type of hash printed will match the '--hash-alg'.</source>
+        <translation>Imprimir o hash do ficheiro após cada ficheiro verificado. O tipo de hash impresso corresponderá à opção «--hash-alg».</translation>
     </message>
     <message>
         <source>Print the file type after each file scanned.</source>
