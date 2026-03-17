@@ -156,8 +156,8 @@
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_4">
-             <item>
+            <layout class="QGridLayout" name="gridLayout_3">
+             <item row="0" column="0">
               <widget class="QLabel" name="clamdIconLabel_2">
                <property name="minimumSize">
                 <size>
@@ -182,7 +182,7 @@
                </property>
               </widget>
              </item>
-             <item>
+             <item row="0" column="1">
               <widget class="QLabel" name="clamdLabel_2">
                <property name="minimumSize">
                 <size>
@@ -204,74 +204,8 @@
                </property>
               </widget>
              </item>
-             <item>
-              <widget class="QPushButton" name="restartClamdPushButton">
-               <property name="enabled">
-                <bool>true</bool>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>50</width>
-                 <height>36</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>50</width>
-                 <height>36</height>
-                </size>
-               </property>
-               <property name="toolTip">
-                <string>Clamd has to be restarted
-for changes made to take effect.</string>
-               </property>
-               <property name="autoFillBackground">
-                <bool>false</bool>
-               </property>
-               <property name="styleSheet">
-                <string notr="true"/>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset resource="../resources.qrc">
-                 <normaloff>:/icons/icons/restart.png</normaloff>:/icons/icons/restart.png</iconset>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>22</width>
-                 <height>22</height>
-                </size>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
-           <widget class="QFrame" name="clamdSettingsFrame">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>1</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>200</height>
-             </size>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::Panel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QGridLayout" name="gridLayout_2">
              <item row="0" column="2">
-              <spacer name="horizontalSpacer_3">
+              <spacer name="horizontalSpacer_4">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
@@ -283,36 +217,178 @@ for changes made to take effect.</string>
                </property>
               </spacer>
              </item>
-             <item row="0" column="0">
-              <widget class="QLabel" name="clamdLabel_3">
-               <property name="minimumSize">
-                <size>
-                 <width>180</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <pointsize>12</pointsize>
-                </font>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">padding:3</string>
-               </property>
+             <item row="0" column="3" rowspan="2">
+              <widget class="QFrame" name="specialSettingsFrame">
                <property name="frameShape">
-                <enum>QFrame::WinPanel</enum>
+                <enum>QFrame::Panel</enum>
                </property>
                <property name="frameShadow">
-                <enum>QFrame::Raised</enum>
+                <enum>QFrame::Sunken</enum>
                </property>
-               <property name="text">
-                <string>Clamd Settings</string>
-               </property>
+               <layout class="QGridLayout" name="gridLayout_2">
+                <item row="2" column="0" colspan="2">
+                 <widget class="QPushButton" name="updateClamdConfParamPushButton">
+                  <property name="toolTip">
+                   <string>determin the current available parameters for clamd.conf. Useful after an update of clamav.</string>
+                  </property>
+                  <property name="text">
+                   <string>Update list of available 
+clamd.conf parameters.</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="../resources.qrc">
+                    <normaloff>:/icons/icons/add_option.png</normaloff>:/icons/icons/add_option.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>24</width>
+                    <height>24</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="0">
+                 <widget class="QCheckBox" name="startClamdOnStartupCheckBox">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>Start Clamd on Startup</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QPushButton" name="restartClamdPushButton">
+                  <property name="enabled">
+                   <bool>true</bool>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>50</width>
+                    <height>36</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>50</width>
+                    <height>36</height>
+                   </size>
+                  </property>
+                  <property name="toolTip">
+                   <string>Clamd has to be restarted
+for changes made to take effect.</string>
+                  </property>
+                  <property name="autoFillBackground">
+                   <bool>false</bool>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true"/>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="../resources.qrc">
+                    <normaloff>:/icons/icons/restart.png</normaloff>:/icons/icons/restart.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>22</width>
+                    <height>22</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0" colspan="2">
+                 <widget class="Line" name="line">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </widget>
              </item>
              <item row="1" column="0" colspan="3">
               <widget class="QFrame" name="clamdSelectionFrame">
                <layout class="QHBoxLayout" name="horizontalLayout_6">
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_3">
+                  <item>
+                   <widget class="QLabel" name="clamdLabel_3">
+                    <property name="minimumSize">
+                     <size>
+                      <width>180</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>180</width>
+                      <height>30</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>12</pointsize>
+                     </font>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">padding:3</string>
+                    </property>
+                    <property name="frameShape">
+                     <enum>QFrame::WinPanel</enum>
+                    </property>
+                    <property name="frameShadow">
+                     <enum>QFrame::Raised</enum>
+                    </property>
+                    <property name="text">
+                     <string>Clamd Settings</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <spacer name="horizontalSpacer_3">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item row="2" column="0" colspan="4">
+              <widget class="QFrame" name="clamdSettingsFrame">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>1</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>200</height>
+                </size>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::Panel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_6">
                 <item>
                  <widget class="QScrollArea" name="scrollArea_2">
                   <property name="widgetResizable">
@@ -324,7 +400,7 @@ for changes made to take effect.</string>
                      <x>0</x>
                      <y>0</y>
                      <width>891</width>
-                     <height>179</height>
+                     <height>178</height>
                     </rect>
                    </property>
                    <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -353,19 +429,6 @@ for changes made to take effect.</string>
                  </widget>
                 </item>
                </layout>
-              </widget>
-             </item>
-             <item row="0" column="1">
-              <widget class="QCheckBox" name="startClamdOnStartupCheckBox">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>Start Clamd on Startup</string>
-               </property>
               </widget>
              </item>
             </layout>
@@ -398,6 +461,12 @@ for changes made to take effect.</string>
                 <size>
                  <width>180</width>
                  <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>180</width>
+                 <height>16777215</height>
                 </size>
                </property>
                <property name="font">
@@ -550,7 +619,7 @@ for changes made to take effect.</string>
                      <x>0</x>
                      <y>0</y>
                      <width>891</width>
-                     <height>110</height>
+                     <height>106</height>
                     </rect>
                    </property>
                    <layout class="QVBoxLayout" name="verticalLayout">
@@ -613,8 +682,8 @@ for changes made to take effect.</string>
    <slot>slot_restartClamdButtonClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>951</x>
-     <y>108</y>
+     <x>941</x>
+     <y>110</y>
     </hint>
     <hint type="destinationlabel">
      <x>850</x>
@@ -629,28 +698,12 @@ for changes made to take effect.</string>
    <slot>slot_clamdStartStopButtonClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>880</x>
-     <y>174</y>
+     <x>144</x>
+     <y>166</y>
     </hint>
     <hint type="destinationlabel">
      <x>847</x>
      <y>122</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>startClamdOnStartupCheckBox</sender>
-   <signal>clicked()</signal>
-   <receiver>clamdManager</receiver>
-   <slot>slot_startClamdOnStartupCheckBoxClicked()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>390</x>
-     <y>166</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>4</x>
-     <y>154</y>
     </hint>
    </hints>
   </connection>
@@ -661,7 +714,7 @@ for changes made to take effect.</string>
    <slot>slot_monitoringDelButtonClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>931</x>
+     <x>930</x>
      <y>489</y>
     </hint>
     <hint type="destinationlabel">
@@ -677,12 +730,44 @@ for changes made to take effect.</string>
    <slot>slot_monitoringAddButtonClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>875</x>
+     <x>874</x>
      <y>489</y>
     </hint>
     <hint type="destinationlabel">
      <x>985</x>
      <y>257</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>updateClamdConfParamPushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>clamdManager</receiver>
+   <slot>slot_updateClamdConfParameters()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>847</x>
+     <y>127</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>987</x>
+     <y>140</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>startClamdOnStartupCheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>clamdManager</receiver>
+   <slot>slot_startClamdOnStartupCheckBoxClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>774</x>
+     <y>93</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>984</x>
+     <y>177</y>
     </hint>
    </hints>
   </connection>
@@ -694,5 +779,6 @@ for changes made to take effect.</string>
   <slot>slot_monitoringDelButtonClicked()</slot>
   <slot>slot_monitoringAddButtonClicked()</slot>
   <slot>slot_startClamdOnStartupCheckBoxClicked()</slot>
+  <slot>slot_updateClamdConfParameters()</slot>
  </slots>
 </ui>

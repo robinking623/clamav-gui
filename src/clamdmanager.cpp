@@ -19,6 +19,8 @@ clamdManager::clamdManager(QWidget* parent, setupFileHandler* setupFile) : QWidg
     connect(m_processWatcher, SIGNAL(timeout()), this, SLOT(slot_processWatcherExpired()));
     m_processWatcher->start(30000);
 
+    m_getClamdConfParametersProcess = new QProcess(this);
+    connect(m_getClamdConfParametersProcess,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(slot_getClamdConfParameterProcessFinished()));
 }
 
 QString clamdManager::trimLocationOutput(QString value)
@@ -89,6 +91,37 @@ void clamdManager::slot_dbPathChanged(QString dbPath)
 {
     m_clamdConf->setSingleLineValue("DatabaseDirectory", dbPath);
     slot_clamdSettingsChanged();
+}
+
+void clamdManager::slot_updateClamdConfParameters()
+{
+    foreach(QWidget* item,m_clamdConfParameters) {
+        m_ui.layout1->removeWidget(item);
+        delete item;
+    }
+    m_clamdConfParameters.clear();
+
+    foreach(QWidget* item,m_clamonaccParameters) {
+        m_ui.layout2->removeWidget(item);
+        delete item;
+    }
+
+    QStringList parameters;
+    parameters << "clamd.conf";
+    m_getClamdConfParametersProcess->start("man",parameters);
+}
+
+void clamdManager::slot_getClamdConfParameterProcessFinished()
+{
+    QString rc = m_getClamdConfParametersProcess->readAll();
+    QFile file(QDir::homePath() + "/.clamav-gui/clamd.conf.man");
+    if (file.open(QIODevice::WriteOnly|QIODevice::Text)) {
+        QTextStream stream(&file);
+        stream << rc;
+        Qt::endl(stream);
+        file.close();
+    }
+    getClamdConfElements();
 }
 
 void clamdManager::slot_updateClamdConf()
@@ -892,16 +925,19 @@ void clamdManager::getClamdConfElements()
                     comboboxmultioption = new clamdconfmultioption(this, keyword, checked, label, tempParams, m_clamdConf,m_setupFile);
                     connect(comboboxmultioption,SIGNAL(settingChanged()),this,SLOT(slot_clamdSettingsChanged()));
                     container != "2" ? m_ui.layout1->addWidget(comboboxmultioption) : m_ui.layout2->addWidget(comboboxmultioption);
+                    container != "2" ? m_clamdConfParameters << comboboxmultioption : m_clamonaccParameters << comboboxmultioption;
                 } else {
                     stringOption = new clamdConfStringOption(this, keyword, checked, label, optionValues, m_clamdConf);
                     connect(stringOption, SIGNAL(settingChanged()), this, SLOT(slot_clamdSettingsChanged()));
                     container != "2" ? m_ui.layout1->addWidget(stringOption) : m_ui.layout2->addWidget(stringOption);
+                    container != "2" ? m_clamdConfParameters << stringOption : m_clamonaccParameters << stringOption;
                 }
             }
             else {
                 comboboxOption = new clamdconfcomboboxoption(this, keyword, checked, label, optionValues, m_clamdConf);
                 connect(comboboxOption, SIGNAL(settingChanged()), this, SLOT(slot_clamdSettingsChanged()));
                 container != "2" ? m_ui.layout1->addWidget(comboboxOption) : m_ui.layout2->addWidget(comboboxOption);
+                container != "2" ? m_clamdConfParameters << comboboxOption : m_clamonaccParameters << comboboxOption;
             }
         }
 
@@ -910,12 +946,14 @@ void clamdManager::getClamdConfElements()
             spinboxOption = new clamdconfspinboxoption(this, keyword, checked, label, optionValues, m_clamdConf);
             connect(spinboxOption, SIGNAL(settingChanged()), this, SLOT(slot_clamdSettingsChanged()));
             container != "2" ? m_ui.layout1->addWidget(spinboxOption) : m_ui.layout2->addWidget(spinboxOption);
+            container != "2" ? m_clamdConfParameters << spinboxOption : m_clamonaccParameters << spinboxOption;
         }
 
         if (group == "BOOL") {
             comboboxOption = new clamdconfcomboboxoption(this, keyword, checked, label, optionValues, m_clamdConf);
             connect(comboboxOption, SIGNAL(settingChanged()), this, SLOT(slot_clamdSettingsChanged()));
             container != "2" ? m_ui.layout1->addWidget(comboboxOption) : m_ui.layout2->addWidget(comboboxOption);
+            container != "2" ? m_clamdConfParameters << comboboxOption : m_clamonaccParameters << comboboxOption;
         }
     }
 }
