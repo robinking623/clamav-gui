@@ -595,7 +595,31 @@ void clamdManager::slot_restartClamdButtonClicked()
     m_setupFile->setSectionValue("Clamd", "ClamdPid", pid);
 
     QString clamonaccOptions;
-    //clamonaccOptions = " --copy=" + QDir::homePath() + "/.clamav-gui/quarantine";
+    if (m_setupFile->getSectionValue("Directories", "MoveInfectedFiles").indexOf("checked") == 0) {
+        QString path = m_setupFile->getSectionValue("Directories", "MoveInfectedFiles");
+        path = path.mid(path.indexOf("|") + 1);
+        clamonaccOptions = " --move=" + path;
+    }
+
+    if (m_setupFile->getSectionValue("Directories", "CopyInfectedFiles").indexOf("checked") == 0) {
+        QString path = m_setupFile->getSectionValue("Directories", "CopyInfectedFiles");
+        path = path.mid(path.indexOf("|") + 1);
+        clamonaccOptions = clamonaccOptions + " --copy=" + path;
+    }
+
+    if (m_setupFile->getSectionValue("Directories", "ScanReportToFile").indexOf("checked") == 0) {
+        QString path = m_setupFile->getSectionValue("Directories", "ScanReportToFile");
+        path = path.mid(path.indexOf("|") + 1);
+        clamonaccOptions = clamonaccOptions + " --log=" + path;
+    }
+
+    if (m_setupFile->keywordExists("Directories", "--verbose") == true)
+        clamonaccOptions += " --verbose";
+    if (m_setupFile->keywordExists("SelectedOptions", "--remove<equal>yes") == true)
+        clamonaccOptions += "--remove";
+    if (m_setupFile->keywordExists("SelectedOptions", "--allmatch<equal>yes") == true)
+        clamonaccOptions += "--allmatch";
+
 
     m_clamdRestartInProgress = true;
 
