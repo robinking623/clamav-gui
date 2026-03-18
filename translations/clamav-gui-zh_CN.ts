@@ -912,6 +912,16 @@ for changes made to take effect.</source>
         <source>  Clamd restarting. Please wait!</source>
         <translation>Clamd正在重启。请稍候！</translation>
     </message>
+    <message>
+        <source>Update list of available 
+clamd.conf parameters.</source>
+        <translation>更新 clamd.conf 文件中
+可用的参数列表。</translation>
+    </message>
+    <message>
+        <source>determin the current available parameters for clamd.conf. Useful after an update of clamav.</source>
+        <translation>确定 clamd.conf 当前可用的参数。在更新 clamav 之后会很有用。</translation>
+    </message>
 </context>
 <context>
     <name>clamdconfcomboboxoption</name>

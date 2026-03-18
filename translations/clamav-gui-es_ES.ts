@@ -912,6 +912,16 @@ para que los cambios realizados surtan efecto.</translation>
         <source>ClamonAcc Settings</source>
         <translation>Configuración de ClamonAcc</translation>
     </message>
+    <message>
+        <source>Update list of available 
+clamd.conf parameters.</source>
+        <translation>Actualizar la lista de parámetros 
+disponibles en clamd.conf.</translation>
+    </message>
+    <message>
+        <source>determin the current available parameters for clamd.conf. Useful after an update of clamav.</source>
+        <translation>Determina los parámetros disponibles actualmente para clamd.conf. Resulta útil tras una actualización de ClamAV.</translation>
+    </message>
 </context>
 <context>
     <name>clamdconfcomboboxoption</name>

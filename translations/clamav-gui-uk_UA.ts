@@ -925,6 +925,16 @@ for changes made to take effect.</source>
         <source>  Clamd restarting. Please wait!</source>
         <translation>  Перезапуск кластера. Будь ласка, зачекайте!</translation>
     </message>
+    <message>
+        <source>Update list of available 
+clamd.conf parameters.</source>
+        <translation>Оновити список параметрів, 
+доступних у файлі clamd.conf.</translation>
+    </message>
+    <message>
+        <source>determin the current available parameters for clamd.conf. Useful after an update of clamav.</source>
+        <translation>Визначте поточні доступні параметри для файлу clamd.conf. Це корисно після оновлення clamav.</translation>
+    </message>
 </context>
 <context>
     <name>clamdconfcomboboxoption</name>

@@ -912,6 +912,16 @@ para que as alterações feitas tenham efeito.</translation>
         <source>  Clamd restarting. Please wait!</source>
         <translation>  O Clamd está a reiniciar. Por favor, aguarde!</translation>
     </message>
+    <message>
+        <source>Update list of available 
+clamd.conf parameters.</source>
+        <translation>Atualizar a lista de parâmetros 
+disponíveis no ficheiro clamd.conf.</translation>
+    </message>
+    <message>
+        <source>determin the current available parameters for clamd.conf. Useful after an update of clamav.</source>
+        <translation>Determina os parâmetros atualmente disponíveis para o ficheiro clamd.conf. Útil após uma atualização do ClamAV.</translation>
+    </message>
 </context>
 <context>
     <name>clamdconfcomboboxoption</name>

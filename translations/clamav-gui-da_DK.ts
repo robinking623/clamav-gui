@@ -912,6 +912,16 @@ for at ændringerne kan træde i kraft.</translation>
         <source>  Clamd restarting. Please wait!</source>
         <translation>  Clamd genstarter. Vær venlig at vente!</translation>
     </message>
+        <message>
+        <source>Update list of available 
+clamd.conf parameters.</source>
+        <translation>Opdatering af listen
+over tilgængelige clamd.conf-parametre.</translation>
+    </message>
+    <message>
+        <source>determin the current available parameters for clamd.conf. Useful after an update of clamav.</source>
+        <translation>Bestemmelse af de aktuelt tilgængelige parametre for clamd.conf. Nyttigt efter en opdatering af ClamAV.</translation>
+    </message>
 </context>
 <context>
     <name>clamdconfcomboboxoption</name>
