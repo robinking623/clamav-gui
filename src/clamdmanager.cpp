@@ -846,6 +846,7 @@ void clamdManager::getClamdConfElements()
                         content.right(1) == "|"?content = content + line:content = content + " " + line;
                         if (line.indexOf("Default:") != -1) {
                             QString defaultvalue = line.mid(line.indexOf("Default:") + 9);
+                            if (defaultvalue.indexOf(" ") != -1) defaultvalue = defaultvalue.mid(0,defaultvalue.indexOf(" "));
                             if (valuetype == "VALUETYPE") {
                                 if ((defaultvalue.indexOf("yes") != -1) || (defaultvalue.indexOf("no") != -1)) {
                                     valuetype = "BOOL";
@@ -967,10 +968,18 @@ void clamdManager::getClamdConfElements()
 
         if ((group == "NUMBER") || (group == "SIZE")) {
             //if (group == "SIZE") qDebug() << keyword << optionValues;
-            spinboxOption = new clamdconfspinboxoption(this, keyword, checked, label, optionValues, m_clamdConf);
-            connect(spinboxOption, SIGNAL(settingChanged()), this, SLOT(slot_clamdSettingsChanged()));
-            container != "2" ? m_ui.layout1->addWidget(spinboxOption) : m_ui.layout2->addWidget(spinboxOption);
-            container != "2" ? m_clamdConfParameters << spinboxOption : m_clamonaccParameters << spinboxOption;
+            if ((label.indexOf("multiple times") != -1) || (label.indexOf("mul‐ tiple times") != -1)) {
+                QStringList tempParams = m_clamdConf->getSingleLineValues(keyword);
+                comboboxmultioption = new clamdconfmultioption(this, keyword, checked, label, tempParams, m_clamdConf,m_setupFile);
+                connect(comboboxmultioption,SIGNAL(settingChanged()),this,SLOT(slot_clamdSettingsChanged()));
+                container != "2" ? m_ui.layout1->addWidget(comboboxmultioption) : m_ui.layout2->addWidget(comboboxmultioption);
+                container != "2" ? m_clamdConfParameters << comboboxmultioption : m_clamonaccParameters << comboboxmultioption;
+            } else {
+                spinboxOption = new clamdconfspinboxoption(this, keyword, checked, label, optionValues, m_clamdConf);
+                connect(spinboxOption, SIGNAL(settingChanged()), this, SLOT(slot_clamdSettingsChanged()));
+                container != "2" ? m_ui.layout1->addWidget(spinboxOption) : m_ui.layout2->addWidget(spinboxOption);
+                container != "2" ? m_clamdConfParameters << spinboxOption : m_clamonaccParameters << spinboxOption;
+            }
         }
 
         if (group == "BOOL") {
