@@ -89,19 +89,22 @@ void clamdManager::slot_initClamdSettings()
 
 void clamdManager::slot_dbPathChanged(QString dbPath)
 {
+    foreach(ClamdConfOptionBaseClass* item,m_clamdConfParameters) {
+        if (item->getKeyword() == "DatabaseDirectory") item->setValue(dbPath);
+    }
     m_clamdConf->setSingleLineValue("DatabaseDirectory", dbPath);
     slot_clamdSettingsChanged();
 }
 
 void clamdManager::slot_updateClamdConfParameters()
 {
-    foreach(QWidget* item,m_clamdConfParameters) {
+    foreach(ClamdConfOptionBaseClass* item,m_clamdConfParameters) {
         m_ui.layout1->removeWidget(item);
         delete item;
     }
     m_clamdConfParameters.clear();
 
-    foreach(QWidget* item,m_clamonaccParameters) {
+    foreach(ClamdConfOptionBaseClass* item,m_clamonaccParameters) {
         m_ui.layout2->removeWidget(item);
         delete item;
     }

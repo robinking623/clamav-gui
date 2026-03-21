@@ -5,6 +5,7 @@
 #include "clamdconfspinboxoption.h"
 #include "clamdconfstringoption.h"
 #include "clamdconfmultioption.h"
+#include "clamdconfoptionbaseclass.h"
 #include "setupfilehandler.h"
 #include "ui_clamdmanager.h"
 #include "highlighter.h"
@@ -51,8 +52,8 @@ private:
     QTimer* m_startDelayTimer;
     QTimer* m_processWatcher;
     highlighter* m_logHighlighter;          // clamd
-    QList <QWidget*> m_clamdConfParameters;   // clamd
-    QList <QWidget*> m_clamonaccParameters;   // clamd
+    QList <ClamdConfOptionBaseClass*> m_clamdConfParameters;   // clamd
+    QList <ClamdConfOptionBaseClass*> m_clamonaccParameters;   // clamd
     QFileSystemWatcher* m_clamdLogWatcher;  // clamd
     QFileSystemWatcher* m_clamdPidWatcher;  // clamd
     int m_dirsUnderMonitoring;

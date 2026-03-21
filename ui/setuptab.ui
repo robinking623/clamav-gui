@@ -1287,7 +1287,10 @@
                </size>
               </property>
               <property name="toolTip">
-               <string/>
+               <string>Grayson-Switch</string>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color:white</string>
               </property>
               <property name="frameShape">
                <enum>QFrame::WinPanel</enum>
@@ -1300,6 +1303,9 @@
                 <widget class="QCheckBox" name="logHighlighterCheckBox">
                  <property name="toolTip">
                   <string extracomment="For people with color blindness">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For people with color blindness. Removes all the fancy color stuff from the log files and indicators.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">color:black;font-weight:bold;font-size:14px</string>
                  </property>
                  <property name="text">
                   <string>Switch the application to monochrome mode.</string>

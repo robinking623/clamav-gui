@@ -321,14 +321,14 @@ for changes made to take effect.</string>
                    <widget class="QLabel" name="clamdLabel_3">
                     <property name="minimumSize">
                      <size>
-                      <width>180</width>
-                      <height>0</height>
+                      <width>200</width>
+                      <height>40</height>
                      </size>
                     </property>
                     <property name="maximumSize">
                      <size>
-                      <width>180</width>
-                      <height>30</height>
+                      <width>16777215</width>
+                      <height>40</height>
                      </size>
                     </property>
                     <property name="font">
@@ -459,14 +459,14 @@ for changes made to take effect.</string>
               <widget class="QLabel" name="clamonaccLabel">
                <property name="minimumSize">
                 <size>
-                 <width>180</width>
-                 <height>0</height>
+                 <width>200</width>
+                 <height>40</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>180</width>
-                 <height>16777215</height>
+                 <width>16777215</width>
+                 <height>40</height>
                 </size>
                </property>
                <property name="font">
@@ -488,126 +488,9 @@ for changes made to take effect.</string>
                </property>
               </widget>
              </item>
-             <item row="1" column="0" colspan="2">
+             <item row="1" column="0" colspan="3">
               <widget class="QFrame" name="clamonaccSelectionFrame">
                <layout class="QVBoxLayout" name="verticalLayout_3">
-                <item>
-                 <widget class="QFrame" name="folderMonitoringFrame">
-                  <property name="autoFillBackground">
-                   <bool>false</bool>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true"/>
-                  </property>
-                  <property name="frameShape">
-                   <enum>QFrame::WinPanel</enum>
-                  </property>
-                  <property name="frameShadow">
-                   <enum>QFrame::Raised</enum>
-                  </property>
-                  <layout class="QHBoxLayout" name="horizontalLayout_2">
-                   <item>
-                    <widget class="QLabel" name="folderIconLabel">
-                     <property name="maximumSize">
-                      <size>
-                       <width>40</width>
-                       <height>40</height>
-                      </size>
-                     </property>
-                     <property name="styleSheet">
-                      <string notr="true"/>
-                     </property>
-                     <property name="text">
-                      <string/>
-                     </property>
-                     <property name="pixmap">
-                      <pixmap resource="../resources.qrc">:/icons/icons/homefolder.png</pixmap>
-                     </property>
-                     <property name="scaledContents">
-                      <bool>true</bool>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QLabel" name="monitoringLabel">
-                     <property name="maximumSize">
-                      <size>
-                       <width>200</width>
-                       <height>16777215</height>
-                      </size>
-                     </property>
-                     <property name="styleSheet">
-                      <string notr="true">font-weight:bold;</string>
-                     </property>
-                     <property name="locale">
-                      <locale language="Portuguese" country="Brazil"/>
-                     </property>
-                     <property name="frameShape">
-                      <enum>QFrame::NoFrame</enum>
-                     </property>
-                     <property name="frameShadow">
-                      <enum>QFrame::Sunken</enum>
-                     </property>
-                     <property name="text">
-                      <string>Folder under monitoring</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QComboBox" name="monitoringComboBox"/>
-                   </item>
-                   <item>
-                    <widget class="QPushButton" name="monitoringAddButton">
-                     <property name="maximumSize">
-                      <size>
-                       <width>50</width>
-                       <height>16777215</height>
-                      </size>
-                     </property>
-                     <property name="styleSheet">
-                      <string notr="true"/>
-                     </property>
-                     <property name="text">
-                      <string/>
-                     </property>
-                     <property name="icon">
-                      <iconset resource="../resources.qrc">
-                       <normaloff>:/icons/icons/add.png</normaloff>:/icons/icons/add.png</iconset>
-                     </property>
-                     <property name="iconSize">
-                      <size>
-                       <width>22</width>
-                       <height>22</height>
-                      </size>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QPushButton" name="monitoringDelButton">
-                     <property name="maximumSize">
-                      <size>
-                       <width>50</width>
-                       <height>16777215</height>
-                      </size>
-                     </property>
-                     <property name="text">
-                      <string/>
-                     </property>
-                     <property name="icon">
-                      <iconset resource="../resources.qrc">
-                       <normaloff>:/icons/icons/trash-can.png</normaloff>:/icons/icons/trash-can.png</iconset>
-                     </property>
-                     <property name="iconSize">
-                      <size>
-                       <width>22</width>
-                       <height>22</height>
-                      </size>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </widget>
-                </item>
                 <item>
                  <widget class="QScrollArea" name="scrollArea">
                   <property name="widgetResizable">
@@ -619,7 +502,7 @@ for changes made to take effect.</string>
                      <x>0</x>
                      <y>0</y>
                      <width>891</width>
-                     <height>106</height>
+                     <height>141</height>
                     </rect>
                    </property>
                    <layout class="QVBoxLayout" name="verticalLayout">
@@ -647,17 +530,134 @@ for changes made to take effect.</string>
               </widget>
              </item>
              <item row="0" column="1">
-              <spacer name="horizontalSpacer">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
+              <widget class="QFrame" name="folderMonitoringFrame">
+               <property name="autoFillBackground">
+                <bool>false</bool>
                </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
+               <property name="styleSheet">
+                <string notr="true"/>
                </property>
-              </spacer>
+               <property name="frameShape">
+                <enum>QFrame::NoFrame</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_2">
+                <item>
+                 <spacer name="horizontalSpacer">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QLabel" name="folderIconLabel">
+                  <property name="maximumSize">
+                   <size>
+                    <width>40</width>
+                    <height>40</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true"/>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="pixmap">
+                   <pixmap resource="../resources.qrc">:/icons/icons/homefolder.png</pixmap>
+                  </property>
+                  <property name="scaledContents">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="monitoringLabel">
+                  <property name="maximumSize">
+                   <size>
+                    <width>200</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">font-weight:bold;</string>
+                  </property>
+                  <property name="locale">
+                   <locale language="Portuguese" country="Brazil"/>
+                  </property>
+                  <property name="frameShape">
+                   <enum>QFrame::NoFrame</enum>
+                  </property>
+                  <property name="frameShadow">
+                   <enum>QFrame::Sunken</enum>
+                  </property>
+                  <property name="text">
+                   <string>Folder under monitoring</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QComboBox" name="monitoringComboBox"/>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="monitoringAddButton">
+                  <property name="maximumSize">
+                   <size>
+                    <width>50</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true"/>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="../resources.qrc">
+                    <normaloff>:/icons/icons/add.png</normaloff>:/icons/icons/add.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>22</width>
+                    <height>22</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="monitoringDelButton">
+                  <property name="maximumSize">
+                   <size>
+                    <width>50</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="../resources.qrc">
+                    <normaloff>:/icons/icons/trash-can.png</normaloff>:/icons/icons/trash-can.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>22</width>
+                    <height>22</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
              </item>
             </layout>
            </widget>

@@ -3,7 +3,7 @@
 
 clamdconfcomboboxoption::clamdconfcomboboxoption(QWidget* parent, QString keyword, bool checked, QString label, QString options,
                                                  setupFileHandler* setupFile)
-    : QWidget(parent), m_optionKeyword(keyword), m_setupFile(setupFile)
+    : ClamdConfOptionBaseClass(parent), m_optionKeyword(keyword), m_setupFile(setupFile)
 {
     m_ui.setupUi(this);
     m_ui.checkBox->setChecked(checked);
@@ -43,6 +43,32 @@ clamdconfcomboboxoption::clamdconfcomboboxoption(QWidget* parent, QString keywor
     m_startup = false;
 
     slot_checkBoxClicked();
+}
+
+QString clamdconfcomboboxoption::getKeyword()
+{
+    return m_optionKeyword;
+}
+
+void clamdconfcomboboxoption::setValue(QString value)
+{
+    int idx = m_ui.comboBox->findText(value);
+    if (idx != -1) m_ui.comboBox->setCurrentIndex(idx);
+}
+
+QString clamdconfcomboboxoption::getValue()
+{
+    return m_ui.comboBox->currentText();
+}
+
+void clamdconfcomboboxoption::setChecked(bool checked)
+{
+    m_ui.checkBox->setChecked(checked);
+}
+
+bool clamdconfcomboboxoption::isChecked()
+{
+    return m_ui.checkBox->isChecked();
 }
 
 void clamdconfcomboboxoption::slot_checkBoxClicked()
