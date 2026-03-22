@@ -104,11 +104,6 @@ void clamdManager::slot_updateClamdConfParameters()
     }
     m_clamdConfParameters.clear();
 
-    foreach(ClamdConfOptionBaseClass* item,m_clamonaccParameters) {
-        m_ui.layout2->removeWidget(item);
-        delete item;
-    }
-
     QStringList parameters;
     parameters << "clamd.conf";
     m_getClamdConfParametersProcess->start("man",parameters);
@@ -125,6 +120,30 @@ void clamdManager::slot_getClamdConfParameterProcessFinished()
         file.close();
     }
     getClamdConfElements();
+}
+
+void clamdManager::slot_filterChanged(QString searchString)
+{
+    QString keyword;
+    QString label;
+
+    if (searchString != "") {
+        searchString = searchString.toUpper();
+
+        foreach(ClamdConfOptionBaseClass* item,m_clamdConfParameters) {
+            keyword = item->getKeyword().toUpper();
+            label = item->getLabel().toUpper();
+            if ((keyword.indexOf(searchString) != -1) || (label.indexOf(searchString) != -1)) {
+                item->setVisible(true);
+            } else {
+                item->setVisible(false);
+            }
+        }
+    } else {
+        foreach(ClamdConfOptionBaseClass* item,m_clamdConfParameters) {
+            item->setVisible(true);
+        }
+    }
 }
 
 void clamdManager::slot_updateClamdConf()
@@ -498,8 +517,6 @@ void clamdManager::slot_add_remove_highlighter(bool state)
             m_logHighlighter = NULL;
         }
         m_monochrome = true;
-        m_ui.clamonaccLabel->setStyleSheet("padding:3px");
-        m_ui.clamdLabel_3->setStyleSheet("padding:3px");
     }
     else {
         if (m_logHighlighter == NULL) {
@@ -510,8 +527,6 @@ void clamdManager::slot_add_remove_highlighter(bool state)
             m_logHighlighter = new highlighter(m_ui.clamdLogPlainTextEdit->document());
         }
         m_monochrome = false;
-        m_ui.clamonaccLabel->setStyleSheet("background-color:#c0c0c0;color:black;padding:3px");
-        m_ui.clamdLabel_3->setStyleSheet("background-color:#c0c0c0;color:black;padding:3px");
     }
     checkClamdRunning();
 }
@@ -795,14 +810,10 @@ void clamdManager::getClamdConfElements()
         else {
             m_ui.startStopClamdPushButton->setStyleSheet(selectColor("red"));
         }
-        m_ui.clamonaccLabel->setStyleSheet("background-color:#c0c0c0;color:black;padding:3px");
-        m_ui.clamdLabel_3->setStyleSheet("background-color:#c0c0c0;color:black;padding:3px");
     }
     else {
         m_monochrome = true;
         m_ui.startStopClamdPushButton->setStyleSheet(selectColor("mono"));
-        m_ui.clamonaccLabel->setStyleSheet("padding:3px");
-        m_ui.clamdLabel_3->setStyleSheet("padding:3px");
     }
 
     QFile file(QDir::homePath() + "/.clamav-gui/clamd.conf.man");
@@ -831,7 +842,6 @@ void clamdManager::getClamdConfElements()
                 if (skip == false) {
                     if (poscounter == 0) {
                         line = line.trimmed();
-                        if ((line.indexOf("ExcludePath") == 0) || (line.indexOf("OnAccess") == 0)) line = "2" + line; else line = "1" + line;
                         if (valuetype == "VALUETYPE") {
                             content = content + line + " VALUETYPE|";
                         } else {
@@ -858,7 +868,6 @@ void clamdManager::getClamdConfElements()
                                 }
                                 content = content.replace("VALUETYPE",valuetype);
                             }
-                            //if (valuetype == "SIZE") qDebug() << "Keyword: " << keyword << " Value: " << valuetype << " Default: " << defaultvalue;
                             if (valuetype == "BOOL") {
                                 defaultvalue = defaultvalue.left(3);
                                 defaultvalue = defaultvalue.trimmed();
@@ -920,7 +929,6 @@ void clamdManager::getClamdConfElements()
     QString optionValues;
     QString element;
     QString group;
-    QString container;
 
     bool checked = false;
     clamdConfStringOption* stringOption;
@@ -935,13 +943,9 @@ void clamdManager::getClamdConfElements()
         QStringList values = element.split("|");
         keywordHelper = values.at(0);
         label = values.at(1);
-
         optionValues = values.at(2);
-
         QStringList splitter = keywordHelper.split(" ");
         keyword = splitter.at(0);
-        container = keyword.left(1);
-        keyword = keyword.mid(1);
         group = splitter.at(1);
 
         if (optionValues == "disabled")
@@ -952,44 +956,43 @@ void clamdManager::getClamdConfElements()
                     QStringList tempParams = m_clamdConf->getSingleLineValues(keyword);
                     comboboxmultioption = new clamdconfmultioption(this, keyword, checked, label, tempParams, m_clamdConf,m_setupFile);
                     connect(comboboxmultioption,SIGNAL(settingChanged()),this,SLOT(slot_clamdSettingsChanged()));
-                    container != "2" ? m_ui.layout1->addWidget(comboboxmultioption) : m_ui.layout2->addWidget(comboboxmultioption);
-                    container != "2" ? m_clamdConfParameters << comboboxmultioption : m_clamonaccParameters << comboboxmultioption;
+                    m_ui.layout1->addWidget(comboboxmultioption);
+                    m_clamdConfParameters << comboboxmultioption;
                 } else {
                     stringOption = new clamdConfStringOption(this, keyword, checked, label, optionValues, m_clamdConf);
                     connect(stringOption, SIGNAL(settingChanged()), this, SLOT(slot_clamdSettingsChanged()));
-                    container != "2" ? m_ui.layout1->addWidget(stringOption) : m_ui.layout2->addWidget(stringOption);
-                    container != "2" ? m_clamdConfParameters << stringOption : m_clamonaccParameters << stringOption;
+                    m_ui.layout1->addWidget(stringOption);
+                    m_clamdConfParameters << stringOption;
                 }
             }
             else {
                 comboboxOption = new clamdconfcomboboxoption(this, keyword, checked, label, optionValues, m_clamdConf);
                 connect(comboboxOption, SIGNAL(settingChanged()), this, SLOT(slot_clamdSettingsChanged()));
-                container != "2" ? m_ui.layout1->addWidget(comboboxOption) : m_ui.layout2->addWidget(comboboxOption);
-                container != "2" ? m_clamdConfParameters << comboboxOption : m_clamonaccParameters << comboboxOption;
+                m_ui.layout1->addWidget(comboboxOption);
+                m_clamdConfParameters << comboboxOption;
             }
         }
 
         if ((group == "NUMBER") || (group == "SIZE")) {
-            //if (group == "SIZE") qDebug() << keyword << optionValues;
             if ((label.indexOf("multiple times") != -1) || (label.indexOf("mul‐ tiple times") != -1)) {
                 QStringList tempParams = m_clamdConf->getSingleLineValues(keyword);
                 comboboxmultioption = new clamdconfmultioption(this, keyword, checked, label, tempParams, m_clamdConf,m_setupFile);
                 connect(comboboxmultioption,SIGNAL(settingChanged()),this,SLOT(slot_clamdSettingsChanged()));
-                container != "2" ? m_ui.layout1->addWidget(comboboxmultioption) : m_ui.layout2->addWidget(comboboxmultioption);
-                container != "2" ? m_clamdConfParameters << comboboxmultioption : m_clamonaccParameters << comboboxmultioption;
+                m_ui.layout1->addWidget(comboboxmultioption);
+                m_clamdConfParameters << comboboxmultioption;
             } else {
                 spinboxOption = new clamdconfspinboxoption(this, keyword, checked, label, optionValues, m_clamdConf);
                 connect(spinboxOption, SIGNAL(settingChanged()), this, SLOT(slot_clamdSettingsChanged()));
-                container != "2" ? m_ui.layout1->addWidget(spinboxOption) : m_ui.layout2->addWidget(spinboxOption);
-                container != "2" ? m_clamdConfParameters << spinboxOption : m_clamonaccParameters << spinboxOption;
+                m_ui.layout1->addWidget(spinboxOption);
+                m_clamdConfParameters << spinboxOption;
             }
         }
 
         if (group == "BOOL") {
             comboboxOption = new clamdconfcomboboxoption(this, keyword, checked, label, optionValues, m_clamdConf);
             connect(comboboxOption, SIGNAL(settingChanged()), this, SLOT(slot_clamdSettingsChanged()));
-            container != "2" ? m_ui.layout1->addWidget(comboboxOption) : m_ui.layout2->addWidget(comboboxOption);
-            container != "2" ? m_clamdConfParameters << comboboxOption : m_clamonaccParameters << comboboxOption;
+            m_ui.layout1->addWidget(comboboxOption);
+            m_clamdConfParameters << comboboxOption;
         }
     }
 }

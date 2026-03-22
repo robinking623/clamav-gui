@@ -53,7 +53,6 @@ private:
     QTimer* m_processWatcher;
     highlighter* m_logHighlighter;          // clamd
     QList <ClamdConfOptionBaseClass*> m_clamdConfParameters;   // clamd
-    QList <ClamdConfOptionBaseClass*> m_clamonaccParameters;   // clamd
     QFileSystemWatcher* m_clamdLogWatcher;  // clamd
     QFileSystemWatcher* m_clamdPidWatcher;  // clamd
     int m_dirsUnderMonitoring;
@@ -92,6 +91,7 @@ private slots:
     void slot_dbPathChanged(QString dbPath);
     void slot_updateClamdConfParameters();
     void slot_getClamdConfParameterProcessFinished();
+    void slot_filterChanged(QString);
 
 
 signals:

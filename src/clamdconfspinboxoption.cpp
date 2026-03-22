@@ -65,6 +65,11 @@ QString clamdconfspinboxoption::getKeyword()
     return m_optionKeyword;
 }
 
+QString clamdconfspinboxoption::getLabel()
+{
+    return  m_ui.checkBox->text();
+}
+
 void clamdconfspinboxoption::setValue(QString value)
 {
     m_ui.spinBox->setValue(value.toInt());

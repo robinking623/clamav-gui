@@ -42,6 +42,11 @@ QString clamdConfStringOption::getKeyword()
     return m_optionKeyword;
 }
 
+QString clamdConfStringOption::getLabel()
+{
+    return m_ui.checkBox->text();
+}
+
 void clamdConfStringOption::setValue(QString value)
 {
     m_ui.lineEdit->setText(value);

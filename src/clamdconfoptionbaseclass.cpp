@@ -7,6 +7,11 @@ QString ClamdConfOptionBaseClass::getKeyword()
     return "";
 }
 
+QString ClamdConfOptionBaseClass::getLabel()
+{
+    return "";
+}
+
 void ClamdConfOptionBaseClass::setValue(QString value)
 {
     Q_UNUSED(value);

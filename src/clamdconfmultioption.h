@@ -28,6 +28,7 @@ class clamdconfmultioption : public ClamdConfOptionBaseClass
     ~clamdconfmultioption();
 
     QString getKeyword();
+    QString getLabel();
     void setValue(QString value = 0);
     QString getValue();
     void setChecked(bool checked = true);

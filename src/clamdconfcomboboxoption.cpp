@@ -50,6 +50,11 @@ QString clamdconfcomboboxoption::getKeyword()
     return m_optionKeyword;
 }
 
+QString clamdconfcomboboxoption::getLabel()
+{
+    return m_ui.checkBox->text();
+}
+
 void clamdconfcomboboxoption::setValue(QString value)
 {
     int idx = m_ui.comboBox->findText(value);

@@ -33,6 +33,11 @@ QString clamdconfmultioption::getKeyword()
     return m_keyword;
 }
 
+QString clamdconfmultioption::getLabel()
+{
+    return m_ui->checkBox->text();
+}
+
 void clamdconfmultioption::setValue(QString value)
 {
     int idx = m_ui->comboBox->findText(value);

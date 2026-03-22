@@ -9,6 +9,7 @@ class ClamdConfOptionBaseClass : public QWidget
    public:
     explicit ClamdConfOptionBaseClass(QWidget* parent = nullptr);
     virtual QString getKeyword();
+    virtual QString getLabel();
     virtual void setValue(QString);
     virtual QString getValue();
     virtual void setChecked(bool);
