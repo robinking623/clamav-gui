@@ -183,8 +183,10 @@ void setupTab::slot_logHightlighterCheckBoxClicked()
 
 void setupTab::slot_requestFinished(QNetworkReply * reply)
 {
-    m_ui.clamavInstalled->setText("Installed : " + m_setupFile->getSectionValue("Updater","Version"));
     int pos, len, ltsCount = 0;
+    QString ltsVersions = "n/a";
+    m_ui.clamavInstalled->setText(m_setupFile->getSectionValue("Updater","Version").trimmed().replace("Scanner ",""));
+
     if(reply->error())
     {
         qDebug() << "ERROR!";
@@ -199,25 +201,22 @@ void setupTab::slot_requestFinished(QNetworkReply * reply)
                 pos = line.indexOf("<strong>") + 8;
                 len = line.indexOf("</strong>") - pos;
                 line = line.mid(pos,len);
-                m_ui.clamavLatest->setText("Latest: " + line);
+                m_ui.clamavLatest->setText(line);
             }
             if ((line.indexOf("<h4>") != -1) && (line.indexOf("LTS") != -1)) {
                 pos = line.indexOf("<h4>") + 4;
                 len = line.indexOf("<span") - pos;
                 line = line.mid(pos,len);
-                switch (ltsCount) {
-                    case 0 :
-                        m_ui.clamavLTS1->setText("LTS: " + line);
-                        ltsCount++;
-                        break;
-                    case 1 :
-                        m_ui.clamavLTS2->setText("LTS: " + line);
-                        ltsCount++;
-                        break;
+                if (ltsCount == 0) {
+                    ltsVersions = "(" + line + ")";
+                    ltsCount++;
+                } else {
+                    ltsVersions = ltsVersions + " ,(" + line + ")";
                 }
             }
         }
-
+        m_ui.clamavLTS1->setText(ltsVersions);
+        if (m_ui.clamavInstalled->text() == m_ui.clamavLatest->text()) m_ui.clamavStatus->setText(tr("OK")); else m_ui.clamavStatus->setText("Update available: " + m_ui.clamavLatest->text());
     }
 
     reply->deleteLater();
