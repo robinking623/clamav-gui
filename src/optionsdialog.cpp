@@ -178,7 +178,7 @@ void optionsDialog::slot_getClamscanProcessFinished()
     }
 
     /*For Debugin-Reasons only*/
-    QFile tempfile("/home/wusel/parameters.txt");
+    /*QFile tempfile("/home/wusel/parameters.txt");
     QStringList commentList = commentSum.split("|");
     if (tempfile.open(QIODevice::WriteOnly|QIODevice::Text)){
         QTextStream stream(&tempfile);
@@ -186,7 +186,7 @@ void optionsDialog::slot_getClamscanProcessFinished()
             stream << "base = base + \"" << commentList.at(i) << "|\";" << "\n";
         }
     }
-    tempfile.close();
+    tempfile.close();*/
 
     QStringList parameters = value.split("\n");
     scanoption* option;

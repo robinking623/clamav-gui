@@ -761,12 +761,12 @@ void freshclamsetter::slot_initFreshclamSettings()
     else {
         QDir tempdir;
         if ((tempdir.exists("/var/lib/clamav") == true) && ((tempFile.exists("/var/lib/clamav/freshclam.dat") == true))) {
-            m_freshclamConf->setSingleLineValue("DatabaseDirectory", "/var/lib/clamav");
+            m_freshclamConf->setSingleLineValue("DatabaseDirectory", "/var/lib/clamav", "Path to a directory containing database files.  This directory must already exist, be an absolute path, be writeable by freshclam and readable by clamd/clamscan. Default: /var/lib/clamav");
             m_ui.runasrootCheckBox->setChecked(true);
             m_setupFile->setSectionValue("FreshClam", "runasroot", true);
         }
         else {
-            m_freshclamConf->setSingleLineValue("DatabaseDirectory", QDir::homePath() + "/.clamav-gui/signatures");
+            m_freshclamConf->setSingleLineValue("DatabaseDirectory", QDir::homePath() + "/.clamav-gui/signatures", "Path to a directory containing database files.  This directory must already exist, be an absolute path, be writeable by freshclam and readable by clamd/clamscan. Default: /var/lib/clamav");
             m_ui.runasrootCheckBox->setChecked(false);
             m_setupFile->setSectionValue("FreshClam", "runasroot", false);
         }
@@ -776,63 +776,63 @@ void freshclamsetter::slot_initFreshclamSettings()
     if (m_freshclamConf->singleLineExists("LogSyslog") == true)
         m_ui.logSysLogComboBox->setCurrentText(m_freshclamConf->getSingleLineValue("LogSyslog"));
     else {
-        m_freshclamConf->setSingleLineValue("LogSyslog", "no");
+        m_freshclamConf->setSingleLineValue("LogSyslog", "no", "Enable logging to Syslog. May be used in combination with UpdateLogFile. Default: disabled.");
         m_ui.logSysLogComboBox->setCurrentText(m_freshclamConf->getSingleLineValue("LogSyslog"));
     }
 
     if (m_freshclamConf->singleLineExists("LogFacility") == true)
         m_ui.logFacilityComboBox->setCurrentText(m_freshclamConf->getSingleLineValue("LogFacility"));
     else {
-        m_freshclamConf->setSingleLineValue("LogFacility", "LOG_LOCAL6");
+        m_freshclamConf->setSingleLineValue("LogFacility", "LOG_LOCAL6", "Specify the type of syslog messages - please refer to 'man syslog' for facility names. Default: LOG_LOCAL6");
         m_ui.logFacilityComboBox->setCurrentText(m_freshclamConf->getSingleLineValue("LogFacility"));
     }
 
     if (m_freshclamConf->singleLineExists("LogTime") == true)
         m_ui.logTimeComboBox->setCurrentText(m_freshclamConf->getSingleLineValue("LogTime"));
     else {
-        m_freshclamConf->setSingleLineValue("LogTime", "no");
+        m_freshclamConf->setSingleLineValue("LogTime", "no", "Log time with each message. Default: no");
         m_ui.logTimeComboBox->setCurrentText(m_freshclamConf->getSingleLineValue("LogTime"));
     }
 
     if (m_freshclamConf->singleLineExists("LogRotate") == true)
         m_ui.logRotateComboBox->setCurrentText(m_freshclamConf->getSingleLineValue("LogRotate"));
     else {
-        m_freshclamConf->setSingleLineValue("LogRotate", "no");
+        m_freshclamConf->setSingleLineValue("LogRotate", "no", "Rotate log file. Requires LogFileMaxSize option set prior to this option. Default: no");
         m_ui.logRotateComboBox->setCurrentText(m_freshclamConf->getSingleLineValue("LogRotate"));
     }
 
     if (m_freshclamConf->singleLineExists("PidFile") == true)
         m_ui.pidFilePathLabel->setText(m_freshclamConf->getSingleLineValue("PidFile"));
     else {
-        m_freshclamConf->setSingleLineValue("PidFile", "/tmp/freshclam.pid");
+        m_freshclamConf->setSingleLineValue("PidFile", "/tmp/freshclam.pid", "Write the daemon's pid to the specified file. Default: disabled");
         m_ui.pidFilePathLabel->setText(m_freshclamConf->getSingleLineValue("PidFile"));
     }
 
     if (m_freshclamConf->singleLineExists("DatabaseOwner") == true)
         m_ui.databaseOwnerLineEdit->setText(m_freshclamConf->getSingleLineValue("DatabaseOwner"));
     else {
-        m_freshclamConf->setSingleLineValue("DatabaseOwner", "clamav");
+        m_freshclamConf->setSingleLineValue("DatabaseOwner", "clamav", "When started by root, drop privileges to a specified user. Default: vscan");
         m_ui.databaseOwnerLineEdit->setText(m_freshclamConf->getSingleLineValue("DatabaseOwner"));
     }
 
     if (m_freshclamConf->singleLineExists("DatabaseMirror") == true)
         m_ui.databaseMirrorLineEdit->setText(m_freshclamConf->getSingleLineValue("DatabaseMirror"));
     else {
-        m_freshclamConf->setSingleLineValue("DatabaseMirror", "database.clamav.net");
+        m_freshclamConf->setSingleLineValue("DatabaseMirror", "database.clamav.net", "DatabaseMirror  specifies  to  which  mirror(s) freshclam should connect. You should have at least one entries: database.clamav.net.  Now that CloudFlare is being used as our Content Delivery Network (CDN), this one domain name works world-wide to direct freshclam to the closest geographic endpoint. Default: database.clamav.net");
         m_ui.databaseMirrorLineEdit->setText(m_freshclamConf->getSingleLineValue("DatabaseMirror"));
     }
 
     if (m_freshclamConf->singleLineExists("LogVerbose") == true)
         m_ui.logVerboseComboBox->setCurrentText(m_freshclamConf->getSingleLineValue("LogVerbose"));
     else {
-        m_freshclamConf->setSingleLineValue("LogVerbose", "no");
+        m_freshclamConf->setSingleLineValue("LogVerbose", "no", "Enable verbose logging. Default: disabled");
         m_ui.logVerboseComboBox->setCurrentText(m_freshclamConf->getSingleLineValue("LogVerbose"));
     }
 
     if (m_freshclamConf->singleLineExists("Checks") == true)
         m_ui.checkPerDaySpinBox->setValue(m_freshclamConf->getSingleLineValue("Checks").toInt());
     else {
-        m_freshclamConf->setSingleLineValue("Checks", "12");
+        m_freshclamConf->setSingleLineValue("Checks", "12", "Number of database checks per day. Default: 12");
         m_ui.checkPerDaySpinBox->setValue(m_freshclamConf->getSingleLineValue("Checks").toInt());
     }
 
@@ -858,7 +858,7 @@ void freshclamsetter::slot_initFreshclamSettings()
 
     if (dbDir.exists(m_ui.databaseDirectoryPathLabel->text()) == true) {
         QFileInfo dbDirectoryPath(m_ui.databaseDirectoryPathLabel->text());
-        m_freshclamConf->setSingleLineValue("DatabaseOwner", dbDirectoryPath.owner());
+        m_freshclamConf->setSingleLineValue("DatabaseOwner", dbDirectoryPath.owner(), "When started by root, drop privileges to a specified user. Default: vscan");
         m_ui.databaseOwnerLineEdit->setText(dbDirectoryPath.owner());
     }
 
@@ -887,63 +887,63 @@ void freshclamsetter::slot_runasrootCheckBoxChanged()
 void freshclamsetter::slot_writeFreshclamSettings()
 {
     if (m_lockFreshclamConf == false) {
-        m_freshclamConf->setSingleLineValue("DatabaseDirectory", m_ui.databaseDirectoryPathLabel->text());
-        m_freshclamConf->setSingleLineValue("LogSyslog", m_ui.logSysLogComboBox->currentText());
-        m_freshclamConf->setSingleLineValue("LogFacility", m_ui.logFacilityComboBox->currentText());
-        m_freshclamConf->setSingleLineValue("LogRotate", m_ui.logRotateComboBox->currentText());
-        m_freshclamConf->setSingleLineValue("PidFile", m_ui.pidFilePathLabel->text());
-        m_freshclamConf->setSingleLineValue("DatabaseOwner", m_ui.databaseOwnerLineEdit->text());
-        m_freshclamConf->setSingleLineValue("DatabaseMirror", m_ui.databaseMirrorLineEdit->text());
-        m_freshclamConf->setSingleLineValue("LogTime", m_ui.logTimeComboBox->currentText());
-        m_freshclamConf->setSingleLineValue("LogVerbose", m_ui.logVerboseComboBox->currentText());
+        m_freshclamConf->setSingleLineValue("DatabaseDirectory", m_ui.databaseDirectoryPathLabel->text(), "Path to a directory containing database files.  This directory must already exist, be an absolute path, be writeable by freshclam and readable by clamd/clamscan. Default: /var/lib/clamav");
+        m_freshclamConf->setSingleLineValue("LogSyslog", m_ui.logSysLogComboBox->currentText(), "Enable logging to Syslog. May be used in combination with UpdateLogFile. Default: disabled.");
+        m_freshclamConf->setSingleLineValue("LogFacility", m_ui.logFacilityComboBox->currentText(), "Specify the type of syslog messages - please refer to 'man syslog' for facility names. Default: LOG_LOCAL6");
+        m_freshclamConf->setSingleLineValue("LogRotate", m_ui.logRotateComboBox->currentText(), "Rotate log file. Requires LogFileMaxSize option set prior to this option. Default: no");
+        m_freshclamConf->setSingleLineValue("PidFile", m_ui.pidFilePathLabel->text(), "Write the daemon's pid to the specified file. Default: disabled");
+        m_freshclamConf->setSingleLineValue("DatabaseOwner", m_ui.databaseOwnerLineEdit->text(), "When started by root, drop privileges to a specified user. Default: vscan");
+        m_freshclamConf->setSingleLineValue("DatabaseMirror", m_ui.databaseMirrorLineEdit->text(), "DatabaseMirror  specifies  to  which  mirror(s) freshclam should connect. You should have at least one entries: database.clamav.net.  Now that CloudFlare is being used as our Content Delivery Network (CDN), this one domain name works world-wide to direct freshclam to the closest geographic endpoint. Default: database.clamav.net");
+        m_freshclamConf->setSingleLineValue("LogTime", m_ui.logTimeComboBox->currentText(), "Log time with each message. Default: no");
+        m_freshclamConf->setSingleLineValue("LogVerbose", m_ui.logVerboseComboBox->currentText(), "Enable verbose logging. Default: disabled");
 
         if (m_ui.onErrorExecuteLineEdit->text() != "")
-            m_freshclamConf->setSingleLineValue("OnErrorExecute", m_ui.onErrorExecuteLineEdit->text());
+            m_freshclamConf->setSingleLineValue("OnErrorExecute", m_ui.onErrorExecuteLineEdit->text(), "Execute this command after a database update has failed. Default: disabled");
         else {
-            m_freshclamConf->setSingleLineValue("OnErrorExecute", "obsolete");
-            m_freshclamConf->removeSingleLine("OnErrorExecute", "obsolete");
+            m_freshclamConf->setSingleLineValue("OnErrorExecute", "obsolete", "Execute this command after a database update has failed. Default: disabled");
+            m_freshclamConf->removeSingleLine("OnErrorExecute", "obsolete", "Execute this command after a database update has failed. Default: disabled");
         }
 
         if (m_ui.onUpdateExecuteLineEdit->text() != "")
-            m_freshclamConf->setSingleLineValue("OnUpdateExecute", m_ui.onUpdateExecuteLineEdit->text());
+            m_freshclamConf->setSingleLineValue("OnUpdateExecute", m_ui.onUpdateExecuteLineEdit->text(), "Execute this command after the database has been successfully updated. Default: disabled");
         else {
-            m_freshclamConf->setSingleLineValue("OnUpdateExecute", "obsolete");
-            m_freshclamConf->removeSingleLine("OnUpdateExecute", "obsolete");
+            m_freshclamConf->setSingleLineValue("OnUpdateExecute", "obsolete", "Execute this command after the database has been successfully updated. Default: disabled");
+            m_freshclamConf->removeSingleLine("OnUpdateExecute", "obsolete", "Execute this command after the database has been successfully updated. Default: disabled");
         }
 
         if (m_ui.onOutdatedExecuteLineEdit->text() != "")
-            m_freshclamConf->setSingleLineValue("OnOutdatedExecute", m_ui.onOutdatedExecuteLineEdit->text());
+            m_freshclamConf->setSingleLineValue("OnOutdatedExecute", m_ui.onOutdatedExecuteLineEdit->text(), "Execute this command when freshclam reports outdated version. In the command string %v will be replaced by the new version number. Default: disabled");
         else {
-            m_freshclamConf->setSingleLineValue("OnOutdatedExecute", "obsolete");
-            m_freshclamConf->removeSingleLine("OnOutdatedExecute", "obsolete");
+            m_freshclamConf->setSingleLineValue("OnOutdatedExecute", "obsolete", "Execute this command when freshclam reports outdated version. In the command string %v will be replaced by the new version number. Default: disabled");
+            m_freshclamConf->removeSingleLine("OnOutdatedExecute", "obsolete", "Execute this command when freshclam reports outdated version. In the command string %v will be replaced by the new version number. Default: disabled");
         }
 
         if (m_ui.httpProxyServerLineEdit->text() != "")
-            m_freshclamConf->setSingleLineValue("HTTPProxyServer", m_ui.httpProxyServerLineEdit->text());
+            m_freshclamConf->setSingleLineValue("HTTPProxyServer", m_ui.httpProxyServerLineEdit->text(), "Use given proxy server and TCP port for database downloads.  The HTTPProxyServer may be prefixed with [scheme]:// to specify which kind of proxy is used. http://     HTTP Proxy. Default when no scheme or proxy type is specified. https://    HTTPS Proxy. (Added in 7.52.0 for OpenSSL, GnuTLS and NSS) socks4://   SOCKS4 Proxy. socks4a://  SOCKS4a Proxy. Proxy resolves URL hostname. socks5://   SOCKS5 Proxy. socks5h://  SOCKS5 Proxy. Proxy resolves URL hostname.");
         else {
-            m_freshclamConf->setSingleLineValue("HTTPProxyServer", "obsolete");
-            m_freshclamConf->removeSingleLine("HTTPProxyServer", "obsolete");
+            m_freshclamConf->setSingleLineValue("HTTPProxyServer", "obsolete", "Use given proxy server and TCP port for database downloads.  The HTTPProxyServer may be prefixed with [scheme]:// to specify which kind of proxy is used. http://     HTTP Proxy. Default when no scheme or proxy type is specified. https://    HTTPS Proxy. (Added in 7.52.0 for OpenSSL, GnuTLS and NSS) socks4://   SOCKS4 Proxy. socks4a://  SOCKS4a Proxy. Proxy resolves URL hostname. socks5://   SOCKS5 Proxy. socks5h://  SOCKS5 Proxy. Proxy resolves URL hostname.");
+            m_freshclamConf->removeSingleLine("HTTPProxyServer", "obsolete", "Use given proxy server and TCP port for database downloads.  The HTTPProxyServer may be prefixed with [scheme]:// to specify which kind of proxy is used. http://     HTTP Proxy. Default when no scheme or proxy type is specified. https://    HTTPS Proxy. (Added in 7.52.0 for OpenSSL, GnuTLS and NSS) socks4://   SOCKS4 Proxy. socks4a://  SOCKS4a Proxy. Proxy resolves URL hostname. socks5://   SOCKS5 Proxy. socks5h://  SOCKS5 Proxy. Proxy resolves URL hostname.");
         }
 
         if (m_ui.httpProxyPortLineEdit->text() != "")
-            m_freshclamConf->setSingleLineValue("HTTPProxyPort", m_ui.httpProxyPortLineEdit->text());
+            m_freshclamConf->setSingleLineValue("HTTPProxyPort", m_ui.httpProxyPortLineEdit->text(), "Use given proxy server and TCP port for database downloads.  The HTTPProxyServer may be prefixed with [scheme]:// to specify which kind of proxy is used. http://     HTTP Proxy. Default when no scheme or proxy type is specified. https://    HTTPS Proxy. (Added in 7.52.0 for OpenSSL, GnuTLS and NSS) socks4://   SOCKS4 Proxy. socks4a://  SOCKS4a Proxy. Proxy resolves URL hostname. socks5://   SOCKS5 Proxy. socks5h://  SOCKS5 Proxy. Proxy resolves URL hostname.");
         else {
-            m_freshclamConf->setSingleLineValue("HTTPProxyPort", "obsolete");
-            m_freshclamConf->removeSingleLine("HTTPProxyPort", "obsolete");
+            m_freshclamConf->setSingleLineValue("HTTPProxyPort", "obsolete", "Use given proxy server and TCP port for database downloads.  The HTTPProxyServer may be prefixed with [scheme]:// to specify which kind of proxy is used. http://     HTTP Proxy. Default when no scheme or proxy type is specified. https://    HTTPS Proxy. (Added in 7.52.0 for OpenSSL, GnuTLS and NSS) socks4://   SOCKS4 Proxy. socks4a://  SOCKS4a Proxy. Proxy resolves URL hostname. socks5://   SOCKS5 Proxy. socks5h://  SOCKS5 Proxy. Proxy resolves URL hostname.");
+            m_freshclamConf->removeSingleLine("HTTPProxyPort", "obsolete", "Use given proxy server and TCP port for database downloads.  The HTTPProxyServer may be prefixed with [scheme]:// to specify which kind of proxy is used. http://     HTTP Proxy. Default when no scheme or proxy type is specified. https://    HTTPS Proxy. (Added in 7.52.0 for OpenSSL, GnuTLS and NSS) socks4://   SOCKS4 Proxy. socks4a://  SOCKS4a Proxy. Proxy resolves URL hostname. socks5://   SOCKS5 Proxy. socks5h://  SOCKS5 Proxy. Proxy resolves URL hostname.");
         }
 
         if (m_ui.httpProxyUsernameLineEdit->text() != "")
-            m_freshclamConf->setSingleLineValue("HTTPProxyUsername", m_ui.httpProxyUsernameLineEdit->text());
+            m_freshclamConf->setSingleLineValue("HTTPProxyUsername", m_ui.httpProxyUsernameLineEdit->text(), "Proxy usage is authenticated through given username and password. Default: disabled");
         else {
-            m_freshclamConf->setSingleLineValue("HTTPProxyUsername", "obsolete");
-            m_freshclamConf->removeSingleLine("HTTPProxyUsername", "obsolete");
+            m_freshclamConf->setSingleLineValue("HTTPProxyUsername", "obsolete", "Proxy usage is authenticated through given username and password. Default: disabled");
+            m_freshclamConf->removeSingleLine("HTTPProxyUsername", "obsolete", "Proxy usage is authenticated through given username and password. Default: disabled");
         }
 
         if (m_ui.httpProxyPasswordLineEdit->text() != "")
-            m_freshclamConf->setSingleLineValue("HTTPProxyPassword", m_ui.httpProxyPasswordLineEdit->text());
+            m_freshclamConf->setSingleLineValue("HTTPProxyPassword", m_ui.httpProxyPasswordLineEdit->text(), "Proxy usage is authenticated through given username and password. Default: disabled");
         else {
-            m_freshclamConf->setSingleLineValue("HTTPProxyPassword", "obsolete");
-            m_freshclamConf->removeSingleLine("HTTPProxyPassword", "obsolete");
+            m_freshclamConf->setSingleLineValue("HTTPProxyPassword", "obsolete", "Proxy usage is authenticated through given username and password. Default: disabled");
+            m_freshclamConf->removeSingleLine("HTTPProxyPassword", "obsolete", "Proxy usage is authenticated through given username and password. Default: disabled");
         }
 
         m_setupFile->setSectionValue("FreshClam", "UpdatesPerDay", m_ui.checkPerDaySpinBox->value());
@@ -954,7 +954,7 @@ void freshclamsetter::slot_writeFreshclamSettings()
 void freshclamsetter::slot_dbPathChanged(QString dbPath)
 {
     if (dbPath != "") {
-        m_freshclamConf->setSingleLineValue("DatabaseDirectory", dbPath);
+        m_freshclamConf->setSingleLineValue("DatabaseDirectory", dbPath, "Path to a directory containing database files.  This directory must already exist, be an absolute path, be writeable by freshclam and readable by clamd/clamscan. Default: /var/lib/clamav");
         m_ui.databaseDirectoryPathLabel->setText(dbPath);
 
         QStringList parameters;
@@ -962,7 +962,7 @@ void freshclamsetter::slot_dbPathChanged(QString dbPath)
         QDir dbDir;
         if (dbDir.exists(m_ui.databaseDirectoryPathLabel->text()) == true) {
             QFileInfo dbDirectoryPath(m_ui.databaseDirectoryPathLabel->text());
-            m_freshclamConf->setSingleLineValue("DatabaseOwner", dbDirectoryPath.owner());
+            m_freshclamConf->setSingleLineValue("DatabaseOwner", dbDirectoryPath.owner(), "When started by root, drop privileges to a specified user. Default: vscan");
             m_ui.databaseOwnerLineEdit->setText(dbDirectoryPath.owner());
         }
     }
@@ -972,7 +972,7 @@ void freshclamsetter::slot_pidFileSelectButtonClicked()
 {
     QString rc = QFileDialog::getExistingDirectory(this, tr("Select Folder for the PID-File"), "/tmp");
     if (rc != "") {
-        m_freshclamConf->setSingleLineValue("PidFile", rc + "/freshclam.pid");
+        m_freshclamConf->setSingleLineValue("PidFile", rc + "/freshclam.pid", "Write the daemon's pid to the specified file. Default: disabled");
         m_setupFile->setSectionValue("Freshclam", "PidFile", rc + "/freshclam.pid");
         m_ui.pidFilePathLabel->setText(rc + "/freshclam.pid");
     }

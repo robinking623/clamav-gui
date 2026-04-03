@@ -52,6 +52,7 @@ clamdconfspinboxoption::clamdconfspinboxoption(QWidget* parent, QString keyword,
     }*/
 // -------------------------------------------------------------------------
 
+    m_comment = label;
     label = QCoreApplication::translate("ClamAV", label.toUtf8().constData());
     m_ui.checkBox->setText(translator::beautifyString(label, 120));
     m_ui.checkBox->setToolTip(keyword);
@@ -99,15 +100,15 @@ void clamdconfspinboxoption::slot_checkboxClicked()
         (state == true) ? m_ui.frame->setStyleSheet(css_mono) : m_ui.frame->setStyleSheet("");
         if (state == true) {
             if (m_ui.label->text() == "MB") {
-                m_setupFile->setSingleLineValue(m_optionKeyword, QString::number(m_ui.spinBox->value()) + "M");
+                m_setupFile->setSingleLineValue(m_optionKeyword, QString::number(m_ui.spinBox->value()) + "M", m_comment);
             }
             else {
-                m_setupFile->setSingleLineValue(m_optionKeyword, QString::number(m_ui.spinBox->value()));
+                m_setupFile->setSingleLineValue(m_optionKeyword, QString::number(m_ui.spinBox->value()), m_comment);
             }
         }
         else {
             QString value = m_setupFile->getSingleLineValue(m_optionKeyword);
-            m_setupFile->removeSingleLine(m_optionKeyword, value);
+            m_setupFile->removeSingleLine(m_optionKeyword, value, m_comment);
         }
         emit settingChanged();
     }
@@ -119,12 +120,12 @@ void clamdconfspinboxoption::slot_spinboxChanged()
         bool state = m_ui.checkBox->isChecked();
         if (state == true) {
             QString value = m_setupFile->getSingleLineValue(m_optionKeyword);
-            m_setupFile->removeSingleLine(m_optionKeyword, value);
+            m_setupFile->removeSingleLine(m_optionKeyword, value, m_comment);
             if (m_ui.label->text() == "MB") {
-                m_setupFile->setSingleLineValue(m_optionKeyword, QString::number(m_ui.spinBox->value()) + "M");
+                m_setupFile->setSingleLineValue(m_optionKeyword, QString::number(m_ui.spinBox->value()) + "M", m_comment);
             }
             else {
-                m_setupFile->setSingleLineValue(m_optionKeyword, QString::number(m_ui.spinBox->value()));
+                m_setupFile->setSingleLineValue(m_optionKeyword, QString::number(m_ui.spinBox->value()), m_comment);
             }
             emit settingChanged();
         }

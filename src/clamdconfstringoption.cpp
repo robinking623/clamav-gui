@@ -28,6 +28,7 @@ clamdConfStringOption::clamdConfStringOption(QWidget* parent, QString keyword, b
     }*/
 // -------------------------------------------------------------------------
 
+    m_comment = label;
     label = QCoreApplication::translate("ClamAV", label.toUtf8().constData());
     label = translator::beautifyString(label, 120);
 
@@ -74,12 +75,12 @@ void clamdConfStringOption::slot_checkBoxClicked()
         m_ui.lineEdit->setEnabled(state);
         if (state == true) {
             QString value = m_setupFile->getSingleLineValue(m_optionKeyword);
-            m_setupFile->removeSingleLine(m_optionKeyword, value);
-            m_setupFile->setSingleLineValue(m_optionKeyword, m_ui.lineEdit->text());
+            m_setupFile->removeSingleLine(m_optionKeyword, value, m_comment);
+            m_setupFile->setSingleLineValue(m_optionKeyword, m_ui.lineEdit->text(), m_comment);
         }
         else {
             QString value = m_setupFile->getSingleLineValue(m_optionKeyword);
-            m_setupFile->removeSingleLine(m_optionKeyword, value);
+            m_setupFile->removeSingleLine(m_optionKeyword, value, m_comment);
         }
         emit settingChanged();
         (state == true) ? m_ui.frame->setStyleSheet(css_mono) : m_ui.frame->setStyleSheet("");
@@ -91,8 +92,8 @@ void clamdConfStringOption::slot_lineEditChanged()
     if (m_startup == false) {
         if (m_ui.checkBox->isChecked() == true) {
             QString value = m_setupFile->getSingleLineValue(m_optionKeyword);
-            m_setupFile->removeSingleLine(m_optionKeyword, value);
-            m_setupFile->setSingleLineValue(m_optionKeyword, m_ui.lineEdit->text());
+            m_setupFile->removeSingleLine(m_optionKeyword, value, m_comment);
+            m_setupFile->setSingleLineValue(m_optionKeyword, m_ui.lineEdit->text(), m_comment);
             emit settingChanged();
         }
     }

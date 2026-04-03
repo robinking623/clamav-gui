@@ -565,7 +565,7 @@ void clamdManager::slot_monitoringAddButtonClicked()
         if (m_ui.monitoringComboBox->findText(path) == -1) {
             m_ui.monitoringComboBox->addItem(path);
             m_setupFile->setSectionValue("Clamonacc", path, "under monitoring");
-            m_clamdConf->addSingleLineValue("OnAccessIncludePath", path);
+            m_clamdConf->addSingleLineValue("OnAccessIncludePath", path, "This option specifies a directory (including all files and directories inside it), which should be scanned on access. This option can be used multiple times. Default: disabled");
             m_dirsUnderMonitoring++;
             if (checkClamdRunning() == true)
                 restartClamonacc();
@@ -585,7 +585,7 @@ void clamdManager::slot_monitoringDelButtonClicked()
                                      QMessageBox::No) == QMessageBox::Yes) {
             m_setupFile->removeKeyword("Clamonacc", entry);
             m_ui.monitoringComboBox->removeItem(m_ui.monitoringComboBox->currentIndex());
-            m_clamdConf->removeSingleLine("OnAccessIncludePath", entry);
+            m_clamdConf->removeSingleLine("OnAccessIncludePath", entry, "This option specifies a directory (including all files and directories inside it), which should be scanned on access. This option can be used multiple times. Default: disabled");
             m_dirsUnderMonitoring--;
             if (checkClamdRunning() == true)
                 restartClamonacc();
@@ -886,6 +886,7 @@ void clamdManager::getClamdConfElements()
                                     } else {
                                         int defaultIntValue = defaultvalue.toInt();
                                         if (defaultIntValue < 0) content = content + "|-1,30,-1";
+                                        if (defaultIntValue == 0) content = content + "|0,10,0";
                                         if ((defaultIntValue >= 0) && (defaultIntValue < 1000)) content = content + "|0," + QString::number(defaultIntValue * 3) + "," + defaultvalue;
                                         if ((defaultIntValue >= 1000) && (defaultIntValue < 10000)) content = content + "|0," + QString::number(defaultIntValue * 2) + "," + defaultvalue;
                                         if (defaultIntValue >= 10000) content = content + "|0," + QString::number(defaultIntValue * 10) + "," + defaultvalue;

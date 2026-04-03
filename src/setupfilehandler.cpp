@@ -51,11 +51,13 @@ void setupFileHandler::setSetupFileName(QString filename)
 
     m_setupFileName = filename;
 
-    if (!file.exists()) {
+    if (!file.exists())
+    {
         QString path = filename.left(filename.lastIndexOf("/"));
         QDir* tempDir = new QDir(path);
         tempDir->mkpath(path);
-        if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        if (file.open(QIODevice::WriteOnly | QIODevice::Text))
+        {
             QTextStream stream(&file);
             Qt::endl(stream);
             file.close();
@@ -83,11 +85,13 @@ QString setupFileHandler::getSetupFileName()
  *                given keyword. If the section does not exist it   *
  *                is created. If the keyword does not exist it is   *
  *                created. If the keyword exists the overwrite bool *
- *                controls wether the value is changed or not.      *
+ *                controls whether the value is changed or not.     *
+ *                Default: overwrite = true                         *
  ********************************************************************/
 void setupFileHandler::setSectionValue(QString section, QString keyword, const char* value, bool overwrite)
 {
-    if (keywordExists(section, keyword)) {
+    if (keywordExists(section, keyword))
+    {
         if (overwrite)
             setSectionValue(section, keyword, (QString)value);
     }
@@ -104,26 +108,24 @@ void setupFileHandler::setSectionValue(QString section, QString keyword, const c
  *                given keyword. If the section does not exist it   *
  *                created. If the keyword does not exist it is      *
  *                created.                                          *
+ *                Default: overwrite = true                         *
  ********************************************************************/
 void setupFileHandler::setSectionValue(QString section, QString keyword, QString value, bool overwrite)
 {
     bool doit = false;
 
-    if (keywordExists(section, keyword)) {
-        doit = overwrite;
-    }
-    else {
-        doit = true;
-    }
+    doit = (keywordExists(section, keyword))?overwrite:true;
 
-    if (doit) {
+    if (doit)
+    {
         readSetupFile();
         QString tempSection = getSection(section).trimmed();
 
         // Check for multiline content and replace \n by <!nl>
         value.replace("\n", "<!nl>");
 
-        if (tempSection == "") {
+        if (tempSection == "")
+        {
             m_setupFileContent = m_setupFileContent + "\n[" + section + "]\n" + keyword + "=" + value + "\n";
         }
         else {
@@ -133,18 +135,19 @@ void setupFileHandler::setSectionValue(QString section, QString keyword, QString
             QString line;
             bool found = false;
 
-            for (int i = 0; i < list.count(); i++) {
+            for (int i = 0; i < list.count(); i++)
+            {
                 line = list.at(i);
-                if (line.indexOf(keyword + "=") == 0) {
+                if (line.indexOf(keyword + "=") == 0)
+                {
                     line = line.left(line.indexOf("=")) + "=" + value;
                     found = true;
                 }
                 if (line != "")
                     rc = rc + line + "\n";
             }
-            if (!found) {
+            if (!found)
                 rc = rc + keyword + "=" + value + "\n";
-            }
 
             m_setupFileContent.replace(sectionReminder, rc.trimmed());
         }
@@ -161,7 +164,7 @@ void setupFileHandler::setSectionValue(QString section, QString keyword, QString
 void setupFileHandler::setSectionValue(QString section, QString keyword, bool tempValue, bool overwrite)
 {
     QString value;
-    tempValue ? value = "true" : value = "false";
+    value = tempValue?"true":"false";
 
     setSectionValue(section, keyword, value, overwrite);
 }
@@ -221,15 +224,16 @@ QString setupFileHandler::getSectionValue(QString section, QString keyword)
     QString tempSection = getSection(section).trimmed();
     QString rc = "";
 
-    if (tempSection != "") {
+    if (tempSection != "")
+    {
         QStringList list = tempSection.split("\n");
         QString line;
 
-        for (int i = 0; i < list.count(); i++) {
+        for (int i = 0; i < list.count(); i++)
+        {
             line = list.at(i);
-            if (line.indexOf(keyword + "=") == 0) {
+            if (line.indexOf(keyword + "=") == 0)
                 rc = line.mid(line.indexOf("=") + 1);
-            }
         }
     }
     // replace encoded \n (<!nl>) by newline (\n)
@@ -255,15 +259,15 @@ bool setupFileHandler::getSectionBoolValue(QString section, QString keyword)
         QStringList list = tempSection.split("\n");
         QString line;
 
-        for (int i = 0; i < list.count(); i++) {
+        for (int i = 0; i < list.count(); i++)
+        {
             line = list.at(i);
-            if (line.indexOf(keyword + "=") == 0) {
+            if (line.indexOf(keyword + "=") == 0)
                 rc = line.mid(line.indexOf("=") + 1);
-            }
         }
     }
 
-    rc == "true" ? boolrc = true : boolrc = false;
+    boolrc = (rc == "true")?true:false;
     return boolrc;
 }
 
@@ -281,15 +285,16 @@ qint64 setupFileHandler::getSectionIntValue(QString section, QString keyword)
     QString rc = "";
     qint64 intrc = 0;
 
-    if (tempSection != "") {
+    if (tempSection != "")
+    {
         QStringList list = tempSection.split("\n");
         QString line;
 
-        for (int i = 0; i < list.count(); i++) {
+        for (int i = 0; i < list.count(); i++)
+        {
             line = list.at(i);
-            if (line.indexOf(keyword + "=") == 0) {
+            if (line.indexOf(keyword + "=") == 0)
                 rc = line.mid(line.indexOf("=") + 1);
-            }
         }
     }
 
@@ -311,15 +316,16 @@ double setupFileHandler::getSectionDoubleValue(QString section, QString keyword)
     QString rc = "";
     double doublerc = 0;
 
-    if (tempSection != "") {
+    if (tempSection != "")
+    {
         QStringList list = tempSection.split("\n");
         QString line;
 
-        for (int i = 0; i < list.count(); i++) {
+        for (int i = 0; i < list.count(); i++)
+        {
             line = list.at(i);
-            if (line.indexOf(keyword + "=") == 0) {
+            if (line.indexOf(keyword + "=") == 0)
                 rc = line.mid(line.indexOf("=") + 1);
-            }
         }
     }
 
@@ -340,16 +346,15 @@ QString setupFileHandler::getSection(QString sectionID)
     QString line;
     bool sectionFlag = false;
 
-    for (int i = 0; i < list.count(); i++) {
+    for (int i = 0; i < list.count(); i++)
+    {
         line = list.at(i);
         if ((line.left(1) == "[") && (line.indexOf("[" + sectionID + "]") == -1))
             sectionFlag = false;
-        if (line.indexOf("[" + sectionID + "]") == 0) {
+        if (line.indexOf("[" + sectionID + "]") == 0)
             sectionFlag = true;
-        }
-        if (sectionFlag == true) {
+        if (sectionFlag == true)
             rc = rc + line + "\n";
-        }
     }
     rc = rc;
     return rc;
@@ -364,7 +369,8 @@ QString setupFileHandler::getSection(QString sectionID)
 void setupFileHandler::readSetupFile()
 {
     QFile file(m_setupFileName);
-    if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
         QTextStream stream(&file);
         m_setupFileContent = stream.readAll().toLocal8Bit().constData();
         if (m_setupFileContent.right(1) != "\n")
@@ -426,17 +432,16 @@ void setupFileHandler::removeKeyword(QString section, QString keyword)
     readSetupFile();
     QString tempSection = getSection(section).trimmed();
 
-    if (tempSection != "") {
+    if (tempSection != "")
+    {
         QString sectionReminder = tempSection;
         QStringList list = tempSection.split("\n");
         QString rc;
-        QString line;
 
-        for (int i = 0; i < list.count(); i++) {
-            line = list.at(i);
-            if (line.indexOf(keyword + "=") != 0) {
+        foreach (QString line, list)
+        {
+            if (line.indexOf(keyword + "=") != 0)
                 rc = rc + line + "\n";
-            }
         }
         m_setupFileContent.replace(sectionReminder, rc.trimmed());
     }
@@ -471,7 +476,8 @@ QStringList setupFileHandler::getSectionNames()
     do {
         index = m_setupFileContent.indexOf("\n");
         line = m_setupFileContent.mid(0, index);
-        if ((line.at(0) == '[') && (line.right(1) == "]")) {
+        if ((line.at(0) == '[') && (line.right(1) == "]"))
+        {
             line = line.mid(1, line.length() - 2);
             sections << line;
         }
@@ -496,7 +502,8 @@ QStringList setupFileHandler::getSectionNames(QStringList excludeList)
     do {
         index = m_setupFileContent.indexOf("\n");
         line = m_setupFileContent.mid(0, index);
-        if ((line.at(0) == '[') && (line.right(1) == "]")) {
+        if ((line.at(0) == '[') && (line.right(1) == "]"))
+        {
             line = line.mid(1, line.length() - 2);
             if (excludeList.indexOf(line) == -1)
                 sections << line;
@@ -545,8 +552,10 @@ QStringList setupFileHandler::getSingleLineValues(QString keyword)
     QStringList values;
     QStringList lines = m_setupFileContent.split("\n");
 
-    foreach (QString line, lines) {
-        if (line.indexOf(keyword + " ") == 0) {
+    foreach (QString line, lines)
+    {
+        if (line.indexOf(keyword + " ") == 0)
+        {
             line = line.replace(keyword + " ", "");
             values << line;
         }
@@ -566,15 +575,16 @@ QStringList setupFileHandler::getKeywords(QString section)
     QString tempSection = getSection(section).trimmed();
     QStringList rc;
 
-    if (tempSection != "") {
+    if (tempSection != "")
+    {
         QStringList list = tempSection.split("\n");
         QString line;
 
-        for (int i = 1; i < list.count(); i++) {
+        for (int i = 1; i < list.count(); i++)
+        {
             line = list.at(i);
-            if (line.indexOf("=") != -1) {
+            if (line.indexOf("=") != -1)
                 rc << line.left(line.indexOf("="));
-            }
         }
     }
     return rc;
@@ -611,18 +621,16 @@ QString setupFileHandler::getFreeFloaterValue(QString keyword)
 QString setupFileHandler::getSingleLineValue(QString keyword)
 {
     readSetupFile();
-    QString KeywordValue = "";
+    QString rc = "";
     QStringList lines = m_setupFileContent.split("\n");
-    QString line = "";
 
-    for (int x = 0; x < lines.length(); x++) {
-        line = lines[x];
-        if (line.indexOf(keyword + " ") == 0) {
-            KeywordValue = line.mid(line.indexOf(" ") + 1);
-        }
+    foreach(QString line,lines)
+    {
+        if (line.indexOf(keyword + " ") == 0)
+            rc = line.mid(line.indexOf(" ") + 1);
     }
 
-    return KeywordValue;
+    return rc;
 }
 
 /********************************************************************
@@ -636,12 +644,54 @@ bool setupFileHandler::singleLineExists(QString keyword)
     readSetupFile();
     bool rc = false;
     QStringList lines = m_setupFileContent.split("\n");
-    QString line = "";
 
-    for (int x = 0; x < lines.length(); x++) {
-        line = lines[x];
+    foreach (QString line, lines)
+    {
         if (line.indexOf(keyword + " ") == 0)
             rc = true;
+    }
+
+    return rc;
+}
+
+/********************************************************************
+ * beautifyString                                                   *
+ * Parameter    : QString, int                                      *
+ * Return Value : QString                                           *
+ * Description  : Formats the given string and break line at the    *
+ *                given length and avoid breaking within a word.    *
+ ********************************************************************/
+QString setupFileHandler::beautifyString(QString value, int length)
+{
+    QString helper = value;
+    QString rc = "";
+    int counter = 0;
+    QString defaultMessageString = "";
+
+    if (helper.indexOf("Default: ") != -1)
+    {
+        defaultMessageString = helper.mid(helper.indexOf("Default: "));
+        helper.replace(defaultMessageString,"");
+    }
+
+
+    if (value != "")
+    {
+        // Word-Wrap of lines that are longer than [length] characters ...
+        rc = "\n# ";
+        for (int i = 0; i < helper.length(); i++) {
+            if ((counter > length) && (helper.mid(i,1) == ' ')) {
+                rc = rc + "\n# ";
+                counter = 0;
+            } else {
+                rc = rc + helper.mid(i,1);
+            }
+            counter++;
+        }
+        if (defaultMessageString != "")
+            rc = rc + "\n# " + defaultMessageString;
+        if (rc.right(0) != "\n")
+            rc = rc+ "\n";
     }
 
     return rc;
@@ -653,24 +703,35 @@ bool setupFileHandler::singleLineExists(QString keyword)
  * Return Value :                                                   *
  * Description  : Removes the single Line Value from the file       *
  ********************************************************************/
-void setupFileHandler::removeSingleLine(QString keyword, QString value)
+void setupFileHandler::removeSingleLine(QString keyword, QString value, QString comment)
 {
     readSetupFile();
-    QStringList lines = m_setupFileContent.split("\n");
-    QString line = "";
-    QString newContent = "";
+    m_setupFileContent = m_setupFileContent.trimmed();
+    bool alreadyFinished = false;
 
-    for (int x = 0; x < lines.length(); x++) {
-        line = lines[x];
-        if (line.indexOf(keyword + " " + value) != 0) {
-            if (newContent == "")
-                newContent = line;
-            else
-                newContent = newContent + "\n" + line;
+    if (comment != "") {
+        comment = beautifyString(comment);
+        comment = comment + keyword + " " + value;
+        if (m_setupFileContent.indexOf(comment) != -1) {
+            alreadyFinished = true;
+            m_setupFileContent.replace(comment, "");
         }
     }
 
-    m_setupFileContent = newContent;
+    if (alreadyFinished == false)
+    {
+        QString newContent = "";
+        QStringList lines = m_setupFileContent.split("\n");
+        foreach (QString line, lines)
+        {
+            if (line.indexOf(keyword + " " + value) != 0)
+            {
+                (newContent == "")?newContent = line:newContent = newContent + "\n" + line;
+            }
+        }
+        m_setupFileContent = newContent;
+    }
+
     writeSetupFile();
 }
 
@@ -679,28 +740,42 @@ void setupFileHandler::removeSingleLine(QString keyword, QString value)
  * Parameter    : QString,                                          *
  * Return Value :                                                   *
  * Description  : set a new value for the single line value         *
+ *                If the keyword is missing it will be added.       *
  ********************************************************************/
-void setupFileHandler::setSingleLineValue(QString keyword, QString value)
+void setupFileHandler::setSingleLineValue(QString keyword, QString value, QString comment)
 {
     readSetupFile();
-    QString prev;
-    QString rest;
-    int start, stop;
+    m_setupFileContent = m_setupFileContent.trimmed();
 
-    if (value.right(0) != "\n")
-        value = value + "\n";
+    comment = beautifyString(comment);
 
-    start = m_setupFileContent.indexOf(keyword + " ");
-
-    if (start > -1) {
-        stop = m_setupFileContent.indexOf("\n", start);
-        prev = m_setupFileContent.mid(0, start);
-        rest = m_setupFileContent.mid(stop + 1);
-        m_setupFileContent = prev + keyword + " " + value + rest;
+    if (singleLineExists(keyword))
+    {
+        QString oldValue = getSingleLineValue(keyword);
+        QString removeKeyString = comment + keyword + " " + oldValue;
+        if (m_setupFileContent.indexOf(removeKeyString) != -1)
+            m_setupFileContent.replace(removeKeyString, "");
     }
-    else {
-        m_setupFileContent = m_setupFileContent + keyword + " " + value;
+
+    QStringList lines = m_setupFileContent.split("\n");
+    QString newContent = "";
+    bool keywordMissing = true;
+
+    foreach(QString line,lines)
+    {
+        if (line.indexOf(keyword + " ") == 0)
+        {
+            line = comment + keyword + " " + value;
+            keywordMissing = false;
+        }
+
+        newContent = newContent + line + "\n";
     }
+
+    if (keywordMissing) newContent = newContent + comment + keyword + " " + value;
+
+    m_setupFileContent = newContent;
+
     writeSetupFile();
 }
 
@@ -710,12 +785,18 @@ void setupFileHandler::setSingleLineValue(QString keyword, QString value)
  * Return Value :                                                   *
  * Description  : set a new value for the single line value         *
  ********************************************************************/
-void setupFileHandler::addSingleLineValue(QString keyword, QString value)
+void setupFileHandler::addSingleLineValue(QString keyword, QString value, QString comment)
 {
     QStringList values = getSingleLineValues(keyword);
     readSetupFile();
+
     if (values.indexOf(value) == -1)
-        m_setupFileContent = m_setupFileContent + keyword + " " + value;
+    {
+        if (comment != "")
+            comment = beautifyString(comment);
+
+        m_setupFileContent = m_setupFileContent + comment + keyword + " " + value;
+    }
 
     writeSetupFile();
 }
@@ -733,40 +814,39 @@ void setupFileHandler::setFreeFloaterValue(QString keyword, QString value, bool 
 {
     bool doit = false;
 
-    if (freeFloaterExists(keyword)) {
-        doit = overwrite;
-    }
-    else {
-        doit = true;
-    }
+    doit = freeFloaterExists(keyword)?overwrite:true;
 
-    if (doit) {
+    if (doit)
+    {
         readSetupFile();
         QString tempSection = m_setupFileContent.left(m_setupFileContent.indexOf("[")).trimmed();
         QString newFreeFloaterSection;
 
-        if (tempSection == "") {
+        if (tempSection == "")
+        {
             m_setupFileContent = newFreeFloaterSection + "\n" + keyword + "=" + value + "\n";
         }
-        else {
+        else
+        {
             QString sectionReminder = tempSection;
             QStringList list = tempSection.split("\n");
             QString rc;
             QString line;
             bool found = false;
 
-            for (int i = 0; i < list.count(); i++) {
+            for (int i = 0; i < list.count(); i++)
+            {
                 line = list.at(i);
-                if (line.indexOf(keyword + "=") == 0) {
+                if (line.indexOf(keyword + "=") == 0)
+                {
                     line = line.left(line.indexOf("=")) + "=" + value;
                     found = true;
                 }
                 if (line != "")
                     rc = rc + line + "\n";
             }
-            if (!found) {
+            if (!found)
                 rc = rc + keyword + "=" + value + "\n";
-            }
 
             m_setupFileContent.replace(sectionReminder, rc.trimmed());
         }
@@ -788,12 +868,7 @@ bool setupFileHandler::sectionExists(QString section)
     QString sectionContent = getSection(section).trimmed();
     bool rc;
 
-    if (sectionContent != "") {
-        rc = true;
-    }
-    else {
-        rc = false;
-    }
+    rc = (sectionContent != "")?true:false;
 
     return rc;
 }
@@ -817,7 +892,8 @@ bool setupFileHandler::keywordExists(QString section, QString keyword)
     if (rc) {
         rc = false;
         QStringList lines = sectionContent.split("\n");
-        foreach (QString line, lines) {
+        foreach (QString line, lines)
+        {
             if (line.indexOf(keyword + "=") == 0)
                 rc = true;
         }
@@ -840,7 +916,8 @@ bool setupFileHandler::freeFloaterExists(QString keyword)
 
     m_setupFileContent = m_setupFileContent.left(m_setupFileContent.indexOf("[") - 2);
     QStringList lines = m_setupFileContent.split("\n");
-    foreach (QString line, lines) {
+    foreach (QString line, lines)
+    {
         if (line.indexOf(keyword) == 0)
             rc = true;
     }
@@ -856,7 +933,8 @@ QString line;
 QString rc = "";
 
     QFile file(setupFilename);
-    if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
         QTextStream stream(&file);
         content = stream.readAll().toLocal8Bit().constData();
         if (content.right(1) != "\n")
@@ -866,29 +944,29 @@ QString rc = "";
 
     QStringList list = content.split("\n");
 
-    for (int i = 0; i < list.count(); i++) {
+    for (int i = 0; i < list.count(); i++)
+    {
         line = list.at(i);
         if ((line.left(1) == "[") && (line.indexOf("[" + sectionID + "]") == -1))
             sectionFlag = false;
-        if (line.indexOf("[" + sectionID + "]") == 0) {
+        if (line.indexOf("[" + sectionID + "]") == 0)
             sectionFlag = true;
-        }
-        if (sectionFlag == true) {
+        if (sectionFlag == true)
             section = section + line + "\n";
-        }
     }
 
     section = section.trimmed();
 
-    if (section != "") {
+    if (section != "")
+    {
         QStringList list = section.split("\n");
         QString line;
 
-        for (int i = 0; i < list.count(); i++) {
+        for (int i = 0; i < list.count(); i++)
+        {
             line = list.at(i);
-            if (line.indexOf(keyword + "=") == 0) {
+            if (line.indexOf(keyword + "=") == 0)
                 rc = line.mid(line.indexOf("=") + 1);
-            }
         }
     }
     // replace encoded \n (<!nl>) by newline (\n)
@@ -905,7 +983,8 @@ QString rc = "";
 bool boolrc = false;
 
     QFile file(setupFilename);
-    if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
         QTextStream stream(&file);
         content = stream.readAll().toLocal8Bit().constData();
         if (content.right(1) != "\n")
@@ -915,33 +994,33 @@ bool boolrc = false;
 
     QStringList list = content.split("\n");
 
-    for (int i = 0; i < list.count(); i++) {
+    for (int i = 0; i < list.count(); i++)
+    {
         line = list.at(i);
         if ((line.left(1) == "[") && (line.indexOf("[" + sectionID + "]") == -1))
             sectionFlag = false;
-        if (line.indexOf("[" + sectionID + "]") == 0) {
+        if (line.indexOf("[" + sectionID + "]") == 0)
             sectionFlag = true;
-        }
-        if (sectionFlag == true) {
+        if (sectionFlag == true)
             section = section + line + "\n";
-        }
     }
 
     section = section.trimmed();
 
-    if (section != "") {
+    if (section != "")
+    {
         QStringList list = section.split("\n");
         QString line;
 
-        for (int i = 0; i < list.count(); i++) {
+        for (int i = 0; i < list.count(); i++)
+        {
             line = list.at(i);
-            if (line.indexOf(keyword + "=") == 0) {
+            if (line.indexOf(keyword + "=") == 0)
                 rc = line.mid(line.indexOf("=") + 1);
-            }
         }
     }
 
-    rc == "true" ? boolrc = true : boolrc = false;
+    boolrc = (rc == "true")?true:false;
     return boolrc;
 
 }
