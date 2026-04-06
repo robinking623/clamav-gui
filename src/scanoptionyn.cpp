@@ -2,7 +2,7 @@
 #define css "background-color:#404040;color:white"
 
 scanoptionyn::scanoptionyn(QWidget *parent, QString setupFileName, QString section, bool checked, QString label, QString comment)
-: QWidget(parent)
+: scanOptionBaseClass(parent)
 {
     m_ui.setupUi(this);
     m_setupFile = new setupFileHandler(setupFileName,this);
@@ -31,6 +31,21 @@ scanoptionyn::scanoptionyn(QWidget *parent, QString setupFileName, QString secti
     m_ui.checkBox->setToolTip(m_option);
 
     if (label.indexOf("<equal>yes") != -1) m_ui.comboBox->setCurrentText("yes");else m_ui.comboBox->setCurrentText("no");
+}
+
+QString scanoptionyn::getOption()
+{
+    return m_option;
+}
+
+QString scanoptionyn::getComment()
+{
+    return m_com;
+}
+
+bool scanoptionyn::isChecked()
+{
+    return m_ui.checkBox->isChecked();
 }
 
 void scanoptionyn::slot_checkboxClicked(){

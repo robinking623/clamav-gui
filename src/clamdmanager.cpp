@@ -127,23 +127,50 @@ void clamdManager::slot_filterChanged(QString searchString)
     QString keyword;
     QString label;
 
-    if (searchString != "") {
-        searchString = searchString.toUpper();
-
-        foreach(ClamdConfOptionBaseClass* item,m_clamdConfParameters) {
-            keyword = item->getKeyword().toUpper();
-            label = item->getLabel().toUpper();
-            if ((keyword.indexOf(searchString) != -1) || (label.indexOf(searchString) != -1)) {
-                item->setVisible(true);
-            } else {
-                item->setVisible(false);
+    if ((m_ui.showSelectedCheckBox->isChecked()) || (m_ui.showUnselectedCheckBox->isChecked()))
+    {
+        if (m_ui.showSelectedCheckBox->isChecked())
+        {
+            foreach (ClamdConfOptionBaseClass* item, m_clamdConfParameters) {
+                item->setVisible(item->isChecked());
+            }
+        } else {
+            foreach (ClamdConfOptionBaseClass* item, m_clamdConfParameters) {
+                item->setVisible(!item->isChecked());
             }
         }
     } else {
-        foreach(ClamdConfOptionBaseClass* item,m_clamdConfParameters) {
-            item->setVisible(true);
+        if (searchString != "") {
+            searchString = searchString.toUpper();
+
+            foreach(ClamdConfOptionBaseClass* item,m_clamdConfParameters) {
+                keyword = item->getKeyword().toUpper();
+                label = item->getLabel().toUpper();
+                ((keyword.indexOf(searchString) != -1) || (label.indexOf(searchString) != -1))?item->setVisible(true):item->setVisible(false);
+            }
+        } else {
+            foreach (ClamdConfOptionBaseClass* item, m_clamdConfParameters)
+            {
+                item->setVisible(true);
+            }
         }
     }
+}
+
+void clamdManager::slot_showSelectedChecked()
+{
+    if (m_ui.showSelectedCheckBox->isChecked())
+        m_ui.showUnselectedCheckBox->setChecked(false);
+
+    slot_filterChanged(m_ui.lineEdit->text());
+}
+
+void clamdManager::slot_showUnselectedChecked()
+{
+    if (m_ui.showUnselectedCheckBox->isChecked())
+        m_ui.showSelectedCheckBox->setChecked(false);
+
+    slot_filterChanged(m_ui.lineEdit->text());
 }
 
 void clamdManager::slot_updateClamdConf()

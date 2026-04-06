@@ -73,7 +73,8 @@ public:
 private:
     QString m_setupFileName;
     QString m_setupFileContent;
-    static QString beautifyString(QString value, int length = 70);
+    QString beautifyString(QString value, int length = 70);
+    void removeStrayComments();
     
     QString getSection(QString sectionID);
     void readSetupFile();

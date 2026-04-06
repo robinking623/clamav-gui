@@ -387,6 +387,8 @@ void setupFileHandler::readSetupFile()
  ********************************************************************/
 void setupFileHandler::writeSetupFile()
 {
+    removeStrayComments();
+
     QFile file(m_setupFileName);
 
     QFileDevice::Permissions p = file.permissions();
@@ -695,6 +697,42 @@ QString setupFileHandler::beautifyString(QString value, int length)
     }
 
     return rc;
+}
+
+/********************************************************************
+ * removeStrayComments                                              *
+ * Parameter    :                                                   *
+ * Return Value :                                                   *
+ * Description  : Removes left over comments in the file (cleanup)  *
+ ********************************************************************/
+void setupFileHandler::removeStrayComments()
+{
+    QString commentBuffer = "";
+    QStringList lines = m_setupFileContent.split("\n");
+    bool commentCollectorFlag = false;
+
+    foreach (QString line, lines)
+    {
+        if (line.indexOf("#") == 0)
+        {
+            commentCollectorFlag = true;
+        } else {
+            commentCollectorFlag = false;
+        }
+
+        if (commentCollectorFlag)
+        {
+            (commentBuffer == "")?commentBuffer = line:commentBuffer = commentBuffer + "\n" + line;
+        } else {
+            if ((commentBuffer != "") && (line == ""))
+                m_setupFileContent.replace(commentBuffer, "");
+
+            commentBuffer = "";
+        }
+    }
+
+    if (commentBuffer != "")
+        m_setupFileContent.replace(commentBuffer, "");
 }
 
 /********************************************************************

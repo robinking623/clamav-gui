@@ -92,6 +92,8 @@ private slots:
     void slot_updateClamdConfParameters();
     void slot_getClamdConfParameterProcessFinished();
     void slot_filterChanged(QString);
+    void slot_showSelectedChecked();
+    void slot_showUnselectedChecked();
 
 
 signals:

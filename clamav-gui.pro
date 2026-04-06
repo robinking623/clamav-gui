@@ -12,6 +12,7 @@ TEMPLATE = app
 
 
 SOURCES += src/main.cpp\
+    src/scanoptionbaseclass.cpp \
     src/clamdconfoptionbaseclass.cpp \
     src/clamdconfmultioption.cpp \
     src/clamdconfcomboboxoption.cpp \
@@ -47,6 +48,7 @@ SOURCES += src/main.cpp\
     src/translator.cpp
 
 HEADERS  += src/clamav_gui.h \
+    src/scanoptionbaseclass.h \
     src/clamdconfoptionbaseclass.h \
     src/clamdconfmultioption.h \
     src/clamdconfcomboboxoption.h \
@@ -81,6 +83,7 @@ HEADERS  += src/clamav_gui.h \
     src/translator.h
 
 FORMS    += ui/clamav_gui.ui \
+    ui/scanoptionbaseclass.ui \
     ui/clamdconfmultioption.ui \
     ui/firstrunwindow.ui \
     ui/myframe.ui \

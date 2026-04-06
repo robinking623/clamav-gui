@@ -43,6 +43,76 @@
          </property>
          <layout class="QVBoxLayout" name="verticalLayout">
           <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_11">
+            <item>
+             <widget class="QFrame" name="frame">
+              <property name="frameShape">
+               <enum>QFrame::Shape::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Shadow::Raised</enum>
+              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout_9">
+               <item>
+                <widget class="QLabel" name="filterLabel">
+                 <property name="text">
+                  <string>Filter: </string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="filterLineEdit">
+                 <property name="clearButtonEnabled">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer name="horizontalSpacer_3">
+                 <property name="orientation">
+                  <enum>Qt::Orientation::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="selectedCheckBox">
+                 <property name="text">
+                  <string>show selected</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="unselectedCheckBox">
+                 <property name="text">
+                  <string>show unselected</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <spacer name="filterHorizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Orientation::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
            <widget class="QScrollArea" name="scrollArea_2">
             <property name="widgetResizable">
              <bool>true</bool>
@@ -53,28 +123,62 @@
                <x>0</x>
                <y>0</y>
                <width>871</width>
-               <height>551</height>
+               <height>499</height>
               </rect>
              </property>
-             <layout class="QGridLayout" name="gridLayout_2">
-              <item row="0" column="0">
-               <layout class="QVBoxLayout" name="optionLayout">
-                <property name="spacing">
-                 <number>6</number>
-                </property>
-                <property name="topMargin">
-                 <number>2</number>
-                </property>
-                <property name="bottomMargin">
-                 <number>2</number>
-                </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_10">
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_2">
+                <item>
+                 <layout class="QVBoxLayout" name="optionLayout">
+                  <property name="spacing">
+                   <number>6</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>2</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>2</number>
+                  </property>
+                 </layout>
+                </item>
+                <item>
+                 <spacer name="verticalSpacer_2">
+                  <property name="orientation">
+                   <enum>Qt::Orientation::Vertical</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>20</width>
+                    <height>40</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
                </layout>
               </item>
-              <item row="0" column="1">
-               <layout class="QVBoxLayout" name="optionLayout_2">
-                <property name="spacing">
-                 <number>6</number>
-                </property>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_4">
+                <item>
+                 <layout class="QVBoxLayout" name="optionLayout_2">
+                  <property name="spacing">
+                   <number>6</number>
+                  </property>
+                 </layout>
+                </item>
+                <item>
+                 <spacer name="verticalSpacer_3">
+                  <property name="orientation">
+                   <enum>Qt::Orientation::Vertical</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>20</width>
+                    <height>40</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
                </layout>
               </item>
              </layout>
@@ -113,7 +217,7 @@
            <item row="8" column="0" colspan="2">
             <spacer name="verticalSpacer">
              <property name="orientation">
-              <enum>Qt::Vertical</enum>
+              <enum>Qt::Orientation::Vertical</enum>
              </property>
              <property name="sizeHint" stdset="0">
               <size>
@@ -126,10 +230,10 @@
            <item row="2" column="0" colspan="2">
             <widget class="QFrame" name="scanFileFrame">
              <property name="frameShape">
-              <enum>QFrame::NoFrame</enum>
+              <enum>QFrame::Shape::NoFrame</enum>
              </property>
              <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
+              <enum>QFrame::Shadow::Raised</enum>
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_3">
               <property name="topMargin">
@@ -161,10 +265,10 @@
            <item row="5" column="0" colspan="2">
             <widget class="QFrame" name="copyFrame">
              <property name="frameShape">
-              <enum>QFrame::NoFrame</enum>
+              <enum>QFrame::Shape::NoFrame</enum>
              </property>
              <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
+              <enum>QFrame::Shadow::Raised</enum>
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_6">
               <property name="topMargin">
@@ -206,10 +310,10 @@
            <item row="1" column="0" colspan="2">
             <widget class="QFrame" name="scanReportFrame">
              <property name="frameShape">
-              <enum>QFrame::NoFrame</enum>
+              <enum>QFrame::Shape::NoFrame</enum>
              </property>
              <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
+              <enum>QFrame::Shadow::Raised</enum>
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_2">
               <property name="topMargin">
@@ -268,10 +372,10 @@
            <item row="4" column="0" colspan="2">
             <widget class="QFrame" name="moveFrame">
              <property name="frameShape">
-              <enum>QFrame::NoFrame</enum>
+              <enum>QFrame::Shape::NoFrame</enum>
              </property>
              <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
+              <enum>QFrame::Shadow::Raised</enum>
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_5">
               <property name="topMargin">
@@ -313,10 +417,10 @@
            <item row="0" column="0" colspan="2">
             <widget class="QFrame" name="databaseFrame">
              <property name="frameShape">
-              <enum>QFrame::NoFrame</enum>
+              <enum>QFrame::Shape::NoFrame</enum>
              </property>
              <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
+              <enum>QFrame::Shadow::Raised</enum>
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout">
               <property name="topMargin">
@@ -361,10 +465,10 @@
            <item row="3" column="0" colspan="2">
             <widget class="QFrame" name="tempFileFrame">
              <property name="frameShape">
-              <enum>QFrame::NoFrame</enum>
+              <enum>QFrame::Shape::NoFrame</enum>
              </property>
              <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
+              <enum>QFrame::Shadow::Raised</enum>
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_4">
               <property name="topMargin">
@@ -406,10 +510,10 @@
            <item row="7" column="0" colspan="2">
             <widget class="QFrame" name="followFileLinksFrame">
              <property name="frameShape">
-              <enum>QFrame::NoFrame</enum>
+              <enum>QFrame::Shape::NoFrame</enum>
              </property>
              <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
+              <enum>QFrame::Shadow::Raised</enum>
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_8">
               <property name="topMargin">
@@ -428,7 +532,7 @@
               <item>
                <spacer name="horizontalSpacer_2">
                 <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
+                 <enum>Qt::Orientation::Horizontal</enum>
                 </property>
                 <property name="sizeHint" stdset="0">
                  <size>
@@ -463,10 +567,10 @@
            <item row="6" column="0" colspan="2">
             <widget class="QFrame" name="followDirLinksFrame">
              <property name="frameShape">
-              <enum>QFrame::NoFrame</enum>
+              <enum>QFrame::Shape::NoFrame</enum>
              </property>
              <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
+              <enum>QFrame::Shadow::Raised</enum>
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_7">
               <property name="topMargin">
@@ -485,7 +589,7 @@
               <item>
                <spacer name="horizontalSpacer">
                 <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
+                 <enum>Qt::Orientation::Horizontal</enum>
                 </property>
                 <property name="sizeHint" stdset="0">
                  <size>
@@ -848,6 +952,54 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>filterLineEdit</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>optionsDialog</receiver>
+   <slot>slot_scanOptionFilterChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>94</x>
+     <y>116</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>5</x>
+     <y>121</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>selectedCheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>optionsDialog</receiver>
+   <slot>slot_showSelectedOnlyChecked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>384</x>
+     <y>123</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>929</x>
+     <y>105</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>unselectedCheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>optionsDialog</receiver>
+   <slot>slot_showUnselectedOnlyChecked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>491</x>
+     <y>126</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>934</x>
+     <y>171</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>slot_addButtonClicked()</slot>
@@ -861,5 +1013,8 @@
   <slot>slot_selectSFFButtonClicked()</slot>
   <slot>slot_logViewerButtonClicked()</slot>
   <slot>slot_scanReportToFileSettingsChanged()</slot>
+  <slot>slot_scanOptionFilterChanged()</slot>
+  <slot>slot_showSelectedOnlyChecked()</slot>
+  <slot>slot_showUnselectedOnlyChecked()</slot>
  </slots>
 </ui>
