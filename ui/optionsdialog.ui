@@ -16,26 +16,46 @@
   <property name="windowOpacity">
    <double>1.000000000000000</double>
   </property>
-  <layout class="QGridLayout" name="gridLayout_5">
-   <item row="1" column="0">
-    <widget class="QTabWidget" name="tabWidget">
+  <layout class="QVBoxLayout" name="verticalLayout_6">
+   <item>
+    <widget class="QLabel" name="versionLabel">
+     <property name="text">
+      <string>ClamAV Version : </string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QToolBox" name="tabWidget">
+     <property name="styleSheet">
+      <string notr="true">QToolBox::tab {
+	font-weight:bold;
+	font-size:14px;
+	background-color: qlineargradient(spread:pad, x1:0.005, y1:0.006, x2:1, y2:1, stop:0.0819672 rgba(0, 0, 0, 255), stop:1 rgba(255, 255, 255, 255));
+	color: white;
+	border-radius:5px;
+}
+</string>
+     </property>
      <property name="currentIndex">
       <number>0</number>
      </property>
-     <property name="iconSize">
-      <size>
-       <width>22</width>
-       <height>22</height>
-      </size>
-     </property>
-     <widget class="QWidget" name="tab">
+     <widget class="QWidget" name="page">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>919</width>
+        <height>590</height>
+       </rect>
+      </property>
       <attribute name="icon">
-       <iconset theme="contact-new"/>
+       <iconset resource="../resources.qrc">
+        <normaloff>:/icons/icons/homefolder.png</normaloff>:/icons/icons/homefolder.png</iconset>
       </attribute>
-      <attribute name="title">
+      <attribute name="label">
        <string>Options</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_3">
+      <layout class="QVBoxLayout" name="verticalLayout_5">
        <item>
         <widget class="QGroupBox" name="groupBox">
          <property name="title">
@@ -122,8 +142,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>871</width>
-               <height>499</height>
+               <width>875</width>
+               <height>475</height>
               </rect>
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_10">
@@ -190,16 +210,24 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="pathTab">
+     <widget class="QWidget" name="page_2">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>919</width>
+        <height>590</height>
+       </rect>
+      </property>
       <attribute name="icon">
        <iconset resource="../resources.qrc">
         <normaloff>:/icons/icons/directories.png</normaloff>:/icons/icons/directories.png</iconset>
       </attribute>
-      <attribute name="title">
-       <string>Tab 1</string>
+      <attribute name="label">
+       <string>Directories</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0">
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
         <widget class="QScrollArea" name="scrollArea">
          <property name="widgetResizable">
           <bool>true</bool>
@@ -209,8 +237,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>895</width>
-            <height>594</height>
+            <width>899</width>
+            <height>570</height>
            </rect>
           </property>
           <layout class="QGridLayout" name="gridLayout_7">
@@ -633,13 +661,6 @@
        </item>
       </layout>
      </widget>
-    </widget>
-   </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="versionLabel">
-     <property name="text">
-      <string>ClamAV Version : </string>
-     </property>
     </widget>
    </item>
   </layout>

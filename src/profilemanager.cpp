@@ -219,6 +219,7 @@ void ProfileManager::slot_addProfileButtonClicked()
     connect(m_profileWizard, SIGNAL(signal_profileSaved()), this, SLOT(slot_profileSaved()));
     m_profileWizard->setModal(true);
     m_profileWizard->show();
+    slot_readProfileSettings();
 }
 
 void ProfileManager::slot_editProfileButtonClicked()

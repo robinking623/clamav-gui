@@ -306,55 +306,67 @@ void clamav_gui::slot_scanRequest(QStringList scanObjects)
         useclamdscan = false;
     }
 
-    if (useclamdscan == true) {
-        temp = "clamdscan --config-file " + QDir::homePath() + "/.clamav-gui/clamd.conf --multiscan --fdpass";
-        parameters << "--config-file" << QDir::homePath() + "/.clamav-gui/clamd.conf" << "--multiscan" << "--fdpass";
-
-        for (int i = 0; i < scanObjects.count(); i++) {
-            parameters << scanObjects.at(i);
-            temp = temp + " " + scanObjects.at(i);
-        }
-
-        slot_setMainWindowState(true);
-
-        if (m_setupFile->getSectionBoolValue("Settings", "ShowHideDropZone") == true) {
-            m_dropZone->close();
-        }
-
-        m_ui.tabWidget->setCurrentIndex(0);
-
-        m_scannerTab->clearLogMessage();
-        m_scannerTab->setStatusMessage(temp + char(13));
-
-        m_scanProcess->start("clamdscan", parameters);
+    switch (m_scannerTab->getVirusFoundComboBoxValue()) {
+        case 0:
+            break;
+        case 1:
+            parameters << "--remove=yes";
+            temp = temp + " --remove=yes";
+            break;
+        case 2:
+            if (moveDirectory != "")
+            {
+                parameters << "--move=" + moveDirectory;
+                temp = temp + " --move=" + moveDirectory;
+            }
+            break;
+        case 3:
+            if (moveDirectory != "")
+            {
+                parameters << "--copy=" + copyDirectory;
+                temp = temp + " --copy=" + copyDirectory;
+            }
+            break;
     }
-    else {
 
+    if (useclamdscan == true) {
+        temp = "clamdscan --config-file=" + QDir::homePath() + "/.clamav-gui/clamd.conf --multiscan --fdpass";
+        parameters << "--config-file=" + QDir::homePath() + "/.clamav-gui/clamd.conf" << "--multiscan" << "--fdpass";
+
+        value = m_setupFile->getSectionValue("Directories", "ScanReportToFile");
+        checked = value.left(value.indexOf("|"));
+        value = value.mid(value.indexOf("|") + 1);
+        if ((checked == "checked") && (value != ""))
+        {
+            parameters << "--log=" + value;
+            temp = temp + " --log=" + value;
+            QFile file(value);
+            if (file.open(QIODevice::ReadWrite | QIODevice::Append | QIODevice::Text)) {
+                QTextStream stream(&file);
+                stream << "\n<Scanning startet> " << QDateTime::currentDateTime().toString("yyyy/M/d - hh:mm");
+                file.close();
+            }
+        }
+        QStringList  scandParameters;
+        scandParameters << "--infected" << "--stdout" << "--no-summary";
+        foreach (QString param, scandParameters)
+        {
+            if (m_setupFile->keywordExists("SelectedOptions", param) == true)
+            {
+                parameters << param;
+                temp = temp + " " + param;
+            }
+        }
+    } else {
         if (m_scannerTab->recursivChecked() == true) {
             parameters << "-r";
-        }
-
-        switch (m_scannerTab->getVirusFoundComboBoxValue()) {
-            case 0:
-                break;
-            case 1:
-                parameters << "--remove=yes";
-                break;
-            case 2:
-                if (moveDirectory != "")
-                    parameters << "--move=" + moveDirectory;
-                break;
-            case 3:
-                if (moveDirectory != "")
-                    parameters << "--copy=" + copyDirectory;
-                break;
         }
 
         for (int i = 0; i < selectedOptions.count(); i++) {
             parameters << selectedOptions.at(i).left(selectedOptions.indexOf("|")).replace("<equal>", "=");
         }
 
-        keywords << "TmpFile" << "MoveInfectedFiles" << "CopyInfectedFiles" << "SCanFileFromFiles" << "FollowDirectorySymLinks"
+        keywords << "TmpFile" << "MoveInfectedFiles" << "CopyInfectedFiles" << "ScanFileFromFiles" << "FollowDirectorySymLinks"
                  << "FollowFileSymLinks";
         switches << "--tempdir=" << "--move=" << "--copy=" << "--file-list=" << "--follow-dir-symlinks=" << "--follow-file-symlinks=";
         // Directory Options
@@ -464,7 +476,8 @@ void clamav_gui::slot_scanRequest(QStringList scanObjects)
             }
         }
 
-        temp = "clamscan ";
+        temp = (useclamdscan == true)?"clamdscan":"clamscan";
+
         QString path = temp;
         path = m_setupFile->getSectionValue("Directories", "LoadSupportedDBFiles");
         path = path.mid(path.indexOf("|") + 1);
@@ -473,26 +486,26 @@ void clamav_gui::slot_scanRequest(QStringList scanObjects)
         for (int i = 0; i < parameters.count(); i++) {
             temp = temp + " " + parameters.at(i);
         }
-
-        // m_parameters << "-d" << m_path;
-        for (int i = 0; i < scanObjects.count(); i++) {
-            parameters << scanObjects.at(i);
-            temp = temp + " " + scanObjects.at(i);
-        }
-
-        slot_setMainWindowState(true);
-
-        if (m_setupFile->getSectionBoolValue("Settings", "ShowHideDropZone") == true) {
-            m_dropZone->close();
-        }
-
-        m_ui.tabWidget->setCurrentIndex(0);
-
-        m_scannerTab->clearLogMessage();
-        m_scannerTab->setStatusMessage(temp + char(13));
-
-        m_scanProcess->start("clamscan", parameters);
     }
+
+    foreach (QString parameter, scanObjects) {
+        parameters << parameter;
+        temp = temp + " " + parameter;
+    }
+
+    slot_setMainWindowState(true);
+
+    if (m_setupFile->getSectionBoolValue("Settings", "ShowHideDropZone") == true) {
+        //m_setupFile->setSectionValue("Settings", "ShowHideDropZone", false);
+        m_dropZone->hide();
+    }
+
+    m_ui.tabWidget->setCurrentIndex(0);
+
+    m_scannerTab->clearLogMessage();
+    m_scannerTab->setStatusMessage(temp + char(13));
+
+    (useclamdscan == true)?m_scanProcess->start("clamdscan", parameters):m_scanProcess->start("clamscan", parameters);
 }
 
 void clamav_gui::slot_mainWinTimerTimeout()

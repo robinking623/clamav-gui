@@ -1,3 +1,7 @@
+* Wed April 8 2026 - Version 1.3.4
+- modified the layout of the scan-tab, provilemanager-tab, freshclam-tab and clamd-tab.
+- fixed an issue with usb devices (detection and drop zone)
+
 * Mon Apr 6 2026 - Version 1.3.3
 - added a filter function to the scan option tab (equal to the clamd tab) and extended it with
 - "show selected" and "show unselected" options.

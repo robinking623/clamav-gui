@@ -6,17 +6,17 @@ optionsDialog::optionsDialog(QWidget* parent, setupFileHandler* setupFile) : QWi
     m_ui.setupUi(this);
     //m_setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini", this); --> uses the setupFileHandler provided by the clamav_gui class
     //updateDirectories();
-    m_ui.tabWidget->setTabText(0, tr("Options"));
-    m_ui.tabWidget->setTabText(1, tr("Directories"));
+    //m_ui.tabWidget->setTabText(0, tr("Options"));
+    //m_ui.tabWidget->setTabText(1, tr("Directories"));
     m_scanLimits = new scanLimitsTab(this, m_setupFile);
-    m_ui.tabWidget->addTab(m_scanLimits, QIcon(":/icons/icons/scanlimits.png"), tr("Scan Limitations"));
+    m_ui.tabWidget->addItem(m_scanLimits, QIcon(":/icons/icons/scanlimits.png"), tr("Scan Limitations"));
     m_incExcOptTab = new includeExcludeOptions(this,m_setupFile);
 
     connect(m_incExcOptTab, SIGNAL(updateClamdConf()), this, SLOT(slot_updateClamdConf()));
     connect(m_scanLimits, SIGNAL(updateClamdConf()), this, SLOT(slot_updateClamdConf()));
 
-    m_ui.tabWidget->addTab(m_incExcOptTab, QIcon(":/icons/icons/includeexclude.png"), tr("Include/Exclude"));
-    m_ui.tabWidget->setIconSize(QSize(24, 24));
+    m_ui.tabWidget->addItem(m_incExcOptTab, QIcon(":/icons/icons/includeexclude.png"), tr("Include/Exclude"));
+    //m_ui.tabWidget->setIconSize(QSize(24, 24));
 
     m_getClamscanParametersProcess = new QProcess(this);
     connect(m_getClamscanParametersProcess, SIGNAL(readyReadStandardError()), this, SLOT(slot_getClamscanProcessHasOutput()));
