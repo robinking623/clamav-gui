@@ -21,25 +21,20 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_4">
    <item>
-    <widget class="QToolBox" name="toolBox">
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="tabPosition">
+      <enum>QTabWidget::TabPosition::West</enum>
+     </property>
      <property name="currentIndex">
       <number>0</number>
      </property>
-     <widget class="QWidget" name="page">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>973</width>
-        <height>597</height>
-       </rect>
-      </property>
+     <widget class="QWidget" name="tabWidgetPage1">
       <attribute name="icon">
        <iconset resource="../resources.qrc">
         <normaloff>:/icons/icons/crosshair.png</normaloff>:/icons/icons/crosshair.png</iconset>
       </attribute>
-      <attribute name="label">
-       <string>Clamd &amp; Scan on Access</string>
+      <attribute name="title">
+       <string>Clamd Scan on Access</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_5">
        <item>
@@ -129,21 +124,13 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="page_2">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>973</width>
-        <height>597</height>
-       </rect>
-      </property>
+     <widget class="QWidget" name="tabWidgetPage2">
       <attribute name="icon">
        <iconset resource="../resources.qrc">
         <normaloff>:/icons/icons/options.png</normaloff>:/icons/icons/options.png</iconset>
       </attribute>
-      <attribute name="label">
-       <string>Clamd &amp; Scan on Access Settings</string>
+      <attribute name="title">
+       <string>Clamd Scan on Access Settings</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_7">
        <item>
@@ -543,8 +530,8 @@ clamd.conf parameters.</string>
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>915</width>
-                  <height>381</height>
+                  <width>885</width>
+                  <height>437</height>
                  </rect>
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -589,66 +576,18 @@ clamd.conf parameters.</string>
  </resources>
  <connections>
   <connection>
-   <sender>restartClamdPushButton</sender>
-   <signal>clicked()</signal>
-   <receiver>clamdManager</receiver>
-   <slot>slot_restartClamdButtonClicked()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>420</x>
-     <y>132</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>850</x>
-     <y>93</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>startStopClamdPushButton</sender>
    <signal>clicked()</signal>
    <receiver>clamdManager</receiver>
    <slot>slot_clamdStartStopButtonClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>144</x>
-     <y>166</y>
+     <x>926</x>
+     <y>114</y>
     </hint>
     <hint type="destinationlabel">
-     <x>847</x>
-     <y>122</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>monitoringDelButton</sender>
-   <signal>clicked()</signal>
-   <receiver>clamdManager</receiver>
-   <slot>slot_monitoringDelButtonClicked()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>938</x>
-     <y>151</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>986</x>
-     <y>210</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>monitoringAddButton</sender>
-   <signal>clicked()</signal>
-   <receiver>clamdManager</receiver>
-   <slot>slot_monitoringAddButtonClicked()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>882</x>
-     <y>151</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>985</x>
-     <y>257</y>
+     <x>988</x>
+     <y>116</y>
     </hint>
    </hints>
   </connection>
@@ -659,12 +598,44 @@ clamd.conf parameters.</string>
    <slot>slot_updateClamdConfParameters()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>938</x>
-     <y>115</y>
+     <x>896</x>
+     <y>59</y>
     </hint>
     <hint type="destinationlabel">
-     <x>987</x>
-     <y>140</y>
+     <x>988</x>
+     <y>68</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>monitoringDelButton</sender>
+   <signal>clicked()</signal>
+   <receiver>clamdManager</receiver>
+   <slot>slot_monitoringDelButtonClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>929</x>
+     <y>104</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>985</x>
+     <y>107</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>monitoringAddButton</sender>
+   <signal>clicked()</signal>
+   <receiver>clamdManager</receiver>
+   <slot>slot_monitoringAddButtonClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>877</x>
+     <y>105</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>985</x>
+     <y>155</y>
     </hint>
    </hints>
   </connection>
@@ -675,44 +646,28 @@ clamd.conf parameters.</string>
    <slot>slot_startClamdOnStartupCheckBoxClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>594</x>
-     <y>106</y>
+     <x>507</x>
+     <y>58</y>
     </hint>
     <hint type="destinationlabel">
-     <x>984</x>
-     <y>177</y>
+     <x>536</x>
+     <y>-4</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>lineEdit</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>clamdManager</receiver>
-   <slot>slot_filterChanged(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>388</x>
-     <y>203</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>982</x>
-     <y>104</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>showSelectedCheckBox</sender>
+   <sender>restartClamdPushButton</sender>
    <signal>clicked()</signal>
    <receiver>clamdManager</receiver>
-   <slot>slot_showSelectedChecked()</slot>
+   <slot>slot_restartClamdButtonClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>425</x>
-     <y>195</y>
+     <x>409</x>
+     <y>75</y>
     </hint>
     <hint type="destinationlabel">
-     <x>5</x>
-     <y>242</y>
+     <x>409</x>
+     <y>-10</y>
     </hint>
    </hints>
   </connection>
@@ -723,12 +678,44 @@ clamd.conf parameters.</string>
    <slot>slot_showUnselectedChecked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>525</x>
-     <y>197</y>
+     <x>451</x>
+     <y>155</y>
     </hint>
     <hint type="destinationlabel">
-     <x>3</x>
-     <y>289</y>
+     <x>458</x>
+     <y>3</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>showSelectedCheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>clamdManager</receiver>
+   <slot>slot_showSelectedChecked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>331</x>
+     <y>157</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>374</x>
+     <y>1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEdit</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>clamdManager</receiver>
+   <slot>slot_filterChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>191</x>
+     <y>152</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>-1</y>
     </hint>
    </hints>
   </connection>

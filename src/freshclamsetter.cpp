@@ -155,7 +155,14 @@ void freshclamsetter::slot_updateNowButtonClicked()
         parameters << "--config-file" << QDir::homePath() + "/.clamav-gui/freshclam.conf";
         m_updater->start(m_setupFile->getSectionValue("FreshclamSettings", "FreshclamLocation"), parameters);
     }
-    m_updateLogFileWatcher->removePath(QDir::homePath() + "/.clamav-gui/update.log");
+    if (m_updateLogFileWatcher->directories().size() > 0)
+        m_updateLogFileWatcher->removePath(QDir::homePath() + "/.clamav-gui/update.log");
+    if (QFileInfo::exists(QDir::homePath() + "/.clamav-gui/update.log") == false)
+    {
+        QFile touchFile(QDir::homePath() + "/.clamav-gui/update.log");
+        touchFile.open(QIODevice::WriteOnly|QIODevice::Append);
+        touchFile.close();
+    }
     m_updateLogFileWatcher->addPath(QDir::homePath() + "/.clamav-gui/update.log");
 }
 
@@ -167,6 +174,12 @@ void freshclamsetter::slot_startStopDeamonButtonClicked()
             m_logFileWatcher->removePath(m_logFile);
         m_pidFile = m_freshclamConf->getSingleLineValue("PidFile");
         m_logFile = QDir::homePath() + "/.clamav-gui/freshclam.log";
+        if (QFileInfo::exists(QDir::homePath() + "/.clamav-gui/freshclam.log") == false)
+        {
+            QFile touchFile(QDir::homePath() + "/.clamav-gui/freshclam.log");
+            touchFile.open(QIODevice::WriteOnly|QIODevice::Append);
+            touchFile.close();
+        }
         m_logFileWatcher->addPath(m_logFile);
         if (m_setupFile->getSectionBoolValue("FreshClam", "runasroot") == true) {
             if (m_startup == false) {
@@ -599,6 +612,14 @@ void freshclamsetter::slot_clearDeamonLogButtonClicked()
         file.close();
         file.setPermissions(QFileDevice::ReadOwner | QFileDevice::WriteOwner | QFileDevice::ReadUser | QFileDevice::WriteUser | QFileDevice::ReadGroup |
                         QFileDevice::WriteGroup | QFileDevice::ReadOther | QFileDevice::WriteOther);
+        if (m_updateLogFileWatcher->directories().size() > 0)
+            m_updateLogFileWatcher->removePath(QDir::homePath() + "/.clamav-gui/freshclam.log");
+        if (QFileInfo::exists(QDir::homePath() + "/.clamav-gui/freshclam.log") == false)
+        {
+            QFile touchFile(QDir::homePath() + "/.clamav-gui/freshclam.log");
+            touchFile.open(QIODevice::WriteOnly|QIODevice::Append);
+            touchFile.close();
+        }
         m_updateLogFileWatcher->addPath(QDir::homePath() + "/.clamav-gui/freshclam.log");
     }
 }
@@ -715,10 +736,16 @@ void freshclamsetter::slot_startDeamonProcessFinished(int exitCode, QProcess::Ex
         m_ui.updateNowButton->setStyleSheet(selectColor("green"));
 
         m_ui.startStopDeamonButton->setIcon(QIcon(":/icons/icons/Clam.png"));
+        if (m_pidFileWatcher->directories().size() > 0)
+            m_pidFileWatcher->removePath(m_pidFile);
         m_pidFileWatcher->addPath(m_pidFile);
+        if (m_logFileWatcher->directories().size() > 0)
+            m_logFileWatcher->removePath(m_logFile);
         m_logFileWatcher->addPath(m_logFile);
         slot_logFileWatcherTriggered();
-        m_pidFileWatcher->addPath(m_pidFile);
+        /*if (m_logFileWatcher->directories().size() > 0)
+            m_logFileWatcher->removePath(m_logFile);
+        m_pidFileWatcher->addPath(m_pidFile);*/
         checkDaemonRunning();
     }
     else {

@@ -1,3 +1,7 @@
+* Thu Apr 9 2026 - Version 1.3.5
+- Further changes to the Options tab, Freshclam tab and Clamd tab due to discrepancies
+- between the display in the development environment and the actual production environment
+
 * Wed Apr 8 2026 - Version 1.3.4
 - modified the layout of the scan-tab, provilemanager-tab, freshclam-tab and clamd-tab.
 - fixed an issue with usb devices (detection and drop zone)

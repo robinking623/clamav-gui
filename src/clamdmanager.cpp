@@ -71,7 +71,10 @@ void clamdManager::slot_initClamdSettings()
         m_ui.startStopClamdPushButton->setStyleSheet(selectColor("green"));
         m_ui.startStopClamdPushButton->setText(tr("  Clamd running - Stop clamd"));
         m_ui.startStopClamdPushButton->setIcon(QIcon(":/icons/icons/stopclamd.png"));
-        m_clamdPidWatcher->addPath("/tmp/clamd.pid");
+        if (QFileInfo::exists("/tmp/clamd.pid") == true)
+            m_clamdPidWatcher->addPath("/tmp/clamd.pid");
+        else
+            qDebug() << "/tmp/clamd.pid file not found!";
     }
     else {
         m_ui.startStopClamdPushButton->setStyleSheet(selectColor("red"));
@@ -292,7 +295,8 @@ void clamdManager::slot_clamdStartStopButtonClicked()
         m_ui.clamdIconLabel->setMovie(new QMovie(":/icons/icons/gifs/spinning_segments_small.gif"));
         m_ui.clamdIconLabel->movie()->start();
 
-        m_clamdLogWatcher->removePath(QDir::homePath() + "/.clamav-gui/clamd.log");
+        if (m_clamdLogWatcher->directories().size() > 0)
+            m_clamdLogWatcher->removePath(QDir::homePath() + "/.clamav-gui/clamd.log");
         QFile logFile(QDir::homePath() + "/.clamav-gui/clamd.log");
         if (logFile.exists() == true)
             logFile.remove();
@@ -301,6 +305,8 @@ void clamdManager::slot_clamdStartStopButtonClicked()
             stream << "";
             logFile.close();
         }
+        if (m_clamdLogWatcher->directories().size() > 0)
+            m_clamdLogWatcher->removePath(QDir::homePath() + "/.clamav-gui/clamd.log");
         m_clamdLogWatcher->addPath(QDir::homePath() + "/.clamav-gui/clamd.log");
 
         m_ui.clamdLogPlainTextEdit->clear();
@@ -381,7 +387,8 @@ void clamdManager::slot_startClamdProcessFinished(int exitCode, QProcess::ExitSt
     m_ui.clamdIconLabel_2->setPixmap(QPixmap(":/icons/icons/options.png"));
 
     if (checkClamdRunning() == false) {
-        m_clamdPidWatcher->removePath("/tmp/clamd.pid");
+        if (m_clamdPidWatcher->directories().size() > 0)
+            m_clamdPidWatcher->removePath("/tmp/clamd.pid");
         m_ui.startStopClamdPushButton->setStyleSheet(selectColor("red"));
         m_ui.startStopClamdPushButton->setText(tr("  Clamd not running - Start Clamd"));
         m_ui.startStopClamdPushButton->setIcon(QIcon(":/icons/icons/startclamd.png"));
@@ -401,6 +408,8 @@ void clamdManager::slot_startClamdProcessFinished(int exitCode, QProcess::ExitSt
     else {
         m_clamdStartupCounter = 0;
 
+        if (m_clamdPidWatcher->directories().size() > 0)
+            m_clamdPidWatcher->removePath("/tmp/clamd.pid");
         m_clamdPidWatcher->addPath("/tmp/clamd.pid");
 
         QFile pidFile("/tmp/clamd.pid");
@@ -444,7 +453,8 @@ void clamdManager::slot_killClamdProcessFinished()
     m_ui.clamdIconLabel_2->setPixmap(QPixmap(":/icons/icons/options.png"));
 
     if (checkClamdRunning() == false) {
-        m_clamdPidWatcher->removePath("/tmp/clamd.pid");
+        if (m_clamdPidWatcher->directories().size() > 0)
+            m_clamdPidWatcher->removePath("/tmp/clamd.pid");
         m_ui.startStopClamdPushButton->setStyleSheet(selectColor("red"));
         m_ui.startStopClamdPushButton->setText(tr("  Clamd not running - Start Clamd"));
         m_ui.startStopClamdPushButton->setIcon(QIcon(":/icons/icons/startclamd.png"));
@@ -458,10 +468,15 @@ void clamdManager::slot_killClamdProcessFinished()
         emit systemStatusChanged();
     }
     else {
-        m_clamdPidWatcher->addPath("/tmp/clamd.pid");
-        m_ui.startStopClamdPushButton->setStyleSheet(selectColor("green"));
-        m_ui.startStopClamdPushButton->setText(tr("  Clamd running - Stop Clamd"));
-        m_ui.startStopClamdPushButton->setIcon(QIcon(":/icons/icons/stopclamd.png"));
+        if (QFileInfo::exists("/tmp/clamd.pid") == true)
+        {
+            if (m_clamdPidWatcher->directories().size() > 0)
+                m_clamdPidWatcher->removePath("/tmp/clamd.pid");
+            m_clamdPidWatcher->addPath("/tmp/clamd.pid");
+            m_ui.startStopClamdPushButton->setStyleSheet(selectColor("green"));
+            m_ui.startStopClamdPushButton->setText(tr("  Clamd running - Stop Clamd"));
+            m_ui.startStopClamdPushButton->setIcon(QIcon(":/icons/icons/stopclamd.png"));
+        }
     }
 
     m_ui.startStopClamdPushButton->setEnabled(true);
@@ -562,7 +577,8 @@ void clamdManager::slot_pidWatcherTriggered()
 {
     QFile pidFile("/tmp/clamd.pid");
     if ((pidFile.exists() == false) && (m_clamdRestartInProgress == false)) {
-        m_clamdPidWatcher->removePath("/tmp/clamd.pid");
+        if (m_clamdPidWatcher->directories().size() > 0)
+            m_clamdPidWatcher->removePath("/tmp/clamd.pid");
         m_ui.startStopClamdPushButton->setStyleSheet(selectColor("red"));
         m_ui.startStopClamdPushButton->setText(tr("  Clamd not running - Start Clamd"));
         m_ui.startStopClamdPushButton->setIcon(QIcon(":/icons/icons/startclamd.png"));

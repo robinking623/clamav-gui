@@ -25,24 +25,18 @@
     </widget>
    </item>
    <item>
-    <widget class="QToolBox" name="tabWidget">
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="tabPosition">
+      <enum>QTabWidget::TabPosition::West</enum>
+     </property>
      <property name="currentIndex">
       <number>0</number>
      </property>
-     <widget class="QWidget" name="page">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>919</width>
-        <height>590</height>
-       </rect>
-      </property>
+     <widget class="QWidget" name="tabWidgetPage1_2">
       <attribute name="icon">
-       <iconset resource="../resources.qrc">
-        <normaloff>:/icons/icons/homefolder.png</normaloff>:/icons/icons/homefolder.png</iconset>
+       <iconset theme="QIcon::ThemeIcon::ListAdd"/>
       </attribute>
-      <attribute name="label">
+      <attribute name="title">
        <string>Options</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -132,8 +126,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>875</width>
-               <height>475</height>
+               <width>845</width>
+               <height>531</height>
               </rect>
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_10">
@@ -200,20 +194,11 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="page_2">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>919</width>
-        <height>590</height>
-       </rect>
-      </property>
+     <widget class="QWidget" name="tabWidgetPage2_2">
       <attribute name="icon">
-       <iconset resource="../resources.qrc">
-        <normaloff>:/icons/icons/directories.png</normaloff>:/icons/icons/directories.png</iconset>
+       <iconset theme="QIcon::ThemeIcon::FolderOpen"/>
       </attribute>
-      <attribute name="label">
+      <attribute name="title">
        <string>Directories</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -227,8 +212,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>899</width>
-            <height>570</height>
+            <width>869</width>
+            <height>626</height>
            </rect>
           </property>
           <layout class="QGridLayout" name="gridLayout_7">
@@ -660,162 +645,18 @@
  </resources>
  <connections>
   <connection>
-   <sender>selectSCRFButton</sender>
-   <signal>clicked()</signal>
-   <receiver>optionsDialog</receiver>
-   <slot>slot_selectSRTFButtonClicked()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>897</x>
-     <y>142</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>743</x>
-     <y>359</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>selectSFFButton</sender>
-   <signal>clicked()</signal>
-   <receiver>optionsDialog</receiver>
-   <slot>slot_selectSFFButtonClicked()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>897</x>
-     <y>176</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>743</x>
-     <y>396</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>selectTFButton</sender>
-   <signal>clicked()</signal>
-   <receiver>optionsDialog</receiver>
-   <slot>slot_selectTDButtonClicked()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>897</x>
-     <y>208</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>743</x>
-     <y>432</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>selectMDButton</sender>
-   <signal>clicked()</signal>
-   <receiver>optionsDialog</receiver>
-   <slot>slot_selectMDButtonClicked()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>897</x>
-     <y>240</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>741</x>
-     <y>462</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>selectCFButton</sender>
-   <signal>clicked()</signal>
-   <receiver>optionsDialog</receiver>
-   <slot>slot_selectCDButtonClicked()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>897</x>
-     <y>272</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>742</x>
-     <y>329</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>viewButton</sender>
    <signal>clicked()</signal>
    <receiver>optionsDialog</receiver>
    <slot>slot_logViewerButtonClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>811</x>
-     <y>144</y>
+     <x>791</x>
+     <y>98</y>
     </hint>
     <hint type="destinationlabel">
-     <x>741</x>
-     <y>314</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>selectLVDButton</sender>
-   <signal>clicked()</signal>
-   <receiver>optionsDialog</receiver>
-   <slot>slot_selectLVDButtonClicked()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>897</x>
-     <y>108</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>742</x>
-     <y>287</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>loadVirusDatabaseCheckBox</sender>
-   <signal>clicked()</signal>
-   <receiver>optionsDialog</receiver>
-   <slot>writeDirectories()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>68</x>
-     <y>106</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>5</x>
-     <y>422</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>scanReportToFileCheckBox</sender>
-   <signal>clicked()</signal>
-   <receiver>optionsDialog</receiver>
-   <slot>writeDirectories()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>118</x>
-     <y>140</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>5</x>
-     <y>460</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>scanFilesFromFileCheckBox</sender>
-   <signal>clicked()</signal>
-   <receiver>optionsDialog</receiver>
-   <slot>writeDirectories()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>104</x>
-     <y>174</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>3</x>
-     <y>493</y>
+     <x>468</x>
+     <y>344</y>
     </hint>
    </hints>
   </connection>
@@ -826,12 +667,140 @@
    <slot>writeDirectories()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>90</x>
-     <y>206</y>
+     <x>175</x>
+     <y>164</y>
     </hint>
     <hint type="destinationlabel">
-     <x>2</x>
-     <y>526</y>
+     <x>468</x>
+     <y>344</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>selectTFButton</sender>
+   <signal>clicked()</signal>
+   <receiver>optionsDialog</receiver>
+   <slot>slot_selectTDButtonClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>857</x>
+     <y>164</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>468</x>
+     <y>344</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>selectSFFButton</sender>
+   <signal>clicked()</signal>
+   <receiver>optionsDialog</receiver>
+   <slot>slot_selectSFFButtonClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>857</x>
+     <y>132</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>468</x>
+     <y>344</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>selectSCRFButton</sender>
+   <signal>clicked()</signal>
+   <receiver>optionsDialog</receiver>
+   <slot>slot_selectSRTFButtonClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>857</x>
+     <y>98</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>468</x>
+     <y>344</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>selectMDButton</sender>
+   <signal>clicked()</signal>
+   <receiver>optionsDialog</receiver>
+   <slot>slot_selectMDButtonClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>857</x>
+     <y>196</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>468</x>
+     <y>344</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>selectLVDButton</sender>
+   <signal>clicked()</signal>
+   <receiver>optionsDialog</receiver>
+   <slot>slot_selectLVDButtonClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>857</x>
+     <y>64</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>468</x>
+     <y>344</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>selectCFButton</sender>
+   <signal>clicked()</signal>
+   <receiver>optionsDialog</receiver>
+   <slot>slot_selectCDButtonClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>857</x>
+     <y>228</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>468</x>
+     <y>344</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>scanReportToFileCheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>optionsDialog</receiver>
+   <slot>writeDirectories()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>141</x>
+     <y>98</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>468</x>
+     <y>344</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>scanFilesFromFileCheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>optionsDialog</receiver>
+   <slot>writeDirectories()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>126</x>
+     <y>132</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>468</x>
+     <y>344</y>
     </hint>
    </hints>
   </connection>
@@ -842,76 +811,28 @@
    <slot>writeDirectories()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>109</x>
-     <y>238</y>
+     <x>172</x>
+     <y>196</y>
     </hint>
     <hint type="destinationlabel">
-     <x>0</x>
-     <y>560</y>
+     <x>468</x>
+     <y>344</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>copyDirectoryCheckBox</sender>
+   <sender>loadVirusDatabaseCheckBox</sender>
    <signal>clicked()</signal>
    <receiver>optionsDialog</receiver>
    <slot>writeDirectories()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>93</x>
-     <y>270</y>
+     <x>173</x>
+     <y>64</y>
     </hint>
     <hint type="destinationlabel">
-     <x>0</x>
-     <y>590</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>followDirectorySymlinksCheckBox</sender>
-   <signal>clicked()</signal>
-   <receiver>optionsDialog</receiver>
-   <slot>writeDirectories()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>109</x>
-     <y>302</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>1</x>
-     <y>619</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>followFileSymlinksCheckBox</sender>
-   <signal>clicked()</signal>
-   <receiver>optionsDialog</receiver>
-   <slot>writeDirectories()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>106</x>
-     <y>334</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>2</x>
-     <y>651</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>followDirectorySymlinksComboBox</sender>
-   <signal>activated(int)</signal>
-   <receiver>optionsDialog</receiver>
-   <slot>writeDirectories()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>897</x>
-     <y>304</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>933</x>
-     <y>600</y>
+     <x>468</x>
+     <y>344</y>
     </hint>
    </hints>
   </connection>
@@ -922,44 +843,92 @@
    <slot>writeDirectories()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>897</x>
-     <y>336</y>
+     <x>864</x>
+     <y>292</y>
     </hint>
     <hint type="destinationlabel">
-     <x>931</x>
-     <y>636</y>
+     <x>468</x>
+     <y>344</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>scanReportToFileCheckBox</sender>
+   <sender>followFileSymlinksCheckBox</sender>
    <signal>clicked()</signal>
    <receiver>optionsDialog</receiver>
-   <slot>slot_scanReportToFileSettingsChanged()</slot>
+   <slot>writeDirectories()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>44</x>
-     <y>130</y>
+     <x>128</x>
+     <y>292</y>
     </hint>
     <hint type="destinationlabel">
-     <x>4</x>
-     <y>136</y>
+     <x>468</x>
+     <y>344</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>scanReportToFileLineEdit</sender>
-   <signal>editingFinished()</signal>
+   <sender>followDirectorySymlinksComboBox</sender>
+   <signal>activated(int)</signal>
    <receiver>optionsDialog</receiver>
-   <slot>slot_scanReportToFileSettingsChanged()</slot>
+   <slot>writeDirectories()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>279</x>
-     <y>130</y>
+     <x>864</x>
+     <y>260</y>
     </hint>
     <hint type="destinationlabel">
-     <x>3</x>
-     <y>172</y>
+     <x>468</x>
+     <y>344</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>followDirectorySymlinksCheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>optionsDialog</receiver>
+   <slot>writeDirectories()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>144</x>
+     <y>260</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>468</x>
+     <y>344</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>copyDirectoryCheckBox</sender>
+   <signal>clicked()</signal>
+   <receiver>optionsDialog</receiver>
+   <slot>writeDirectories()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>170</x>
+     <y>228</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>468</x>
+     <y>344</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>copyDirectoryLineEdit</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>optionsDialog</receiver>
+   <slot>writeDirectories()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>547</x>
+     <y>228</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>468</x>
+     <y>344</y>
     </hint>
    </hints>
   </connection>
@@ -970,12 +939,12 @@
    <slot>slot_scanOptionFilterChanged()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>94</x>
-     <y>116</y>
+     <x>181</x>
+     <y>93</y>
     </hint>
     <hint type="destinationlabel">
-     <x>5</x>
-     <y>121</y>
+     <x>4</x>
+     <y>52</y>
     </hint>
    </hints>
   </connection>
@@ -986,12 +955,12 @@
    <slot>slot_showSelectedOnlyChecked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>384</x>
-     <y>123</y>
+     <x>277</x>
+     <y>94</y>
     </hint>
     <hint type="destinationlabel">
-     <x>929</x>
-     <y>105</y>
+     <x>285</x>
+     <y>27</y>
     </hint>
    </hints>
   </connection>
@@ -1002,12 +971,12 @@
    <slot>slot_showUnselectedOnlyChecked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>491</x>
-     <y>126</y>
+     <x>412</x>
+     <y>95</y>
     </hint>
     <hint type="destinationlabel">
-     <x>934</x>
-     <y>171</y>
+     <x>497</x>
+     <y>30</y>
     </hint>
    </hints>
   </connection>
