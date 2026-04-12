@@ -407,7 +407,7 @@ void firstRunWindow::createClamdConfFile()
         m_clamdConf->setSingleLineValue("TCPAddr", "127.0.0.1","By default clamd binds to INADDR_ANY. This option allows you to restrict the TCP address and provide some degree of protection from the outside world. This option can be specified multiple times in order to listen on multiple IPs. IPv6 is now supported. Default: disabled");
         m_clamdConf->addSingleLineValue("TCPAddr", "::1","By default clamd binds to INADDR_ANY. This option allows you to restrict the TCP address and provide some degree of protection from the outside world. This option can be specified multiple times in order to listen on multiple IPs. IPv6 is now supported. Default: disabled");
         m_clamdConf->setSingleLineValue("LogFileMaxSize", "1M");
-        m_clamdConf->setSingleLineValue("LogTime", "yes");
+        m_clamdConf->setSingleLineValue("LogTime", "no");
         m_clamdConf->setSingleLineValue("LogRotate", "yes");
         m_clamdConf->setSingleLineValue("OnAccessMaxFileSize", "10M");
         m_clamdConf->setSingleLineValue("OnAccessMaxThreads", "10");
