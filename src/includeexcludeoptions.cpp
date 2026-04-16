@@ -11,6 +11,7 @@ includeExcludeOptions::includeExcludeOptions(QWidget* parent, setupFileHandler* 
         readSettings();
     }
 
+    m_readSettingsInProgress = false;
     slot_highlightSettings();
 }
 
@@ -31,7 +32,7 @@ void includeExcludeOptions::slot_writeSettings()
         m_ui->dontScanFileNameCheckBox->isChecked() ? checked = "checked" : checked = "not checked";
         m_setupFile->setSectionValue(section, keyword, checked + "|" + value);
 
-        keyword = "DontScanDiretoriesMatchingRegExp";
+        keyword = "DontScanDirectoriesMatchingRegExp"; // 1
         value = m_ui->dontScanDirLineEdit->text();
         m_ui->dontScanDirCheckBox->isChecked() ? checked = "checked" : checked = "not checked";
         m_setupFile->setSectionValue(section, keyword, checked + "|" + value);
@@ -112,7 +113,7 @@ void includeExcludeOptions::readSettings()
     checked == "checked" ? m_ui->dontScanFileNameCheckBox->setChecked(true) : m_ui->dontScanFileNameCheckBox->setChecked(false);
     m_ui->dontScanFileNameLineEdit->setText(value);
 
-    keyword = "DontScanDiretoriesMatchingRegExp";
+    keyword = "DontScanDirectoriesMatchingRegExp"; // 2
     value = m_setupFile->getSectionValue(section, keyword);
     checked = value.left(value.indexOf("|"));
     value = value.mid(value.indexOf("|") + 1);
