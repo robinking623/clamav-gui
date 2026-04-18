@@ -85,18 +85,18 @@ void ProfileManager::slot_readProfileSettings()
         optionLabel = optionLabel + "\n" + "--exclude=" +
                       tempSetupFile->getSectionValue("REGEXP_and_IncludeExclude", "DontScanFileNamesMatchingRegExp")
                           .mid(tempSetupFile->getSectionValue("REGEXP_and_IncludeExclude", "DontScanFileNamesMatchingRegExp").indexOf("|") + 1);
-    if (tempSetupFile->getSectionValue("REGEXP_and_IncludeExclude", "DontScanDiretoriesMatchingRegExp").indexOf("not checked") == -1)
+    if (tempSetupFile->getSectionValue("REGEXP_and_IncludeExclude", "DontScanDirectoriesMatchingRegExp").indexOf("not checked") == -1)
         optionLabel = optionLabel + "\n" + "--exclude-dir=" +
-                      tempSetupFile->getSectionValue("REGEXP_and_IncludeExclude", "DontScanDiretoriesMatchingRegExp")
-                          .mid(tempSetupFile->getSectionValue("REGEXP_and_IncludeExclude", "DontScanDiretoriesMatchingRegExp").indexOf("|") + 1);
+                      tempSetupFile->getSectionValue("REGEXP_and_IncludeExclude", "DontScanDirectoriesMatchingRegExp")
+                          .mid(tempSetupFile->getSectionValue("REGEXP_and_IncludeExclude", "DontScanDirectoriesMatchingRegExp").indexOf("|") + 1);
     if (tempSetupFile->getSectionValue("REGEXP_and_IncludeExclude", "OnlyScanFileNamesMatchingRegExp").indexOf("not checked") == -1)
         optionLabel = optionLabel + "\n" + "--include=" +
                       tempSetupFile->getSectionValue("REGEXP_and_IncludeExclude", "OnlyScanFileNamesMatchingRegExp")
                           .mid(tempSetupFile->getSectionValue("REGEXP_and_IncludeExclude", "OnlyScanFileNamesMatchingRegExp").indexOf("|") + 1);
-    if (tempSetupFile->getSectionValue("REGEXP_and_IncludeExclude", "OnlyScanDiretoriesMatchingRegExp").indexOf("not checked") == -1)
+    if (tempSetupFile->getSectionValue("REGEXP_and_IncludeExclude", "OnlyScanDirectoriesMatchingRegExp").indexOf("not checked") == -1)
         optionLabel = optionLabel + "\n" + "--include-dir=" +
-                      tempSetupFile->getSectionValue("REGEXP_and_IncludeExclude", "OnlyScanDiretoriesMatchingRegExp")
-                          .mid(tempSetupFile->getSectionValue("REGEXP_and_IncludeExclude", "OnlyScanDiretoriesMatchingRegExp").indexOf("|") + 1);
+                      tempSetupFile->getSectionValue("REGEXP_and_IncludeExclude", "OnlyScanDirectoriesMatchingRegExp")
+                          .mid(tempSetupFile->getSectionValue("REGEXP_and_IncludeExclude", "OnlyScanDirectoriesMatchingRegExp").indexOf("|") + 1);
 
     if (tempSetupFile->getSectionBoolValue("REGEXP_and_IncludeExclude", "EnablePUAOptions") == true) {
         QStringList keywords;

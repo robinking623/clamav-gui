@@ -42,7 +42,7 @@ void includeExcludeOptions::slot_writeSettings()
         m_ui->onlyScanFileNameCheckBox->isChecked() ? checked = "checked" : checked = "not checked";
         m_setupFile->setSectionValue(section, keyword, checked + "|" + value);
 
-        keyword = "OnlyScanDiretoriesMatchingRegExp";
+        keyword = "OnlyScanDirectoriesMatchingRegExp";
         value = m_ui->onlyScanDirLineEdit->text();
         m_ui->onlyScanDirCheckBox->isChecked() ? checked = "checked" : checked = "not checked";
         m_setupFile->setSectionValue(section, keyword, checked + "|" + value);
@@ -127,7 +127,7 @@ void includeExcludeOptions::readSettings()
     checked == "checked" ? m_ui->onlyScanFileNameCheckBox->setChecked(true) : m_ui->onlyScanFileNameCheckBox->setChecked(false);
     m_ui->onlyScanFileNameLineEdit->setText(value);
 
-    keyword = "OnlyScanDiretoriesMatchingRegExp";
+    keyword = "OnlyScanDirectoriesMatchingRegExp";
     value = m_setupFile->getSectionValue(section, keyword);
     checked = value.left(value.indexOf("|"));
     value = value.mid(value.indexOf("|") + 1);

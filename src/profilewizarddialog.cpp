@@ -158,7 +158,7 @@ void ProfileWizardDialog::readSettings()
     checked == "checked" ? m_ui->pwdontScanFileNameCheckBox->setChecked(true) : m_ui->pwdontScanFileNameCheckBox->setChecked(false);
     m_ui->pwdontScanFileNameLineEdit->setText(value);
 
-    keyword = "DontScanDiretoriesMatchingRegExp";
+    keyword = "DontScanDirectoriesMatchingRegExp";
     value = m_setupFile->getSectionValue(section, keyword);
     checked = value.left(value.indexOf("|"));
     value = value.mid(value.indexOf("|") + 1);
@@ -172,7 +172,7 @@ void ProfileWizardDialog::readSettings()
     checked == "checked" ? m_ui->pwonlyScanFileNameCheckBox->setChecked(true) : m_ui->pwonlyScanFileNameCheckBox->setChecked(false);
     m_ui->pwonlyScanFileNameLineEdit->setText(value);
 
-    keyword = "OnlyScanDiretoriesMatchingRegExp";
+    keyword = "OnlyScanDirectoriesMatchingRegExp";
     value = m_setupFile->getSectionValue(section, keyword);
     checked = value.left(value.indexOf("|"));
     value = value.mid(value.indexOf("|") + 1);
@@ -755,7 +755,7 @@ void ProfileWizardDialog::slot_createButtonClicked()
     m_ui->pwdontScanFileNameCheckBox->isChecked() ? checked = "checked" : checked = "not checked";
     profiles->setSectionValue(section, keyword, checked + "|" + value);
 
-    keyword = "DontScanDiretoriesMatchingRegExp";
+    keyword = "DontScanDirectoriesMatchingRegExp";
     value = m_ui->pwdontScanDirLineEdit->text();
     m_ui->pwdontScanDirCheckBox->isChecked() ? checked = "checked" : checked = "not checked";
     profiles->setSectionValue(section, keyword, checked + "|" + value);
@@ -765,7 +765,7 @@ void ProfileWizardDialog::slot_createButtonClicked()
     m_ui->pwonlyScanFileNameCheckBox->isChecked() ? checked = "checked" : checked = "not checked";
     profiles->setSectionValue(section, keyword, checked + "|" + value);
 
-    keyword = "OnlyScanDiretoriesMatchingRegExp";
+    keyword = "OnlyScanDirectoriesMatchingRegExp";
     value = m_ui->pwonlyScanDirLineEdit->text();
     m_ui->pwonlyScanDirCheckBox->isChecked() ? checked = "checked" : checked = "not checked";
     profiles->setSectionValue(section, keyword, checked + "|" + value);

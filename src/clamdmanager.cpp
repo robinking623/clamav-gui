@@ -299,13 +299,13 @@ void clamdManager::slot_updateClamdConf()
         }
 
         if ((m_setupFile->sectionExists("REGEXP_and_IncludeExclude")) &&
-            (m_setupFile->getSectionValue("REGEXP_and_IncludeExclude", "DontScanDiretoriesMatchingRegExp").indexOf("checked|") == 0))
+            (m_setupFile->getSectionValue("REGEXP_and_IncludeExclude", "DontScanDirectoriesMatchingRegExp").indexOf("checked|") == 0))
             m_clamdConf->addSingleLineValue("ExcludePath",
-                                            m_setupFile->getSectionValue("REGEXP_and_IncludeExclude", "DontScanDiretoriesMatchingRegExp").mid(8));
+                                            m_setupFile->getSectionValue("REGEXP_and_IncludeExclude", "DontScanDirectoriesMatchingRegExp").mid(8));
         if ((m_setupFile->sectionExists("REGEXP_and_IncludeExclude")) &&
             (m_setupFile->getSectionValue("REGEXP_and_IncludeExclude", "DontScanFileNamesMatchingRegExp").indexOf("checked|") == 0))
             m_clamdConf->addSingleLineValue("ExcludePath",
-                                            m_setupFile->getSectionValue("REGEXP_and_IncludeExclude", "DontScanDiretoriesMatchingRegExp").mid(8));
+                                            m_setupFile->getSectionValue("REGEXP_and_IncludeExclude", "DontScanFileNamesMatchingRegExp").mid(8));
         if (m_setupFile->getSectionBoolValue("REGEXP_and_IncludeExclude", "EnablePUAOptions") == true) {
             QStringList PUAKeywords;
             PUAKeywords << "LoadPUAPacked" << "LoadPUAPWTool" << "LoadPUANetTool" << "LoadPUAP2P" << "LoadPUAIRC" << "LoadPUARAT" << "LoadPUANetToolSpy"
