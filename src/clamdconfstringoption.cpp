@@ -9,7 +9,8 @@ clamdConfStringOption::clamdConfStringOption(QWidget* parent, QString keyword, b
 
     m_ui.setupUi(this);
 
-    if (m_setupFile->singleLineExists(keyword) == true) {
+    if (m_setupFile->singleLineExists(keyword) == true)
+    {
         m_ui.checkBox->setChecked(true);
         m_ui.lineEdit->setText(m_setupFile->getSingleLineValue(keyword));
     }
@@ -70,10 +71,12 @@ bool clamdConfStringOption::isChecked()
 
 void clamdConfStringOption::slot_checkBoxClicked()
 {
-    if (m_startup == false) {
+    if (m_startup == false)
+    {
         bool state = m_ui.checkBox->isChecked();
         m_ui.lineEdit->setEnabled(state);
-        if (state == true) {
+        if (state == true)
+        {
             QString value = m_setupFile->getSingleLineValue(m_optionKeyword);
             m_setupFile->removeSingleLine(m_optionKeyword, value, m_comment);
             m_setupFile->setSingleLineValue(m_optionKeyword, m_ui.lineEdit->text(), m_comment);
@@ -89,8 +92,10 @@ void clamdConfStringOption::slot_checkBoxClicked()
 
 void clamdConfStringOption::slot_lineEditChanged()
 {
-    if (m_startup == false) {
-        if (m_ui.checkBox->isChecked() == true) {
+    if (m_startup == false)
+    {
+        if (m_ui.checkBox->isChecked() == true)
+        {
             QString value = m_setupFile->getSingleLineValue(m_optionKeyword);
             m_setupFile->removeSingleLine(m_optionKeyword, value, m_comment);
             m_setupFile->setSingleLineValue(m_optionKeyword, m_ui.lineEdit->text(), m_comment);

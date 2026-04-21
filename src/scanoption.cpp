@@ -15,7 +15,8 @@ scanoption::scanoption(QWidget *parent, QString setupFileName, QString section, 
 // -------------------------------------------------------------------------
 // For DEBUG reasons only.
 /*    QFile file(QDir::homePath() + "/clamav-xx_XX.ts");
-    if (file.open(QIODevice::WriteOnly|QIODevice::Text|QIODevice::Append)) {
+    if (file.open(QIODevice::WriteOnly|QIODevice::Text|QIODevice::Append))
+    {
         QTextStream stream(&file);
         stream << "    <message>\n        <source>" << comment << "</source>\n        <translation>TRANS</translation>\n    </message>\n";
         file.close();
@@ -24,7 +25,8 @@ scanoption::scanoption(QWidget *parent, QString setupFileName, QString section, 
 
     m_ui.checkBox->setChecked(checked);
 
-    if (checked == true) {
+    if (checked == true)
+    {
         this->setStyleSheet(css);
         m_setupFile->setSectionValue(m_setupFileSection,m_option,m_com);
     }
@@ -48,11 +50,14 @@ bool scanoption::isChecked()
     return m_ui.checkBox->isChecked();
 }
 
-void scanoption::slot_checkboxClicked(){
-    if (m_ui.checkBox->isChecked() == false) {
+void scanoption::slot_checkboxClicked()
+{
+    if (m_ui.checkBox->isChecked() == false)
+    {
         m_setupFile->removeKeyword(m_setupFileSection,m_option);
         this->setStyleSheet("");
-    } else {
+    }
+    else {
         m_setupFile->setSectionValue(m_setupFileSection,m_option,m_com);
         this->setStyleSheet(css);
     }

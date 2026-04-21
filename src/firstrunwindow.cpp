@@ -72,8 +72,10 @@ void firstRunWindow::findTranslation()
     //QString translation_path = "/usr/share/clamav-gui/"; //for testing ...
     QDir directory(translation_path);
     QStringList m_filelist = directory.entryList(QDir::Files);
-    foreach(QString m_file, m_filelist) {
-        if (m_file.indexOf(".qm") != -1 && m_file.contains("gui")) {
+    foreach(QString m_file, m_filelist)
+    {
+        if (m_file.indexOf(".qm") != -1 && m_file.contains("gui"))
+        {
             QString m_lang = m_file.mid(11,5);
             QLocale locale(m_lang);
 
@@ -99,56 +101,68 @@ void firstRunWindow::slot_initProcessFinished()
     QString rc = m_initProcess->readAll().trimmed();
     QStringList elements = rc.split(" ");
 
-    if (m_initIndex < m_initCommands.size()) {
-        switch (m_initIndex) {
+    if (m_initIndex < m_initCommands.size())
+    {
+        switch (m_initIndex)
+        {
             case 0:
-                if (elements.count() >= 2) {
+                if (elements.count() >= 2)
+                {
                     m_ui->clamdSourceLabel->setText(elements.at(1));
                     m_ui->clamdStatusLabel->setPixmap(QPixmap(":/icons/icons/create.png"));
                     m_setupFile->setSectionValue("Clamd","ClamdLocation",elements.at(1));
                     m_setupFile->setSectionValue("Clamd","StartClamdOnStartup",false);
-                } else {
+                }
+                else {
                     QMessageBox::warning(this, tr("ERROR"), tr("Clamad is missing. Please install!"), QMessageBox::Ok);
                     emit quitApplication();
                 }
                 break;
             case 1:
-                if (elements.count() >= 2) {
+                if (elements.count() >= 2)
+                {
                     m_ui->freshclamSourceLabel->setText(elements.at(1));
                     m_ui->freshclamStatusLabel->setPixmap(QPixmap(":/icons/icons/create.png"));
                     m_setupFile->setSectionValue("FreshclamSettings", "FreshclamLocation", elements.at(1));
-                } else {
+                }
+                else {
                     QMessageBox::warning(this, tr("ERROR"), tr("Freshclam is missing. Please install!"), QMessageBox::Ok);
                     emit quitApplication();
                 }
                 break;
             case 2:
-                if (elements.count() >= 2) {
+                if (elements.count() >= 2)
+                {
                     m_ui->clamonaccSourceLabel->setText(elements.at(1));
                     m_ui->clamonaccStatusLabel->setPixmap(QPixmap(":/icons/icons/create.png"));
                     m_setupFile->setSectionValue("Clamd","ClamonaccLocation",elements.at(1));
-                } else {
+                }
+                else {
                     QMessageBox::warning(this, tr("ERROR"), tr("Clamonacc is missing. Please install!"), QMessageBox::Ok);
                     emit quitApplication();
                 }
                 break;
             case 3:
-                if (elements.count() >=2) {
+                if (elements.count() >=2)
+                {
                     m_ui->clamscanSourceLabel->setText(elements.at(1));
                     m_ui->clamscanStatusLabel->setPixmap(QPixmap(":/icons/icons/create.png"));
-                } else {
+                }
+                else {
                     QMessageBox::warning(this, tr("ERROR"), tr("Clamav is missing. Please install!"), QMessageBox::Ok);
                     emit quitApplication();
                 }
                 break;
             case 4:
-                if (elements.count() >= 2) {
+                if (elements.count() >= 2)
+                {
                     m_ui->clamdscanSourceLabel->setText(elements.at(1));
                     m_ui->clamdscanStatusLabel->setPixmap(QPixmap(":/icons/icons/create.png"));
                 }
                 break;
             case 5:
-                if (elements.count() >= 2) {
+                if (elements.count() >= 2)
+                {
                     m_ui->sudoGUISourceLabel->setText(elements.at(1));
                     m_ui->sudoGUIStatusLabel->setPixmap(QPixmap(":/icons/icons/create.png"));
                     m_setupFile->setSectionValue("RequiredApplications",m_initParameters.at(m_initIndex),elements.at(1));
@@ -157,12 +171,14 @@ void firstRunWindow::slot_initProcessFinished()
                 }
                 break;
             case 6:
-                if (elements.count() >= 2) {
+                if (elements.count() >= 2)
+                {
                     m_ui->sudoGUISourceLabel->setText(elements.at(1));
                     m_ui->sudoGUIStatusLabel->setPixmap(QPixmap(":/icons/icons/create.png"));
                     m_setupFile->setSectionValue("RequiredApplications",m_initParameters.at(m_initIndex),elements.at(1));
                     m_setupFile->setSectionValue("Settings","SudoGUI",elements.at(1));
-                } else {
+                }
+                else {
                     m_setupFile->setSectionValue("RequiredApplications",m_initParameters.at(m_initIndex),"n/a");
                     m_setupFile->setSectionValue("Settings","SudoGUI","n/a");
                     QMessageBox::warning(this, tr("ERROR"), tr("Neither 'pkexe' nor 'kdesu' os installed. Please install at least one of this applications!"), QMessageBox::Ok);
@@ -170,7 +186,8 @@ void firstRunWindow::slot_initProcessFinished()
                 }
                 break;
             case 7:
-                if (rc != "") {
+                if (rc != "")
+                {
                     m_ui->applicationUserLabel->setText("Database Owner : " + elements.at(0));
                     m_ui->applicationUserStatusLabel->setPixmap(QPixmap(":/icons/icons/create.png"));
                     m_freshclamConf = new setupFileHandler(QDir::homePath()+ "/.clamav-gui/freshclam.conf");
@@ -180,7 +197,8 @@ void firstRunWindow::slot_initProcessFinished()
                 }
                 break;
             case 8:
-                if (elements.count() > 0) {
+                if (elements.count() > 0)
+                {
                     m_ui->applicationGroupLabel->setText("Application Group : " + elements.at(0));
                     m_ui->applicationGroupStatusLabel->setPixmap(QPixmap(":/icons/icons/create.png"));
                     m_setupFile->setSectionValue("RequiredApplications","Group",m_ui->applicationGroupLabel->text().replace("Application Group : ",""));
@@ -188,7 +206,8 @@ void firstRunWindow::slot_initProcessFinished()
                 break;
             case 9:
                 QFile file(QDir::homePath() + "/.clamav-gui/clamd.conf.man");
-                if (file.open(QIODevice::WriteOnly|QIODevice::Text)) {
+                if (file.open(QIODevice::WriteOnly|QIODevice::Text))
+                {
                     QTextStream stream(&file);
                     stream << rc;
                     Qt::endl(stream);
@@ -199,12 +218,15 @@ void firstRunWindow::slot_initProcessFinished()
 
         m_initIndex++;
 
-        if (m_initIndex < m_initCommands.size()) {
+        if (m_initIndex < m_initCommands.size())
+        {
             m_processParameters.clear();
-            if (m_initParameters.at(m_initIndex) != "") {
+            if (m_initParameters.at(m_initIndex) != "")
+            {
                 m_processParameters << m_initParameters.at(m_initIndex);
                 m_initProcess->start(m_initCommands.at(m_initIndex),m_processParameters);
-            } else {
+            }
+            else {
                 m_processParameters << m_initParameters.at(m_initIndex);
                 m_initProcess->start(m_initCommands.at(m_initIndex),QStringList());
             }
@@ -214,15 +236,18 @@ void firstRunWindow::slot_initProcessFinished()
 
 void firstRunWindow::slot_sddComboBoxChanged()
 {
-    if (m_processInit == false) {
+    if (m_processInit == false)
+    {
         setupFileHandler * m_clamdConf = new setupFileHandler(QDir::homePath() + "/.clamav-gui/clamd.conf");
         setupFileHandler * m_freshclamConf = new setupFileHandler(QDir::homePath() + "/.clamav-gui/freshclam.conf");
-        if (m_ui->signatureDatabaseDirectoryComboBox->currentText() == QDir::homePath() + "/.clamav-gui/signatures") {
+        if (m_ui->signatureDatabaseDirectoryComboBox->currentText() == QDir::homePath() + "/.clamav-gui/signatures")
+        {
             m_setupFile->setSectionValue("Directories", "LoadSupportedDBFiles", "checked|" + QDir::homePath() + "/.clamav-gui/signatures");
             m_setupFile->setSectionValue("FreshClam","runasroot",false);
             m_clamdConf->setSingleLineValue("DatabaseDirectory",QDir::homePath() + "/.clamav-gui/signatures");
             m_freshclamConf->setSingleLineValue("DatabaseDirectory", QDir::homePath() + "/.clamav-gui/signatures", "Path to a directory containing database files.  This directory must already exist, be an absolute path, be writeable by freshclam and readable by clamd/clamscan. Default: /var/lib/clamav");
-        } else  {
+        }
+        else  {
             m_setupFile->setSectionValue("Directories", "LoadSupportedDBFiles", "checked|" + m_ui->signatureDatabaseDirectoryComboBox->currentText());
             m_setupFile->setSectionValue("FreshClam","runasroot",true);
             m_clamdConf->setSingleLineValue("DatabaseDirectory",m_ui->signatureDatabaseDirectoryComboBox->currentText());
@@ -264,7 +289,8 @@ void firstRunWindow::createBaseDirStructure()
     // For UALinux
     // If the settings.ini in the home folder of the user is not present a predefined version is been copied into the folder.
     //_____________________________________________________________________________________________________________________________________
-    if ((!QFileInfo::exists(QDir::homePath() + "/.clamav-gui/settings.ini")) && (!QFile::exists(QDir::homePath() + "/.clamav-gui/settings.ini"))) {
+    if ((!QFileInfo::exists(QDir::homePath() + "/.clamav-gui/settings.ini")) && (!QFile::exists(QDir::homePath() + "/.clamav-gui/settings.ini")))
+    {
         dir.mkdir(QDir::homePath() + "/.clamav-gui");
 
         if (QFile::exists("/etc/clamav-gui/settings.ini"))
@@ -288,10 +314,12 @@ void firstRunWindow::createServiceMenu()
         serviceMenuPath = QDir::homePath() + "/.local/share/kio/servicemenus";
 
     if (serviceMenuPath.isEmpty())
-        serviceMenuPath = serviceMenuPath = QDir::homePath() + "/.local/share/kservices5/ServiceMenus";
+        serviceMenuPath = serviceMenuPath = QDir::homePath() + "/.local/share/kio/servicemenus";
 
-    if (!QFileInfo::exists(serviceMenuPath + "/scanWithClamAV-GUI.desktop")) {
-        if (!QFileInfo::exists(serviceMenuPath)) {
+    if (!QFileInfo::exists(serviceMenuPath + "/scanWithClamAV-GUI.desktop"))
+    {
+        if (!QFileInfo::exists(serviceMenuPath))
+        {
             QDir dir(serviceMenuPath);
             dir.mkpath(serviceMenuPath);
         }
@@ -330,6 +358,8 @@ void firstRunWindow::createServiceMenu()
         serviceFile->setSectionValue("Desktop Action scan", "Exec", "clamav-gui --scan %F");
         delete serviceFile;
     }
+    QFile file(serviceMenuPath + "/scanWithClamAV-GUI.desktop");
+    file.setPermissions(QFileDevice::ReadOwner|QFileDevice::WriteOwner|QFileDevice::ExeOwner|QFileDevice::ReadGroup|QFile::WriteGroup|QFileDevice::ExeGroup|QFileDevice::ReadOther|QFileDevice::WriteOther|QFileDevice::ExeOther);
     //*****************************************************************************
 
     m_ui->dolphinContestMenuStatusLabel->setPixmap(QPixmap(":/icons/icons/create.png"));
@@ -341,7 +371,8 @@ void firstRunWindow::createInitialSettings()
     if (QFileInfo::exists("/usr/local/share/clamav")) m_ui->signatureDatabaseDirectoryComboBox->addItem("/usr/local/share/clamav");
     m_ui->signatureDatabaseDirectoryComboBox->addItem(QDir::homePath() + "/.clamav-gui/signatures");
 
-    if (QFileInfo::exists("/var/lib/clamav") && (QFile::exists("/var/lib/clamav/freshclam.dat"))) {
+    if (QFileInfo::exists("/var/lib/clamav") && (QFile::exists("/var/lib/clamav/freshclam.dat")))
+    {
         if (m_setupFile->keywordExists("Directories","LoadSupportedDBFiles") == false)
             m_setupFile->setSectionValue("Directories", "LoadSupportedDBFiles", "checked|/var/lib/clamav");
 
@@ -392,11 +423,14 @@ void firstRunWindow::createClamdConfFile()
 {
     QFile clamdConfFile(QDir::homePath() + "/.clamav-gui/clamd.conf");
 
-    if (clamdConfFile.exists() == false) {
+    if (clamdConfFile.exists() == false)
+    {
         m_clamdConf = new setupFileHandler(QDir::homePath() + "/.clamav-gui/clamd.conf", this);
         QString value = m_setupFile->getSectionValue("Directories", "LoadSupportedDBFiles");
+
         if (value.indexOf("checked|") == 0)
             m_clamdConf->addSingleLineValue("DatabaseDirectory", value.mid(value.indexOf("|") + 1));
+
         m_clamdConf->setSingleLineValue("LogSyslog", "no");
         m_clamdConf->setSingleLineValue("LogFacility", "LOG_LOCAL6");
         m_clamdConf->setSingleLineValue("PidFile", "/tmp/clamd.pid","By default clamd binds to INADDR_ANY. This option allows you to restrict the TCP address and provide some degree of protection from the outside world. This option can be specified multiple times in order to listen on multiple IPs. IPv6 is now supported. Default: disabled");
@@ -424,7 +458,8 @@ void firstRunWindow::createClamdConfFile()
 
 void firstRunWindow::createFreshclamConfFile()
 {
-    if (QFile::exists(QDir::homePath() + "/.clamav-gui/freshclam.conf") == false) {
+    if (QFile::exists(QDir::homePath() + "/.clamav-gui/freshclam.conf") == false)
+    {
         QFile freshclamConfFile(QDir::homePath() + "/.clamav-gui/freshclam.conf");
         freshclamConfFile.setPermissions(QFileDevice::ReadOwner | QFileDevice::WriteOwner);
 

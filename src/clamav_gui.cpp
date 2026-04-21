@@ -1,5 +1,6 @@
 #include "clamav_gui.h"
 #include "ui_clamav_gui.h"
+#include "sharedvars.cpp"
 
 enum baloonStatus {Information, Warning, Critical};
 
@@ -12,7 +13,8 @@ clamav_gui::clamav_gui(QWidget* parent) : QWidget(parent)
 
     if ((!QFile::exists(settingsPath)) || (!QFile::exists(QDir::homePath() + "/.clamav-gui/clamd.conf.man")) ||
         (!QFile::exists(QDir::homePath() + "/.clamav-gui/clamd.conf")) || (!QFile::exists(QDir::homePath() + "/.clamav-gui/freshclam.conf")) ||
-        (!QFile::exists(QDir::homePath() + "/.clamav-gui/clamd.conf.man"))) {
+        (!QFile::exists(QDir::homePath() + "/.clamav-gui/clamd.conf.man")))
+    {
         firstrun = true;
         initDialog = new firstRunWindow(this);
         connect(initDialog,SIGNAL(rejected()),qApp,SLOT(quit()));
@@ -24,7 +26,8 @@ clamav_gui::clamav_gui(QWidget* parent) : QWidget(parent)
         initDialog->setGeometry((m_screenGeometry.width() - 650) / 2, (m_screenGeometry.height() - 410) / 2, 650,410);
     }
 
-    if (firstrun == false) {
+    if (firstrun == false)
+    {
         m_error = false;
         m_guisudoapp = "pkexec";
 
@@ -136,8 +139,8 @@ clamav_gui::clamav_gui(QWidget* parent) : QWidget(parent)
         m_showLogoTimer->start(250);
         if(!firstrun) emit doneit();
     }
-
 }
+
 
 void clamav_gui::slot_receiveVersionInformation(QString info)
 {
@@ -146,10 +149,10 @@ void clamav_gui::slot_receiveVersionInformation(QString info)
 
 void clamav_gui::closeEvent(QCloseEvent* event)
 {
-    if (firstrun == false) {
-        if (m_error == true) {
+    if (firstrun == false)
+    {
+        if (m_error == true)
             qApp->quit();
-        }
         else {
             if (this->isVisible() == true)
                 slot_hideWindow();
@@ -160,11 +163,8 @@ void clamav_gui::closeEvent(QCloseEvent* event)
 
 void clamav_gui::changeEvent(QEvent* event)
 {
-    if (event->type() == QEvent::WindowStateChange) {
-        if (isMinimized() == true) {
+    if ((event->type() == QEvent::WindowStateChange) && (isMinimized() == true))
             slot_setMainWindowState(false);
-        }
-    }
 }
 
 void clamav_gui::createTrayIcon()
@@ -190,7 +190,8 @@ void clamav_gui::createTrayIcon()
 
 void clamav_gui::slot_actionShowHideMainWindowTriggered()
 {
-    if (m_setupFile->getSectionBoolValue("Settings", "ShowHideMainWindow") == true) {
+    if (m_setupFile->getSectionBoolValue("Settings", "ShowHideMainWindow") == true)
+    {
         slot_setMainWindowState(false);
         m_setupFile->setSectionValue("Settings", "ShowHideMainWindow", false);
     }
@@ -202,19 +203,17 @@ void clamav_gui::slot_actionShowHideMainWindowTriggered()
 
 void clamav_gui::slot_systemTrayIconActivated(QSystemTrayIcon::ActivationReason reason)
 {
-    if (reason == QSystemTrayIcon::MiddleClick) {
+    if (reason == QSystemTrayIcon::MiddleClick)
         slot_actionShowHideDropZoneTriggered();
-    }
-    else {
-        if (reason == QSystemTrayIcon::Trigger) {
+    else
+        if (reason == QSystemTrayIcon::Trigger)
             slot_actionShowHideMainWindowTriggered();
-        }
-    }
 }
 
 void clamav_gui::slot_setMainWindowState(bool state)
 {
-    if (state == true) {
+    if (state == true)
+    {
         this->showMaximized();
         this->activateWindow();
         m_setupFile->setSectionValue("Settings", "ShowHideMainWindow", true);
@@ -228,7 +227,8 @@ void clamav_gui::slot_setMainWindowState(bool state)
 
 void clamav_gui::slot_actionShowHideDropZoneTriggered()
 {
-    if (m_setupFile->getSectionBoolValue("Settings", "ShowHideDropZone") == false) {
+    if (m_setupFile->getSectionBoolValue("Settings", "ShowHideDropZone") == false)
+    {
         m_setupFile->setSectionValue("Settings", "ShowHideDropZone", true);
         createDropZone();
     }
@@ -266,8 +266,6 @@ void clamav_gui::slot_scanRequest(QStringList scanObjects)
     QStringList scanLimitations = m_setupFile->getKeywords("ScanLimitations");
     QStringList directoryOptions = m_setupFile->getKeywords("Directories");
     QStringList parameters;
-    QStringList keywords;
-    QStringList switches;
     QString moveDirectory = m_optionTab->getMoveDirectory();
     QString copyDirectory = m_optionTab->getCopyDirectory();
     QString checked;
@@ -282,8 +280,10 @@ void clamav_gui::slot_scanRequest(QStringList scanObjects)
     monochrome == true ? color = "#404040;color:white" : color = "#ffff00;color:black";
     m_scannerTab->setStatusBarMessage(tr("Scanning started ......."), color);
 
-    if (m_setupFile->getSectionValue("Clamd", "Status") == "is running") {
-        switch (m_setupFile->getSectionIntValue("Clamd", "ClamdScanMultithreading")) {
+    if (m_setupFile->getSectionValue("Clamd", "Status") == "is running")
+    {
+        switch (m_setupFile->getSectionIntValue("Clamd", "ClamdScanMultithreading"))
+        {
             case 0:
                 useclamdscan = false;
                 break;
@@ -298,19 +298,18 @@ void clamav_gui::slot_scanRequest(QStringList scanObjects)
                 break;
             case 4:
                 if (QMessageBox::question(this, tr("Use ClamdScan"), tr("Perform scanning using clamdscan instead of clamscan?"), QMessageBox::Yes,
-                                          QMessageBox::No) == QMessageBox::Yes) {
+                                          QMessageBox::No) == QMessageBox::Yes)
                     useclamdscan = true;
-                }
-                else {
+                else
                     useclamdscan = false;
-                }
         }
     }
     else {
         useclamdscan = false;
     }
 
-    switch (m_scannerTab->getVirusFoundComboBoxValue()) {
+    switch (m_scannerTab->getVirusFoundComboBoxValue())
+    {
         case 0:
             break;
         case 1:
@@ -333,7 +332,8 @@ void clamav_gui::slot_scanRequest(QStringList scanObjects)
             break;
     }
 
-    if (useclamdscan == true) {
+    if (useclamdscan == true)
+    {
         temp = "clamdscan --config-file=" + m_setupFile->getSectionValue("Clamd","ClamdConfPath") + " --multiscan --fdpass";
         parameters << "--config-file=" + m_setupFile->getSectionValue("Clamd","ClamdConfPath") << "--multiscan" << "--fdpass";
 
@@ -345,7 +345,8 @@ void clamav_gui::slot_scanRequest(QStringList scanObjects)
             parameters << "--log=" + value;
             temp = temp + " --log=" + value;
             QFile file(value);
-            if (file.open(QIODevice::ReadWrite | QIODevice::Append | QIODevice::Text)) {
+            if (file.open(QIODevice::ReadWrite | QIODevice::Append | QIODevice::Text))
+            {
                 QTextStream stream(&file);
                 stream << "\n<Scanning startet> " << QDateTime::currentDateTime().toString("yyyy/M/d - hh:mm");
                 file.close();
@@ -361,122 +362,85 @@ void clamav_gui::slot_scanRequest(QStringList scanObjects)
                 temp = temp + " " + param;
             }
         }
-    } else {
-        if (m_scannerTab->recursivChecked() == true) {
+    }
+    else {
+        if (m_scannerTab->recursivChecked() == true)
             parameters << "-r";
-        }
 
-        for (int i = 0; i < selectedOptions.count(); i++) {
+        for (int i = 0; i < selectedOptions.count(); i++)
+        {
             parameters << selectedOptions.at(i).left(selectedOptions.indexOf("|")).replace("<equal>", "=");
         }
 
-        keywords << "TmpFile" << "MoveInfectedFiles" << "CopyInfectedFiles" << "ScanFileFromFiles" << "FollowDirectorySymLinks"
-                 << "FollowFileSymLinks";
-        switches << "--tempdir=" << "--move=" << "--copy=" << "--file-list=" << "--follow-dir-symlinks=" << "--follow-file-symlinks=";
         // Directory Options
-        for (int i = 0; i < directoryOptions.count(); i++) {
+        for (int i = 0; i < directoryOptions.count(); i++)
+        {
             option = directoryOptions.at(i);
             value = m_setupFile->getSectionValue("Directories", option);
             checked = value.left(value.indexOf("|"));
             value = value.mid(value.indexOf("|") + 1);
 
-            if ((checked == "checked") && (value != "")) {
-                if (option == "LoadSupportedDBFiles") {
-                    parameters << "--database=" + value;
-                }
-                if (option == "ScanReportToFile") {
-                    parameters << "--log=" + value;
-                    if (value != "") {
-                        QFile file(value);
-                        if (file.open(QIODevice::ReadWrite | QIODevice::Append | QIODevice::Text)) {
-                            QTextStream stream(&file);
-                            stream << "\n<Scanning startet> " << QDateTime::currentDateTime().toString("yyyy/M/d - hh:mm");
-                            file.close();
+            if ((checked == "checked") && (value != ""))
+            {
+                for (int idx = 0; idx < directoryOptionKeywords.size(); idx++)
+                {
+                    if (directoryOptionKeywords.at(idx) == option)
+                    {
+                        if (directoryOptionKeywords.at(idx) == "ScanReportToFile")
+                        {
+                            if (value != "")
+                            {
+                                parameters << "--log=" + value;
+                                QFile file(value);
+                                if (file.open(QIODevice::ReadWrite | QIODevice::Append | QIODevice::Text))
+                                {
+                                    QTextStream stream(&file);
+                                    stream << "\n<Scanning startet> " << QDateTime::currentDateTime().toString("yyyy/M/d - hh:mm");
+                                    file.close();
+                                }
+                            }
                         }
+                        else
+                            parameters << directoryOptionSwitches.at(idx) + "=" + value;
                     }
                 }
-                if (keywords.indexOf(option) != -1)
-                    parameters << switches.at(keywords.indexOf(option)) + value;
             }
         }
 
         // Scan Limitations
-        QStringList SLKeywords;
-        QStringList SLSwitches;
-        SLKeywords << "Files larger than this will be skipped and assumed clean" << "The maximum amount of data to scan for each container file";
-        SLKeywords << "The maximum number of files to scan for each container file" << "Maximum archive recursion level for container file";
-        SLKeywords << "Maximum directory recursion level" << "Maximum size file to check for embedded PE"
-                   << "Maximum size of HTML file to normalize";
-        SLKeywords << "Maximum size of normalized HTML file to scan" << "Maximum size of script file to normalize"
-                   << "Maximum size zip to type reanalyze";
-        SLKeywords << "Maximum number of partitions in disk image to be scanned" << "Maximum number of icons in PE file to be scanned";
-        SLKeywords << "Number of seconds to wait for waiting a response back from the stats server" << "Bytecode timeout in milliseconds";
-        SLKeywords << "Collect and print execution statistics" << "Structured SSN Format" << "Structured SSN Count" << "Structured CC Count"
-                   << "Structured CC Mode";
-        SLKeywords << "Max Scan-Time" << "Max recursion to HWP3 parsing function" << "Max calls to PCRE match function"
-                   << "Max recursion calls to the PCRE match function";
-        SLKeywords << "Max PCRE file size" << "Database outdated if older than x days";
-        SLSwitches << "--max-filesize=" << "--max-scansize=" << "--max-files=" << "--max-recursion=" << "--max-dir-recursion=";
-        SLSwitches << "--max-embeddedpe=" << "--max-htmlnormalize=" << "--max-htmlnotags=" << "--max-scriptnormalize=" << "--max-ziptypercg=";
-        SLSwitches << "--max-partitions=" << "--max-iconspe=" << "--stats-timeout=" << "--bytecode-timeout=" << "--statistics=";
-        SLSwitches << "--structured-ssn-format=" << "--structured-ssn-count=" << "--structured-cc-count=" << "--structured-cc-mode="
-                   << "--max-scantime=";
-        SLSwitches << "--max-rechwp3=" << "--pcre-match-limit=" << "--pcre-recmatch-limit=" << "--pcre-max-filesize="
-                   << "--fail-if-cvd-older-than=";
-        for (int i = 0; i < scanLimitations.count(); i++) {
+        for (int i = 0; i < scanLimitations.count(); i++)
+        {
             option = scanLimitations.at(i);
             value = m_setupFile->getSectionValue("ScanLimitations", option);
             checked = value.left(value.indexOf("|"));
             value = value.mid(value.indexOf("|") + 1);
-            if (checked == "checked") {
-                for (int i = 0; i < SLKeywords.length(); i++) {
-                    if (option == SLKeywords.at(i)) {
-                        parameters << SLSwitches.at(i) + value;
-                    }
+            if (checked == "checked")
+            {
+                for (int i = 0; i < scanLimitKeywords.length(); i++)
+                {
+                    if (option == scanLimitKeywords.at(i))
+                        parameters << scanLimitSwitches.at(i) + "=" + value;
                 }
             }
         }
 
         // REGEXP and Include Exclude Options
-        value = m_setupFile->getSectionValue("REGEXP_and_IncludeExclude", "DontScanFileNamesMatchingRegExp");
-        checked = value.left(value.indexOf("|"));
-        value = value.mid(value.indexOf("|") + 1);
-        if (checked == "checked")
-            parameters << "--exclude=" + value;
-
-        value = m_setupFile->getSectionValue("REGEXP_and_IncludeExclude", "DontScanDirectoriesMatchingRegExp");
-        checked = value.left(value.indexOf("|"));
-        value = value.mid(value.indexOf("|") + 1);
-        if (checked == "checked")
-            parameters << "--exclude-dir=" + value;
-
-        value = m_setupFile->getSectionValue("REGEXP_and_IncludeExclude", "OnlyScanFileNamesMatchingRegExp");
-        checked = value.left(value.indexOf("|"));
-        value = value.mid(value.indexOf("|") + 1);
-        if (checked == "checked")
-            parameters << "--include=" + value;
-
-        value = m_setupFile->getSectionValue("REGEXP_and_IncludeExclude", "OnlyScanDirectoriesMatchingRegExp");
-        checked = value.left(value.indexOf("|"));
-        value = value.mid(value.indexOf("|") + 1);
-        if (checked == "checked")
-            parameters << "--include-dir=" + value;
-
-        if (m_setupFile->getSectionBoolValue("REGEXP_and_IncludeExclude", "EnablePUAOptions") == true) {
-            QStringList m_keywords;
-            QStringList m_switches;
-            m_keywords << "LoadPUAPacked" << "LoadPUAPWTool" << "LoadPUANetTool" << "LoadPUAP2P" << "LoadPUAIRC" << "LoadPUARAT"
-                       << "LoadPUANetToolSpy";
-            m_keywords << "LoadPUAServer" << "LoadPUAScript" << "LoadPUAAndr" << "LoadPUAJava" << "LoadPUAOsx" << "LoadPUATool" << "LoadPUAUnix"
-                       << "LoadPUAWin";
-            m_switches << "--include-pua=Packed" << "--include-pua=PWTool" << "--include-pua=NetTool" << "--include-pua=P2P" << "--include-pua=IRC"
-                       << "--include-pua=RAT";
-            m_switches << "--include-pua=NetToolSpy" << "--include-pua=Server" << "--include-pua=Script" << "--include-pua=Andr"
-                       << "--include-pua=Java";
-            m_switches << "--include-pua=Osx" << "--include-pua=Tool" << "--include-pua=Unix" << "--include-pua=Win";
-            for (int i = 0; i < m_keywords.length(); i++) {
-                if (m_setupFile->getSectionBoolValue("REGEXP_and_IncludeExclude", m_keywords.at(i)) == true)
-                    parameters << m_switches.at(i);
+        for (int idx = 0; idx < inclExclKeywords.size(); idx++)
+        {
+            if (idx < 4)
+            {
+                value = m_setupFile->getSectionValue("REGEXP_and_IncludeExclude",inclExclKeywords.at(idx));
+                checked = value.left(value.indexOf("|"));
+                value = value.mid(value.indexOf("|") + 1);
+                if (checked == "checked") parameters << inclExclSwitches.at(idx) + "=" + value;
+            }
+            else {
+                if (m_setupFile->getSectionBoolValue("REGEXP_and_IncludeExclude","EnablePUAOptions") == true)
+                {
+                    if ((m_setupFile->getSectionBoolValue("REGEXP_and_IncludeExclude",inclExclKeywords.at(idx)) == true) &&
+                        (inclExclKeywords.at(idx) != "EnablePUAOptions"))
+                        parameters << inclExclSwitches.at(idx);
+                }
             }
         }
 
@@ -485,24 +449,26 @@ void clamav_gui::slot_scanRequest(QStringList scanObjects)
         QString path = temp;
         path = m_setupFile->getSectionValue("Directories", "LoadSupportedDBFiles");
         path = path.mid(path.indexOf("|") + 1);
+
         if (path.indexOf("not checked") != -1)
             temp = temp + "-d " + path;
-        for (int i = 0; i < parameters.count(); i++) {
+
+        for (int i = 0; i < parameters.count(); i++)
+        {
             temp = temp + " " + parameters.at(i);
         }
     }
 
-    foreach (QString parameter, scanObjects) {
+    foreach (QString parameter, scanObjects)
+    {
         parameters << parameter;
         temp = temp + " " + parameter;
     }
 
     slot_setMainWindowState(true);
 
-    if (m_setupFile->getSectionBoolValue("Settings", "ShowHideDropZone") == true) {
-        //m_setupFile->setSectionValue("Settings", "ShowHideDropZone", false);
+    if (m_setupFile->getSectionBoolValue("Settings", "ShowHideDropZone") == true)
         m_dropZone->hide();
-    }
 
     m_ui.tabWidget->setCurrentIndex(0);
 
@@ -514,12 +480,10 @@ void clamav_gui::slot_scanRequest(QStringList scanObjects)
 
 void clamav_gui::slot_mainWinTimerTimeout()
 {
-    if (m_setupFile->getSectionBoolValue("Settings", "ShowHideMainWindow") == true) {
+    if (m_setupFile->getSectionBoolValue("Settings", "ShowHideMainWindow") == true)
         slot_setMainWindowState(true);
-    }
-    else {
+    else
         slot_setMainWindowState(false);
-    }
 }
 
 void clamav_gui::slot_scanProcessHasStdOutput()
@@ -542,32 +506,37 @@ void clamav_gui::slot_scanProcessFinished(int exitCode, QProcess::ExitStatus sta
     bool monochrome = m_setupFile->getSectionBoolValue("Setup", "DisableLogHighlighter");
     QString m_color;
 
-    if (status == QProcess::CrashExit) {
+    if (status == QProcess::CrashExit)
+    {
         monochrome == true ? m_color = "#404040;color:white" : m_color = "#ff0000;color:white";
         m_scannerTab->setStatusBarMessage(tr("Scan-Process aborted ......"), m_color);
         m_trayIcon->showMessage(tr("Scan-Status"), tr("Scan Process aborted ....."), QSystemTrayIcon::Warning, 5000);
     }
     else {
-        if (exitCode == 0) {
+        if (exitCode == 0)
+        {
             monochrome == true ? m_color = "#404040;color:white" : m_color = "#00ff00;color:white";
             m_scannerTab->setStatusBarMessage(tr("Scan-Process finished ...... no Virus found!"), m_color);
             m_trayIcon->showMessage(tr("Scan-Status"), tr("Scan Process finished ..... no virus found!"), QSystemTrayIcon::Information, 5000);
         }
-        else if (exitCode == 1) {
-            monochrome == true ? m_color = "#404040;color:white" : m_color = "#ff0000;color:white";
-            m_scannerTab->setStatusBarMessage(tr("Scan-Process finished ...... Virus found!"), m_color);
-            m_trayIcon->showMessage(tr("Scan-Status"), tr("Scan Process finished ..... a virus was found!"), QSystemTrayIcon::Critical, 5000);
+        else
+            if (exitCode == 1)
+            {
+                monochrome == true ? m_color = "#404040;color:white" : m_color = "#ff0000;color:white";
+                m_scannerTab->setStatusBarMessage(tr("Scan-Process finished ...... Virus found!"), m_color);
+                m_trayIcon->showMessage(tr("Scan-Status"), tr("Scan Process finished ..... a virus was found!"), QSystemTrayIcon::Critical, 5000);
+            }
+            else {
+                monochrome == true ? m_color = "#404040;color:white" : m_color = "#ff0000;color:white";
+                m_scannerTab->setStatusBarMessage(tr("Scan-Process finished ...... an error occured!"), m_color);
+                m_trayIcon->showMessage(tr("Scan-Status"), tr("Scan Process finished ..... an error occurred!"), QSystemTrayIcon::Warning, 5000);
+            }
         }
-        else {
-            monochrome == true ? m_color = "#404040;color:white" : m_color = "#ff0000;color:white";
-            m_scannerTab->setStatusBarMessage(tr("Scan-Process finished ...... an error occured!"), m_color);
-            m_trayIcon->showMessage(tr("Scan-Status"), tr("Scan Process finished ..... an error occurred!"), QSystemTrayIcon::Warning, 5000);
-        }
-    }
 
     emit setScannerForm(true);
 
-    if (m_setupFile->getSectionBoolValue("Settings", "ShowHideDropZone") == true) {
+    if (m_setupFile->getSectionBoolValue("Settings", "ShowHideDropZone") == true)
+    {
         createDropZone();
     }
 
@@ -589,7 +558,8 @@ void clamav_gui::slot_abortScan()
 
 void clamav_gui::slot_showDropZone()
 {
-    if (m_setupFile->getSectionBoolValue("Settings", "ShowHideDropZone") == false) {
+    if (m_setupFile->getSectionBoolValue("Settings", "ShowHideDropZone") == false)
+    {
         m_setupFile->setSectionValue("Settings", "ShowHideDropZone", true);
         createDropZone();
     }
@@ -613,7 +583,8 @@ void clamav_gui::slot_setTrayIconBalloonMessage(int status, QString title, QStri
 {
 
     //TODO: use enumerate - done!
-    switch (status) {
+    switch (status)
+    {
         case Information:
             m_trayIcon->showMessage(title, message, QSystemTrayIcon::Information, 5000);
             break;
@@ -634,16 +605,15 @@ void clamav_gui::slot_closeRequest(QWidget* dialog)
 void clamav_gui::slot_logoTimerTimeout()
 {
     m_startLogoLabel->hide();
-    if (m_setupFile->keywordExists("Setup", "WindowState")) {
+    if (m_setupFile->keywordExists("Setup", "WindowState"))
+    {
         if (m_setupFile->getSectionValue("Setup", "WindowState") == "minimized")
             this->close();
-        if (m_setupFile->getSectionValue("Setup", "WindowState") == "maximized") {
+        if (m_setupFile->getSectionValue("Setup", "WindowState") == "maximized")
             this->showMaximized();
-        }
     }
-    else {
+    else
         this->showMaximized();
-    }
 }
 
 void clamav_gui::slot_showLogoTimerTimeout()

@@ -25,8 +25,10 @@ scanTab::scanTab(QWidget* parent, setupFileHandler* setupFile) : QWidget(parent)
     m_ui.treeView->collapseAll();
     m_model->unCheckAll();
     m_model->setRootPath("/");
-    foreach (QString dir, directories) {
-        if (dir != "") {
+    foreach (QString dir, directories)
+    {
+        if (dir != "")
+        {
             m_model->setChecked(dir, true);
             QModelIndex index = m_model->index(dir);
             m_ui.treeView->scrollTo(index);
@@ -47,7 +49,8 @@ scanTab::scanTab(QWidget* parent, setupFileHandler* setupFile) : QWidget(parent)
 
 void scanTab::checkMonochromeSettings()
 {
-    if (m_monochrome == false) {
+    if (m_monochrome == false)
+    {
         m_devicelabel->setStyleSheet("background-color:#c0c0c0;color:black;padding:4px;border-radius:5px;");
         m_ui.pathLabel->setStyleSheet("background-color:#c0c0c0;color:black;padding:4px;border-radius:5px;");
     }
@@ -62,7 +65,8 @@ void scanTab::slot_scanButtonClicked()
     QList<QPersistentModelIndex> list = m_model->checkedIndexes().values();
     QStringList scanObjects;
 
-    for (int i = 0; i < list.count(); i++) {
+    for (int i = 0; i < list.count(); i++)
+    {
         if (list[i].data(QFileSystemModel::FilePathRole).toString() != "")
             scanObjects << list[i].data(QFileSystemModel::FilePathRole).toString();
     }
@@ -112,14 +116,16 @@ void scanTab::slot_updateDeviceList()
     m_devicelabel = new QLabel(tr("Devices"));
     QLayoutItem* item = NULL;
 
-    while ((item = m_ui.devicesFrame->layout()->takeAt(0)) != 0) {
+    while ((item = m_ui.devicesFrame->layout()->takeAt(0)) != 0)
+    {
         delete item->widget();
     }
 
     m_fileSystemWatcher->addPath(dir.path());
     connect(m_fileSystemWatcher, SIGNAL(directoryChanged(QString)), this, SLOT(slot_updateDeviceList()));
 
-    if (m_setupFile->getSectionBoolValue("Setup", "DisableLogHighlighter") == true) {
+    if (m_setupFile->getSectionBoolValue("Setup", "DisableLogHighlighter") == true)
+    {
         m_devicelabel->setStyleSheet("background-color:#404040;color:white;padding:3px;");
     }
     else {
@@ -130,10 +136,12 @@ void scanTab::slot_updateDeviceList()
     m_deviceGroup = new QButtonGroup(this);
     connect(m_deviceGroup, SIGNAL(idClicked(int)), this, SLOT(slot_deviceButtonClicked(int)));
 
-    if (dirs.count() > 0) {
+    if (dirs.count() > 0)
+    {
         m_devices.clear();
         m_buttonID = 0;
-        foreach (QString entry, dirs) {
+        foreach (QString entry, dirs)
+        {
             m_devices << (QString)(dir.path() + "/" + entry);
             dragablePushButton* button = new dragablePushButton(QIcon(":/icons/icons/media.png"), entry.mid(entry.lastIndexOf("/") + 1), this,
                                                                 (QString)(dir.path() + "/" + entry));
@@ -185,7 +193,8 @@ void scanTab::setStatusMessage(QString message)
     QString currentFile;
     int start, end;
 
-    while (message.indexOf("Scanning") != -1) {
+    while (message.indexOf("Scanning") != -1)
+    {
         start = message.indexOf("Scanning");
         end = message.indexOf("\n", start);
         currentFile = message.mid(start, end - start + 1);
@@ -213,7 +222,8 @@ void scanTab::slot_abortScan()
 void scanTab::slot_enableForm(bool mode)
 {
 
-    if (mode == false) {
+    if (mode == false)
+    {
         m_busyLabel = new QLabel(this);
         m_busyLabel->setStyleSheet("background:transparent");
         m_busyLabel->setGeometry((this->width() - 80) / 2, (this->height() - 80) / 2, 80, 80);
@@ -223,7 +233,8 @@ void scanTab::slot_enableForm(bool mode)
         m_movie->start();
     }
     else {
-        if (m_movie != 0) {
+        if (m_movie != 0)
+        {
             m_movie->stop();
             delete m_movie;
             delete m_busyLabel;
@@ -261,8 +272,10 @@ void scanTab::slot_dirtreeSelectionChanged()
     QList<QPersistentModelIndex> list = m_model->checkedIndexes().values();
     QString directories;
 
-    for (int i = 0; i < list.count(); i++) {
-        if (i < list.count() - 1) {
+    for (int i = 0; i < list.count(); i++)
+    {
+        if (i < list.count() - 1)
+        {
             directories = directories + list[i].data(QFileSystemModel::FilePathRole).toString() + "\n";
         }
         else {
@@ -286,7 +299,8 @@ void scanTab::slot_disableScanButton()
 
 void scanTab::slot_hiddenFoldersCheckBoxClicked()
 {
-    if (m_ui.showHiddenDirsCheckBox->isChecked() == true) {
+    if (m_ui.showHiddenDirsCheckBox->isChecked() == true)
+    {
         m_model->setFilter(QDir::AllDirs | QDir::NoDotAndDotDot | QDir::Hidden);
     }
     else {
@@ -300,14 +314,17 @@ void scanTab::slot_add_remove_highlighter(bool state)
     m_monochrome = state;
     m_setupFile->setSectionValue("Setup", "DisableLogHighlighter", state);
 
-    if (state == true) {
-        if (m_logHighLighter != NULL) {
+    if (state == true)
+    {
+        if (m_logHighLighter != NULL)
+        {
             delete m_logHighLighter;
             m_logHighLighter = NULL;
         }
     }
     else {
-        if (m_logHighLighter == NULL) {
+        if (m_logHighLighter == NULL)
+        {
             m_logHighLighter = new highlighter(m_ui.logPlainTextEdit->document());
         }
         else {

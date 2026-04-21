@@ -45,6 +45,7 @@ SOURCES += src/main.cpp\
     src/progressdialog.cpp \
     src/profilewizarddialog.cpp \
     src/profilemanager.cpp \
+    src/sharedvars.cpp \
     src/translator.cpp
 
 HEADERS  += src/clamav_gui.h \
