@@ -75,13 +75,20 @@ void firstRunWindow::slot_gsettingsProcessFinished(int rc, QProcess::ExitStatus)
     {
         if (output.indexOf("[]") != -1)
         {
-            gnomecommanderParams << "set"  << "org.gnome.gnome-commander.preferences.general" << "favorite-apps" << "[('scan with ClamAV-GUI', '/usr/bin/clamav-gui --scan %F', '/usr/share/icons/hicolor/48x48/apps/clamav-gui.png', '', uint32 2, false, true, false)]";
+            if (isRunninginFlatPak())
+                gnomecommanderParams << "set"  << "org.gnome.gnome-commander.preferences.general" << "favorite-apps" << "[('scan with ClamAV-GUI', 'flatpak run --branch=master --arch=x86_64 --command=clamav-gui io.github.wusel1007.clamav-gui --scan %F', '/usr/share/icons/hicolor/48x48/apps/clamav-gui.png', '', uint32 2, false, true, false)]";
+            else
+                gnomecommanderParams << "set"  << "org.gnome.gnome-commander.preferences.general" << "favorite-apps" << "[('scan with ClamAV-GUI', '/usr/bin/clamav-gui --scan %F', '/usr/share/icons/hicolor/48x48/apps/clamav-gui.png', '', uint32 2, false, true, false)]";
+
             QProcess::execute("gsettings",gnomecommanderParams);
         }
         else {
             if (output.indexOf("clamav-gui") == -1)
             {
-                output = output.mid(0,output.length() - 2) + ", ('scan with ClamAV-GUI', '/usr/bin/clamav-gui --scan %F', '/usr/share/icons/hicolor/48x48/apps/clamav-gui.png', '', uint32 2, false, true, false)]";
+                if (isRunninginAppImage())
+                    output = output.mid(0,output.length() - 2) + ", ('scan with ClamAV-GUI', 'flatpak run --branch=master --arch=x86_64 --command=clamav-gui io.github.wusel1007.clamav-gui --scan %F', '/usr/share/icons/hicolor/48x48/apps/clamav-gui.png', '', uint32 2, false, true, false)]";
+                else
+                    output = output.mid(0,output.length() - 2) + ", ('scan with ClamAV-GUI', '/usr/bin/clamav-gui --scan %F', '/usr/share/icons/hicolor/48x48/apps/clamav-gui.png', '', uint32 2, false, true, false)]";
             }
             gnomecommanderParams << "set" << "org.gnome.gnome-commander.preferences.general" << "favorite-apps"  << output;
             QProcess::execute("gsettings",gnomecommanderParams);

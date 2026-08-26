@@ -237,7 +237,11 @@ bool createServiceMenus()
         setupFileHandler* serviceFile = new setupFileHandler(QDir::homePath() + "/.local/share/nemo/actions/scan.nemo_action", nullptr);
         serviceFile->setSectionValue("Nemo Action", "Name", "scan with ClamAV-GUI");
         serviceFile->setSectionValue("Nemo Action", "Comment", "scan with ClamAV-GUI");
-        serviceFile->setSectionValue("Nemo Action", "Exec", "clamav-gui --scan &F");
+        if (isRunninginFlatPak())
+            serviceFile->setSectionValue("Nemo Action", "Exec", "flatpak run --branch=master --arch=x86_64 --command=clamav-gui io.github.wusel1007.clamav-gui --scan %F");
+        else
+            serviceFile->setSectionValue("Nemo Action", "Exec", "clamav-gui --scan &F");
+        //serviceFile->setSectionValue("Nemo Action", "Exec", "clamav-gui --scan &F");
         serviceFile->setSectionValue("Nemo Action", "Icon-Name", "clamav-gui");
         serviceFile->setSectionValue("Nemo Action", "Selection", "notnone");
         serviceFile->setSectionValue("Nemo Action", "Extensions", "any");
