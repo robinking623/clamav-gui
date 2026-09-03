@@ -20,4 +20,5 @@ bool processRunning(QString);
 QString pidof(QString progname);
 QString which(QString progname);
 QString whoami();
+QString beautifyString(QString value, int length = 50);
 #endif  // TOOLBOX_H

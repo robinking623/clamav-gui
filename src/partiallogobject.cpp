@@ -1,3 +1,6 @@
+/*******************************************************************
+ * Displays the result / log after a scan
+*******************************************************************/
 #include "partiallogobject.h"
 #include "ui_partiallogobject.h"
 
@@ -7,9 +10,7 @@ partialLogObject::partialLogObject(QWidget* parent, QString logText, bool highli
     m_ui.setupUi(this);
     m_logHighlighter = NULL;
     if (highlighterDisabled == false)
-    {
         m_logHighlighter = new highlighter(m_ui.logPlainText->document());
-    }
     setLogText(logText);
 }
 
@@ -26,48 +27,33 @@ void partialLogObject::setLogText(QString logText)
 
     pos = logText.indexOf("Engine version:");
     if (pos > -1)
-    {
         engine = logText.mid(pos + 15, logText.indexOf("\n", pos + 15) - (pos + 15));
-    }
-    else {
+    else
         engine = "n/a";
-    }
 
     pos = logText.indexOf("Scanned directories:");
     if (pos > -1)
-    {
         scannedDirs = logText.mid(pos + 20, logText.indexOf("\n", pos + 20) - (pos + 20));
-    }
-    else {
+    else
         scannedDirs = "n/a";
-    }
 
     pos = logText.indexOf("Scanned files:");
     if (pos > -1)
-    {
         scannedFiles = logText.mid(pos + 14, logText.indexOf("\n", pos + 14) - (pos + 14));
-    }
-    else {
+    else
         scannedFiles = "n/a";
-    }
 
     pos = logText.indexOf("Total errors:");
     if (pos > -1)
-    {
         errors = logText.mid(pos + 13, logText.indexOf("\n", pos + 13) - (pos + 13));
-    }
-    else {
+    else
         errors = "n/a";
-    }
 
     pos = logText.indexOf("Infected files:");
     if (pos > -1)
-    {
         infectedFiles = logText.mid(pos + 15, logText.indexOf("\n", pos + 15) - (pos + 15));
-    }
-    else {
+    else
         infectedFiles = "n/a";
-    }
 
     m_ui.engineVersionLabel->setText(tr("Engine Version: ") + engine);
     m_ui.scannedDirectoriesLabel->setText(tr("Scanned Directories: ") + scannedDirs);
@@ -113,9 +99,8 @@ void partialLogObject::slot_searchButtonClicked()
                 m_ui.logPlainText->setTextCursor(cursor);
                 m_ui.logPlainText->ensureCursorVisible();
             }
-            else {
+            else
                 QMessageBox::information(this, tr("INFO"), tr("Searchstring not found!"));
-            }
         }
     }
 }
@@ -193,9 +178,7 @@ void partialLogObject::slot_add_remove_highlighter(bool state)
     }
     else {
         if (m_logHighlighter == NULL)
-        {
             m_logHighlighter = new highlighter(m_ui.logPlainText->document());
-        }
         else {
             delete m_logHighlighter;
             m_logHighlighter = new highlighter(m_ui.logPlainText->document());

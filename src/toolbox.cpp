@@ -1,3 +1,6 @@
+/*******************************************************************
+ * Toolbox with procedures helping with the flatpak handling
+*******************************************************************/
 #include "toolbox.h"
 
 bool isRunninginFlatPak()
@@ -12,9 +15,9 @@ void startProcess(QProcess *process, QString basecommand, QStringList parameters
     {
         QStringList newParams;
         newParams << "--host" << basecommand;
-        foreach (QString para, parameters) {
+        foreach (QString para, parameters)
             newParams << para;
-        }
+
         process->start("flatpak-spawn",newParams);
     }
     else {
@@ -32,16 +35,14 @@ bool checkFileExists(const QString path)
 
         process.start("flatpak-spawn", {"--host","test","-f",path});
 
-        if (!process.waitForFinished(3000)) {
+        if (!process.waitForFinished(3000))
             return false;
-        }
 
         rc =  process.exitStatus() == QProcess::NormalExit
                && process.exitCode() == 0;
     }
-    else {
+    else
         rc = QFileInfo::exists(path);
-    }
 
     return rc;
 }
@@ -51,16 +52,12 @@ bool processRunning(QString progname)
     QProcess process;
 
     if (isRunninginFlatPak())
-    {
         process.start("flatpak-spawn", {"--host","ps","-f",progname});
-    }
-    else {
+    else
         process.start("ps", {"-f",progname});
-    }
 
-    if (!process.waitForFinished(3000)) {
+    if (!process.waitForFinished(3000))
         return false;
-    }
 
     return process.exitStatus() == QProcess::NormalExit
          && process.exitCode() == 0;
@@ -81,9 +78,8 @@ QString pidof(QString progname)
         process.start("bash", {"-c",command});
     }
 
-    if (!process.waitForFinished(3000)) {
+    if (!process.waitForFinished(3000))
         return "";
-    }
 
     return QString::fromLocal8Bit(process.readAllStandardOutput()).trimmed();
 }
@@ -93,17 +89,12 @@ QString which(QString progname)
     QProcess process;
 
     if (isRunninginFlatPak())
-    {
         process.start("flatpak-spawn", {"--host","which",progname});
-
-    }
-    else {
+    else
         process.start("which", {progname});
-    }
 
-    if (!process.waitForFinished(3000)) {
+    if (!process.waitForFinished(3000))
         return "";
-    }
 
     return QString::fromLocal8Bit(process.readAllStandardOutput()).trimmed();
 }
@@ -113,17 +104,12 @@ QString whoami()
     QProcess process;
 
     if (isRunninginFlatPak())
-    {
         process.start("flatpak-spawn", {"--host","whoami"});
-
-    }
-    else {
+    else
         process.start("whoami", {});
-    }
 
-    if (!process.waitForFinished(3000)) {
+    if (!process.waitForFinished(3000))
         return "";
-    }
 
     return QString::fromLocal8Bit(process.readAllStandardOutput()).trimmed();
 }
@@ -135,18 +121,16 @@ QString runProg(QString command, QStringList parameters)
     {
         QStringList newParams;
         newParams << "--host" << command;
-        foreach (QString para, parameters) {
+        foreach (QString para, parameters)
             newParams << para;
-        }
+
         process.start("flatpak-spawn",newParams);
     }
-    else {
+    else
         process.start(command,parameters);
-    }
 
-    if (!process.waitForFinished(3000)) {
+    if (!process.waitForFinished(3000))
         return "";
-    }
 
     return QString::fromLocal8Bit(process.readAllStandardOutput()).trimmed();
 }
@@ -174,12 +158,6 @@ bool createServiceMenus()
 
     if (serviceMenuPath.isEmpty() && QFileInfo::exists(QDir::homePath() + "/.local/share/kio/servicemenus"))
         serviceMenuPath = QDir::homePath() + "/.local/share/kio/servicemenus";
-
-    /*if ((serviceMenuPath.isEmpty()) && (QFileInfo::exists(QCoreApplication::applicationDirPath() + "/../share/" + "kio/servicemenues")))
-        serviceMenuPath = QDir::homePath() + "/.local/share/kio/servicemenus";
-
-    if ((serviceMenuPath.isEmpty()) && (QFileInfo::exists(QCoreApplication::applicationDirPath() + "/../share/" + "kservices5/ServiceMenus")))
-        serviceMenuPath = QDir::homePath() + "/.local/share/kservices5/ServiceMenus";*/
 
     if (serviceMenuPath != "")
     {
@@ -252,4 +230,27 @@ bool createServiceMenus()
 
     return created;
     //*****************************************************************************
+}
+
+QString beautifyString(QString value, int length)
+{
+    QString helper = value;
+    QString rc = "";
+    int counter = 0;
+
+    // Word-Wrap of lines that are longer than [length] characters ...
+    for (int i = 0; i < helper.length(); i++)
+    {
+        if ((counter > length) && (helper.mid(i,1) == ' '))
+        {
+            rc = rc + "\n";
+            counter = 0;
+        }
+        else {
+            rc = rc + helper.mid(i,1);
+        }
+        counter++;
+    }
+
+    return rc;
 }

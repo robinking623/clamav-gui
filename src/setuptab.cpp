@@ -1,3 +1,6 @@
+/************************************************************************
+ * Setup Tab of the applicatino
+ ************************************************************************/
 #include "setuptab.h"
 #define css_red "background-color:red;color:white"
 #define css_yellow "background-color:yellow;color:black"
@@ -9,7 +12,6 @@ setupTab::setupTab(QWidget* parent, setupFileHandler* setupFile) : QWidget(paren
     m_ui.setupUi(this);
     m_supressMessage = true;  // verhindert, dass bei der Initialisierung der Sprachauswahl die Warnmeldung kommt.
 
-    //m_setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini", this); --> uses the setupFileHandler provided by the clamav_gui class
     m_monochrome = false;
     if (m_setupFile->keywordExists("Setup", "DisableLogHighlighter") == true)
         m_monochrome = m_setupFile->getSectionBoolValue("Setup", "DisableLogHighlighter");
@@ -23,20 +25,14 @@ setupTab::setupTab(QWidget* parent, setupFileHandler* setupFile) : QWidget(paren
     }
 
     if (m_setupFile->keywordExists("Clamd", "ClamdScanMultithreading") == true)
-    {
         m_ui.clamdscanComboBox->setCurrentIndex(m_setupFile->getSectionIntValue("Clamd", "ClamdScanMultithreading"));
-    }
-    else {
+    else
         m_setupFile->setSectionValue("Clamd", "ClamdScanMultithreading", 0);
-    }
 
     if (m_setupFile->keywordExists("Setup", "DisableLogHighlighter") == true)
-    {
         m_ui.logHighlighterCheckBox->setChecked(m_setupFile->getSectionBoolValue("Setup", "DisableLogHighlighter"));
-    }
-    else {
+    else
         m_setupFile->setSectionValue("Setup", "DisableLogHighlighter", false);
-    }
 
     manager = new QNetworkAccessManager(this);
     connect(manager,SIGNAL(finished(QNetworkReply*)),SLOT(slot_requestFinished(QNetworkReply*)));
@@ -51,9 +47,7 @@ QString setupTab::checkmonochrome(QString color)
 {
     QString rc = "";
     if (m_monochrome == true)
-    {
         rc = css_mono;
-    }
     else {
         if (color == "red")
             rc = css_red;
@@ -299,9 +293,7 @@ void setupTab::slot_selectedLanguageChanged()
 {
     m_setupFile->setSectionValue("Setup", "language", m_ui.languageSelectComboBox->currentText().mid(0, 7));
     if (m_supressMessage == false)
-    {
         QMessageBox::information(this, tr("Warning"), tr("You have to restart the application for changes to take effect!"));
-    }
 }
 
 void setupTab::slot_basicSettingsChanged()

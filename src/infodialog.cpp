@@ -1,8 +1,11 @@
+/***************************************************************
+ * Info tab with licence agreement an cedits of supporters.
+ ***************************************************************/
 #include "infodialog.h"
 
 infoDialog::infoDialog(QWidget* parent) : QWidget(parent)
 {
-    QString version = "1.4.5 (QT5/QT6)";
+    QString version = "1.4.6 (QT5/QT6)";
     QString iconPath;
     if (isRunninginFlatPak())
         iconPath = "/app/usr/share/clamav-gui/";

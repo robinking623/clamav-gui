@@ -1,3 +1,7 @@
+/**************************************************************
+ * Initiated at the first start of the application for setting
+ * up the initial directory structur and configuration files.
+ **************************************************************/
 #include "firstrunwindow.h"
 #include "ui_firstrunwindow.h"
 
@@ -36,6 +40,7 @@ firstRunWindow::~firstRunWindow()
 
 void firstRunWindow::slot_findRequiredApplications()
 {
+    // List of applications required for clamav-gui to run.
     m_initCommands << "whereis" << "whereis" << "whereis" << "whereis" << "whereis" << "whereis" << "whereis" << "whoami" << "groups" << "man";
     m_initParameters  << "clamd" << "freshclam"<< "clamonacc" << "clamscan" << "clamdscan" << "pkexec" << "kdesu" << "" << "" << "clamd.conf";
     m_initIndex = 0;
@@ -45,7 +50,6 @@ void firstRunWindow::slot_findRequiredApplications()
 
     m_processParameters.clear();
     m_processParameters << m_initParameters.at(m_initIndex);
-    //m_initProcess->start(m_initCommands.at(m_initIndex),m_processParameters);
     startProcess(m_initProcess,m_initCommands.at(m_initIndex),m_processParameters);
 }
 
@@ -58,7 +62,7 @@ void firstRunWindow::slot_startupModeChanged()
 {
     if (m_ui->startupModeComboBox->currentIndex() == 0)
         m_setupFile->setSectionValue("Setup", "WindowState", "maximized");
-    if (m_ui->startupModeComboBox->currentIndex() == 1)
+    else
         m_setupFile->setSectionValue("Setup", "WindowState", "minimized");
 }
 
@@ -258,12 +262,10 @@ void firstRunWindow::slot_initProcessFinished()
             if (m_initParameters.at(m_initIndex) != "")
             {
                 m_processParameters << m_initParameters.at(m_initIndex);
-                //m_initProcess->start(m_initCommands.at(m_initIndex),m_processParameters);
                 startProcess(m_initProcess,m_initCommands.at(m_initIndex),m_processParameters);
             }
             else {
                 m_processParameters << m_initParameters.at(m_initIndex);
-                //m_initProcess->start(m_initCommands.at(m_initIndex),QStringList());
                 startProcess(m_initProcess,m_initCommands.at(m_initIndex),QStringList());
             }
         }
@@ -352,7 +354,6 @@ void firstRunWindow::createServiceMenu()
     m_gsettingsProcess = new QProcess(this);
     gnomecommanderParams << "get"  << "org.gnome.gnome-commander.preferences.general" << "favorite-apps";
     connect(m_gsettingsProcess,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(slot_gsettingsProcessFinished(int,QProcess::ExitStatus)));
-    //m_gsettingsProcess->start("gsettings",gnomecommanderParams);
     startProcess(m_gsettingsProcess,"gsettings",gnomecommanderParams);
 
     if (created == true)

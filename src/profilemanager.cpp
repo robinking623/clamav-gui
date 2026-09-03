@@ -1,10 +1,12 @@
+/*********************************************************************
+ * Profile tab of the application. (add, edit, remove profiles)
+ *********************************************************************/
 #include "profilemanager.h"
 #include "ui_profilemanager.h"
 #include "sharedvars.cpp"
 
 ProfileManager::ProfileManager(QWidget* parent, setupFileHandler* setupFile) : QWidget(parent), m_setupFile(setupFile), m_ui(new Ui::ProfileManager)
 {
-    // m_setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini", this); --> uses the setupFileHandler provided by the clamav_gui class
     m_ui->setupUi(this);
     getProfileList();
     slot_readProfileSettings();
@@ -19,16 +21,6 @@ ProfileManager::~ProfileManager()
 void ProfileManager::getProfileList()
 {
     QStringList profiles = m_setupFile->getKeywords("Profiles");
-    QStringList selectableProfiles;
-    setupFileHandler sf(this);
-
-    foreach (QString profile, profiles)
-    {
-        sf.setSetupFileName(QDir::homePath() + "/.clamav-gui/profiles/" + profile + ".ini");
-        if (sf.getSectionValue(profile, "Directories") != "")
-            selectableProfiles << profile;
-    }
-
     m_ui->profileComboBox->clear();
     m_ui->profileComboBox->addItems(profiles);
 }
@@ -69,13 +61,10 @@ void ProfileManager::slot_readProfileSettings()
     for (int i = 1; i < targets.count(); i++)
     {
         if ((targets[i] != "") & (targetLabel != ""))
-        {
             targetLabel = targetLabel + "\n" + targets[i];
-        }
-        else {
+        else
             if (targets[i] != "")
                 targetLabel = targets[i];
-        }
     }
 
     m_ui->targetsListLabel->setText(targetLabel);
@@ -83,9 +72,7 @@ void ProfileManager::slot_readProfileSettings()
     if (options.count() > 0)
         optionLabel = optionLabel + options[0];
     for (int i = 1; i < options.count(); i++)
-    {
         optionLabel = optionLabel + "\n" + options[i];
-    }
 
     for (int idx = 0; idx < inclExclKeywords.size(); idx ++)
     {
@@ -124,24 +111,18 @@ void ProfileManager::slot_readProfileSettings()
     if (tempSetupFile->getSectionBoolValue(profileName, "Recursion") == true)
     {
         if (optionLabel != "")
-        {
             optionLabel = optionLabel + "\n" + "-r";
-        }
-        else {
+        else
             optionLabel = "-r";
-        }
     }
 
     optionLabel = optionLabel.replace("<equal>", "=");
     m_ui->optionsListLabel->setText(optionLabel);
 
     if (logFile.left(logFile.indexOf("|")) == "checked")
-    {
         logFile = logFile.mid(logFile.indexOf("|") + 1);
-    }
-    else {
+    else
         logFile = "";
-    }
 
     m_ui->filenameTextLabel->setText(logFile);
 
@@ -217,9 +198,8 @@ void ProfileManager::slot_eraseProfileButtonClicked()
                 delete sf;
             }
         }
-        else {
+        else
             QMessageBox::information(this, tr("ERROR"), tr("Profile can not be removed because it is in use by the scheduler!"));
-        }
     }
 }
 

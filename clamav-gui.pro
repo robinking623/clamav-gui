@@ -46,8 +46,7 @@ SOURCES += src/main.cpp\
     src/profilewizarddialog.cpp \
     src/profilemanager.cpp \
     src/sharedvars.cpp \
-    src/toolbox.cpp \
-    src/translator.cpp
+    src/toolbox.cpp
 
 HEADERS  += src/clamav_gui.h \
     src/scanoptionbaseclass.h \
@@ -82,8 +81,7 @@ HEADERS  += src/clamav_gui.h \
     src/progressdialog.h \
     src/profilewizarddialog.h \
     src/profilemanager.h \
-    src/toolbox.h \
-    src/translator.h
+    src/toolbox.h
 
 FORMS    += ui/clamav_gui.ui \
     ui/scanoptionbaseclass.ui \

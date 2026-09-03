@@ -31,27 +31,20 @@ int main(int argc, char *argv[])
     if (argc > 2) setLang = (QString) argv[2];
 
     if (rc == "--language")
-    {
         printf("\nDesktop Language Settings: %s\n",lang.toStdString().c_str());
-    }
 
     QFile file;
     if (file.exists(QDir::homePath() + "/.clamav-gui/settings.ini") == true)
     {
         setupFileHandler setupFile(QDir::homePath() + "/.clamav-gui/settings.ini");
         if (setupFile.keywordExists("Setup","language") == true)
-        {
             lang = setupFile.getSectionValue("Setup","language").mid(1,5);
-        }
-        else {
+        else
             lang = "en_GB";
-        }
     }
 
     if (rc == "--setlang")
-    {
         lang = setLang;
-    }
 
     if (rc == "--scan")
     {
@@ -66,9 +59,7 @@ int main(int argc, char *argv[])
             QString value;
 
             for (int i = 0; i < selectedOptions.count(); i++)
-            {
                 parameters << selectedOptions.at(i).left(selectedOptions.indexOf("|")).replace("<equal>","=");
-            }
 
             // Directory Options
             for (int i = 0; i < directoryOptions.count(); i++)
@@ -98,9 +89,8 @@ int main(int argc, char *argv[])
                                     }
                                 }
                             }
-                            else {
+                            else
                                 parameters << directoryOptionSwitches.at(idx) + "=" + value;
-                            }
                         }
                     }
                 }
@@ -118,9 +108,7 @@ int main(int argc, char *argv[])
                     for (int i = 0; i < scanLimitKeywords.length(); i++)
                     {
                         if (option == scanLimitKeywords.at(i))
-                        {
                             parameters << scanLimitSwitches.at(i) + "=" + value;
-                        }
                     }
                 }
             }
@@ -149,9 +137,7 @@ int main(int argc, char *argv[])
         parameters << "-r";
 
         for (int i = 2; i < argc; i++)
-        {
             parameters << (QString)argv[i];
-        }
 
         scheduleScanObject * scanObject = new scheduleScanObject(0,"Direct Scan",parameters);
 
@@ -198,9 +184,8 @@ int main(int argc, char *argv[])
                 showMainWindow = true;
                 setupFile->setSectionValue("Settings", "ShowHideMainWindow", true);
             }
-            else {
+            else
                 setupFile->setSectionValue("Settings", "ShowHideMainWindow", false);
-            }
             delete setupFile;
         }
 

@@ -77,11 +77,9 @@ private:
     QAction                 * m_actionShowHideMainWindow;
     setupFileHandler        * m_setupFile;
     QProcess                * m_scanProcess;
-    QProcess                * m_getVersionProcess;
     QString                   m_guisudoapp;
     scanTab                 * m_scannerTab;
     setupTab                * m_setUpTab;
-    QTimer                  * m_mainWindowTimer;
     QTimer                  * m_logoTimer;
     QTimer                  * m_showLogoTimer;
     optionsDialog           * m_optionTab;
@@ -100,6 +98,7 @@ private:
     void createTrayIcon();
     void createDropZone();
     void checkAppImage();
+    void getVersion();
 
 private slots:
     void slot_setMainWindowState(bool);
@@ -108,7 +107,6 @@ private slots:
     void slot_actionShowHideDropZoneTriggered();
     void slot_hideWindow();
     void slot_scanRequest(QStringList);
-    void slot_mainWinTimerTimeout();
     void slot_scanProcessHasStdOutput();
     void slot_scanProcessHasErrOutput();
     void slot_scanProcessFinished(int,QProcess::ExitStatus);
@@ -125,7 +123,6 @@ private slots:
     void slot_switchActiveTab(int index);
     void slot_quitApplication();
     void slot_receiveVersionInformation(QString info);
-    void slot_getVersionProcessFinished(int, QProcess::ExitStatus);
 
 signals:
     void showHideDropZoneTriggered();

@@ -1,10 +1,12 @@
+/************************************************************************
+ * Scan Tab of the application
+ ************************************************************************/
 #include "scantab.h"
 
 scanTab::scanTab(QWidget* parent, setupFileHandler* setupFile) : QWidget(parent), m_setupFile(setupFile)
 {
     m_ui.setupUi(this);
     m_ui.stopScanButton->setVisible(false);
-    //m_setupFile = new setupFileHandler(QDir::homePath() + "/.clamav-gui/settings.ini", this); --> uses the setupFileHandler provided by the clamav_gui class
     m_logHighLighter = NULL;
     m_monochrome = m_setupFile->getSectionBoolValue("Setup", "DisableLogHighlighter");
     if (m_monochrome == false)
@@ -65,10 +67,8 @@ void scanTab::slot_scanButtonClicked()
     QStringList scanObjects;
 
     for (int i = 0; i < list.count(); i++)
-    {
         if (list[i].data(QFileSystemModel::FilePathRole).toString() != "")
             scanObjects << list[i].data(QFileSystemModel::FilePathRole).toString();
-    }
 
     if (scanObjects.count() > 0)
         emit triggerScanRequest(scanObjects);
@@ -98,13 +98,16 @@ void scanTab::slot_updateDeviceList()
     else
         if (QFileInfo::exists("/run/media") == true)
             dir.setPath("/run/media");
+
     if (QFileInfo::exists("/media/" + m_username) == true)
         dir.setPath("/media/" + m_username);
     else
         if (QFileInfo::exists("/media") == true)
             dir.setPath("/media/");
 
-    if (m_fileSystemWatcher != nullptr) delete m_fileSystemWatcher;
+    if (m_fileSystemWatcher != nullptr)
+        delete m_fileSystemWatcher;
+
     m_fileSystemWatcher = new QFileSystemWatcher(this);
 
     QStringList filters;
@@ -116,9 +119,7 @@ void scanTab::slot_updateDeviceList()
     QLayoutItem* item = NULL;
 
     while ((item = m_ui.devicesFrame->layout()->takeAt(0)) != 0)
-    {
         delete item->widget();
-    }
 
     if (dir.path() != "")
     {
@@ -127,12 +128,10 @@ void scanTab::slot_updateDeviceList()
     }
 
     if (m_setupFile->getSectionBoolValue("Setup", "DisableLogHighlighter") == true)
-    {
         m_devicelabel->setStyleSheet("background-color:#404040;color:white;padding:3px;");
-    }
-    else {
+    else
         m_devicelabel->setStyleSheet("background-color:#c0c0c0;color:black;padding:3px;");
-    }
+
     m_ui.devicesFrame->layout()->addWidget(m_devicelabel);
 
     m_deviceGroup = new QButtonGroup(this);
@@ -210,6 +209,7 @@ void scanTab::slot_abortScan()
     m_ui.currentFileLabel->setText(tr("Scanning aborted ......"));
     if (m_movie != nullptr)
         m_movie->stop();
+
     emit abortScan();
 }
 
@@ -271,13 +271,11 @@ void scanTab::slot_dirtreeSelectionChanged()
     for (int i = 0; i < list.count(); i++)
     {
         if (i < list.count() - 1)
-        {
             directories = directories + list[i].data(QFileSystemModel::FilePathRole).toString() + "\n";
-        }
-        else {
+        else
             directories = directories + list[i].data(QFileSystemModel::FilePathRole).toString();
-        }
     }
+
     m_ui.selectedDirectoriesLabel->setText(directories);
 
     m_setupFile->setSectionValue("Settings", "Directories", directories);
@@ -296,12 +294,10 @@ void scanTab::slot_disableScanButton()
 void scanTab::slot_hiddenFoldersCheckBoxClicked()
 {
     if (m_ui.showHiddenDirsCheckBox->isChecked() == true)
-    {
         m_model->setFilter(QDir::AllDirs | QDir::NoDotAndDotDot | QDir::Hidden);
-    }
-    else {
+    else
         m_model->setFilter(QDir::AllDirs | QDir::NoDotAndDotDot);
-    }
+
     m_setupFile->setSectionValue("Settings", "ShowHiddenDirs", m_ui.showHiddenDirsCheckBox->isChecked());
 }
 
@@ -320,9 +316,7 @@ void scanTab::slot_add_remove_highlighter(bool state)
     }
     else {
         if (m_logHighLighter == NULL)
-        {
             m_logHighLighter = new highlighter(m_ui.logPlainTextEdit->document());
-        }
         else {
             delete m_logHighLighter;
             m_logHighLighter = new highlighter(m_ui.logPlainTextEdit->document());
