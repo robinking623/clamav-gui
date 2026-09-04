@@ -5,7 +5,8 @@
 
 bool isRunninginFlatPak()
 {
-    return !qEnvironmentVariable("FLATPAK_ID").isEmpty()
+    QString flatpakid = getenv("FLATPAK_ID");
+    return !flatpakid.isEmpty()
     || QFile::exists("/.flatpak-info");
 }
 

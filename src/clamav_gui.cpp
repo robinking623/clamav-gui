@@ -166,7 +166,9 @@ void clamav_gui::slot_receiveVersionInformation(QString info)
  */
 void clamav_gui::getVersion()
 {
-    QString buffer = runProg("freshclam", {"--config-file", QString(QDir::homePath() + "/.clamav-gui/freshclam.conf"), "-V"});
+    QString buffer = runProg("freshclam", {"-V"});
+    if (buffer.isEmpty())
+        buffer = runProg("freshclam", {"--config-file", QString(QDir::homePath() + "/.clamav-gui/freshclam.conf"), "-V"});
     QStringList versionSections = buffer.split("/");
     while (versionSections.length() < 3)
         versionSections << "n/a";

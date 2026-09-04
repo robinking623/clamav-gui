@@ -1,6 +1,7 @@
 #ifndef TOOLBOX_H
 #define TOOLBOX_H
-#include <QtEnvironmentVariables>
+//#include <QtEnvironmentVariables>
+#include <cstdlib>
 #include <QStringList>
 #include <QFileInfo>
 #include <QProcess>

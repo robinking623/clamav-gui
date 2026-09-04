@@ -1,3 +1,6 @@
+* Fri Sep 4 2026 - Version 1.4.6 updated
+- Changed in toolbox.cpp the use of QtEnvironment to the older getEnv to keep the code compiling in QT5 and Qt6.
+
 * Thu Sep 3 2026 - Version 1.4.6
 - Complete code review and clean up.
 
